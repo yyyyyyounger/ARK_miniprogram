@@ -1,0 +1,53 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/category/category",
+    "pages/user/user",
+    "pages/more/more",
+    "pages/search/search"
+  ],
+  "window":{
+    "backgroundTextStyle":"dark",
+    "navigationBarBackgroundColor": "#3498db",
+    "navigationBarTitleText": "ARK-Dev version",
+    "navigationBarTextStyle":"white",
+    "enablePullDownRefresh": false
+  },
+  
+  "tabBar": {
+    "color": "",
+    "selectedColor": "#EA444C",
+    "backgroundColor": "",
+    "position": "bottom",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首頁",
+        "iconPath": "icons/home.png",
+        "selectedIconPath": "icons/home-o.png"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "text": "更多",
+        "iconPath": "icons/category.png",
+        "selectedIconPath": "icons/category-o.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "icons/my.png",
+        "selectedIconPath": "icons/my-o.png"
+      },
+      {
+        "pagePath": "pages/more/more",
+        "text": "更多",
+        "iconPath": "icons/cart.png",
+        "selectedIconPath": "icons/cart-o.png"
+      }
+    ]
+  },
+  
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
