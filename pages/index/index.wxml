@@ -1,8 +1,6 @@
 <view class="iconfont">
   首頁
-  <text class="iconfont icon-shuxingliebiaoxiangqing"></text>
-  <view class="icon-hm_arrow_lower_light" />
-  <view class="icon-hm_arrow_right_light" />
+  <text class="icon-shuxingliebiaoxiangqing"></text>
 </view>
 
 
