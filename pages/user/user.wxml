@@ -1,13 +1,3 @@
-<text class="userinfo">
-  用戶頭像；
-  UM Student ID；
-	暱稱、真實姓名；
-		大幾、專業；
-		專長、自我介紹；
-  開課、聽課記錄；
-  </text>
-
-
 <view class="userinfo">
 
   <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
@@ -18,6 +8,8 @@
     </view>
     <!-- 調用open-data的user的Nickname(微信名) -->
     <open-data type="userNickName"></open-data>
+    <!-- <open-data type="userCity"></open-data>
+    <open-data type="userProvince"></open-data> -->
   </block>
 
   <block wx:elif="{{!hasUserInfo}}">
@@ -32,3 +24,13 @@
   </block>
 
 </view>
+
+
+<view class="userinfo"> UM Student ID:  </view>
+
+<text class="userinfo">
+	暱稱、真實姓名；
+		大幾、專業；
+		專長、自我介紹；
+  開課、聽課記錄；
+  </text>
