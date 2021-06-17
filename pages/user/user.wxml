@@ -1,5 +1,6 @@
 <view class="userinfo">
 
+  <!-- 向微信庫詢問是否能使用openData，if可以，展示頭像、WeChat ID -->
   <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
     <!-- 設定頭像樣式 -->
     <view class="userinfo-avatar">
@@ -12,10 +13,14 @@
     <open-data type="userProvince"></open-data> -->
   </block>
 
+  <!-- 如果不能使用openData，且當下沒有用戶信息，則提示授權 -->
   <block wx:elif="{{!hasUserInfo}}">
-    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-    <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <view wx:else> 请使用1.4.4及以上版本基础库 </view>
+    <!-- 如果onLoad時查詢程序可以調用用戶信息，則向用戶發出授權按鈕提示，獲取准確的用戶信息 -->
+    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 獲取頭像暱稱 </button>
+    <!-- 不可調用則使用匿名的用戶信息 -->
+    <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 獲取頭像暱稱 </button>
+    <!-- <view wx:else> 请使用1.4.4及以上版本基础库 </view> -->
+    <view class="devColor" wx:else> 這裡有BUG，速查！ </view>
   </block>
 
   <block wx:else>
@@ -25,12 +30,20 @@
 
 </view>
 
+<view class="userinfo">
+  <view 
+  wx:for="{{userInfoGlobal}}"
+  wx:key="id"
+  >
+    {{item.name}}
+  </view>
+</view>
 
-<view class="userinfo"> UM Student ID:  </view>
+<!-- <view class="userinfo"> UM Student ID:  </view>
 
 <text class="userinfo">
 	暱稱、真實姓名；
 		大幾、專業；
 		專長、自我介紹；
   開課、聽課記錄；
-  </text>
+  </text> -->

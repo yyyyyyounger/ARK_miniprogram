@@ -20,7 +20,14 @@ App({
   
   // 全局數據
   globalData: {
-    
+    // 用戶信息全局變量
+    userInfoGlobal: [
+      { id:0, name:"UM ID:", },
+      { id:1, name:"姓名:", },
+      { id:2, name:"專業 & 年級:", },
+      { id:3, name:"組織次數:", },
+      { id:4, name:"參與次數:", },
+    ]
   }
 });
   
