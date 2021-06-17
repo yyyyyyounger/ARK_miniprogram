@@ -30,14 +30,24 @@
 
 </view>
 
-<view class="userinfo">
-  <view 
+<text class="userinfo" bindtap="editProfile" > 編輯個人資料 </text>
+<!-- <navigator target="" url="pages/user/editPage/editPage.wxml" open-type="navigate">
+  <button class="userinfo" >
+    點我更新個人資料
+  </button>
+</navigator> -->
+
+<text>\n\n\n</text>
+<text class="userinfo" selectable="false" space="true">
+  <text 
   wx:for="{{userInfoGlobal}}"
   wx:key="id"
   >
-    {{item.name}}
-  </view>
-</view>
+    {{item.name}}       {{item.input}}
+  </text>
+</text>
+
+
 
 <!-- <view class="userinfo"> UM Student ID:  </view>
 

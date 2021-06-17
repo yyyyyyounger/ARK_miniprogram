@@ -1,0 +1,13 @@
+<text class="" selectable="false" space="true" decode="false">
+  <text
+  class="title" 
+  wx:for="{{userInfoGlobal}}"
+  wx:key="id"
+  >
+    {{item.name}}    <text class="devColor" space="true" decode="false">input框，修改完匯入全局，匯入服務器</text>
+  </text>
+</text>
+
+
+<button>確定修改</button>
+<button>取消</button>

@@ -22,11 +22,11 @@ App({
   globalData: {
     // 用戶信息全局變量
     userInfoGlobal: [
-      { id:0, name:"UM ID:", },
-      { id:1, name:"姓名:", },
-      { id:2, name:"專業 & 年級:", },
-      { id:3, name:"組織次數:", },
-      { id:4, name:"參與次數:", },
+      { id:0, name:"UM ID:", input:"未設置" },
+      { id:1, name:"姓名:", input:"未設置" },
+      { id:2, name:"專業 & 年級:", input:"未設置" },
+      { id:3, name:"組織次數:", input:"未設置" },
+      { id:4, name:"參與次數:", input:"未設置" },
     ]
   }
 });

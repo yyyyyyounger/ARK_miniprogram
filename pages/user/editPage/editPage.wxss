@@ -1,0 +1,16 @@
+.title{
+    /* text */
+    color: black;
+    font-weight: bold;
+
+    display: flex;
+    /* 文字居中 */
+    margin-left:10rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width:40%;
+    /* 頁面居中 */
+}
+

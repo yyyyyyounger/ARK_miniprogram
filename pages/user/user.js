@@ -1,10 +1,13 @@
+var app = getApp();
+
 Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName') // 如需尝试获取用户信息可改为false
+    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
+    userInfoGlobal : app.globalData.userInfoGlobal,
   },
 
   onLoad() { // 該頁面初始化時，請求user授權
@@ -40,6 +43,12 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+
+  editProfile(){
+    wx.navigateTo({
+      url: './editPage/editPage',
     })
   }
 
