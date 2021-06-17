@@ -10,8 +10,15 @@ page,view,text,swiper,swiper-item,image,navigator{
     主題顏色 通過變量來實現
 */
 page{
-    /* 定義主題顏色 */
-    --themeColor:#090163;
+    /* 定義開發需注意顏色 */
+    --devColor:#d50000;
+    
     /* 定義統一的字體大小 */
     font-size: 30rpx;
+}
+
+.devColor{
+    color: var(--devColor);
+    font-size: 25rpx;
+    text-decoration: underline;
 }

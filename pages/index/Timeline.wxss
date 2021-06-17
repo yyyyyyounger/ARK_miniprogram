@@ -26,7 +26,7 @@
   font-size: 30rpx;
   color: #888888;
 }
-.container .content.on {
+.container .contentOn {
   display: block;
   text-overflow: clip;
   overflow: visible;

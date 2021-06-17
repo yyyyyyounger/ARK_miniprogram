@@ -1,15 +1,14 @@
-//Page Object
 Page({
   data: {
-    isShow: false
+    isShow : false
   },
   // 時間軸的icon的點擊事件
-  timelineTap(e) {
-    console.log(e);
-    console.log(this.isShow);
-    
-    this.isShow = !this.isShow;
-    // this.$apply();
+  containerTap: function() {
+    let{isShow} = this.data;
+    isShow =! isShow;
+    this.setData({
+      isShow
+    })
   },
   //options(Object)
   onLoad: function(options) {

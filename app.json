@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/user/user",
     "pages/index/index",
     "pages/category/category",
-    "pages/user/user",
     "pages/more/more",
     "pages/search/search"
   ],
@@ -29,7 +29,7 @@
       },
       {
         "pagePath": "pages/category/category",
-        "text": "更多",
+        "text": "課程",
         "iconPath": "icons/category.png",
         "selectedIconPath": "icons/category-o.png"
       },

@@ -1,2 +1,34 @@
-<!--pages/user/user.wxml-->
-<text>pages/user/user.wxml</text>
+<text class="userinfo">
+  用戶頭像；
+  UM Student ID；
+	暱稱、真實姓名；
+		大幾、專業；
+		專長、自我介紹；
+  開課、聽課記錄；
+  </text>
+
+
+<view class="userinfo">
+
+  <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
+    <!-- 設定頭像樣式 -->
+    <view class="userinfo-avatar">
+      <!-- 調用open-data的user頭像 -->
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <!-- 調用open-data的user的Nickname(微信名) -->
+    <open-data type="userNickName"></open-data>
+  </block>
+
+  <block wx:elif="{{!hasUserInfo}}">
+    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
+    <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <view wx:else> 请使用1.4.4及以上版本基础库 </view>
+  </block>
+
+  <block wx:else>
+    <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </block>
+
+</view>

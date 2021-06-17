@@ -1,36 +1,20 @@
 <view class="iconfont">
-  首頁
-  <text class="icon-shuxingliebiaoxiangqing"></text>
+  ARK平台已經運行了
+  <text class="devColor">Here display 雲端記錄的已運行時間</text>
+   天
 </view>
-
-
-
 
 <view class="container">
   <view class="title">
     <text class="title_txt">Container Test</text>
-    <!-- <text class="iconfont icon-hm_arrow_right_light" /> -->
-    <view 
-      class="iconfont {{isShow ? 'icon-hm_arrow_lower_light' : 'icon-hm_arrow_right_light'}}" 
-      bindtap="timelineTap" />
-    <!-- 進度：https://www.jianshu.com/p/28756c48082e 時間軸，結束時突然想起可以去UMMoodle抄一份 -->
-    <view class="iconfont">
-      <view wx:if="{{isShow}}">
-        <view class="icon-hm_arrow_lower_light" />
-      </view>
-      <view wx:else> 
-        <view class="icon-hm_arrow_right_light" />
-      </view>
-      
-    </view>
-      
-      
+    <text 
+      class="iconfont {{isShow==true ? 'icon-hm_arrow_lower_light' : 'icon-hm_arrow_right_light'}}"
+      bindtap="containerTap">
+    </text>
   </view>
-  <!-- <view class="content">  
-    我所有的自负皆来自我的自卑，所有的英雄气概都来自于我的软弱。嘴里振振有词是因为心里满是怀疑，深情是因为痛恨自己无情。这世界没有一件事情是虚空而生的，站在光里，背后就会有阴影，这深夜里一片寂静，是因为你还没有听见声音。
-  </view> -->
-  <view class="content {{isShow ? 'on' : ''}}">
-  我所有的自负皆来自我的自卑，所有的英雄气概都来自于我的软弱。嘴里振振有词是因为心里满是怀疑，深情是因为痛恨自己无情。这世界没有一件事情是虚空而生的，站在光里，背后就会有阴影，这深夜里一片寂静，是因为你还没有听见声音。
+
+  <view class="{{isShow ? 'contentOn' : 'content'}}">
+    文字測試：我所有的自负皆来自我的自卑，所有的英雄气概都来自于我的软弱。嘴里振振有词是因为心里满是怀疑，深情是因为痛恨自己无情。这世界没有一件事情是虚空而生的，站在光里，背后就会有阴影，这深夜里一片寂静，是因为你还没有听见声音。
   </view>
 
 </view>
