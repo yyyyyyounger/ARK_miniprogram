@@ -1,3 +1,4 @@
+<!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
 
   <!-- 向微信庫詢問是否能使用openData，if可以，展示頭像、WeChat ID -->
@@ -30,35 +31,24 @@
 
 </view>
 
+<!-- 編輯個人資料互動 -->
 <text class="userinfo" bindtap="editProfile" > 點我 · 編輯個人資料 </text>
 
 <!-- 換行 -->
 <text>\n\n</text>
 
 
-<!-- <text class="userinfo" selectable="false" space="true">
-  <text 
-  wx:for="{{userInfoGlobal}}"
-  wx:key="id"
-  >
-    {{item.name}}       {{item.input}}
-  </text>
-</text> -->
-
-
 <mp-cells ext-class="my-celles" title="個人信息">
-  <mp-cell value="UM ID:"  footer="未設置"></mp-cell>
-  <mp-cell value="組織次數:"  footer="未設置"></mp-cell  >
-  <mp-cell value="參與次數:"  footer="未設置"></mp-cell  >
+  <mp-cell value="UM ID:"  footer="{{UM_id_local}}"></mp-cell>
+  <mp-cell value="年級:"  footer="{{student_year}}"></mp-cell>
+  <mp-cell value="專業:"  footer="{{student_major}}"></mp-cell>
+  <mp-cell value="組織次數:"  footer="{{hold_time}}"></mp-cell>
+  <mp-cell value="參與次數:"  footer="{{join_time}}"></mp-cell>
   <mp-cell>
     <view>标题文字（slot）</view>
     <view slot="footer">
-      <text class="devColor">此處應修改成變量渲染</text>
+      <text class="devColor">此處應修改成通過變量渲染</text>
     </view>
   </mp-cell>
 </mp-cells>
 
-
-
-
-<include src="../footer/footer.wxml"></include>

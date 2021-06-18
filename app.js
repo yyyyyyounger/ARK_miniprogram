@@ -21,6 +21,11 @@ App({
   // 全局數據
   globalData: {
     // 用戶信息全局變量
+    UM_id_local : "未設置",
+    student_year : "未設置",
+    student_major : "未設置",
+    hold_time : "未設置",
+    join_time : "未設置",
     userInfoGlobal: [
       { id:0, name:"UM ID:", input:"未設置" },
       { id:1, name:"姓名:", input:"未設置" },

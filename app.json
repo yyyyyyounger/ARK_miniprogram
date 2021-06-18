@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/user/editPage/editPage",
     "pages/user/user",
     "pages/footer/footer",
-    "pages/user/editPage/editPage",
     "pages/index/index",
     "pages/category/category",
     "pages/more/more",
