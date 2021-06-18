@@ -30,30 +30,35 @@
 
 </view>
 
-<text class="userinfo" bindtap="editProfile" > 編輯個人資料 </text>
-<!-- <navigator target="" url="pages/user/editPage/editPage.wxml" open-type="navigate">
-  <button class="userinfo" >
-    點我更新個人資料
-  </button>
-</navigator> -->
+<text class="userinfo" bindtap="editProfile" > 點我 · 編輯個人資料 </text>
 
-<text>\n\n\n</text>
-<text class="userinfo" selectable="false" space="true">
+<!-- 換行 -->
+<text>\n\n</text>
+
+
+<!-- <text class="userinfo" selectable="false" space="true">
   <text 
   wx:for="{{userInfoGlobal}}"
   wx:key="id"
   >
     {{item.name}}       {{item.input}}
   </text>
-</text>
+</text> -->
+
+
+<mp-cells ext-class="my-celles" title="個人信息">
+  <mp-cell value="UM ID:"  footer="未設置"></mp-cell>
+  <mp-cell value="組織次數:"  footer="未設置"></mp-cell  >
+  <mp-cell value="參與次數:"  footer="未設置"></mp-cell  >
+  <mp-cell>
+    <view>标题文字（slot）</view>
+    <view slot="footer">
+      <text class="devColor">此處應修改成變量渲染</text>
+    </view>
+  </mp-cell>
+</mp-cells>
 
 
 
-<!-- <view class="userinfo"> UM Student ID:  </view>
 
-<text class="userinfo">
-	暱稱、真實姓名；
-		大幾、專業；
-		專長、自我介紹；
-  開課、聽課記錄；
-  </text> -->
+<include src="../footer/footer.wxml"></include>

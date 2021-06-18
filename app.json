@@ -1,6 +1,7 @@
 {
   "pages":[
     "pages/user/user",
+    "pages/footer/footer",
     "pages/user/editPage/editPage",
     "pages/index/index",
     "pages/category/category",
@@ -50,5 +51,8 @@
   },
   
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "useExtendedLib": {
+    "weui": true
+  }
 }

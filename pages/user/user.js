@@ -16,7 +16,7 @@ Page({
       this.setData({
         // 用戶授權狀態設為true
         canIUseGetUserProfile: true
-      })
+      });
     }
   },
 
@@ -50,6 +50,10 @@ Page({
     wx.navigateTo({
       url: './editPage/editPage',
     })
+  },
+
+  slideButtonTap(e) {
+    console.log('slide button tap', e.detail)
   }
 
 })
