@@ -45,6 +45,12 @@
             </mp-cell> -->
           </mp-cells>
 
+          <mp-cells title="" footer="請輸入能讓同學認出你的姓名">
+            <mp-cell prop="name" title="姓名" ext-class="">
+                <input bindinput="formNameInputChange" data-field="name" class="weui-input" placeholder="輸入全名" />
+            </mp-cell>
+          </mp-cells>
+
           <!-- <mp-cells title="提交后表单项报错">
             <mp-cell show-error prop="idcard" title="卡号" ext-class="">
                 <input bindinput="formInputChange" data-field="idcard" class="weui-input" placeholder="请输入卡号"/>
@@ -77,15 +83,19 @@
           </mp-cells>
       </mp-form>
 
-      <checkbox-group slot="tips" bindchange="bindAgreeChange">
+<!-- 註冊頁需要 -->
+<!-- 還差對ARK協議的跳轉 -->
+      <!-- <checkbox-group slot="tips" bindchange="bindAgreeChange">
           <label class="weui-agree">
               <checkbox class="weui-agree__checkbox-check" />
               <text class="weui-agree__checkbox"></text>
-              <view class="weui-agree__text">阅读并同意<navigator>《相关条款》</navigator></view>
+              <view class="weui-agree__text">閱讀並同意
+              <navigator>《ARK協議》</navigator></view>
           </label>
-      </checkbox-group>
+      </checkbox-group> -->
       <view slot="button">
-          <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
+          <button class="weui-btn" type="primary" bindtap="submitForm">保存</button>
+          <button class="weui-btn" type="warn" bindtap="submitForm_cancel">取消</button>
       </view>
     </mp-form-page>
 

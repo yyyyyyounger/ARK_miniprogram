@@ -7,24 +7,32 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
-    userInfoGlobal : app.globalData.userInfoGlobal,
-    // 此處需要與雲端綁定
-    UM_id_local : app.globalData.UM_id_local,
-    student_year : app.globalData.student_year,
-    student_major : app.globalData.student_major,
-    hold_time : app.globalData.hold_time,
-    join_time : app.globalData.join_time,
+    // userInfoGlobal:{},
+    // 此處應該與雲端綁定
+    userInfoGlobal : {},
   },
 
   onLoad() { // 該頁面初始化時，請求user授權
+    this.setData({
+      userInfoGlobal : app.globalData.userInfoGlobal
+    })
     if (wx.getUserProfile) {
       // if請求返回用戶信息的授權成功
       this.setData({
         // 用戶授權狀態設為true
         canIUseGetUserProfile: true
-      });
+      })
     }
-    console.log("未完成 - onLoad時應該從雲端獲取該用戶的信息");
+
+    console.log("未完成 - onLoad函數內應該從雲端獲取該用戶後續自定義的數據");
+    console.log("頁面已刷新");
+  },
+
+  onShow : function () {
+    // 用於刷新editPage更改後的數據
+    this.setData({
+      userInfoGlobal : app.globalData.userInfoGlobal
+    })
   },
 
   // 調用該方法可以：彈出彈窗，準確獲取用戶信息
@@ -61,6 +69,8 @@ Page({
 
   slideButtonTap(e) {
     console.log('slide button tap', e.detail)
-  }
+  },
+
+
 
 })

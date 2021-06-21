@@ -7,5 +7,6 @@
     "mp-checkbox": "weui-miniprogram/checkbox/checkbox",
     "mp-checkbox-group": "weui-miniprogram/checkbox-group/checkbox-group",
     "mp-form": "weui-miniprogram/form/form"
-  }
+  },
+  "navigationBarTitleText": "個人信息編輯/註冊"
 }

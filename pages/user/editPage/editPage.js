@@ -1,4 +1,8 @@
 var app =  getApp();  // 獲取全局數據
+var UM_ID_input;
+var studentYear_input;
+var studentMajor_input;
+var studentName_input;
 
 Page({    
   onShareAppMessage() {
@@ -8,7 +12,8 @@ Page({
     }
   },
   data: {
-    userInfoGlobal : app.globalData.userInfoGlobal,
+    userInfoGlobal : {},
+
     showTopTips: false,
 
     radioItems: [
@@ -37,12 +42,13 @@ Page({
     studentMajor: ["ECE", "CPS", "xxx"],
     studentMajorIndex: 0,
 
-    accounts: ["微信号", "QQ", "Email"],
-    accountIndex: 0,
+    // accounts: ["微信号", "QQ", "Email"],
+    // accountIndex: 0,
 
     isAgree: false,
+    // 表單數據
     formData: {
-
+      
     },
     rules: [{
         name: 'radio',
@@ -70,6 +76,11 @@ Page({
             }
         }},
     }]
+  },
+  onload() {
+    this.setData({
+      userInfoGlobal : app.globalData.userInfoGlobal
+    })
   },
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
@@ -111,10 +122,19 @@ Page({
     })
   },
   formInputChange(e) {
-    const {field} = e.currentTarget.dataset
+    console.log("事件值：",e);
+    const {field} = e.currentTarget.dataset;
     this.setData({
-        [`formData.${field}`]: e.detail.value
+        [`formData.${field}`]: e.detail.value ,
     })
+    UM_ID_input = e.detail.value;
+    console.log("全局變量值：",UM_ID_input);
+  },
+  formNameInputChange(e) {
+    console.log("事件值：",e);
+    const {field} = e.currentTarget.dataset;
+    studentName_input = e.detail.value;
+    console.log("全局變量值：",studentName_input);
   },
   bindTimeChange: function (e) {
     this.setData({
@@ -127,6 +147,7 @@ Page({
     this.setData({
       studentMajorIndex: e.detail.value
     })
+    studentMajor_input = this.data.studentMajor[e.detail.value];
   },
   bindStudentYearChange: function(e) {
     console.log('picker studentYear 发生选择改变，携带值为', e.detail.value);
@@ -134,6 +155,7 @@ Page({
     this.setData({
       studentYearIndex: e.detail.value
     })
+    studentYear_input = this.data.studentYear[e.detail.value];
   },
   bindAccountChange: function(e) {
     console.log('picker account 发生选择改变，携带值为', e.detail.value);
@@ -148,26 +170,49 @@ Page({
     });
   },
   submitForm() {
-    this.selectComponent('#form').validate((valid, errors) => {
-      console.log('valid', valid, errors)
-      if (!valid) {
-        const firstError = Object.keys(errors)
-        if (firstError.length) {
-            this.setData({
-                error: errors[firstError[0]].message
-            })
+    // this.selectComponent('#form').validate((valid, errors) => {
+    //   console.log('valid', valid, errors)
+    //   if (!valid) {
+    //     const firstError = Object.keys(errors)
+    //     if (firstError.length) {
+    //         this.setData({
+    //             error: errors[firstError[0]].message
+    //         })
 
-        }
-      } 
-      else {
-        wx.showToast({
-            title: '校验通过'
-        })
-      }
-    })
-    // this.selectComponent('#form').validateField('mobile', (valid, errors) => {
-    //     console.log('valid', valid, errors)
+    //     }
+    //   } 
+    //   else {
+    //     wx.showToast({
+    //         title: '校验通过'
+    //     })
+    //   }
     // })
+
+    // 這裡缺少條件判斷
+
+    // 如果條件所有成立，
+    // 寫入變量
+    console.log("app.js變量值：",app.globalData.userInfoGlobal[3].input);
+    if (!studentYear_input | !studentMajor_input) {
+      studentYear_input = this.data.studentYear[0]
+      studentMajor_input = this.data.studentMajor[0]
+      if (!UM_ID_input) {
+        UM_ID_input = "未設置"
+      }
+    }
+    app.globalData.userInfoGlobal[0].input = UM_ID_input;
+    app.globalData.userInfoGlobal[1].input = studentName_input;
+    app.globalData.userInfoGlobal[2].input = studentYear_input;
+    app.globalData.userInfoGlobal[3].input = studentMajor_input;
+    // 返回上一級
+    wx:wx.navigateBack({
+      delta: 1
+    });
+  },
+  submitForm_cancel() {
+    wx:wx.navigateBack({
+      delta: 1
+    });
   }
 
 });
