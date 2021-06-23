@@ -7,6 +7,13 @@ Page({
     studentYear_input :'',
     studentMajor_input :'',
 
+// 待整合成數組
+    editState : [
+      {name:"idEdit", value:false},
+      {name:"nameEdit", value:false},
+    ],
+    idEdit : false,
+
     studentYear: ["大一", "大二", "大三", "大四"],
     studentYearIndex: 0,
     studentMajor: ["ECE", "CPS", "xxx"],
@@ -46,6 +53,8 @@ Page({
       [item]: e.detail.value
     });
 
+    this.bindEditIdChange;
+
     console.log("UM_ID_input為 ",this.data.UM_ID_input);
     console.log("studentName_input為 ",this.data.studentName_input);
   },
@@ -68,8 +77,8 @@ Page({
     // 則寫入變量
     app.globalData.userInfoGlobal[0].input = this.data.UM_ID_input;
     app.globalData.userInfoGlobal[1].input = this.data.studentName_input;
-    app.globalData.userInfoGlobal[2].input = this.data.studentYear_input;
-    app.globalData.userInfoGlobal[3].input = this.data.studentMajor_input;
+    app.globalData.userInfoGlobal[2].input = this.data.studentMajor_input;
+    app.globalData.userInfoGlobal[3].input = this.data.studentYear_input;
 
     // wx.showModal({    //彈窗確認
     //   title: '提示',
@@ -104,6 +113,10 @@ Page({
         }
       }
     })
+  },
+  bindEditIdChange() {
+    this.data.idEdit =! this.data.idEdit;
+    console.log(this.data.idEdit);
   },
 
 });

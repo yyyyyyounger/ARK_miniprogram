@@ -1,3 +1,5 @@
+<view class="" > 點擊名字即可修改 </view>
+
 <view class="page" data-weui-theme="{{theme}}">
 
 
@@ -6,13 +8,18 @@
 
         <mp-cells title="澳大學生號" footer="例D-C0-1234-5，則輸入DC012345">
           <mp-cell prop="name" title="UM ID" ext-class="">
-            <input 
-            bindinput="formInputChange" 
-            data-model="UM_ID_input" 
-            class="weui-input" 
-            placeholder="在此輸入學生號" 
-            value="{{UM_ID_input}}"
-            />
+            <view >
+              <input 
+              bindinput="formInputChange" 
+              data-model="UM_ID_input" 
+              class="weui-input" 
+              placeholder="在此輸入學生號" 
+              focus="{{!idEdit}}"
+              selection-start="0"
+              selection-end="8"
+              value="{{UM_ID_input}}"
+              />
+            </view>
           </mp-cell>
         </mp-cells>
 
@@ -24,6 +31,9 @@
               data-model="studentName_input" 
               class="weui-input" 
               placeholder="在此輸入您的全名"
+              ocus="{{idEdit}}"
+              selection-start="0"
+              selection-end="8"
               value="{{studentName_input}}"
               />
           </mp-cell>
