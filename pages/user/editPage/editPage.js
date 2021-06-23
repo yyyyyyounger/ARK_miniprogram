@@ -1,8 +1,8 @@
 var app =  getApp();  // 獲取全局數據
-var UM_ID_input;
-var studentYear_input;
-var studentMajor_input;
-var studentName_input;
+var UM_ID_input = "未設置";
+var studentYear_input = "未設置";
+var studentMajor_input = "未設置";
+var studentName_input = "未設置";
 
 Page({    
   onShareAppMessage() {
@@ -13,6 +13,7 @@ Page({
   },
   data: {
     userInfoGlobal : {},
+    // studentName_input : "未設置" ,
 
     showTopTips: false,
 
@@ -82,6 +83,12 @@ Page({
       userInfoGlobal : app.globalData.userInfoGlobal
     })
   },
+  onShow : function () {
+    // 用於刷新editPage更改後的數據
+    this.setData({
+      userInfoGlobal : app.globalData.userInfoGlobal
+    })
+  },
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value);
 
@@ -132,9 +139,9 @@ Page({
   },
   formNameInputChange(e) {
     console.log("事件值：",e);
-    const {field} = e.currentTarget.dataset;
+    // const {field} = e.currentTarget.dataset;
     studentName_input = e.detail.value;
-    console.log("全局變量值：",studentName_input);
+    console.log("全局變量-name：",studentName_input);
   },
   bindTimeChange: function (e) {
     this.setData({
@@ -192,7 +199,6 @@ Page({
 
     // 如果條件所有成立，
     // 寫入變量
-    console.log("app.js變量值：",app.globalData.userInfoGlobal[3].input);
     if (!studentYear_input | !studentMajor_input) {
       studentYear_input = this.data.studentYear[0]
       studentMajor_input = this.data.studentMajor[0]
