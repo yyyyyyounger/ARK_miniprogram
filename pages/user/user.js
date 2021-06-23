@@ -1,4 +1,5 @@
 var app = getApp();
+var util = require('../../utils/util.js');
 
 Page({
   data: {
@@ -23,6 +24,12 @@ Page({
         canIUseGetUserProfile: true
       })
     }
+    // 调用函数时，传入new Date()参数，返回值是日期和时间
+    var time = util.formatTime(new Date());
+    // 再通过setData更改Page()里面的data，动态更新页面的数据
+    this.setData({
+      time: time
+    });
 
     console.log("未完成 - onLoad函數內應該從雲端獲取該用戶後續自定義的數據");
     console.log("頁面已刷新");

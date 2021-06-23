@@ -6,33 +6,38 @@
 
         <mp-cells title="澳大學生號" footer="例D-C0-1234-5，則輸入DC012345">
           <mp-cell prop="name" title="UM ID" ext-class="">
-            <!-- prop應該對應一種校驗規則rules -->
-            <input bindinput="formInputChange" data-field="name" class="weui-input" placeholder="在此輸入學生號" />
+            <input 
+            bindinput="formInputChange" 
+            data-model="UM_ID_input" 
+            class="weui-input" 
+            placeholder="在此輸入學生號" 
+            value="{{UM_ID_input}}"
+            />
           </mp-cell>
         </mp-cells>
 
         <mp-cells title="" footer="請輸入能讓同學認出你的姓名">
           <mp-cell prop="name" title="姓名" ext-class="">
-              <!-- <input bindinput="formNameInputChange" data-field="name" class="weui-input" placeholder="輸入全名" /> -->
+              <!-- 使用data-xxx分隔兩個數據共用同一個綁定事件，數據必須在data{}中定義 -->
               <input 
-              bindinput="formNameInputChange" 
+              bindinput="formInputChange" 
+              data-model="studentName_input" 
               class="weui-input" 
-              focus="{{true}}"
-              adjust-adjust-position="{{true}}"
-              data-field="name" 
-              placeholder="在此輸入您的全名" 
-              value="{{studentName_input}}" 
+              placeholder="在此輸入您的全名"
+              value="{{studentName_input}}"
               />
           </mp-cell>
         </mp-cells>
 
         <mp-cells title="">
+          <!-- 年級展示塊 -->
           <mp-cell ext-class="weui-cell_select weui-cell_select-after">
             <view slot="title" class="weui-label">年級</view>
             <picker bindchange="bindStudentYearChange" value="{{studentYearIndex}}" range="{{studentYear}}">
-                <view class="weui-select">{{studentYear[studentYearIndex]}}</view>
+                <view class="weui-select" >{{studentYear[studentYearIndex]}} </view>
             </picker>
           </mp-cell>
+          <!-- 專業展示塊 -->
           <mp-cell ext-class="weui-cell_select weui-cell_select-after">
             <view slot="title" class="weui-label">專業</view>
             <picker bindchange="bindStudentMajorChange" value="{{studentMajorIndex}}" range="{{studentMajor}}">

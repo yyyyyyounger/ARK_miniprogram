@@ -38,6 +38,7 @@
 <!-- 換行 -->
 <text>\n\n</text>
 
+<view>當前時間為：{{time}}</view>
 
 <!-- 單獨賦值方法 -->
 <!-- <mp-cells ext-class="my-celles" title="個人信息">
