@@ -11,6 +11,10 @@ Page({
     studentYearIndex: 0,
     studentMajor: ["ECE", "CPS", "xxx"],
     studentMajorIndex: 0,
+
+    value:'',
+    showClearBtn:true,
+
   },
   onShow : function () {
     // 從全局數據中讀取
@@ -46,10 +50,15 @@ Page({
       [item]: e.detail.value
     });
 
-    this.bindEditIdChange;
+    // Clear按鈕顯示邏輯
+    const { value } = e.detail;
+    this.setData({
+        value,
+        showClearBtn: !!value.length,
+    });
 
-    console.log("UM_ID_input為 ",this.data.UM_ID_input);
-    console.log("studentName_input為 ",this.data.studentName_input);
+    // console.log("UM_ID_input為 ",this.data.UM_ID_input);
+    // console.log("studentName_input為 ",this.data.studentName_input);
   },
   bindStudentMajorChange(e){
     console.log('picker studentMajor 发生选择改变，携带值为', e.detail.value);
@@ -64,6 +73,14 @@ Page({
       studentYearIndex: e.detail.value ,
     })
     this.data.studentYear_input = this.data.studentYear[this.data.studentYearIndex] ;
+  },
+  onClear() {
+    // 清空輸入
+    this.setData({
+      value: '',
+      UM_ID_input :'',
+      showClearBtn: false,
+    });
   },
   submitForm() {
     // 設置picker的默認選項
@@ -88,6 +105,12 @@ Page({
           console.log('用户点击确定')
           wx:wx.navigateBack({    // 返回上一級
             delta: 1
+          });
+          // 動態提示
+          wx.showToast({
+            title: '修改成功',
+            // 持續時間
+            duration: 700
           });
         } else if (res.cancel) {
           console.log('用户点击取消')

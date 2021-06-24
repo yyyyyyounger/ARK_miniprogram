@@ -1,11 +1,11 @@
 {
   "pages":[
     "pages/user/user",
+    "pages/more/more",
     "pages/user/editPage/editPage",
     "pages/footer/footer",
     "pages/index/index",
     "pages/category/category",
-    "pages/more/more",
     "pages/search/search"
   ],
   "window":{

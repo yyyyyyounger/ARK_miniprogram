@@ -19,6 +19,6 @@ page{
 
 .devColor{
     color: var(--devColor);
-    font-size: 25rpx;
+    font-size: 40rpx;
     text-decoration: underline;
 }
