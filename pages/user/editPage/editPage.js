@@ -7,13 +7,6 @@ Page({
     studentYear_input :'',
     studentMajor_input :'',
 
-// 待整合成數組
-    editState : [
-      {name:"idEdit", value:false},
-      {name:"nameEdit", value:false},
-    ],
-    idEdit : false,
-
     studentYear: ["大一", "大二", "大三", "大四"],
     studentYearIndex: 0,
     studentMajor: ["ECE", "CPS", "xxx"],
@@ -73,6 +66,13 @@ Page({
     this.data.studentYear_input = this.data.studentYear[this.data.studentYearIndex] ;
   },
   submitForm() {
+    // 設置picker的默認選項
+    if (this.data.studentMajor_input == "未設置") {
+      this.data.studentMajor_input = "ECE"
+    }
+    if (this.data.studentYear_input == "未設置") {
+      this.data.studentYear_input = "大一"
+    }
     // 如果輸入rules條件所有成立，
     // 則寫入變量
     app.globalData.userInfoGlobal[0].input = this.data.UM_ID_input;
@@ -80,23 +80,20 @@ Page({
     app.globalData.userInfoGlobal[2].input = this.data.studentMajor_input;
     app.globalData.userInfoGlobal[3].input = this.data.studentYear_input;
 
-    // wx.showModal({    //彈窗確認
-    //   title: '提示',
-    //   content: '確定修改嗎',
-    //   success (res) {
-    //     if (res.confirm) {
-    //       console.log('用户点击确定')
-    //       wx:wx.navigateBack({    // 返回上一級
-    //         delta: 1
-    //       });
-    //     } else if (res.cancel) {
-    //       console.log('用户点击取消')
-    //     }
-    //   }
-    // })
-    wx:wx.navigateBack({    // 返回上一級
-      delta: 1
-    });
+    wx.showModal({    //彈窗確認
+      title: '提示',
+      content: '確定修改嗎',
+      success (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx:wx.navigateBack({    // 返回上一級
+            delta: 1
+          });
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
   submitForm_cancel() {
     wx.showModal({    //彈窗確認
@@ -113,10 +110,6 @@ Page({
         }
       }
     })
-  },
-  bindEditIdChange() {
-    this.data.idEdit =! this.data.idEdit;
-    console.log(this.data.idEdit);
   },
 
 });
