@@ -13,59 +13,64 @@ Page({
     studentMajorIndex: 0,
 
     value:'',
-    showClearBtn:true,
+    showClearBtn0:true,
+    showClearBtn1:true,
 
   },
-  onShow : function () {
+  onShow() {
     // 從全局數據中讀取
     this.setData({
       UM_ID_input : app.globalData.userInfoGlobal[0].input ,
       studentName_input : app.globalData.userInfoGlobal[1].input ,
-      studentYear_input : app.globalData.userInfoGlobal[2].input ,
-      studentMajor_input : app.globalData.userInfoGlobal[3].input ,
+      studentMajor_input : app.globalData.userInfoGlobal[2].input ,
+      studentYear_input : app.globalData.userInfoGlobal[3].input ,
     })
-    // console.log("studentYear_input為 ",this.data.studentYear_input);
-    // console.log("查找值為 ", ((this.data.studentYear.find(o=> o==this.data.studentYear_input))) );
-    // console.log("是否undefined複雜 ", (typeof(this.data.studentYear.find(o=> o==this.data.studentYear_input)) == "undefined") );
-    if ( typeof(this.data.studentYear.find(o=> o==this.data.studentYear_input)) == "undefined" ) {
-      // 如果是未設置，應該為undefine，此時設置studentYearIndex為0
+    if ( this.data.studentYear_input == "未設置" ) {
+      // 如果是未設置，應該為undefine，此時設置studentMajorIndex為0
       this.data.studentYearIndex = 0;
     }
     else{
-      this.data.studentYearIndex = this.data.studentYear.findIndex(o=> o==this.data.studentYear_input);
+      console.log("保存的Yearinput值的索引值：", this.data.studentYear.findIndex(o=> o== this.data.studentYear_input) );
+      this.setData({
+        studentYearIndex : this.data.studentYear.findIndex(o=> o==this.data.studentYear_input),
+      })
     }
-    if ( typeof(this.data.studentMajor.find(o=> o==this.data.studentMajor_input)) == "undefined" ) {
+    if ( this.data.studentMajor_input == "未設置" ) {
       // 如果是未設置，應該為undefine，此時設置studentMajorIndex為0
       this.data.studentMajorIndex = 0;
     }
     else{
-      this.data.studentMajorIndex = this.data.studentMajor.findIndex(o=> o==this.data.studentMajor_input);
+      console.log("保存的Majorinput值的索引值：", this.data.studentMajor.findIndex(o=> o== this.data.studentMajor_input) );
+      this.setData({
+        studentMajorIndex : this.data.studentMajor.findIndex(o=> o==this.data.studentMajor_input),
+      })
     }
     console.log("onShow() - editPage加載完成");
   },
   formInputChange(e) {
-    // 输入监听
+    // 输入监听，該方法可以多個input綁定同一個函數
     let item = e.currentTarget.dataset.model;
     this.setData({
       [item]: e.detail.value
     });
 
     // Clear按鈕顯示邏輯
-    const { value } = e.detail;
     this.setData({
-        value,
-        showClearBtn: !!value.length,
-    });
-
-    // console.log("UM_ID_input為 ",this.data.UM_ID_input);
-    // console.log("studentName_input為 ",this.data.studentName_input);
+        showClearBtn0 : !!this.data.UM_ID_input.length,
+        showClearBtn1 : !!this.data.studentName_input.length,
+      });
+    console.log("UM_ID_input為 ",this.data.UM_ID_input.length);
+    console.log("studentName_input為 ",this.data.studentName_input.length);
   },
   bindStudentMajorChange(e){
     console.log('picker studentMajor 发生选择改变，携带值为', e.detail.value);
-    this.setData({
+    this.setData({ //存起picker改變的攜帶值
       studentMajorIndex: e.detail.value ,
     })
-    this.data.studentMajor_input = this.data.studentMajor[this.data.studentMajorIndex] ;
+    this.setData({ //必須第二次SetData才會準確更新
+      studentMajor_input : this.data.studentMajor[this.data.studentMajorIndex] ,
+    })
+    console.log("studentMajor_input-第二次setData為 ", this.data.studentMajor_input);
   },
   bindStudentYearChange(e) {
     console.log('picker studentYear 发生选择改变，携带值为', e.detail.value);
@@ -73,13 +78,20 @@ Page({
       studentYearIndex: e.detail.value ,
     })
     this.data.studentYear_input = this.data.studentYear[this.data.studentYearIndex] ;
+    console.log("studentYear_input ", this.data.studentYear_input);
   },
-  onClear() {
-    // 清空輸入
+  onClear0() {
+    // 清空學生號輸入
     this.setData({
-      value: '',
       UM_ID_input :'',
-      showClearBtn: false,
+      showClearBtn0: false,
+    });
+  },
+  onClear1() {
+    // 清空姓名輸入
+    this.setData({
+      studentName_input :'',
+      showClearBtn1: false,
     });
   },
   submitForm() {

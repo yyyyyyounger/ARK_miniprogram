@@ -15,7 +15,7 @@
                   placeholder="在此輸入學生號" 
                   value="{{UM_ID_input}}"
               />
-            <view wx:if="{{showClearBtn}}" class="weui-btn_reset weui-btn_icon weui-btn_input-clear" bindtap="onClear">
+            <view wx:if="{{showClearBtn0}}" class="weui-btn_reset weui-btn_icon weui-btn_input-clear" bindtap="onClear0">
              <icon class="weui-icon-clear"></icon>
             </view>
           </mp-cell>
@@ -25,15 +25,18 @@
           <mp-cell prop="name" title="姓名" ext-class="">
               <!-- 使用data-xxx分隔兩個數據共用同一個綁定事件，數據必須在data{}中定義 -->
               <input 
-              bindinput="formInputChange" 
-              data-model="studentName_input" 
-              class="weui-input" 
-              placeholder="在此輸入您的全名"
-              ocus="{{true}}"
-              selection-start="0"
-              selection-end="8"
-              value="{{studentName_input}}"
+                    bindinput="formInputChange" 
+                    data-model="studentName_input" 
+                    class="weui-input" 
+                    placeholder="在此輸入您的全名"
+                    ocus="{{true}}"
+                    selection-start="0"
+                    selection-end="8"
+                    value="{{studentName_input}}"
               />
+              <view wx:if="{{showClearBtn1}}" class="weui-btn_reset weui-btn_icon weui-btn_input-clear" bindtap="onClear1">
+                <icon class="weui-icon-clear"></icon>
+              </view>
           </mp-cell>
         </mp-cells>
 
