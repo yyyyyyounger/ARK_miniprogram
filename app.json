@@ -4,9 +4,8 @@
     "pages/more/more",
     "pages/user/editPage/editPage",
     "pages/footer/footer",
-    "pages/index/index",
     "pages/category/category",
-    "pages/search/search"
+    "pages/index/index"
   ],
   "window":{
     "backgroundTextStyle":"dark",
