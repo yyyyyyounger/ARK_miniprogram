@@ -23,6 +23,11 @@
 
 <text>\n</text>
 <view class="iconfont">點擊查看 <text class="devColor">ARK協議</text> </view>
+<text>\n</text>
+<view class="iconfont">
+	<text class="devColor">公告欄</text> 
+	<view>xxxxx...</view>
+</view>
 
 <view class="weui-panel weui-panel_access">
 	<view class="weui-panel__hd">我Follow的ARK分享：</view>
