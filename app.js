@@ -20,6 +20,12 @@ App({
   
   // 全局數據
   globalData: {
+    // 項目運作時間
+    projStartTime: [{
+      Year: '2021',
+      Month: '06',
+      Day: '03',
+    }],
     // 用戶信息全局變量
     userInfoGlobal: [
       { id:0, name:"UM ID:",    input:"未設置" },

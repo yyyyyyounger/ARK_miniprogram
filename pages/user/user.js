@@ -32,7 +32,6 @@ Page({
     });
 
     console.log("未完成 - onLoad函數內應該從雲端獲取該用戶後續自定義的數據");
-    console.log("頁面已刷新");
   },
 
   onShow : function () {

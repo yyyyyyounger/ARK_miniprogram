@@ -1,11 +1,11 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/user/user",
     "pages/more/more",
     "pages/user/editPage/editPage",
     "pages/footer/footer",
-    "pages/category/category",
-    "pages/index/index"
+    "pages/category/category"
   ],
   "window":{
     "backgroundTextStyle":"dark",

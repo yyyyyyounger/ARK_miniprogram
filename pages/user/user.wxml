@@ -40,22 +40,6 @@
 
 <view>當前時間為：{{time}}</view>
 
-<!-- 單獨賦值方法 -->
-<!-- <mp-cells ext-class="my-celles" title="個人信息">
-  <mp-cell value="UM ID:"  footer="{{UM_id_local}}"></mp-cell>
-  <mp-cell value="年級:"  footer="{{student_year}}"></mp-cell>
-  <mp-cell value="專業:"  footer="{{student_major}}"></mp-cell>
-  <mp-cell value="組織次數:"  footer="{{hold_times}}"></mp-cell>
-  <mp-cell value="參與次數:"  footer="{{join_times}}"></mp-cell>
-  <mp-cell>
-    <view>标题文字（slot）</view>
-    <view slot="footer">
-      <text class="devColor">此處應修改成通過變量渲染</text>
-    </view>
-  </mp-cell>
-</mp-cells> -->
-
-
 <!-- for循環渲染方法 -->
 <mp-cells ext-class="my-cells" title="個人信息test" >
   <mp-cell
