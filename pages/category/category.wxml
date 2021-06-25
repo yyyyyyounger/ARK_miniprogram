@@ -1,2 +1,6 @@
-<!--pages/category/category.wxml-->
-<text>pages/category/category.wxml</text>
+<view class="devColor">
+  <view>所有課程</view>
+  <view>我Follow的課程</view>
+  <view>參與記錄</view>
+  <view>我要開課</view>
+</view>

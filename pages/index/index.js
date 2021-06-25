@@ -1,9 +1,12 @@
 var app = getApp(); 
 
+
 Page({
   data: {
     isShow : false,
     projStartTime: [],
+    today:'',
+    durationDay:0,
   },
   onLoad: function() {
     this.setData({
@@ -24,6 +27,10 @@ Page({
     let today = Y+'/'+M+'/'+D;
     console.log("The today is",today);
     let durationDay = (new Date(today).getTime() - new Date('2021/06/03').getTime()) / (1000 * 60 * 60*24);
+    this.setData({
+      durationDay,
+      today
+    })
     console.log("The duration day is",durationDay);
     console.log("onLoad() - index加載完成");
   },

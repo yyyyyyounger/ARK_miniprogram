@@ -34,11 +34,7 @@
 <!-- 編輯個人資料互動 -->
 <text class="userinfo" bindtap="editProfile" > 編輯個人信息 </text>
 
-
-<!-- 換行 -->
-<text>\n\n</text>
-
-<view>當前時間為：{{time}}</view>
+<!-- <view>當前時間為：{{time}}</view> -->
 
 <!-- for循環渲染方法 -->
 <mp-cells ext-class="my-cells" title="個人信息test" >
@@ -57,3 +53,6 @@
   </mp-cell>
 </mp-cells>
 
+<!-- 換行 -->
+<text>\n\n</text>
+<view class="iconfont">你離畢業還有<text class="devColor">xx</text>天</view>
