@@ -58,3 +58,7 @@
 <view class="iconfont">你離畢業還有<text class="devColor">xx</text>天</view>
 <view class="iconfont">完Sem還有<text class="devColor">xx</text>天</view>
 <text class="devColor">這裡用progress表示</text>
+
+<view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+	<text class="weui-loadmore__tips"></text>
+</view>

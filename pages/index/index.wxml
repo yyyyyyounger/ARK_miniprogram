@@ -122,3 +122,7 @@
 		</a>
 	</view>
 </view>
+
+<view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+	<text class="weui-loadmore__tips"></text>
+</view>

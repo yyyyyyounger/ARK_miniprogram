@@ -48,9 +48,13 @@ Page({
   onPageScroll: function() {
 
   },
-  //item(index,pagePath,text)
   onTabItemTap:function(item) {
 
+  },
+  jumpToProtocol() {
+    wx:wx.navigateTo({
+      url: '../../protocol/protocol',
+    });
   }
 });
   

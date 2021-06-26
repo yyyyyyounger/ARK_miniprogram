@@ -3,4 +3,8 @@
   <view>我Follow的課程</view>
   <view>參與記錄</view>
   <view>我要開課 +</view>
+
+  <view class="weui-loadmore weui-loadmore_line">
+    <text class="weui-loadmore__tips">暫無數據</text>
+  </view>
 </view>
