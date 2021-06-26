@@ -1,18 +1,9 @@
-var app = getApp(); 
-
 Page({
   data: {
-    isShow : false,
-    projStartTime: [],
     today:'',
     durationDay:0,
   },
   onLoad: function() {
-    this.setData({
-      projStartTime : app.globalData.projStartTime
-    })
-    console.log("項目開始時間："+this.data.projStartTime[0].Year +'-'+ this.data.projStartTime[0].Month +'-'+ this.data.projStartTime[0].Day);
-
     // 獲取當前時間軸
     var timestamp = Date.parse(new Date());
     timestamp = timestamp / 1000;
@@ -31,7 +22,7 @@ Page({
       today
     })
     console.log("The duration day is",durationDay);
-    console.log("onLoad() - index加載完成");
+    console.log("onLoad() - about加載完成");
   },
   onReady: function() {
     
@@ -42,31 +33,24 @@ Page({
   onHide: function() {
 
   },
-  // 時間軸的icon的點擊事件
-  containerTap: function() {
-    let{isShow} = this.data;
-    isShow =! isShow;
-    this.setData({
-      isShow
-    })
+  onUnload: function() {
+
   },
-  handleTapProtocol () {
-    console.log("跳轉ARK協議頁");
-    wx:wx.navigateTo({
-      url: '../protocol/protocol'
-    });
+  onPullDownRefresh: function() {
+
   },
-  // 跳轉“關於”頁
-  jumpToAbout () {
-    wx.navigateTo({
-      url: '../more/about/about',
-    });
+  onReachBottom: function() {
+
   },
-  // 跳轉“公告”頁
-  jumpToNotice () {
-    wx.navigateTo({
-      url: '../notice/notice',
-    });
+  onShareAppMessage: function() {
+
+  },
+  onPageScroll: function() {
+
+  },
+  //item(index,pagePath,text)
+  onTabItemTap:function(item) {
+
   }
-}); 
+});
   

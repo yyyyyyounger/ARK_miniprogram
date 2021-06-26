@@ -1,5 +1,3 @@
-@import '../../wemark/wemark.wxss';
-
 page{
   background-color: #FFFFFF;
 }

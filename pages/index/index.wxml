@@ -1,4 +1,4 @@
-<view class="iconfont">
+<view class="iconfont" bindtap="jumpToAbout">
   <text>項目開始時間：2021/06/03
   今天是：{{today}}</text>
   <view>ARK平台已經開發了
@@ -25,7 +25,7 @@
 <view class="iconfont">點擊查看 <text class="devColor" bindtap="handleTapProtocol">ARK協議</text> </view>
 <text>\n</text>
 <view class="iconfont">
-	<text class="devColor">公告欄</text> 
+	<text class="devColor" bindtap="jumpToNotice">公告欄</text> 
 	<view>xxxxx...</view>
 </view>
 

@@ -1,11 +1,14 @@
 {
   "pages":[
-    "pages/protocol/protocol",
     "pages/index/index",
+    "pages/notice/notice",
     "pages/user/user",
     "pages/more/more",
+    "pages/more/smallFun/smallFun",
+    "pages/more/about/about",
     "pages/user/editPage/editPage",
     "pages/footer/footer",
+    "pages/protocol/protocol",
     "pages/category/category"
   ],
   "window":{

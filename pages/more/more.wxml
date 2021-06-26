@@ -1,10 +1,10 @@
 <view class="devColor">
-<view>程序猿爆肝中...🙄</view>
-<!-- 換行 -->
-<text>\n\n</text>
+  <view>程序猿爆肝中...🙄</view>
+  <!-- 換行 -->
+  <text>\n\n</text>
 
-<view>小功能</view>
-<view>權限一覽</view>
-<view>關於</view>
-<view>反饋</view>
+  <view bindtap="jumpToSmallFun">小功能</view>
+  <view>權限一覽</view>
+  <view bindtap="jumpToAbout">關於</view>
+  <view>反饋</view>
 </view>

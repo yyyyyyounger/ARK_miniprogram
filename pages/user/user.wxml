@@ -56,3 +56,5 @@
 <!-- 換行 -->
 <text>\n\n</text>
 <view class="iconfont">你離畢業還有<text class="devColor">xx</text>天</view>
+<view class="iconfont">完Sem還有<text class="devColor">xx</text>天</view>
+<text class="devColor">這裡用progress表示</text>
