@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/protocol/protocol",
     "pages/index/index",
     "pages/user/user",
     "pages/more/more",

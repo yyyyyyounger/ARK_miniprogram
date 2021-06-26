@@ -51,6 +51,11 @@ Page({
       isShow
     })
   },
-
+  handleTapProtocol () {
+    console.log("跳轉ARK協議頁");
+    wx:wx.navigateTo({
+      url: '../protocol/protocol'
+    });
+  }
 }); 
   
