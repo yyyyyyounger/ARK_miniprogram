@@ -34,7 +34,6 @@
 <!-- 編輯個人資料互動 -->
 <text class="userinfo" bindtap="editProfile" > 編輯個人信息 </text>
 
-<!-- <view>當前時間為：{{time}}</view> -->
 
 <!-- for循環渲染方法 -->
 <mp-cells ext-class="my-cells" title="個人信息test" >
@@ -44,20 +43,25 @@
   >
     <view>{{item.name}}</view>
     <view slot="footer">
-      <text>{{item.input}}</text>
-      <!-- <input class="" value="" type="text|number|idcard|digit|time|date" password="false" placeholder="" placeholder-style="" placeholder-class="input-placeholder" 
-        disabled="false" maxlength="140" focus="false" bindinput="" bindfocus="" bindblur="" bindconfirm="">
-        
-      </input> -->
+      <!-- if組織/參與次數為0，需要強調注意 -->
+      <text class="{{item.input===0 ? 'devColor':''}}">{{item.input}}</text>
     </view>
   </mp-cell>
 </mp-cells>
 
 <!-- 換行 -->
 <text>\n\n</text>
-<view class="iconfont">你離畢業還有<text class="devColor">xx</text>天</view>
-<view class="iconfont">完Sem還有<text class="devColor">xx</text>天</view>
-<text class="devColor">這裡用progress表示</text>
+<!-- 此處如果能調用UM準確的時間則更好，詳細算法未寫，可以精細到幾幾年的sem 1 or 2 -->
+<view class="iconfont">離完Sem還有<text class="devColor">{{durationDay_sem}}</text>天</view>
+<view class="iconfont">離畢業還有<text class="devColor">{{durationDay_Grudate}}</text>天，目前進度：</view>
+<!-- 進度條 -->
+<view class="weui-progress">
+  <view class="weui-progress__bar">
+    <progress percent="{{durationDay_Grudate_progress}}" stroke-width="3" />
+  </view>
+  <view>{{durationDay_Grudate_progress}}%</view>
+</view>
+
 
 <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
 	<text class="weui-loadmore__tips"></text>

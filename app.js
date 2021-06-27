@@ -49,5 +49,9 @@ App({
     userSignUpTime:'',
     // 登錄狀態
     isSignIn:'',
+    // 完sem日
+    semFinishDay:'2022/01/05',
+    // 畢業日
+    graduateDay:'',
   }
 });

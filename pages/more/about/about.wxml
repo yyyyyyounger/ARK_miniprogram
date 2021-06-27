@@ -4,9 +4,9 @@
   <view>ARK平台已經開發了
   <text class="devColor">{{durationDay}}</text> 天
   </view>
-  <text class="devColor" bindtap="jumpToProtocol">ARK協議</text>
+  <view>查看<text class="devColor" bindtap="jumpToProtocol">ARK協議</text></view>
 </view>
 
 <!-- <view>
-  打賞
+  打賞頁？
 </view> -->
