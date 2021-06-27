@@ -6,6 +6,7 @@ Page({
     projStartTime: [],
     today:'',
     durationDay:0,
+  
   },
   onLoad: function() {
     this.setData({
@@ -33,14 +34,8 @@ Page({
     console.log("The duration day is",durationDay);
     console.log("onLoad() - index加載完成");
   },
-  onReady: function() {
-    
-  },
-  onShow: function() {
-    
-  },
-  onHide: function() {
-
+  onPullDownRefresh() {
+    this.onLoad();
   },
   // 時間軸的icon的點擊事件
   containerTap: function() {
@@ -67,6 +62,12 @@ Page({
     wx.navigateTo({
       url: '../notice/notice',
     });
-  }
+  },
+  jumpToCourse_tabBar () {
+    wx.switchTab({
+      url: '../category/category'
+    });
+  },
+  
 }); 
   

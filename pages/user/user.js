@@ -53,6 +53,10 @@ Page({
     
   },
 
+  onPullDownRefresh() { // 觸發下拉刷新時
+    this.onLoad();
+  },
+
   // 調用該方法可以：彈出彈窗，準確獲取用戶信息
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，

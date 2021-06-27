@@ -18,7 +18,7 @@ Page({
 
   },
   onPullDownRefresh: function(){
-
+    this.onLoad();
   },
   onReachBottom: function(){
 

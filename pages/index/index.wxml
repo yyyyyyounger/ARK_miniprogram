@@ -52,7 +52,7 @@
 		</a>
 	</view>
 	<view class="weui-panel__ft">
-		<a class="weui-cell weui-cell_active weui-cell_access weui-cell_link">
+		<a class="weui-cell weui-cell_active weui-cell_access weui-cell_link" bindtap="jumpToCourse_tabBar">
 			<view class="weui-cell__bd">查看更多</view>
 			<text class="weui-cell__ft"></text>
 		</a>
@@ -84,7 +84,7 @@
 		</a>
 	</view>
 	<view class="weui-panel__ft">
-		<a class="weui-cell weui-cell_active weui-cell_access weui-cell_link">
+		<a class="weui-cell weui-cell_active weui-cell_access weui-cell_link" bindtap="jumpToCourse_tabBar">
 			<view class="weui-cell__bd">查看更多</view>
 			<text class="weui-cell__ft"></text>
 		</a>

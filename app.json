@@ -16,7 +16,7 @@
     "navigationBarBackgroundColor": "#3498db",
     "navigationBarTitleText": "ARK-Dev version",
     "navigationBarTextStyle":"white",
-    "enablePullDownRefresh": false
+    "enablePullDownRefresh": true
   },
   
   "tabBar": {
