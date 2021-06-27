@@ -1,8 +1,8 @@
 <view class="devColor">
-  <view>所有課程</view>
-  <view>我Follow的課程</view>
-  <view>參與記錄</view>
-  <view>我要開課 +</view>
+  <view bindtap="jumpToallCourses">所有課程</view>
+  <view bindtap="jumpTomyFollowCourses">我Follow的課程</view>
+  <view bindtap="jumpTomyJoinCourses">參與記錄</view>
+  <view bindtap="jumpToholdACourses">我要開課 +</view>
 
   <view class="weui-loadmore weui-loadmore_line">
     <text class="weui-loadmore__tips">暫無數據</text>

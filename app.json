@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/category/category",
     "pages/index/index",
     "pages/user/user",
     "pages/notice/notice",
@@ -9,7 +10,10 @@
     "pages/user/editPage/editPage",
     "pages/footer/footer",
     "pages/protocol/protocol",
-    "pages/category/category"
+    "pages/category/allCourses/allCourses",
+    "pages/category/myFollowCourses/myFollowCourses",
+    "pages/category/myJoinCourses/myJoinCourses",
+    "pages/category/holdACourses/holdACourses"
   ],
   "window":{
     "backgroundTextStyle":"dark",
