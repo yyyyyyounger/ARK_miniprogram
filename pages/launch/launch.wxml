@@ -1,0 +1,8 @@
+<view class="title" animation="{{slide_up1}}">我是啟動頁</view>
+
+<view class="title" animation="{{slide_up2}}">
+	<view>...</view>
+</view>
+<view class="title" animation="{{slide_up3}}">
+	<view>...</view>
+</view>

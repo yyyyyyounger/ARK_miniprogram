@@ -53,5 +53,84 @@ App({
     semFinishDay:'2022/01/05',
     // 畢業日
     graduateDay:'',
+  },
+
+// 計算剩下日期
+  calcDurationDay(that,pastOrFuture,date_input) {
+    // 獲取當前時間軸
+    var timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
+    // console.log("当前时间戳为：" + timestamp);
+    //获取当前时间
+    var n = timestamp * 1000;
+    var date = new Date(n);
+    var Y = date.getFullYear();
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    let today = Y+'/'+M+'/'+D;
+    console.log("Today is",today);
+    console.log("The target date is",date_input);
+    let durationDay = 0;
+    if (pastOrFuture==1) {
+      // 過去到今天的持續時間
+     durationDay = (new Date(today).getTime() - new Date(date_input).getTime()) / (1000 * 60 * 60*24);
+    }
+    else{
+      // 今天到未來某日的持續時間
+     durationDay = (new Date(date_input).getTime() - new Date(today).getTime()) / (1000 * 60 * 60*24);
+    }
+    that.setData({
+      durationDay,
+      today
+    })
+    console.log("The duration day is",durationDay);
+  },
+
+// 動畫設置
+  //渐入，渐出实现 
+  show : function(that,param,opacity){
+    var animation = wx.createAnimation({
+      //持续时间800ms
+      duration: 800,
+      timingFunction: 'ease',
+    });
+    //var animation = this.animation
+    animation.opacity(opacity).step()
+    //将param转换为key
+    var json = '{"' + param + '":""}'
+    json = JSON.parse(json);
+    json[param] = animation.export()
+    //设置动画
+    that.setData(json)
+  },
+
+  //滑动渐入渐出
+  slideupshow:function(that,param,px,opacity){
+    var animation = wx.createAnimation({
+      duration: 800,
+      timingFunction: 'ease',
+    });
+    animation.translateY(px).opacity(opacity).step()
+    //将param转换为key
+    var json = '{"' + param + '":""}'
+    json = JSON.parse(json);
+    json[param] = animation.export()
+    //设置动画
+    that.setData(json)
+  },
+
+  //向右滑动渐入渐出
+  sliderightshow: function (that, param, px, opacity) {
+    var animation = wx.createAnimation({
+      duration: 800,
+      timingFunction: 'ease',
+    });
+    animation.translateX(px).opacity(opacity).step()
+    //将param转换为key
+    var json = '{"' + param + '":""}'
+    json = JSON.parse(json);
+    json[param] = animation.export()
+    //设置动画
+    that.setData(json)
   }
 });

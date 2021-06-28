@@ -6,3 +6,8 @@
     display:block;
     margin-right:16px
 }
+
+.animaInit{
+    position: relative;
+    top: 200px;
+}

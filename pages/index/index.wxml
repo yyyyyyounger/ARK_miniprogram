@@ -1,4 +1,4 @@
-<view class="iconfont" bindtap="jumpToAbout">
+<view class="iconfont animaInit" bindtap="jumpToAbout" animation="{{slide_up1}}">
   <text>項目開始時間：2021/06/03
   今天是：{{today}}</text>
   <view>ARK平台已經開發了
@@ -6,30 +6,15 @@
   </view>
 </view>
 
-<!-- Container主頁形式 -->
-<!-- <view class="container">
-  <view class="title">
-    <text class="title_txt" bindtap="containerTap">Container Test</text>
-    <text 
-      class="iconfont {{isShow==true ? 'icon-hm_arrow_lower_light' : 'icon-hm_arrow_right_light'}}"
-      bindtap="containerTap">
-    </text>
-  </view>
-
-  <view class="{{isShow ? 'contentOn' : 'content'}}"  bindtap="containerTap">
-    文字測試：我所有的自负皆来自我的自卑，所有的英雄气概都来自于我的软弱。嘴里振振有词是因为心里满是怀疑，深情是因为痛恨自己无情。这世界没有一件事情是虚空而生的，站在光里，背后就会有阴影，这深夜里一片寂静，是因为你还没有听见声音。
-  </view>
-</view> -->
-
 <text>\n</text>
-<view class="iconfont">點擊查看 <text class="devColor" bindtap="handleTapProtocol">ARK協議</text> </view>
+<view class="iconfont animaInit" animation="{{slide_up2}}">點擊查看 <text class="devColor" bindtap="handleTapProtocol">ARK協議</text> </view>
 <text>\n</text>
-<view class="iconfont">
+<view class="iconfont animaInit" animation="{{slide_up3}}">
 	<text class="devColor" bindtap="jumpToNotice">公告欄</text> 
 	<view>xxxxx...</view>
 </view>
 
-<view class="weui-panel weui-panel_access">
+<view class="weui-panel weui-panel_access animaInit" animation="{{slide_up3}}">
 	<view class="weui-panel__hd">我Follow的ARK分享：</view>
 	<view class="weui-panel__bd">
 		<a class="weui-media-box weui-media-box_appmsg">
