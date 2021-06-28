@@ -62,7 +62,7 @@ Page({
   },
 
   onPullDownRefresh() { // 觸發下拉刷新時
-    this.onLoad();
+    this.app.onPullDownRefresh(this);
   },
 
   // 調用該方法可以：彈出彈窗，準確獲取用戶信息

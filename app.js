@@ -17,6 +17,13 @@ App({
   onPageNotFound: function(options) {
 
   },
+  onPullDownRefresh : function(that) {
+    // 調用該函數可保證刷新完回彈
+    that.onLoad();
+    setTimeout(() => {
+      wx.stopPullDownRefresh();
+    }, 1000);
+  },
   
   // 全局數據
   globalData: {

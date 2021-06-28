@@ -20,31 +20,31 @@ Page({
     console.log("onLoad() - index加載完成");
   },
   onShow (){  //頁面展示時，觸發動畫
-    this.app.sliderAnimaMode(this, 'slide_up1', -550, 1, 0, 0);
-    this.app.sliderAnimaMode(this, 'slide_up2', -550, 1, 0, 300);
-    this.app.sliderAnimaMode(this, 'slide_up3', -550, 1, 0, 600);
-    this.app.sliderAnimaMode(this, 'slide_up4', -550, 1, 0, 900);
+    this.app.sliderAnimaMode(this, 'slide_up1', -200, 1, 0, 0);
+    this.app.sliderAnimaMode(this, 'slide_up2', -200, 1, 0, 300);
+    this.app.sliderAnimaMode(this, 'slide_up3', -200, 1, 0, 600);
+    this.app.sliderAnimaMode(this, 'slide_up4', -200, 1, 0, 900);
   },
   onHide (){  //頁面隱藏時，觸發漸出動畫
-    this.app.sliderAnimaMode(this, 'slide_up1', 550, 0, 0, 0);
-    this.app.sliderAnimaMode(this, 'slide_up2', 550, 0, 0, 300);
-    this.app.sliderAnimaMode(this, 'slide_up3', 550, 0, 0, 600);
-    this.app.sliderAnimaMode(this, 'slide_up4', 550, 0, 0, 900);
-    this.app.sliderAnimaMode(this, 'slide_up5', -550, 0, 0, 0);
-    this.app.sliderAnimaMode(this, 'slide_up6', -550, 0, 0, 0);
+    this.app.sliderAnimaMode(this, 'slide_up1', 200, 0, 0, 0);
+    this.app.sliderAnimaMode(this, 'slide_up2', 200, 0, 0, 300);
+    this.app.sliderAnimaMode(this, 'slide_up3', 200, 0, 0, 600);
+    this.app.sliderAnimaMode(this, 'slide_up4', 200, 0, 0, 900);
+    this.app.sliderAnimaMode(this, 'slide_up5', -200, 0, 0, 0);
+    this.app.sliderAnimaMode(this, 'slide_up6', -200, 0, 0, 0);
 
     console.log("onHide() - index觸發");
   },
   onPullDownRefresh() {
-    this.onLoad();
+    this.app.onPullDownRefresh(this);
   },
   // 監聽用戶滾動畫面動作
   onPageScroll(e) {
     // console.log(e.scrollTop);
     if (e.scrollTop>60) {
-      this.app.sliderAnimaMode(this, 'slide_up5', -550, 1, 0, 0);
+      this.app.sliderAnimaMode(this, 'slide_up5', -200, 1, 0, 0);
       if (e.scrollTop>380) {
-        this.app.sliderAnimaMode(this, 'slide_up6', -550, 1, 0, 0);
+        this.app.sliderAnimaMode(this, 'slide_up6', -200, 1, 0, 0);
       }
     }
   },

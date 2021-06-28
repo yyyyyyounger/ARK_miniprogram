@@ -3,7 +3,7 @@ Page({
     
   },
   onLoad: function() {
-    
+    this.app = getApp();
   },
   onReady: function() {
     
@@ -18,7 +18,7 @@ Page({
 
   },
   onPullDownRefresh: function() {
-    this.onLoad();
+    this.app.onPullDownRefresh(this);
   },
   onReachBottom: function() {
 

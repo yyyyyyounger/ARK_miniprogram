@@ -7,16 +7,16 @@ Page({
     let timer = setTimeout(() => {
       clearTimeout(timer)
       this.direct()
-    }, 3000)
+    }, 1800)
   },
   onShow () {
     this.app.sliderAnimaMode(this, 'slide_up1', -350, 1, 0, 0);
     this.app.sliderAnimaMode(this, 'slide_up2', -350, 1, 0, 300);
     this.app.sliderAnimaMode(this, 'slide_up3', -350, 1, 0, 600);
-    let timer = setTimeout(() => {
-      clearTimeout(timer)
-      this.onHide()
-    }, 1800)
+    // let timer = setTimeout(() => {
+    //   clearTimeout(timer)
+    //   this.onHide()
+    // }, 1800)
   },
   onHide () {
     this.app.sliderAnimaMode(this, 'slide_up1', 350, 0, 0, 0);
