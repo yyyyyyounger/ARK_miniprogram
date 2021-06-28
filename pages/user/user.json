@@ -2,7 +2,8 @@
   "usingComponents": {
     "mp-slideview": "weui-miniprogram/slideview/slideview",
     "mp-cells": "weui-miniprogram/cells/cells",
-    "mp-cell": "weui-miniprogram/cell/cell"
+    "mp-cell": "weui-miniprogram/cell/cell",
+    "mp-toptips": "weui-miniprogram/toptips/toptips"
   },
   "navigationBarTitleText": "個人信息"
 }

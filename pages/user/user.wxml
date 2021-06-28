@@ -1,10 +1,12 @@
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
 
   <!-- 向微信庫詢問是否能使用openData，if可以，展示頭像、WeChat ID -->
   <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
     <!-- 設定頭像樣式 -->
-    <view class="userinfo-avatar">
+    <view class="userinfo-avatar" bindtap="editProfile">
       <!-- 調用open-data的user頭像 -->
       <open-data type="userAvatarUrl"></open-data>
     </view>

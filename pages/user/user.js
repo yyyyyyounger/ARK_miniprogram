@@ -2,6 +2,7 @@ var app = getApp();
 
 Page({
   data: {
+    error:'',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -18,6 +19,11 @@ Page({
 
   onLoad() { // 該頁面初始化時，請求user授權
     this.app = getApp();
+    // 模擬向服務器請求的延時
+    this.app.toastLoadingDIY();
+    this.setData({
+      error: '申請授權未成功'
+    })
     this.setData({
       userInfoGlobal : app.globalData.userInfoGlobal,
       semFinishDay : app.globalData.semFinishDay
@@ -30,7 +36,28 @@ Page({
       })
     }
 
-    console.log("待最後完善 - onLoad函數內應該從雲端獲取該用戶後續自定義的數據");
+    // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.record']) {
+          wx.authorize({
+            scope: 'scope.record',
+            success () {
+              // wx.startRecord()
+              console.log("用户已经同意或拒絕小程序使用录音功能，不会再弹窗询问");
+              wx.showToast({
+                title: '成功授權',
+              })
+            },
+            fail (){
+              console.log("接口調用失敗");
+            }
+          })
+        }
+      }
+    })
+
+    console.log("onLoad() - user頁加載完成");
   },
 
   onShow () {

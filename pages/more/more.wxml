@@ -4,9 +4,9 @@
   <text>\n</text>
 
   <view bindtap="jumpToSmallFun">小功能</view>
-  <view>權限一覽</view>
+  <view bindtap="bindOpenSetting">小程序權限設置</view>
   <view bindtap="jumpToAbout">關於</view>
-  <view>反饋</view>
+  <view bindtap="jumpToFeedBack">反饋</view>
 
   <view class="weui-loadmore weui-loadmore_line">
     <text class="weui-loadmore__tips">暫無數據</text>

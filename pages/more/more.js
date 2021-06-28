@@ -45,5 +45,19 @@ Page({
     wx.navigateTo({
       url: './smallFun/smallFun',
     });
-  }
+  },
+  // 跳轉“反饋”頁
+  jumpToFeedBack () {
+    wx.navigateTo({
+      url: './feedBack/feedBack',
+    });
+  },
+  bindOpenSetting (){
+    console.log("已點擊");
+    wx.openSetting({
+      success (res) {
+        console.log(res)
+      }
+    })
+  },
 });

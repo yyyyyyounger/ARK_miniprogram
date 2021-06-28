@@ -9,6 +9,12 @@ Page({
   },
   onLoad: function() {
     this.app = getApp();
+    // 模擬向服務器請求的延時
+    this.app.toastLoadingDIY();
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
 
     this.setData({
       projStartTime : app.globalData.projStartTime[0]
@@ -72,6 +78,13 @@ Page({
       url: '../category/category'
     });
   },
+  // onShareAppMessage (){
+  //   return {
+  //     title:'這是Index頁',
+  //     desc: '還不錯',
+  //     path:''
+  //   }
+  // },
   
 }); 
   

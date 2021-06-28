@@ -4,6 +4,8 @@ Page({
   },
   onLoad: function() {
     this.app = getApp();
+    // 模擬向服務器請求的延時
+    this.app.toastLoadingDIY();
   },
   onReady: function() {
     

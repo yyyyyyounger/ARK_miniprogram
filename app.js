@@ -5,7 +5,7 @@ App({
     
   },
   onShow: function(options) {
-
+    
   },
   onHide: function() {
 
@@ -17,9 +17,17 @@ App({
   onPageNotFound: function(options) {
 
   },
-  onPullDownRefresh : function(that) {
-    // 調用該函數可保證刷新完回彈
-    that.onLoad();
+  toastLoadingDIY : function() {
+    wx.showToast({
+      title: '作者真帥😎',
+      icon: 'loading'
+    })
+  },
+  onPullDownRefresh : function(that) {   // 調用該函數可保證刷新完回彈
+    that.app.toastLoadingDIY();
+    setTimeout(() => {
+      that.onLoad();
+    }, 2500);
     setTimeout(() => {
       wx.stopPullDownRefresh();
     }, 1000);

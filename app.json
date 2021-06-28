@@ -1,13 +1,14 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/launch/launch",
     "pages/user/user",
+    "pages/launch/launch",
     "pages/category/category",
     "pages/notice/notice",
     "pages/more/more",
     "pages/more/smallFun/smallFun",
     "pages/more/about/about",
+    "pages/more/feedBack/feedBack",
     "pages/user/editPage/editPage",
     "pages/footer/footer",
     "pages/protocol/protocol",
