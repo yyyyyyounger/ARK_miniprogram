@@ -132,5 +132,28 @@ App({
     json[param] = animation.export()
     //设置动画
     that.setData(json)
-  }
+  },
+
+  sliderAnimaMode: function (that,name,move,inOut,mode,delay){
+    // that為調用段設置this，作為傳參
+    // name為wxml設置綁定變量名，需為''類型
+    // move為移動距離，±數字
+    // inOut，進入/加載時為1，退出/隱藏時為0
+    // mode設置up模式(0) or right模式(1)
+    // delay為出現延時
+
+    // this.app.slideupshow(this, 'slide_up1', -200, 1);
+    //第一个参数是当前的页面对象，方便函数setData直接返回数据
+    //第二个参数是绑定的数据名,传参给setData,供wxml綁定
+    //第三个参数是上下滑动的px,因为class="init"定义初始该元素向下偏移了200px，所以这里使其上移200px
+    //第四个参数是需要修改为的透明度，这里是1，表示从初始的class="init"中定义的透明度0修改到1
+    setTimeout(function () {
+      if (!mode) {
+        that.app.slideupshow(that, name, move, inOut)
+      }
+      else{
+        that.app.sliderightshow(that, name, move, inOut)
+      }
+    }.bind(that), delay);
+  },
 });

@@ -9,5 +9,5 @@
 
 .animaInit{
     position: relative;
-    top: 200px;
+    top: 550px;
 }

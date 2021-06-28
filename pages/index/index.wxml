@@ -14,7 +14,7 @@
 	<view>xxxxx...</view>
 </view>
 
-<view class="weui-panel weui-panel_access animaInit" animation="{{slide_up3}}">
+<view class="weui-panel weui-panel_access animaInit" animation="{{slide_up4}}">
 	<view class="weui-panel__hd">我Follow的ARK分享：</view>
 	<view class="weui-panel__bd">
 		<a class="weui-media-box weui-media-box_appmsg">
@@ -46,7 +46,7 @@
 
 <text>\n</text>
 
-<view class="weui-panel weui-panel_access">
+<view class="weui-panel weui-panel_access animaInit" animation="{{slide_up5}}">
 	<view class="weui-panel__hd">其他有趣的ARK分享：</view>
 	<view class="weui-panel__bd">
 		<a class="weui-media-box weui-media-box_appmsg">
@@ -78,7 +78,7 @@
 
 <text>\n</text>
 
-<view class="weui-panel weui-panel_access">
+<view class="weui-panel weui-panel_access animaInit" animation="{{slide_up6}}">
 	<view class="weui-panel__hd">我參與過的ARK分享：</view>
 	<view class="weui-panel__bd">
 		<a class="weui-media-box weui-media-box_appmsg">

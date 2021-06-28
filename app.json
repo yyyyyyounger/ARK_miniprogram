@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/launch/launch",
     "pages/index/index",
+    "pages/launch/launch",
     "pages/category/category",
     "pages/user/user",
     "pages/notice/notice",
