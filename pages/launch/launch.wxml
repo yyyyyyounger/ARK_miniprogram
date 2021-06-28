@@ -1,8 +1,8 @@
-<view class="title" animation="{{slide_up1}}">我是啟動頁</view>
+<view class="title" animation="{{slide_up1}}">歡迎！FST人🎉🎊！</view>
 
 <view class="title" animation="{{slide_up2}}">
-	<view>...</view>
+	<view>ARK平台小程序</view>
 </view>
 <view class="title" animation="{{slide_up3}}">
-	<view>...</view>
+	<view>Since @2021</view>
 </view>

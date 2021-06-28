@@ -38,6 +38,7 @@ Page({
   onPullDownRefresh() {
     this.onLoad();
   },
+  // 監聽用戶滾動畫面動作
   onPageScroll(e) {
     // console.log(e.scrollTop);
     if (e.scrollTop>60) {

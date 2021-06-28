@@ -17,6 +17,7 @@ Page({
   },
 
   onLoad() { // 該頁面初始化時，請求user授權
+    this.app = getApp();
     this.setData({
       userInfoGlobal : app.globalData.userInfoGlobal,
       semFinishDay : app.globalData.semFinishDay
@@ -33,6 +34,8 @@ Page({
   },
 
   onShow () {
+    this.app.sliderAnimaMode(this, 'slide_right1', 100, 1, 1, 0);
+    this.app.sliderAnimaMode(this, 'slide_right2', -100, 1, 1, 0);
     // 用於刷新editPage更改後的數據
     this.setData({
       userInfoGlobal : app.globalData.userInfoGlobal
@@ -51,6 +54,11 @@ Page({
       console.log("durationDay_Grudate_progress為(目前過了)",this.data.durationDay_Grudate_progress,'%');
     }
     
+  },
+
+  onHide () {
+    this.app.sliderAnimaMode(this, 'slide_right1', -100, 0, 1, 0);
+    this.app.sliderAnimaMode(this, 'slide_right2', 100, 0, 1, 0);
   },
 
   onPullDownRefresh() { // 觸發下拉刷新時

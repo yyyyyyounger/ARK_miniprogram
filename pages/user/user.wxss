@@ -13,7 +13,18 @@
     border-radius: 50%;
 }
 
-page{background-color:#FFFFFF;}
+.animaInit_right{
+    left: 100px;
+    position: relative;
+}
+.animaInit_left{
+    left: -100px;
+    position: relative;
+}
+
+
 .weui-progress{
     margin-bottom: 24px;
 }
+
+page{background-color:#FFFFFF;}

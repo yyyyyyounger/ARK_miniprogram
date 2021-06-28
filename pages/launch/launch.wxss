@@ -9,5 +9,5 @@
   align-items: center;
 
   position: relative;
-  top: 600rpx;
+  top: 550px;
 }

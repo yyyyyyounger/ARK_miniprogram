@@ -32,18 +32,18 @@
 </view>
 
 <!-- 編輯個人資料互動 -->
-<text class="userinfo" bindtap="editProfile" > 編輯個人信息 </text>
+<text class="userinfo" bindtap="editProfile"> 點我編輯個人信息 </text>
 
 
 <!-- for循環渲染方法 -->
-<mp-cells ext-class="my-cells" title="個人信息test" >
+<mp-cells ext-class="my-cells" title="個人信息">
   <mp-cell
   wx:for="{{userInfoGlobal}}"
   wx:key="id"
   >
-    <view>{{item.name}}</view>
-    <view slot="footer">
-      <!-- if組織/參與次數為0，需要強調注意 -->
+    <view class="animaInit_left" animation="{{slide_right1}}">{{item.name}}</view>
+    <view slot="footer" class="animaInit_right" animation="{{slide_right2}}">
+      <!-- if組織/參與次數為0，需要強調用户注意 -->
       <text class="{{item.input===0 ? 'devColor':''}}">{{item.input}}</text>
     </view>
   </mp-cell>
@@ -62,7 +62,7 @@
   <view>{{durationDay_Grudate_progress}}%</view>
 </view>
 
-
-<view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
+<!-- 暫無數據條 -->
+<!-- <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
 	<text class="weui-loadmore__tips"></text>
-</view>
+</view> -->

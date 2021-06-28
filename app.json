@@ -1,9 +1,9 @@
 {
   "pages":[
-    "pages/index/index",
     "pages/launch/launch",
-    "pages/category/category",
+    "pages/index/index",
     "pages/user/user",
+    "pages/category/category",
     "pages/notice/notice",
     "pages/more/more",
     "pages/more/smallFun/smallFun",
