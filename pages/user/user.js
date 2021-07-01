@@ -4,10 +4,13 @@ Page({
   data: {
     error:'',
     userInfo: {},
+    isUserSignUp: false,
+    isSignIn: false,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
-    canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
+    canIUseOpenData: false, // 如需尝试获取用户信息可改为false
+    // canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
     // userInfoGlobal:{},
     // 此處應該與雲端綁定
     userInfoGlobal : {},
@@ -17,24 +20,34 @@ Page({
     durationDay_sem:0,
   },
 
-  onLoad() { // 該頁面初始化時，請求user授權
+  onLoad() { // user頁初始化時，請求user授權
     this.app = getApp();
-    // 模擬向服務器請求的延時
-    this.app.toastLoadingDIY();
+    this.app.toastLoadingDIY();   // 模擬向服務器請求的延時
     this.setData({
-      error: '申請授權未成功'
+      error: '申請授權未成功'   // 頂部error顯示信息
     })
     this.setData({
+      // 對user.js的data寫入服務器/全局數據
       userInfoGlobal : app.globalData.userInfoGlobal,
       semFinishDay : app.globalData.semFinishDay
     })
+    this.getUserProfile();
     if (wx.getUserProfile) {
       // if請求返回用戶信息的授權成功
       this.setData({
         // 用戶授權狀態設為true
         canIUseGetUserProfile: true
       })
+      console.log("GetuserProfile success");
     }
+    else{
+      console.log("GetuserProfile fail");
+    }
+    console.log("canIUse狀態",this.data.canIUse);
+    console.log("canIUseOpenData狀態",this.data.canIUseOpenData);
+    console.log("獲取profile狀態",this.data.canIUseGetUserProfile);
+    console.log("hasUserInfo狀態",this.data.hasUserInfo);
+
 
     // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope
     wx.getSetting({
@@ -100,11 +113,14 @@ Page({
     wx.getUserProfile({
       desc: '展示用戶信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log(res)
+        console.log("獲取用戶信息成功",res)
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true // 已獲取用戶信息
         })
+      },
+      fail: (res) => {
+        console.log("獲取用戶信息失敗：",res);
       }
     })
   },

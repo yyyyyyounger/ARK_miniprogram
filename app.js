@@ -17,13 +17,15 @@ App({
   onPageNotFound: function(options) {
 
   },
+// 自定義Toast樣式，保證全局一樣
   toastLoadingDIY : function() {
     wx.showToast({
       title: '作者真帥😎',
       icon: 'loading'
     })
   },
-  onPullDownRefresh : function(that) {   // 調用該函數可保證刷新完回彈
+// 下拉刷新函數，調用該函數可保證刷新完回彈
+  onPullDownRefresh : function(that) {   
     that.app.toastLoadingDIY();
     setTimeout(() => {
       that.onLoad();
@@ -60,10 +62,13 @@ App({
     ],
     // 簽到密碼
     attendCode:'',
-    // 用戶註冊時間
+    // 用戶註冊相關
+    // 註冊狀態,是否已註冊
+    isUserSignUp: false,
+    // 註冊時間
     userSignUpTime:'',
     // 登錄狀態
-    isSignIn:'',
+    isSignIn: false,
     // 完sem日
     semFinishDay:'2022/01/05',
     // 畢業日
