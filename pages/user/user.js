@@ -5,21 +5,9 @@ Page({
   data: {
 // 提示類
     error:'', // 頂部提示
-    show: true,  // 底部註冊提示
-    buttons: [
-      {
-        type: 'default',
-        className: '',
-        text: '我就是來隨便看看',
-        value: 0
-      },
-      {
-        type: 'primary',
-        className: '',
-        text: '好的現在就去註冊',
-        value: 1
-      }
-    ],
+// Vant - begin
+    overlay_show:false,
+// Vant - end
     userInfo: {},
     isUserSignUp: false,
     isSignIn: false,
@@ -38,7 +26,7 @@ Page({
 
   onLoad() { // user頁初始化時，請求user授權
     this.app = getApp();
-    this.app.toastLoadingDIY();   // 模擬向服務器請求的延時
+    // this.app.toastLoadingDIY();   // 模擬向服務器請求的延時
     this.setData({
       error: '申請授權未成功' ,   // 頂部error顯示信息
       // 對user.js的data寫入服務器/全局數據
@@ -106,8 +94,8 @@ Page({
   },
 
   onShow () {
-    this.app.sliderAnimaMode(this, 'slide_right1', 100, 1, 1, 0);
-    this.app.sliderAnimaMode(this, 'slide_right2', -100, 1, 1, 0);
+    // this.app.sliderAnimaMode(this, 'slide_right1', 100, 1, 1, 0);
+    // this.app.sliderAnimaMode(this, 'slide_right2', -100, 1, 1, 0);
     // 用於刷新editPage更改後的數據
     this.setData({
       userInfoGlobal : app.globalData.userInfoGlobal
@@ -128,8 +116,8 @@ Page({
   },
 
   onHide () {
-    this.app.sliderAnimaMode(this, 'slide_right1', -100, 0, 1, 0);
-    this.app.sliderAnimaMode(this, 'slide_right2', 100, 0, 1, 0);
+    // this.app.sliderAnimaMode(this, 'slide_right1', -100, 0, 1, 0);
+    // this.app.sliderAnimaMode(this, 'slide_right2', 100, 0, 1, 0);
   },
 
   onPullDownRefresh() { // 觸發下拉刷新時
@@ -146,6 +134,16 @@ Page({
       show :! that.data.show
     })
   },
+
+  onClickShow() {
+    this.setData({ overlay_show: true });
+  },
+
+  onClickHide() {
+    // this.setData({ overlay_show: false });
+  },
+
+  noop() {},
 
   // 調用該方法可以：彈出彈窗，準確獲取用戶信息
   getUserProfile(e) {

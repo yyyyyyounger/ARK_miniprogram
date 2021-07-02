@@ -1,0 +1,22 @@
+{
+  "name": "ark_vant",
+  "version": "1.0.0",
+  "description": "- 開發中：\r    - 註冊頁\r    - ARK協議頁\r    - 主頁\r    - 其他頁",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yyyyyyounger/ARK.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yyyyyyounger/ARK/issues"
+  },
+  "homepage": "https://github.com/yyyyyyounger/ARK#readme",
+  "dependencies": {
+    "@vant/weapp": "^1.6.9"
+  }
+}

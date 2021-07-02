@@ -2,6 +2,37 @@ var app = getApp();
 
 Page({
   data: {
+    // Vant - begin
+    active_collapse: '0',
+    active_col:0,
+    steps: [
+      {
+        text: 'ECEN1005',
+        desc: '2天後',
+        inactiveIcon: 'location-o',
+        activeIcon: 'success',
+      },
+      {
+        text: 'ECEN1008',
+        desc: '4天後',
+        inactiveIcon: 'like-o',
+        activeIcon: 'plus',
+      },
+      {
+        text: 'ECEN1007',
+        desc: '7天後',
+        inactiveIcon: 'star-o',
+        activeIcon: 'cross',
+      },
+      {
+        text: 'CISC1000',
+        desc: '半個月後',
+        inactiveIcon: 'phone-o',
+        activeIcon: 'fail',
+      },
+    ],
+    // Vant - finish
+    ARK_Notice:"ARK協議v1.01已發佈！點擊查看",
     isShow : false,
     projStartTime: [],
     today:'',
@@ -9,8 +40,8 @@ Page({
   },
   onLoad: function() {
     this.app = getApp();
-    // 模擬向服務器請求的延時
-    this.app.toastLoadingDIY();
+// 模擬向服務器請求的延時
+    // this.app.toastLoadingDIY();
     wx.showShareMenu({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
@@ -26,18 +57,16 @@ Page({
     console.log("onLoad() - index加載完成");
   },
   onShow (){  //頁面展示時，觸發動畫
-    this.app.sliderAnimaMode(this, 'slide_up1', -200, 1, 0, 0);
-    this.app.sliderAnimaMode(this, 'slide_up2', -200, 1, 0, 300);
-    this.app.sliderAnimaMode(this, 'slide_up3', -200, 1, 0, 600);
-    this.app.sliderAnimaMode(this, 'slide_up4', -200, 1, 0, 900);
+    // this.app.sliderAnimaMode(this, 'slide_up1', -200, 1, 0, 0);
+    // this.app.sliderAnimaMode(this, 'slide_up2', -200, 1, 0, 300);
+    // this.app.sliderAnimaMode(this, 'slide_up3', -200, 1, 0, 600);
+    // this.app.sliderAnimaMode(this, 'slide_up4', -200, 1, 0, 900);
   },
   onHide (){  //頁面隱藏時，觸發漸出動畫
-    this.app.sliderAnimaMode(this, 'slide_up1', 200, 0, 0, 0);
-    this.app.sliderAnimaMode(this, 'slide_up2', 200, 0, 0, 300);
-    this.app.sliderAnimaMode(this, 'slide_up3', 200, 0, 0, 600);
-    this.app.sliderAnimaMode(this, 'slide_up4', 200, 0, 0, 900);
-    this.app.sliderAnimaMode(this, 'slide_up5', -200, 0, 0, 0);
-    this.app.sliderAnimaMode(this, 'slide_up6', -200, 0, 0, 0);
+    // this.app.sliderAnimaMode(this, 'slide_up1', 200, 0, 0, 0);
+    // this.app.sliderAnimaMode(this, 'slide_up2', 200, 0, 0, 300);
+    // this.app.sliderAnimaMode(this, 'slide_up3', 200, 0, 0, 600);
+    // this.app.sliderAnimaMode(this, 'slide_up4', 200, 0, 0, 900);
 
     console.log("onHide() - index觸發");
   },
@@ -47,12 +76,25 @@ Page({
   // 監聽用戶滾動畫面動作
   onPageScroll(e) {
     // console.log(e.scrollTop);
-    if (e.scrollTop>60) {
-      this.app.sliderAnimaMode(this, 'slide_up5', -200, 1, 0, 0);
-      if (e.scrollTop>380) {
-        this.app.sliderAnimaMode(this, 'slide_up6', -200, 1, 0, 0);
-      }
-    }
+
+  },
+  // Vant - 折疊面板
+  onChange(event) {
+    console.log("折疊面板",event.detail);
+    let detail = event.detail;
+    this.setData({
+      active_collapse: detail,
+      active_col : detail
+    });
+  },
+  // Vant - 豎向步驟條
+  bindTapSteps(event){
+    console.log("豎向步驟條",event.detail);
+    let detail = event.detail+""; //num+"" 可以實現數字轉字符串
+    this.setData({
+      active_col : detail,
+      active_collapse: detail
+    })
   },
   // 跳轉“協議”頁
   handleTapProtocol () {
@@ -73,18 +115,12 @@ Page({
       url: '../notice/notice',
     });
   },
+  // 跳轉“所有課程”頁
   jumpToCourse_tabBar () {
     wx.switchTab({
       url: '../category/category'
     });
   },
-  // onShareAppMessage (){
-  //   return {
-  //     title:'這是Index頁',
-  //     desc: '還不錯',
-  //     path:''
-  //   }
-  // },
   
 }); 
   
