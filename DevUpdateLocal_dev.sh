@@ -1,7 +1,7 @@
 echo "----------------- Update for local ---------------------"
 echo " "
 
-git pull -f origin master
+git pull -f origin dev
 
 echo " "
 echo "The program has finished ~"
