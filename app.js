@@ -45,12 +45,14 @@ App({
     }],
     // 用戶信息全局變量
     userInfoGlobal: [
-      { id:0, name:"UM ID:",    input:"未設置" },
-      { id:1, name:"姓名:",     input:"未設置" },
-      { id:2, name:"專業:",     input:"未設置" },
-      { id:3, name:"年級:",     input:"未設置" },
-      { id:4, name:"組織次數:", input:0 },
-      { id:5, name:"參與次數:", input:0 }
+      { id:0, name:"UM ID:",    input:"未登入", display:true },
+      { id:1, name:"姓名:",     input:"未登入", display:true },
+      { id:2, name:"專業:",     input:"未登入", display:true },
+      { id:3, name:"年級:",     input:"未登入", display:true },
+      { id:4, name:"組織次數:", input:0,        display:true },
+      { id:5, name:"參與次數:", input:0,        display:true },
+      { id:6, name:"註冊時間:", input:"未登入",  display:true },
+      { id:7, name:"管理員:",   input:"no one", display:false },
     ],
     // 課程數據全局變量
     courseInfoGlobal: [
@@ -59,14 +61,11 @@ App({
       { item:"地點: ", input:"xx" },
       { item:"Follow人數: ", input:"xx" },
       { item:"課程狀態: ", input:"xx" },
+      { item:"簽到密碼: ", input:"xx" },
     ],
-    // 簽到密碼
-    attendCode:'',
     // 用戶註冊相關
     // 註冊狀態,是否已註冊
     isUserSignUp: false,
-    // 註冊時間
-    userSignUpTime:'',
     // 登錄狀態
     isSignIn: false,
     // 完sem日

@@ -1,4 +1,5 @@
 var app =  getApp();  // 獲取全局數據
+var cloudData = require('../../../data/json.js')
 
 Page({
   data: {
@@ -16,17 +17,21 @@ Page({
     showClearBtn0:true,
     showClearBtn1:true,
 
+    clickButton: 0,
+  },
+  onLoad() {
+    
   },
   onShow() {
     // 從全局數據中讀取
     this.setData({
-      UM_ID_input : app.globalData.userInfoGlobal[0].input ,
-      studentName_input : app.globalData.userInfoGlobal[1].input ,
-      studentMajor_input : app.globalData.userInfoGlobal[2].input ,
-      studentYear_input : app.globalData.userInfoGlobal[3].input ,
+      UM_ID_input :         app.globalData.userInfoGlobal[0].input ,
+      studentName_input :   app.globalData.userInfoGlobal[1].input ,
+      studentMajor_input :  app.globalData.userInfoGlobal[2].input ,
+      studentYear_input :   app.globalData.userInfoGlobal[3].input ,
     })
-    if ( this.data.studentYear_input == "未設置" ) {
-      // 如果是未設置，應該為undefine，此時設置studentMajorIndex為0
+    if ( this.data.studentYear_input == "未登入" ) {
+      // 如果是未登入，應該為undefine，此時設置studentMajorIndex為0
       this.data.studentYearIndex = 0;
     }
     else{
@@ -35,8 +40,8 @@ Page({
         studentYearIndex : this.data.studentYear.findIndex(o=> o==this.data.studentYear_input),
       })
     }
-    if ( this.data.studentMajor_input == "未設置" ) {
-      // 如果是未設置，應該為undefine，此時設置studentMajorIndex為0
+    if ( this.data.studentMajor_input == "未登入" ) {
+      // 如果是未登入，應該為undefine，此時設置studentMajorIndex為0
       this.data.studentMajorIndex = 0;
     }
     else{
@@ -46,6 +51,25 @@ Page({
       })
     }
     console.log("onShow() - editPage加載完成");
+  },
+  onUnload() {
+    if (this.data.clickbutton) {
+      // 設置picker在user頁的默認顯示
+      if (this.data.studentMajor_input == "未登入") {
+        this.data.studentMajor_input = "ECE"
+      }
+      if (this.data.studentYear_input == "未登入") {
+        this.data.studentYear_input = "大一"
+      }
+      // 如果輸入rules條件所有成立
+      // 則寫入全局/雲端變量
+      app.globalData.userInfoGlobal[0].input = this.data.UM_ID_input;
+      app.globalData.userInfoGlobal[1].input = this.data.studentName_input;
+      app.globalData.userInfoGlobal[2].input = this.data.studentMajor_input;
+      app.globalData.userInfoGlobal[3].input = this.data.studentYear_input;
+
+      app.globalData.isUserSignUp = true;
+    }
   },
   formInputChange(e) {
     // 输入监听，該方法可以多個input綁定同一個函數
@@ -95,40 +119,30 @@ Page({
     });
   },
   submitForm() {
-    // 設置picker的默認選項
-    if (this.data.studentMajor_input == "未設置") {
-      this.data.studentMajor_input = "ECE"
-    }
-    if (this.data.studentYear_input == "未設置") {
-      this.data.studentYear_input = "大一"
-    }
-    // 如果輸入rules條件所有成立，
-    // 則寫入變量
-    app.globalData.userInfoGlobal[0].input = this.data.UM_ID_input;
-    app.globalData.userInfoGlobal[1].input = this.data.studentName_input;
-    app.globalData.userInfoGlobal[2].input = this.data.studentMajor_input;
-    app.globalData.userInfoGlobal[3].input = this.data.studentYear_input;
-
     wx.showModal({    //彈窗確認
       title: '提示',
       content: '確定修改嗎',
       success (res) {
         if (res.confirm) {
-          console.log('用户点击确定')
-          wx:wx.navigateBack({    // 返回上一級
-            delta: 1
-          });
+          console.log('用户点击确定');
+          let that = this;
+// 註冊狀態改為true，這裡前提是學生號合法
+          that.data.clickButton = 1;
           // 動態提示
           wx.showToast({
             title: '修改成功',
             // 持續時間
             duration: 700
           });
+          wx.navigateBack({    // 返回上一級
+            delta: 1
+          });
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
     })
+    
   },
   submitForm_cancel() {
     wx.showModal({    //彈窗確認

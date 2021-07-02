@@ -1,8 +1,20 @@
 <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+<!-- 註冊提示 -->
+<mp-half-screen-dialog 
+  bindbuttontap="signUpHintBindButton"
+  show="{{show}}"
+  maskClosable="{{false}}" 
+  title="作者 の ♂提示" 
+  subTitle=""
+  desc="使用須知："
+  tips="點擊上方登錄 或 現在註冊 ，填寫相關信息，才能完整使用本平台功能哦！"
+  buttons="{{buttons}}"
+></mp-half-screen-dialog>
+
+<text>\n</text>
 
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
-
   <!-- 向微信庫詢問是否能使用openData，if可以，展示頭像、WeChat ID -->
   <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
     <!-- 設定頭像樣式 -->
@@ -15,7 +27,6 @@
     <!-- <open-data type="userCity"></open-data>
     <open-data type="userProvince"></open-data> -->
   </block>
-
   <!-- 如果不能使用openData，且當下沒有用戶信息，則提示授權 -->
   <block wx:elif="{{!hasUserInfo}}">
     <!-- 如果onLoad時查詢程序可以調用用戶信息，則向用戶發出授權按鈕提示，獲取准確的用戶信息 -->
@@ -25,23 +36,22 @@
     <!-- <view wx:else> 请使用1.4.4及以上版本基础库 </view> -->
     <view class="devColor" wx:else> 這裡有BUG，速查！ </view>
   </block>
-
+  <!-- 如果都沒有權限，則調用wx.getUserInfo獲取匿名信息 -->
   <block wx:else>
     <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </block>
-
 </view>
 
 <!-- 編輯個人資料互動 -->
-<text class="userinfo" bindtap="editProfile"> 點我編輯個人信息 </text>
-
+<text class="userinfo" bindtap="bindEditPage"> 點我編輯個人信息 </text>
 
 <!-- for循環渲染方法 -->
-<mp-cells ext-class="my-cells" title="個人信息">
+<mp-cells ext-class="my-cells" title="">
   <mp-cell
   wx:for="{{userInfoGlobal}}"
   wx:key="id"
+  wx:if="{{InfoDisplay[index]}}"
   >
     <view class="animaInit_left" animation="{{slide_right1}}">{{item.name}}</view>
     <view slot="footer" class="animaInit_right" animation="{{slide_right2}}">
