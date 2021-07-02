@@ -54,19 +54,7 @@ Page({
   },
   onUnload() {
     if (this.data.clickbutton) {
-      // 設置picker在user頁的默認顯示
-      if (this.data.studentMajor_input == "未登入") {
-        this.data.studentMajor_input = "ECE"
-      }
-      if (this.data.studentYear_input == "未登入") {
-        this.data.studentYear_input = "大一"
-      }
-      // 如果輸入rules條件所有成立
-      // 則寫入全局/雲端變量
-      app.globalData.userInfoGlobal[0].input = this.data.UM_ID_input;
-      app.globalData.userInfoGlobal[1].input = this.data.studentName_input;
-      app.globalData.userInfoGlobal[2].input = this.data.studentMajor_input;
-      app.globalData.userInfoGlobal[3].input = this.data.studentYear_input;
+      
 
       app.globalData.isUserSignUp = true;
     }
@@ -119,15 +107,26 @@ Page({
     });
   },
   submitForm() {
+    // 設置picker在user頁的默認顯示
+    if (this.data.studentMajor_input == "未登入") {
+      this.data.studentMajor_input = "ECE"
+    }
+    if (this.data.studentYear_input == "未登入") {
+      this.data.studentYear_input = "大一"
+    }
+    // 如果輸入rules條件所有成立
+    // 則寫入全局/雲端變量
+    app.globalData.userInfoGlobal[0].input = this.data.UM_ID_input;
+    app.globalData.userInfoGlobal[1].input = this.data.studentName_input;
+    app.globalData.userInfoGlobal[2].input = this.data.studentMajor_input;
+    app.globalData.userInfoGlobal[3].input = this.data.studentYear_input;
     wx.showModal({    //彈窗確認
       title: '提示',
       content: '確定修改嗎',
       success (res) {
         if (res.confirm) {
           console.log('用户点击确定');
-          let that = this;
-// 註冊狀態改為true，這裡前提是學生號合法
-          that.data.clickButton = 1;
+          app.globalData.isUserSignUp = true;
           // 動態提示
           wx.showToast({
             title: '修改成功',
