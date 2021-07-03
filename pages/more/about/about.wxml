@@ -2,11 +2,11 @@
   <text>項目開始時間：2021/06/03
   今天是：{{today}}</text>
   <view>ARK平台已經開發了
-  <text class="devColor">{{durationDay}}</text> 天
+    <text class="devColor">{{durationDay}}</text> 天
   </view>
   <view>查看<text class="devColor" bindtap="jumpToProtocol">ARK協議</text></view>
 </view>
 
-<!-- <view>
-  打賞頁？
-</view> -->
+<van-tag type="danger" size="large">Vant</van-tag>
+<text>\n\n</text>
+<van-tag type="danger" size="large">打賞頁</van-tag>

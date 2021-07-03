@@ -1,6 +1,7 @@
 var app = getApp();
 var cloudData = require('../../data/json.js')
 
+
 Page({
   data: {
 // 提示類
@@ -22,6 +23,7 @@ Page({
       },
     ],
     studentYear: ["大一", "大二", "大三", "大四"],
+    show_sheet_major:false,
     actions_sheet_major: [
       {
         name: 'ECE',
@@ -34,7 +36,7 @@ Page({
       },
     ],
     studentMajor: ["ECE", "CPS", "xxx"],
-    showTest:false,
+    bindEditMode:false,
 // Vant - end
     userInfo: {},
     isUserSignUp: false,
@@ -242,20 +244,22 @@ Page({
   bindCellClick(e){
     console.log(e.currentTarget.dataset.cellindex);
     let cellindex = e.currentTarget.dataset.cellindex;
-    switch (cellindex) {
-      case 2:
-        this.setData({    show_sheet_major : true      })
-        break;
-      case 3:
-        this.setData({    show_sheet_year : true      })
-        break;
+    if (this.data.bindEditMode) {
+      switch (cellindex) {
+        case 2:
+          this.setData({    show_sheet_major : true      })
+          break;
+        case 3:
+          this.setData({    show_sheet_year : true      })
+          break;
+      }
     }
     this.setData({      cellindex    });
   },
 
   bindEditPage(){
     this.setData({
-      showTest :! this.data.showTest,
+      bindEditMode :! this.data.bindEditMode,
     })
   },
 

@@ -42,4 +42,5 @@ page{background-color:#FFFFFF;}
     height: 120px;
     background-color: #fff;
 }
+
 /* Vant - end */

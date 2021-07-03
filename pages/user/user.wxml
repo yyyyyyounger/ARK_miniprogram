@@ -1,19 +1,5 @@
 <!-- <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips> -->
 
-<van-cell-group>
-  <van-field
-  value="{{ sms }}"
-  center
-  clearable
-  label="UM ID："
-  placeholder="请输入xxx"
-  border="{{ false }}"
-  use-button-slot
-  >
-  <van-button slot="button" size="small" type="primary"> 確認 </van-button>
-  </van-field>
-</van-cell-group>
-
 <text>\n</text>
 
 <!-- WeChat頭像&ID的請求與打印 -->
@@ -48,7 +34,7 @@
 
 <!-- 編輯個人資料互動 -->
 <view>
-  <view wx:if="{{!showTest}}">
+  <view wx:if="{{!bindEditMode}}">
     <van-button plain type="primary" bind:click="bindEditPage">編輯個人信息</van-button>
   </view>
   <view wx:else>
@@ -56,10 +42,13 @@
     <van-button type="danger" bind:click="bindEditPage">取消</van-button>
   </view>
 </view>
+<!-- 彈出窗口 - 修改確認 -->
+<van-dialog id="van-dialog" />
 
 
+<!-- 彈出選擇窗口 - 專業/年級選擇 -->
 <van-action-sheet
-  show="{{ show_sheet_year }}"
+  show="{{ show_sheet_year && bindEditMode }}"
   actions="{{ actions_sheet_year }}"
   cancel-text="取消"
   bind:close="onClose_sheet"
@@ -67,7 +56,7 @@
   bind:select="onSelect_sheet"
 />
 <van-action-sheet
-  show="{{ show_sheet_major }}"
+  show="{{ show_sheet_major && bindEditMode }}"
   actions="{{ actions_sheet_major }}"
   cancel-text="取消"
   bind:close="onClose_sheet"
@@ -75,55 +64,31 @@
   bind:select="onSelect_sheet"
 />
 <!-- for循環渲染方法 -->
-<!-- <van-cell-group 
-wx:for="{{userInfoGlobal}}"
-wx:key="id"
-wx:if="{{InfoDisplay[index]}}"
->
-  <van-field
-  value="{{item.input}}"
-  center
-  clearable
-  label="{{item.name}}"
-  placeholder="请输入xxx"
-  border="{{ false }}"
-  use-button-slot
-  >
-  <van-button slot="button" size="small" type="primary"> 確認 </van-button>
-  </van-field>
-</van-cell-group> -->
 <van-cell-group
 wx:for="{{userInfoGlobal}}"
 wx:key="id"
 wx:if="{{InfoDisplay[index]}}"
 >
   <van-cell center clickable="{{canEdit[index]}}" size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
-    <view wx:if="{{(showTest)&&(canEdit[index])}}">
-      <van-field
-      value="{{ sms }}"
-      center
-      clearable
-      label=""
-      placeholder="我是一個輸入框~"
-      >
-      </van-field>
+    <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
+      <view wx:if="{{(index==2)||(index==3)||(index==6)}}">
+        {{item.input}} 
+        <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>
+      </view>
+      <view wx:else>
+        <van-field
+        value="{{ item.input }}"
+        center
+        clearable
+        label=""
+        placeholder="我是一個輸入框~"
+        >
+        </van-field>
+      </view>
     </view>
     <view wx:else>{{item.input}}</view>
   </van-cell>
 </van-cell-group>
-
-<!-- <mp-cells ext-class="my-cells" title="">
-  <mp-cell
-  wx:for="{{userInfoGlobal}}"
-  wx:key="id"
-  wx:if="{{InfoDisplay[index]}}"
-  >
-    <view>{{item.name}}</view>
-    <view slot="footer">
-      <text class="{{item.input===0 ? 'devColor':''}}">{{item.input}}</text>
-    </view>
-  </mp-cell>
-</mp-cells> -->
 
 <!-- 換行 -->
 <text>\n\n</text>
@@ -137,8 +102,3 @@ wx:if="{{InfoDisplay[index]}}"
   </view>
   <view>{{durationDay_Grudate_progress}}%</view>
 </view>
-
-<!-- 暫無數據條 -->
-<!-- <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot">
-	<text class="weui-loadmore__tips"></text>
-</view> -->
