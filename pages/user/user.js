@@ -1,6 +1,7 @@
 var app = getApp();
 var cloudData = require('../../data/json.js')
-
+import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
+// Notify('通知内容');
 
 Page({
   data: {
@@ -187,7 +188,7 @@ Page({
           userInfo: res.userInfo,
           hasUserInfo: true // 已獲取用戶信息
         })
-// 登錄成功後，判斷該用戶是否已註冊，若已註冊：將數據從雲端寫入到全局
+// 登錄成功後，判斷該用戶是否已註冊，若已註冊：將數據從雲端（json.js）寫入到全局
 // 未註冊將進入註冊頁，並保存相關信息到雲端
         app.globalData.isUserSignUp = false;  // 模擬用戶：未註冊
         if (app.globalData.isUserSignUp) {
@@ -201,9 +202,8 @@ Page({
           }, 500);
         }
         else {
-          wx.navigateTo({
-            url: './editPage/editPage',
-          })
+          // 提示填寫相關信息
+          this.setData({  bindEditMode : true  })
         }
         // 登錄後不用再按鈕請求登錄
         this.setData({

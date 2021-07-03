@@ -1,4 +1,5 @@
 <text>\n</text>
+<van-notify id="van-notify" />
 
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
