@@ -1,10 +1,43 @@
-<view class="devColor">
-  <view bindtap="jumpToallCourses">所有課程</view>
-  <view bindtap="jumpTomyFollowCourses">我Follow的課程</view>
-  <view bindtap="jumpTomyJoinCourses">參與記錄</view>
-  <view bindtap="jumpToholdACourses">我要開課 +</view>
+<van-button type="primary" size="large" block>我要開課 <van-icon name="plus"/></van-button>
 
-  <view class="weui-loadmore weui-loadmore_line">
-    <text class="weui-loadmore__tips">暫無數據</text>
-  </view>
+<!-- <text>\n\n</text> -->
+
+<!-- <van-sidebar active-key="{{ activeKey }}">
+  <van-sidebar-item title="所有課程"    dot > </van-sidebar-item>
+  <van-sidebar-item title="我的Follow"  badge="5" />
+  <van-sidebar-item title="參與記錄"    badge="99+" />
+  <van-sidebar-item title="所有課程" bindtap="jumpToallCourses" dot />
+  <van-sidebar-item title="我的Follow" bindtap="jumpTomyFollowCourses" badge="5" />
+  <van-sidebar-item title="參與記錄" bindtap="jumpTomyJoinCourses" badge="99+" />
+  <van-sidebar-item title="我要開課" bindtap="jumpToholdACourses" />
+</van-sidebar> -->
+
+<van-tabs sticky swipeable>
+  <van-tab title="所有課程">
+    <van-skeleton title row="15" loading="true">
+      <!-- loading為false時，顯示隱藏的內容 -->
+      <view>實際內容</view>
+    </van-skeleton>
+  </van-tab>
+
+  <van-tab title="我的Follow">
+    <van-skeleton title row="2" loading="true">
+      <!-- loading為false時，顯示隱藏的內容 -->
+      <view>實際內容</view>
+    </van-skeleton>
+    <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
+  </van-tab>
+
+  <van-tab title="參與記錄">
+    <van-skeleton title row="2" loading="true">
+      <!-- loading為false時，顯示隱藏的內容 -->
+      <view>實際內容</view>
+    </van-skeleton>
+  </van-tab>
+</van-tabs>
+
+
+
+<view class="weui-loadmore weui-loadmore_line">
+  <text class="weui-loadmore__tips">暫無數據</text>
 </view>

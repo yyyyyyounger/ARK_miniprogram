@@ -52,12 +52,14 @@
 			steps="{{ steps }}"
 			active="{{ active_col }}"
 			direction="vertical"
-			active-color="#2ecc71"
+			active-color="#5595D9"
 			bind:click-step="bindTapSteps"
 		/>
 	</van-col>
+</van-row>
+<van-row>
   <van-col offset="9" span="8">
-		<van-button icon="plus" type="primary" size="small" bind:click="jumpToCourse_tabBar">整多點 ♂</van-button>
+		<van-button icon="plus" type="primary" size="normal" bind:click="jumpToCourse_tabBar">整多點 ♂</van-button>
 	</van-col>
 </van-row>
 

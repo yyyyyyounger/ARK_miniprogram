@@ -7,11 +7,10 @@
     "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog",
 
 
-    "van-field": "@vant/weapp/field/index",
-
     "van-overlay": "@vant/weapp/overlay/index",
 
-    "van-button": "@vant/weapp/button/index"
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index"
   },
   "navigationBarTitleText": "個人信息"
 }

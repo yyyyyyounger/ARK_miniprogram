@@ -1,10 +1,10 @@
 {
   "pages":[
+    "pages/category/category",
     "pages/user/user",
     "pages/index/index",
     "pages/test/test",
     "pages/launch/launch",
-    "pages/category/category",
     "pages/notice/notice",
     "pages/more/more",
     "pages/more/smallFun/smallFun",
@@ -63,5 +63,16 @@
   "sitemapLocation": "sitemap.json",
   "useExtendedLib": {
     "weui": true
+  },
+  "usingComponents": {
+    "van-button": "@vant/weapp/button/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index",
+    "van-skeleton": "@vant/weapp/skeleton/index",
+    "van-field": "@vant/weapp/field/index",
+    "van-divider": "@vant/weapp/divider/index"
+
+
   }
 }

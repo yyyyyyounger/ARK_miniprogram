@@ -1,4 +1,6 @@
 <!-- <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips> -->
+<van-button size="small" type="primary"> 編輯mode </van-button>
+
 <van-cell-group>
   <van-field
   value="{{ sms }}"
@@ -49,19 +51,43 @@
 <text class="userinfo" bindtap="bindEditPage"> 點我編輯個人信息 </text>
 
 <!-- for循環渲染方法 -->
-<mp-cells ext-class="my-cells" title="">
+<!-- <van-cell-group 
+wx:for="{{userInfoGlobal}}"
+wx:key="id"
+wx:if="{{InfoDisplay[index]}}"
+>
+  <van-field
+  value="{{item.input}}"
+  center
+  clearable
+  label="{{item.name}}"
+  placeholder="请输入xxx"
+  border="{{ false }}"
+  use-button-slot
+  >
+  <van-button slot="button" size="small" type="primary"> 確認 </van-button>
+  </van-field>
+</van-cell-group> -->
+<van-cell-group
+wx:for="{{userInfoGlobal}}"
+wx:key="id"
+wx:if="{{InfoDisplay[index]}}"
+>
+  <van-cell title="{{item.name}}" is-link value="{{item.input}}" size="large" />
+</van-cell-group>
+
+<!-- <mp-cells ext-class="my-cells" title="">
   <mp-cell
   wx:for="{{userInfoGlobal}}"
   wx:key="id"
   wx:if="{{InfoDisplay[index]}}"
   >
-    <view class="animaInit_left_delete" animation="{{slide_right1}}">{{item.name}}</view>
-    <view slot="footer" class="animaInit_right_delete" animation="{{slide_right2}}">
-      <!-- if組織/參與次數為0，需要強調用户注意 -->
+    <view>{{item.name}}</view>
+    <view slot="footer">
       <text class="{{item.input===0 ? 'devColor':''}}">{{item.input}}</text>
     </view>
   </mp-cell>
-</mp-cells>
+</mp-cells> -->
 
 <!-- 換行 -->
 <text>\n\n</text>
