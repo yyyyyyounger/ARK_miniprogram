@@ -10,26 +10,27 @@ bind:close="closePopup"
 			<text class="devColor">{{durationDay}}</text> 天
 		</view>
 	</view>
+	<text>\n</text>
+	<view class="flexCenter">
+		歡迎回來！第 999 位ARKer ！ ♂
+	</view>
 
 </van-popup>
-
-
-
 
 
 <!-- <text>\n</text> -->
 <!-- 公告區 -->
 <van-notice-bar
-  wrapable
-  scrollable="{{ false }}"
-  text="這裡需要有個很牛逼的公告欄 ♂"
-	bindtap="jumpToNotice"
-/>
-<van-notice-bar
   left-icon="volume-o"
 	scrollable 
   text="{{ARK_Notice}}" 
 	bindtap="handleTapProtocol"
+/>
+<van-notice-bar
+  wrapable
+  scrollable="{{ false }}"
+  text="這裡需要有個很牛逼的公告欄 ♂"
+	bindtap="jumpToNotice"
 />
 
 <van-notice-bar mode="closeable" text="“Follow的分享” 可以在這裡看到喔！" />
