@@ -1,12 +1,34 @@
-<view class="iconfont animaInit_delete" bindtap="jumpToAbout" animation="{{slide_up1}}">
-  <text>項目開始時間：2021/06/03
-  今天是：{{today}}</text>
-  <view>ARK平台已經開發了
-  <text class="devColor">{{durationDay}}</text> 天
-  </view>
-</view>
+<van-popup 
+show="{{ show_popup }}" 
+position="top"
+bind:close="closePopup"
+>
+	<van-row>
+		<van-col offset="6" >
+			<text>項目開始時間：2021/06/03</text>
+		</van-col>
+	</van-row>
+	<van-row>
+		<van-col offset="7" >
+			<text> 今天是：{{today}} </text>
+		</van-col>
+	</van-row>
+	<van-row>
+		<van-col offset="6" >
+			<view>ARK平台已經開發了
+				<text class="devColor">{{durationDay}}</text> 天
+			</view>
+		</van-col>
+	</van-row>
+
+</van-popup>
+
+
+
+
 
 <!-- <text>\n</text> -->
+<!-- 公告區 -->
 <van-notice-bar
   wrapable
   scrollable="{{ false }}"
@@ -21,7 +43,7 @@
 />
 
 <van-notice-bar mode="closeable" text="“Follow的分享” 可以在這裡看到喔！" />
-<!-- Follow課程展示頁 -->
+<!-- Follow課程展示區 -->
 <van-row>
 	<van-col span="16">
 		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange">
@@ -66,7 +88,7 @@
 
 <text>\n</text>
 
-
+<!-- 骨架 -->
 <van-skeleton title row="2" loading="true">
 <!-- loading為false時，顯示隱藏的內容 -->
   <view>實際內容</view>

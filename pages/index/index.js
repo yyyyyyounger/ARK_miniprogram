@@ -31,6 +31,8 @@ Page({
         activeIcon: 'fail',
       },
     ],
+
+    show_popup:false,
     // Vant - finish
     ARK_Notice:"ARK協議v1.01已發佈！點擊查看",
     isShow : false,
@@ -40,6 +42,7 @@ Page({
   },
   onLoad: function() {
     this.app = getApp();
+    this.showPopup();     // 展示頂部彈出層
 // 模擬向服務器請求的延時
     // this.app.toastLoadingDIY();
     wx.showShareMenu({
@@ -77,6 +80,14 @@ Page({
   onPageScroll(e) {
     // console.log(e.scrollTop);
 
+  },
+  // Vant - 頂部彈出層
+  showPopup() {
+    this.setData({ show_popup: true });
+  },
+  // Vant - 頂部彈出層
+  closePopup() {
+    this.setData({ show_popup: false });
   },
   // Vant - 折疊面板
   onChange(event) {

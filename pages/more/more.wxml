@@ -1,14 +1,24 @@
-<view class="devColor">
-  <view>程序猿爆肝中...🙄</view>
-  <!-- 換行 -->
-  <text>\n</text>
+<van-skeleton title row="3" loading="true">
+<!-- loading為false時，顯示隱藏的內容 -->
+  <view>實際內容</view>
+</van-skeleton>
 
-  <view bindtap="jumpToSmallFun">小功能</view>
-  <view bindtap="bindOpenSetting">小程序權限設置</view>
-  <view bindtap="jumpToAbout">關於</view>
-  <view bindtap="jumpToFeedBack">反饋</view>
+<text>\n</text>
 
-  <view class="weui-loadmore weui-loadmore_line">
-    <text class="weui-loadmore__tips">暫無數據</text>
-  </view>
-</view>
+<van-grid gutter="{{ 10 }}" column-num="2">
+  <van-grid-item icon="photo-o" text="小功能"         bindtap="jumpToSmallFun" />
+  <van-grid-item icon="photo-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
+  <van-grid-item icon="photo-o" text="關於"           bindtap="jumpToAbout" />
+  <van-grid-item icon="photo-o" text="反饋"           bindtap="jumpToFeedBack" />
+</van-grid>
+
+<text>\n</text>
+
+<van-skeleton title row="3" loading="true">
+<!-- loading為false時，顯示隱藏的內容 -->
+  <view>實際內容</view>
+</van-skeleton>
+
+<text>\n</text>
+
+<van-divider />

@@ -11,9 +11,7 @@
 
     "van-action-sheet": "@vant/weapp/action-sheet/index",
 
-    "van-progress": "@vant/weapp/progress/index",
-
-    "van-notify": "@vant/weapp/notify/index"
+    "van-progress": "@vant/weapp/progress/index"
 
   },
   "navigationBarTitleText": "個人信息"

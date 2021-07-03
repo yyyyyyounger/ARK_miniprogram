@@ -1,6 +1,7 @@
-<text>\n</text>
-<van-notify id="van-notify" />
-
+<!-- 彈出類 -->
+<van-notify id="van-notify"/>
+<van-dialog id="van-dialog" />
+<!-- <text>\n</text> -->
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
   <!-- 向微信庫詢問是否能使用openData，if可以，展示頭像、WeChat ID -->

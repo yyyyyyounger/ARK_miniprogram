@@ -5,8 +5,9 @@
 
     "van-steps": "@vant/weapp/steps/index",
 
-    "van-notice-bar": "@vant/weapp/notice-bar/index"
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
 
+    "van-popup": "@vant/weapp/popup/index"
 
   },
   "navigationBarTitleText": "ARK主頁"

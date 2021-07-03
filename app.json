@@ -3,10 +3,10 @@
     "pages/user/user",
     "pages/index/index",
     "pages/category/category",
+    "pages/more/more",
     "pages/test/test",
     "pages/launch/launch",
     "pages/notice/notice",
-    "pages/more/more",
     "pages/more/smallFun/smallFun",
     "pages/more/about/about",
     "pages/more/feedBack/feedBack",
@@ -70,8 +70,10 @@
     "van-col": "@vant/weapp/col/index",
     "van-skeleton": "@vant/weapp/skeleton/index",
     "van-field": "@vant/weapp/field/index",
-    "van-divider": "@vant/weapp/divider/index"
-
+    "van-divider": "@vant/weapp/divider/index",
+    "van-notify": "@vant/weapp/notify/index",
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-transition": "@vant/weapp/transition/index"
 
   }
 }

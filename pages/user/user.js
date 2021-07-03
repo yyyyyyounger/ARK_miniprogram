@@ -1,7 +1,7 @@
 var app = getApp();
 var cloudData = require('../../data/json.js')
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
-// Notify('通知内容');
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
   data: {
@@ -110,7 +110,6 @@ Page({
     //   }
     // })
     this.calcTime();
-
   },
 
   onShow () {
@@ -273,10 +272,14 @@ Page({
     });
     // 寫入全局data記錄
     app.globalData.userInfoGlobal = that.data.userInfoGlobal;
+    Notify({ type: 'success', message: '修改成功！' });
   },
   // 編輯資料的取消按鈕
   bindEditPage_cancel(){
     this.setData({      bindEditMode :! this.data.bindEditMode    });
+    if (this.data.bindEditMode) {
+      Notify({ type: 'primary', message: '進入編輯模式' });
+    }
   },
 
   calcTime (){
