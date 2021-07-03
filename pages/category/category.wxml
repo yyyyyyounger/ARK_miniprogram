@@ -12,7 +12,7 @@
   <van-sidebar-item title="我要開課" bindtap="jumpToholdACourses" />
 </van-sidebar> -->
 
-<van-tabs sticky swipeable animated color="#5595D9">
+<van-tabs sticky swipeable animated color="#56BF63">
   <van-tab title="所有課程">
     <van-skeleton title row="15" loading="true">
       <!-- loading為false時，顯示隱藏的內容 -->

@@ -3,9 +3,6 @@
 <van-dialog id="van-dialog" />
 <!-- <text>\n</text> -->
 
-<van-row>
-  <van-col offset="10"></van-col>
-</van-row>
 <van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" />
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
@@ -24,7 +21,7 @@
   <!-- 如果不能使用openData，且當下沒有用戶信息，則提示授權 -->
   <block wx:elif="{{!hasUserInfo}}">
     <!-- 如果onLoad時查詢程序可以調用用戶信息，則向用戶發出授權按鈕提示，獲取准確的用戶信息 -->
-    <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 點我登錄 </button>
+    <van-button wx:if="{{canIUseGetUserProfile}}" color="#5595D9" bindtap="getUserProfile" type="info">登錄</van-button>
     <!-- 不可調用則使用匿名的用戶信息 -->
     <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 獲取頭像暱稱canIUse </button>
     <!-- <view wx:else> 请使用1.4.4及以上版本基础库 </view> -->
@@ -37,8 +34,9 @@
   </block>
 </view>
 
+<text>\n</text>
 <!-- 編輯個人資料互動 -->
-<view>
+<view class="userinfo">
   <view wx:if="{{!bindEditMode}}">
     <van-button plain type="primary" bind:click="bindEditPage_cancel">編輯個人信息</van-button>
   </view>
@@ -88,7 +86,7 @@ wx:if="{{InfoDisplay[index]}}"
         size = "large"
         confirm-hold="true"
         label=""
-        placeholder="我是一個輸入框~"
+        placeholder="對 我 輸 入 ！"
         bind:change="bindCellInput"
         >
         </van-field>
