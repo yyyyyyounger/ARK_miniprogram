@@ -3,23 +3,13 @@ show="{{ show_popup }}"
 position="top"
 bind:close="closePopup"
 >
-	<van-row>
-		<van-col offset="6" >
-			<text>項目開始時間：2021/06/03</text>
-		</van-col>
-	</van-row>
-	<van-row>
-		<van-col offset="7" >
-			<text> 今天是：{{today}} </text>
-		</van-col>
-	</van-row>
-	<van-row>
-		<van-col offset="6" >
-			<view>ARK平台已經開發了
-				<text class="devColor">{{durationDay}}</text> 天
-			</view>
-		</van-col>
-	</van-row>
+	<view class="flexCenter">
+		<text>項目開始時間：2021/06/03</text>
+		<text> 今天是：{{today}} </text>
+		<view>ARK平台已經開發了
+			<text class="devColor">{{durationDay}}</text> 天
+		</view>
+	</view>
 
 </van-popup>
 

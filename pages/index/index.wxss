@@ -9,3 +9,9 @@
     position: relative;
     top: 200px;
 }
+
+.flexCenter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

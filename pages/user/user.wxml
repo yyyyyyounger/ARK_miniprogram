@@ -2,6 +2,11 @@
 <van-notify id="van-notify"/>
 <van-dialog id="van-dialog" />
 <!-- <text>\n</text> -->
+
+<van-row>
+  <van-col offset="10"></van-col>
+</van-row>
+<van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" />
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
   <!-- 向微信庫詢問是否能使用openData，if可以，展示頭像、WeChat ID -->

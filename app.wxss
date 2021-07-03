@@ -21,7 +21,7 @@ page{
     --devColor:#d50000;
     
     /* 定義統一的字體大小 */
-    font-size: 30rpx;
+    font-size: 35rpx;
 }
 
 .devColor{
