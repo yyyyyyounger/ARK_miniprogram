@@ -4,8 +4,6 @@ var cloudData = require('../../data/json.js')
 
 Page({
   data: {
-// 提示類
-    error:'', // 頂部提示
 // Vant - begin
     show_sheet_year:false,
     actions_sheet_year: [
@@ -38,6 +36,12 @@ Page({
     studentMajor: ["ECE", "CPS", "xxx"],
     bindEditMode:false,
 // Vant - end
+// 用戶輸入 - begin
+    UM_ID_input :'',
+    studentName_input :'',
+    studentYear_input :'',
+    studentMajor_input :'',
+// 用戶輸入 - end
     userInfo: {},
     isUserSignUp: false,
     isSignIn: false,
@@ -56,17 +60,16 @@ Page({
 
   onLoad() { // user頁初始化時，請求user授權
     this.app = getApp();
+    this.setData({  userInfoGlobal : app.globalData.userInfoGlobal,  })     // 先讓局部userInfoGlobal讀取全局.js的數據
     // this.app.toastLoadingDIY();   // 模擬向服務器請求的延時
     this.setData({
-      error: '申請授權未成功' ,   // 頂部error顯示信息
-      // 對user.js的data寫入服務器/全局數據
-      userInfoGlobal : app.globalData.userInfoGlobal,
-      // display : app.globalData.userInfoGlobal.display,
-      semFinishDay : app.globalData.semFinishDay,
+      semFinishDay : app.globalData.semFinishDay,           // display : app.globalData.userInfoGlobal.display,
+      studentMajor_input : this.data.userInfoGlobal[2].input,
+      studentYear_input : this.data.userInfoGlobal[3].input,
     })
     // 獲取userInfoGlobal裡允許顯示的設置數組
     let InfoDisplay = this.data.userInfoGlobal.map((item)=>{    return item.display   });
-    // userInfoGlobal裡的“是否顯示”設置
+    // userInfoGlobal裡的“是否顯示”的設置
     this.setData({    InfoDisplay   });
     // 獲取userInfoGlobal裡允許顯示的設置數組
     let canEdit = this.data.userInfoGlobal.map((item)=>{    return item.canEdit    });
@@ -84,44 +87,28 @@ Page({
     else{
       console.log("GetuserProfile fail");
     }
-    // console.log("canIUse狀態",this.data.canIUse);
-    // console.log("canIUseOpenData狀態",this.data.canIUseOpenData);
-    // console.log("獲取profile狀態",this.data.canIUseGetUserProfile);
-    // console.log("hasUserInfo狀態",this.data.hasUserInfo);
-
-
+    
     // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope(權限)
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.record']) {
-          wx.authorize({
-            scope: 'scope.record',
-            success () {
-              // wx.startRecord()
-              console.log("用户已经同意或拒絕小程序使用录音功能，不会再弹窗询问");
-              wx.showToast({
-                title: '成功授權',
-              })
-            },
-            fail (){
-              // console.log("接口調用失敗");
-            }
-          })
-        }
-      }
-    })
-
-    // console.log("該用戶註冊狀態："+ app.globalData.isUserSignUp);
-    // console.log("該用戶登錄狀態："+ app.globalData.isSignIn);
-    if (app.globalData.isUserSignUp && app.globalData.isSignIn) {
-      cloudData.writeUserInfoGlobal();
-      let that = this;
-      that.onHide();
-      setTimeout(function () {
-        that.onLoad();
-        that.onShow();
-      }, 500);
-    }
+    // wx.getSetting({
+    //   success(res) {
+    //     if (!res.authSetting['scope.record']) {
+    //       wx.authorize({
+    //         scope: 'scope.record',
+    //         success () {
+    //           // wx.startRecord()
+    //           console.log("用户已经同意或拒絕小程序使用录音功能，不会再弹窗询问");
+    //           wx.showToast({
+    //             title: '成功授權',
+    //           })
+    //         },
+    //         fail (){
+    //           // console.log("接口調用失敗");
+    //         }
+    //       })
+    //     }
+    //   }
+    // })
+    this.calcTime();
 
   },
 
@@ -134,17 +121,8 @@ Page({
     })
 // 計算持續時間
     this.calcTime();
-// 計算progress進度條比值
-    if (this.data.durationDay_Grudate) {
-      console.log("durationDay_Grudate為",this.data.durationDay_Grudate);
-      console.log("總上學時長為",(365*4 -4-31-31-8));
-      let durationDay_Grudate_progress = 100-Math.round(this.data.durationDay_Grudate / (365*4 -4-31-31-8) *100);
-      this.setData({
-        durationDay_Grudate_progress
-      })
-      console.log("durationDay_Grudate_progress為(目前過了)",this.data.durationDay_Grudate_progress,'%');
-    }
 
+    console.log("onShow()完成");
   },
 
   onHide () {
@@ -152,7 +130,7 @@ Page({
     // this.app.sliderAnimaMode(this, 'slide_right2', 100, 0, 1, 0);
   },
 
-  onPullDownRefresh() { // 觸發下拉刷新時
+  onPullDownRefresh() {   // 觸發下拉刷新時
     this.app.onPullDownRefresh(this);
   },
 
@@ -174,20 +152,27 @@ Page({
       show_sheet_major: false,
     });
   },
-
   onSelect_sheet(event) {
-    console.log(event.detail.name);
+    // console.log(event.detail.name);
     let sheet_select = event.detail.name;
-    let yearInputIndex = this.data.studentYear.findIndex(o=> o== sheet_select);
-    let MajorInputIndex = this.data.studentMajor.findIndex(o=> o== sheet_select);
-    console.log("所選擇的Yearinput值的索引值：", yearInputIndex );
-    console.log("所選擇的Majorinput值的索引值：", MajorInputIndex );
-    if (yearInputIndex!=-1) {
-      app.globalData.userInfoGlobal[3].input = this.data.studentYear[yearInputIndex];
+    let studentYearIndex = this.data.studentYear.findIndex(o=> o== sheet_select);
+    let studentMajorIndex = this.data.studentMajor.findIndex(o=> o== sheet_select);
+    // console.log("所選擇的Yearinput值的索引值：", yearInputIndex );
+    // console.log("所選擇的Majorinput值的索引值：", MajorInputIndex );
+    if (studentYearIndex!=-1) {
+      this.data.studentYear_input = this.data.studentYear[studentYearIndex];
     }
     else{
-      app.globalData.userInfoGlobal[2].input = this.data.studentMajor[MajorInputIndex];
+      this.data.studentMajor_input = this.data.studentMajor[studentMajorIndex];
     }
+    let write2 = "userInfoGlobal[2].input";
+    let write3 = "userInfoGlobal[3].input";
+    this.setData({
+      [write2] : this.data.studentMajor_input,
+      [write3] : this.data.studentYear_input,
+      studentYearIndex,
+      studentMajorIndex,
+    });
   },
 
   // 調用該方法可以：彈出彈窗，準確獲取用戶信息
@@ -231,7 +216,6 @@ Page({
       }
     })
   },
-
   // 調用該方法可以：不彈出彈窗，直接返回匿名用戶信息
   getUserInfo(e) {
     console.log(e)
@@ -241,9 +225,10 @@ Page({
     })
   },
 
-  bindCellClick(e){
-    console.log(e.currentTarget.dataset.cellindex);
+  bindCellClick(e){   // Cell的點擊事件：獲取index
     let cellindex = e.currentTarget.dataset.cellindex;
+    // console.log(cellindex);
+    this.setData({      cellindex    });
     if (this.data.bindEditMode) {
       switch (cellindex) {
         case 2:
@@ -254,13 +239,44 @@ Page({
           break;
       }
     }
-    this.setData({      cellindex    });
   },
 
-  bindEditPage(){
-    this.setData({
-      bindEditMode :! this.data.bindEditMode,
-    })
+  bindCellInput(e){   // 輸入事件
+    // console.log(e.detail);
+    let cellInput = e.detail;
+    switch (this.data.cellindex) {
+      case 0:
+        console.log("cellIndex為0：",this.data.cellindex);
+        this.setData({    UM_ID_input : cellInput      })
+        break;
+      case 1:
+        console.log("cellIndex為1：",this.data.cellindex);
+        this.setData({    studentName_input : cellInput      })
+        break;
+    }
+  },
+
+  // 編輯資料的確認按鈕
+  bindEditPage_confirm(){
+    let that = this;
+// 如果輸入符合條件，才能寫入本地的userInfoGlobal
+    let write0 = "userInfoGlobal[0].input";
+    let write1 = "userInfoGlobal[1].input";
+    let write2 = "userInfoGlobal[2].input";
+    let write3 = "userInfoGlobal[3].input";
+    that.setData({        // 寫入局部userInfoGlobal數據，這種data寫法可以保證展示頁刷新
+      bindEditMode :! that.data.bindEditMode,
+      [write0] : that.data.UM_ID_input,
+      [write1] : that.data.studentName_input,
+      [write2] : that.data.studentMajor_input,
+      [write3] : that.data.studentYear_input,
+    });
+    // 寫入全局data記錄
+    app.globalData.userInfoGlobal = that.data.userInfoGlobal;
+  },
+  // 編輯資料的取消按鈕
+  bindEditPage_cancel(){
+    this.setData({      bindEditMode :! this.data.bindEditMode    });
   },
 
   calcTime (){
@@ -286,8 +302,19 @@ Page({
     this.setData({
       durationDay_Grudate
     })
+
+
+// 計算progress進度條比值
+    if (this.data.durationDay_Grudate) {
+      console.log("durationDay_Grudate為",this.data.durationDay_Grudate);
+      console.log("總上學時長為",(365*4 -4-31-31-8));
+      let durationDay_Grudate_progress = 100-Math.round(this.data.durationDay_Grudate / (365*4 -4-31-31-8) *100);
+      this.setData({
+        durationDay_Grudate_progress
+      })
+      console.log("durationDay_Grudate_progress為(目前過了)",this.data.durationDay_Grudate_progress,'%');
+    }
   },
-  
   calcGraduateDay (today_Year){
     let studentYear_input = app.globalData.userInfoGlobal[3].input;
     let studentYear = ["未登入","大一","大二","大三","大四"];
@@ -297,7 +324,6 @@ Page({
       return(today_Year+(4-studentYearIndex)+'/'+'06'+'/'+'23');
     }
   },
-
 
 })
 

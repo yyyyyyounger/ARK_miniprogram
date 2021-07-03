@@ -3,7 +3,6 @@
     "mp-slideview": "weui-miniprogram/slideview/slideview",
     "mp-cells": "weui-miniprogram/cells/cells",
     "mp-cell": "weui-miniprogram/cell/cell",
-    "mp-toptips": "weui-miniprogram/toptips/toptips",
     "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog",
 
 
@@ -12,7 +11,8 @@
 
     "van-action-sheet": "@vant/weapp/action-sheet/index",
 
-    "van-dialog": "@vant/weapp/dialog/index"
+    "van-progress": "@vant/weapp/progress/index"
+
 
   },
   "navigationBarTitleText": "個人信息"

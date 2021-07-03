@@ -1,5 +1,3 @@
-<!-- <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips> -->
-
 <text>\n</text>
 
 <!-- WeChat頭像&ID的請求與打印 -->
@@ -35,16 +33,13 @@
 <!-- 編輯個人資料互動 -->
 <view>
   <view wx:if="{{!bindEditMode}}">
-    <van-button plain type="primary" bind:click="bindEditPage">編輯個人信息</van-button>
+    <van-button plain type="primary" bind:click="bindEditPage_cancel">編輯個人信息</van-button>
   </view>
   <view wx:else>
-    <van-button type="primary" bind:click="bindEditPage">保存</van-button>
-    <van-button type="danger" bind:click="bindEditPage">取消</van-button>
+    <van-button type="primary" bind:click="bindEditPage_confirm">保存</van-button>
+    <van-button type="danger" bind:click="bindEditPage_cancel">取消</van-button>
   </view>
 </view>
-<!-- 彈出窗口 - 修改確認 -->
-<van-dialog id="van-dialog" />
-
 
 <!-- 彈出選擇窗口 - 專業/年級選擇 -->
 <van-action-sheet
@@ -63,6 +58,8 @@
   bind:cancel="onClose_sheet"
   bind:select="onSelect_sheet"
 />
+
+<text>\n</text>
 <!-- for循環渲染方法 -->
 <van-cell-group
 wx:for="{{userInfoGlobal}}"
@@ -71,17 +68,21 @@ wx:if="{{InfoDisplay[index]}}"
 >
   <van-cell center clickable="{{canEdit[index]}}" size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
     <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
-      <view wx:if="{{(index==2)||(index==3)||(index==6)}}">
+      <view wx:if="{{(index==2)||(index==3)||(index==6)}}">   <!-- 可選取的值 -->
         {{item.input}} 
-        <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>
+        <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>   <!-- 右箭頭 -->
       </view>
-      <view wx:else>
+      <view wx:else>    <!-- 輸入框 -->
         <van-field
         value="{{ item.input }}"
+        data-cellIndex="{{index}}"
         center
         clearable
+        size = "large"
+        confirm-hold="true"
         label=""
         placeholder="我是一個輸入框~"
+        bind:change="bindCellInput"
         >
         </van-field>
       </view>
@@ -95,10 +96,6 @@ wx:if="{{InfoDisplay[index]}}"
 <!-- 此處如果能調用UM準確的時間則更好，詳細算法未寫，可以精細到幾幾年的sem 1 or 2 -->
 <view class="iconfont">離完Sem還有<text class="devColor">{{durationDay_sem}}</text>天</view>
 <view class="iconfont">離畢業還有<text class="devColor">{{durationDay_Grudate}}</text>天，目前進度：</view>
+<text>\n</text>
 <!-- 進度條 -->
-<view class="weui-progress">
-  <view class="weui-progress__bar">
-    <progress percent="{{durationDay_Grudate_progress}}" stroke-width="3" />
-  </view>
-  <view>{{durationDay_Grudate_progress}}%</view>
-</view>
+<van-progress percentage="{{durationDay_Grudate_progress}}" />

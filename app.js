@@ -51,7 +51,7 @@ App({
       { id:3, name:"年級:",     input:"未登入", display:true,   canEdit:true },
       { id:4, name:"組織次數:", input:0,        display:true,   canEdit:false },
       { id:5, name:"參與次數:", input:0,        display:true,   canEdit:false },
-      { id:6, name:"註冊時間:", input:"未登入",  display:true,  canEdit:true },
+      { id:6, name:"註冊時間:", input:"未登入",  display:true,  canEdit:false },
       { id:7, name:"管理員:",   input:false,    display:false, canEdit:false },
     ],
     // 課程數據全局變量
