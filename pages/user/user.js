@@ -6,7 +6,35 @@ Page({
 // 提示類
     error:'', // 頂部提示
 // Vant - begin
-    overlay_show:false,
+    show_sheet_year:false,
+    actions_sheet_year: [
+      {
+        name: '大一',
+      },
+      {
+        name: '大二',
+      },
+      {
+        name: '大三',
+      },
+      {
+        name: '大四',
+      },
+    ],
+    studentYear: ["大一", "大二", "大三", "大四"],
+    actions_sheet_major: [
+      {
+        name: 'ECE',
+      },
+      {
+        name: 'CPS',
+      },
+      {
+        name: 'xxx',
+      },
+    ],
+    studentMajor: ["ECE", "CPS", "xxx"],
+    showTest:false,
 // Vant - end
     userInfo: {},
     isUserSignUp: false,
@@ -34,12 +62,14 @@ Page({
       // display : app.globalData.userInfoGlobal.display,
       semFinishDay : app.globalData.semFinishDay,
     })
-    let InfoDisplay = this.data.userInfoGlobal.map((item)=>{    // 獲取userInfoGlobal裡允許顯示的設置數組
-      return item.display;
-    })
-    this.setData({
-      InfoDisplay,    // userInfoGlobal裡的“是否顯示”設置
-    })
+    // 獲取userInfoGlobal裡允許顯示的設置數組
+    let InfoDisplay = this.data.userInfoGlobal.map((item)=>{    return item.display   });
+    // userInfoGlobal裡的“是否顯示”設置
+    this.setData({    InfoDisplay   });
+    // 獲取userInfoGlobal裡允許顯示的設置數組
+    let canEdit = this.data.userInfoGlobal.map((item)=>{    return item.canEdit    });
+    // userInfoGlobal裡的“是否允許編輯”設置
+    this.setData({    canEdit    });
     
     if (wx.getUserProfile) {
       // if請求返回用戶信息的授權成功
@@ -72,15 +102,15 @@ Page({
               })
             },
             fail (){
-              console.log("接口調用失敗");
+              // console.log("接口調用失敗");
             }
           })
         }
       }
     })
 
-    console.log("該用戶註冊狀態："+ app.globalData.isUserSignUp);
-    console.log("該用戶登錄狀態："+ app.globalData.isSignIn);
+    // console.log("該用戶註冊狀態："+ app.globalData.isUserSignUp);
+    // console.log("該用戶登錄狀態："+ app.globalData.isSignIn);
     if (app.globalData.isUserSignUp && app.globalData.isSignIn) {
       cloudData.writeUserInfoGlobal();
       let that = this;
@@ -135,15 +165,28 @@ Page({
     })
   },
 
-  onClickShow() {
-    this.setData({ overlay_show: true });
+  // Vant - sheet
+  onClose_sheet() {
+    this.setData({ 
+      show_sheet_year: false,
+      show_sheet_major: false,
+    });
   },
 
-  onClickHide() {
-    // this.setData({ overlay_show: false });
+  onSelect_sheet(event) {
+    console.log(event.detail.name);
+    let sheet_select = event.detail.name;
+    let yearInputIndex = this.data.studentYear.findIndex(o=> o== sheet_select);
+    let MajorInputIndex = this.data.studentMajor.findIndex(o=> o== sheet_select);
+    console.log("所選擇的Yearinput值的索引值：", yearInputIndex );
+    console.log("所選擇的Majorinput值的索引值：", MajorInputIndex );
+    if (yearInputIndex!=-1) {
+      app.globalData.userInfoGlobal[3].input = this.data.studentYear[yearInputIndex];
+    }
+    else{
+      app.globalData.userInfoGlobal[2].input = this.data.studentMajor[MajorInputIndex];
+    }
   },
-
-  noop() {},
 
   // 調用該方法可以：彈出彈窗，準確獲取用戶信息
   getUserProfile(e) {
@@ -196,15 +239,24 @@ Page({
     })
   },
 
+  bindCellClick(e){
+    console.log(e.currentTarget.dataset.cellindex);
+    let cellindex = e.currentTarget.dataset.cellindex;
+    switch (cellindex) {
+      case 2:
+        this.setData({    show_sheet_major : true      })
+        break;
+      case 3:
+        this.setData({    show_sheet_year : true      })
+        break;
+    }
+    this.setData({      cellindex    });
+  },
+
   bindEditPage(){
-    if (!app.globalData.isUserSignUp && !app.globalData.isSignIn) {  //如果未登錄 或 未註冊
-      this.getUserProfile();
-    }
-    else {
-      wx.navigateTo({
-        url: './editPage/editPage',
-      })
-    }
+    this.setData({
+      showTest :! this.data.showTest,
+    })
   },
 
   calcTime (){
@@ -225,7 +277,7 @@ Page({
       durationDay_sem,
       today
     })
-    console.log("今天離全局設置的完sem日還有：",durationDay_sem,"天");
+    // console.log("今天離全局設置的完sem日還有：",durationDay_sem,"天");
     let durationDay_Grudate = (new Date(this.calcGraduateDay(Y)).getTime() - new Date(today).getTime()) / (1000 * 60 * 60*24);
     this.setData({
       durationDay_Grudate

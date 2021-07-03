@@ -1,5 +1,4 @@
 <!-- <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips> -->
-<van-button size="small" type="primary"> 編輯mode </van-button>
 
 <van-cell-group>
   <van-field
@@ -48,8 +47,33 @@
 </view>
 
 <!-- 編輯個人資料互動 -->
-<text class="userinfo" bindtap="bindEditPage"> 點我編輯個人信息 </text>
+<view>
+  <view wx:if="{{!showTest}}">
+    <van-button plain type="primary" bind:click="bindEditPage">編輯個人信息</van-button>
+  </view>
+  <view wx:else>
+    <van-button type="primary" bind:click="bindEditPage">保存</van-button>
+    <van-button type="danger" bind:click="bindEditPage">取消</van-button>
+  </view>
+</view>
 
+
+<van-action-sheet
+  show="{{ show_sheet_year }}"
+  actions="{{ actions_sheet_year }}"
+  cancel-text="取消"
+  bind:close="onClose_sheet"
+  bind:cancel="onClose_sheet"
+  bind:select="onSelect_sheet"
+/>
+<van-action-sheet
+  show="{{ show_sheet_major }}"
+  actions="{{ actions_sheet_major }}"
+  cancel-text="取消"
+  bind:close="onClose_sheet"
+  bind:cancel="onClose_sheet"
+  bind:select="onSelect_sheet"
+/>
 <!-- for循環渲染方法 -->
 <!-- <van-cell-group 
 wx:for="{{userInfoGlobal}}"
@@ -73,7 +97,19 @@ wx:for="{{userInfoGlobal}}"
 wx:key="id"
 wx:if="{{InfoDisplay[index]}}"
 >
-  <van-cell title="{{item.name}}" is-link value="{{item.input}}" size="large" />
+  <van-cell center clickable="{{canEdit[index]}}" size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
+    <view wx:if="{{(showTest)&&(canEdit[index])}}">
+      <van-field
+      value="{{ sms }}"
+      center
+      clearable
+      label=""
+      placeholder="我是一個輸入框~"
+      >
+      </van-field>
+    </view>
+    <view wx:else>{{item.input}}</view>
+  </van-cell>
 </van-cell-group>
 
 <!-- <mp-cells ext-class="my-cells" title="">
