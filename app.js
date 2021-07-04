@@ -71,21 +71,6 @@ App({
     graduateDay:'',
   },
 
-// 全局數據初始化：從雲端寫入全局
-  userInfoInit : function (that,mode) {
-    // mode為empty時為輸入空數據
-    // 為fill時輸入用戶數據
-    // 注意此處引用的路徑
-    var cloudData = require('./data/cloud.js')
-    if (mode=="empty") {
-      console.log("empty模式 - → 全局 寫入雲端的empty數據",cloudData.userInfoInput_empty);
-      that.app.globalData.userInfoInput = cloudData.userInfoInput_empty;
-    }   else{
-      console.log("fill模式 - → 全局 寫入雲端用戶保存的數據",cloudData.userInfoInput);
-      that.app.globalData.userInfoInput = cloudData.userInfoInput;
-    }
-  },
-
 // 計算剩下日期
   calcDurationDay(that,pastOrFuture,date_input) {
     // 獲取當前時間軸

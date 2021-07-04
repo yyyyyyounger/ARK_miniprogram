@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/yyyyyyounger/ARK#readme",
   "dependencies": {
+    "@vant/touch-emulator": "^1.3.0",
     "@vant/weapp": "^1.6.9"
   }
 }

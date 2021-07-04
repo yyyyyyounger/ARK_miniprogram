@@ -42,11 +42,11 @@ function writeUserInfoInput () {
 // 數據output
 module.exports = {
   // 出口名為testJsonList，類型為jsonDIY數據
-  userInfoInput:userInfoInput,
-  userInfoInput_empty:userInfoInput_empty,
-  semFinishDay:semFinishDay,
-  studentYear:studentYear,
-  studentMajor:studentMajor,
+  userInfoInput :         userInfoInput,
+  userInfoInput_empty :   userInfoInput_empty,
+  semFinishDay :          semFinishDay,
+  studentYear :           studentYear,
+  studentMajor :          studentMajor,
 
-  writeUserInfoInput:writeUserInfoInput,
+  writeUserInfoInput :    writeUserInfoInput,
 }

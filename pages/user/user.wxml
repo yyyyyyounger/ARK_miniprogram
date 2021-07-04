@@ -86,7 +86,7 @@ wx:if="{{InfoDisplay[index]}}"
         center
         size = "large"
         label=""
-        placeholder="對 我 輸 入 ！"
+        placeholder="e.g. {{index===userInfoInput_umIdIndex ? '8位DC123456':'陳大文'}}"
         bind:change="bindCellInput"
         >
         </van-field>
