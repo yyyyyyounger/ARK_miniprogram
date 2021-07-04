@@ -75,7 +75,8 @@ wx:if="{{InfoDisplay[index]}}"
   <van-cell center clickable="{{canEdit[index]}}" size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
     <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
       <view wx:if="{{(index==2)||(index==3)}}">   <!-- 可選取的值 -->
-        {{item.input}} 
+        <text wx:if="{{index==2}}">{{studentMajor_input}}</text>
+        <text wx:else>{{studentYear_input}}</text>
         <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>   <!-- 右箭頭 -->
       </view>
       <view wx:else>    <!-- 輸入框 -->

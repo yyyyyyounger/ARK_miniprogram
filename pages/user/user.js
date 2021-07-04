@@ -106,7 +106,8 @@ Page({
         Toast('請盡快前往個人信息頁完成註冊喔 !');
       }
     }
-    // 獲取簡易版(無input版)userInfo數組
+    console.log("局部的userInfo為",this.data.userInfoInput);
+    // 生成簡易版(無input版)userInfo數組
     let shortNameArray =    this.data.userInfoInput.map((item)=>{    return item.shortName   });
     this.setData({
       userInfoInput_umIdIndex :         shortNameArray.findIndex(o=> o== "umId"),
@@ -184,26 +185,24 @@ Page({
     // console.log("所選擇的Majorinput值的索引值：", MajorInputIndex );
     // 索引值是-1則代表：選擇了不屬於這個數組的元素
     if (studentYearIndex!=-1) {             // 選取了studentYear的數據時，選項 → 本地數據
-      this.data.studentYear_input = this.data.studentYear[studentYearIndex];
+      this.setData({  studentYear_input : this.data.studentYear[studentYearIndex]  })
+      // this.data.studentYear_input = this.data.studentYear[studentYearIndex];
     }   else{                               // 選取了studentMajor的數據時，選項 → 本地數據
-      this.data.studentMajor_input = this.data.studentMajor[studentMajorIndex];
+      this.setData({  studentMajor_input : this.data.studentMajor[studentMajorIndex]  })
+      // this.data.studentMajor_input = this.data.studentMajor[studentMajorIndex];
     }
 // 將input寫入本地userInfoInput對象數組
 // 匹配數組的方法，避免雲端改寫順序
-    let userInfoMajorIndex = this.data.userInfoInput.find(o => o.shortName === 'studentMajor').id;
-    let userInfoYearIndex = this.data.userInfoInput.find(o => o.shortName === 'studentYear').id;
-    let write2 = 'userInfoInput['+userInfoMajorIndex+'].input';
-    let write3 = 'userInfoInput['+userInfoYearIndex+'].input';
+    // let userInfoMajorIndex = this.data.userInfoInput.find(o => o.shortName === 'studentMajor').id;
+    // let userInfoYearIndex = this.data.userInfoInput.find(o => o.shortName === 'studentYear').id;
+    // let write2 = 'userInfoInput['+userInfoMajorIndex+'].input';
+    // let write3 = 'userInfoInput['+userInfoYearIndex+'].input';
     this.setData({
-      [write2] : this.data.studentMajor_input,
-      [write3] : this.data.studentYear_input,
+      // [write2] : this.data.studentMajor_input,
+      // [write3] : this.data.studentYear_input,
       studentYearIndex,
       studentMajorIndex,
     });
-    console.log("現在的empty數組", cloudData.userInfoInput_empty );
-    // console.log("現在的empty數組", cloudData.userInfoInput_empty.find(o => o.shortName == 'studentYear').input );
-    // console.log("現在的empty數組", cloudData.userInfoInput_empty.find(o => o.shortName == 'studentMajor').input );
-    console.log("現在的雲端數組", cloudData.userInfoInput );
   },
 
   // 點擊登錄按鈕 - 綁定事件
@@ -242,9 +241,9 @@ Page({
           })
         }
         else {                // 未註冊，提示進入註冊頁
-          this.setData({  
-            userInfoInput : cloudData.userInfoInput_empty,
-          })
+          // this.setData({  
+            // userInfoInput : cloudData.userInfoInput_empty,
+          // })
           Dialog.confirm({
             title: '系統提示',
             message: '現在填寫必要資料 (完成註冊) 嗎',
@@ -339,15 +338,12 @@ Page({
 
   // 編輯資料的確認按鈕
   bindEditPage_confirm(){
-    // console.log("現在的輸入狀態",this.data.UM_ID_input);
-    // console.log("現在的輸入狀態",this.data.studentName_input);
     console.log("現在的studentMajor_input狀態",this.data.studentMajor_input);
     console.log("現在的studentYear_input狀態",this.data.studentYear_input);
 
     console.log("現在的empty數組", cloudData.userInfoInput_empty );
-    console.log("現在的雲端數組", cloudData.userInfoInput );
-
     console.log("現在empty數組中year的狀態", cloudData.userInfoInput_empty.find(o => o.shortName === 'studentYear').input );
+
     let idError = !this.data.UM_ID_input;
     let nameError = !this.data.studentName_input;
     let majorError = (this.data.studentMajor_input==cloudData.userInfoInput_empty.find(o => o.shortName === 'studentMajor').input);
@@ -369,7 +365,7 @@ Page({
     }
     else {    // 如果輸入符合條件
       let that = this;
-// 寫入本地的userInfoInput - 未完成
+// 寫入本地的userInfoInput
       let w0 = this.data.userInfoInput.findIndex(o=> o.shortName === 'umId' );
       let w1 = this.data.userInfoInput.findIndex(o=> o.shortName === 'name' );
       let w2 = this.data.userInfoInput.findIndex(o=> o.shortName === 'studentMajor' );
@@ -387,17 +383,18 @@ Page({
       });
   
       let userInfo_isSignUpIndex = that.data.userInfoInput.findIndex(o=> o.shortName === 'isSignUp' );
-// if 本地註冊狀態為false，但能來到此的邏輯都是能正確註冊，添加註冊時間
+// if 本地註冊狀態為false，但能來到此的邏輯都是能正確註冊，因此寫入本地註冊時間
       if (!that.data.userInfoInput[userInfo_isSignUpIndex].input) {
         let wTime = that.data.userInfoInput.findIndex(o=> o.shortName === 'signUpTime' );
         let writeTime = 'userInfoInput['+wTime+'].input';
-        console.log(that.data.today);
+        // console.log(that.data.today);
         that.setData({  [writeTime] : that.data.today,  })
       }
 // 修改本地註冊狀態為 true
       that.data.userInfoInput[userInfo_isSignUpIndex].input = true;
 // 上傳數據 本地 → 雲端
       cloudData.userInfoInput = that.data.userInfoInput;
+      console.log("上傳後雲端的數據：",cloudData.userInfoInput);
       Notify({ type: 'success', message: '修改成功！建議使用下拉刷新頁面喔！' });
     }
     if (this.data.mesError) {
