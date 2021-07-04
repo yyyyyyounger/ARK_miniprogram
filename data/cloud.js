@@ -1,5 +1,5 @@
 var app = getApp();
-var userInfoInput_empty = [
+let userInfoInput_empty = [
   { id:0, name:"UM ID:",    shortName:"umId",         input:"未登入", display:true,   canEdit:true },
   { id:1, name:"姓名:",     shortName:"name",         input:"未登入", display:true,   canEdit:true },
   { id:2, name:"專業:",     shortName:"studentMajor", input:"未登入", display:true,   canEdit:true },
@@ -12,7 +12,7 @@ var userInfoInput_empty = [
   { id:9, name:"管理員:",   shortName:"admin",        input:false,    display:false, canEdit:false },
   {       name:"isSignUp:", shortName:"isSignUp",    input: false, },
 ];
-var userInfoInput = [
+let userInfoInput = [
   { id:0, name:"UM ID:",    shortName:"umId",         input:"DC025814", display:true,   canEdit:true },
   { id:1, name:"姓名:",     shortName:"name",         input:"LZY",  display:true,   canEdit:true },
   { id:2, name:"專業:",     shortName:"studentMajor", input:"ECE",  display:true,   canEdit:true },
