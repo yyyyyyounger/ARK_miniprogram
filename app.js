@@ -1,3 +1,7 @@
+import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
+// import Notify from '../miniprogram_npm/@vant/weapp/notify/notify';
+// import Dialog from '../miniprogram_npm/@vant/weapp/dialog/dialog';
+
 //app.js
 App({
   //onLaunch,onShow: options(path,query,scene,shareTicket,referrerInfo(appId,extraData))
@@ -19,10 +23,14 @@ App({
   },
 // 自定義Toast樣式，保證全局一樣
   toastLoadingDIY : function() {
-    wx.showToast({
-      title: '作者真帥😎',
-      icon: 'loading'
-    })
+    // wx.showToast({
+    //   title: '作者真帥😎',
+    //   icon: 'loading'
+    // })
+    Toast.loading({
+      message: '加載中...',
+      forbidClick: true,
+    });
   },
 // 下拉刷新函數，調用該函數可保證刷新完回彈
   onPullDownRefresh : function(that) {   
@@ -45,15 +53,23 @@ App({
     }],
     // 用戶信息全局變量
     userInfoGlobal: [
-      { id:0, name:"UM ID:",    input:"未登入", display:true,   canEdit:true },
-      { id:1, name:"姓名:",     input:"未登入", display:true,   canEdit:true },
-      { id:2, name:"專業:",     input:"未登入", display:true,   canEdit:true },
-      { id:3, name:"年級:",     input:"未登入", display:true,   canEdit:true },
-      { id:4, name:"組織次數:", input:0,        display:true,   canEdit:false },
-      { id:5, name:"參與次數:", input:0,        display:true,   canEdit:false },
-      { id:6, name:"註冊時間:", input:"未登入",  display:true,  canEdit:false },
-      { id:7, name:"管理員:",   input:false,    display:false, canEdit:false },
+      // { id:0, name:"UM ID:",    input:"未登入", display:true,   canEdit:true },
+      // { id:1, name:"姓名:",     input:"未登入", display:true,   canEdit:true },
+      // { id:2, name:"專業:",     input:"未登入", display:true,   canEdit:true },
+      // { id:3, name:"年級:",     input:"未登入", display:true,   canEdit:true },
+      // { id:4, name:"組織次數:", input:0,        display:true,   canEdit:false },
+      // { id:5, name:"參與次數:", input:0,        display:true,   canEdit:false },
+      // { id:6, name:"星級:",     input:5,        display:true,  canEdit:false },
+      // { id:7, name:"註冊時間:", input:"未登入",  display:true,  canEdit:false },
+      // { id:8, name:"ARKid:",    input:"未登入",  display:true,  canEdit:false },
+      // { id:9, name:"管理員:",   input:false,    display:false, canEdit:false },
     ],
+// 用戶註冊相關
+    // 登錄狀態
+    isSignIn: false,
+    // 註冊狀態,是否已註冊，包含基礎資料是否填妥、是否同意ARK協議
+    isUserSignUp: false,
+
     // 課程數據全局變量
     courseInfoGlobal: [
       { item:"主題: ", input:"xx" },
@@ -63,15 +79,18 @@ App({
       { item:"課程狀態: ", input:"xx" },
       { item:"簽到密碼: ", input:"xx" },
     ],
-    // 用戶註冊相關
-    // 註冊狀態,是否已註冊
-    isUserSignUp: false,
-    // 登錄狀態
-    isSignIn: false,
     // 完sem日
     semFinishDay:'2022/01/05',
     // 畢業日
     graduateDay:'',
+  },
+
+// 全局數據初始化：從雲端寫入全局
+  userInfoInit_empty : function (that) {
+    // 注意此處引用的路徑
+    var cloudData = require('./data/json.js')
+    console.log("雲端的empty數據為",cloudData.userInfoGlobal_empty);
+    that.app.globalData.userInfoGlobal = cloudData.userInfoGlobal_empty;
   },
 
 // 計算剩下日期

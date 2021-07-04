@@ -1,7 +1,18 @@
 var app = getApp();
-var cloudData = require('../../data/json.js')
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+var cloudData = require('../../data/json.js')
+const beforeClose = (action) => new Promise((resolve) => {
+  setTimeout(() => {
+    if (action === 'confirm') {
+      resolve(true);
+    } else {
+      // 拦截取消操作
+      resolve(false);
+    }
+  }, 1000);
+});
 
 Page({
   data: {
@@ -43,24 +54,32 @@ Page({
     studentYear_input :'',
     studentMajor_input :'',
 // 用戶輸入 - end
-    userInfo: {},
-    isUserSignUp: false,
+// 自定義的用戶數據 - begin
+    userInfoGlobal : {},
     isSignIn: false,
+    isUserSignUp: false,
+// 自定義的用戶數據 - end
+    userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIUseGetUserProfile: false,
-    canIUseOpenData: false, // 如需尝试获取用户信息可改为false
+    canIUseOpenData: false,
     // canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
-    // 此處應該與雲端綁定
-    userInfoGlobal : {},
+// 此處應該與雲端綁定 - 未完成
     semFinishDay : '',
-    // 日期變量
+// 日期變量
     today:'',
     durationDay_sem:0,
   },
 
   onLoad() { // user頁初始化時，請求user授權
     this.app = getApp();
+    if (!app.globalData.isSignIn) {   // 如果未登錄，則雲端向 全局&局部 輸入 空數據
+      this.app.userInfoInit_empty(this);
+    }
+    else {
+      Toast('Welcome Back~');
+    }
     this.setData({  userInfoGlobal : app.globalData.userInfoGlobal,  })     // 先讓局部userInfoGlobal讀取全局.js的數據
     // this.app.toastLoadingDIY();   // 模擬向服務器請求的延時
     this.setData({
@@ -175,44 +194,46 @@ Page({
     });
   },
 
+  // 點擊登錄按鈕 - 綁定事件
+  binSignInButton() {
+    // 提示閱讀使用條款
+    Dialog.alert({
+      message: '繼續登錄將表示您已閱讀並同意該小程序的使用條款',
+    }).then(() => {
+      // on close
+      this.getUserProfile();
+    });
+  },
+
   // 調用該方法可以：彈出彈窗，準確獲取用戶信息
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，
-    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+// 开发者妥善保管用户的头像昵称，避免重复弹窗
     wx.getUserProfile({
       desc: '展示用戶信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log("用戶點擊同意，信息如下：",res)
+        Notify({ type: 'success', message: '登錄成功！' });
         this.setData({
           userInfo: res.userInfo,
-          hasUserInfo: true // 已獲取用戶信息
+          hasUserInfo: true, // 已獲取用戶信息
+          isSignIn:true      // 用戶已登錄
         })
+        app.globalData.isSignIn = true;
+        console.log("用戶點擊同意，userInfo為：",this.data.userInfo);
 // 登錄成功後，判斷該用戶是否已註冊，若已註冊：將數據從雲端（json.js）寫入到全局
 // 未註冊將進入註冊頁，並保存相關信息到雲端
-        app.globalData.isUserSignUp = false;  // 模擬用戶：未註冊
-        if (app.globalData.isUserSignUp) {
-          console.log("該用戶已註冊！");
-          cloudData.writeUserInfoGlobal();
-          let that = this;
-          that.onHide();
-          setTimeout(function () {
-            that.onLoad();
-            that.onShow();
-          }, 500);
-        }
-        else {
-          // 提示填寫相關信息
-          this.setData({  bindEditMode : true  })
-        }
-        // 登錄後不用再按鈕請求登錄
+        cloudData.writeUserInfoGlobal();  //雲端數據寫入全局
+        console.log("全局的userInfo數據為",app.globalData.userInfoGlobal);
+
+// 登錄後不用再按鈕請求登錄 - 未完成
         this.setData({
           canIUseOpenData : true ,
         })
-        app.globalData.isSignIn = this.data.canIUseOpenData;
-      },
+      },  // success - end
       fail: (res) => {
         console.log("用戶點擊拒絕：",res);
-      }
+        Notify({ type: 'warning', message: '登錄失敗QAQ，微信登錄只為了獲取您的頭像暱稱，以及給予一個獨立的標識id喔！' });
+      }   // fail - end
     })
   },
   // 調用該方法可以：不彈出彈窗，直接返回匿名用戶信息

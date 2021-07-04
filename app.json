@@ -73,7 +73,8 @@
     "van-divider": "@vant/weapp/divider/index",
     "van-notify": "@vant/weapp/notify/index",
     "van-dialog": "@vant/weapp/dialog/index",
-    "van-transition": "@vant/weapp/transition/index"
+    "van-transition": "@vant/weapp/transition/index",
+    "van-toast": "@vant/weapp/toast/index"
 
   }
 }

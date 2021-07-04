@@ -1,9 +1,10 @@
 <!-- 彈出類 -->
 <van-notify id="van-notify"/>
 <van-dialog id="van-dialog" />
+<van-toast id="van-toast" />
 <!-- <text>\n</text> -->
 
-<van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" />
+<van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" wx:if="{{!isSignIn}}" />
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
   <!-- 向微信庫詢問是否能使用openData，if可以，展示頭像、WeChat ID -->
@@ -21,7 +22,7 @@
   <!-- 如果不能使用openData，且當下沒有用戶信息，則提示授權 -->
   <block wx:elif="{{!hasUserInfo}}">
     <!-- 如果onLoad時查詢程序可以調用用戶信息，則向用戶發出授權按鈕提示，獲取准確的用戶信息 -->
-    <van-button wx:if="{{canIUseGetUserProfile}}" color="#5595D9" bindtap="getUserProfile" type="info">登錄</van-button>
+    <van-button wx:if="{{canIUseGetUserProfile}}" color="#5595D9" bindtap="binSignInButton" type="info">登錄</van-button>
     <!-- 不可調用則使用匿名的用戶信息 -->
     <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 獲取頭像暱稱canIUse </button>
     <!-- <view wx:else> 请使用1.4.4及以上版本基础库 </view> -->
@@ -34,7 +35,7 @@
   </block>
 </view>
 
-<text>\n</text>
+<text class="userinfo" wx:if="{{!isSignIn}}" >小程序使用條款\n</text>
 <!-- 編輯個人資料互動 -->
 <view class="userinfo">
   <view wx:if="{{!bindEditMode}}">
@@ -73,7 +74,7 @@ wx:if="{{InfoDisplay[index]}}"
 >
   <van-cell center clickable="{{canEdit[index]}}" size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
     <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
-      <view wx:if="{{(index==2)||(index==3)||(index==6)}}">   <!-- 可選取的值 -->
+      <view wx:if="{{(index==2)||(index==3)}}">   <!-- 可選取的值 -->
         {{item.input}} 
         <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>   <!-- 右箭頭 -->
       </view>
