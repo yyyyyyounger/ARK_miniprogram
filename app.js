@@ -28,7 +28,7 @@ App({
     //   icon: 'loading'
     // })
     Toast.loading({
-      message: '加載中...',
+      message: '拼命加載中...',
       forbidClick: true,
     });
   },
@@ -52,23 +52,9 @@ App({
       Day: '03',
     }],
     // 用戶信息全局變量
-    userInfoGlobal: [
-      // { id:0, name:"UM ID:",    input:"未登入", display:true,   canEdit:true },
-      // { id:1, name:"姓名:",     input:"未登入", display:true,   canEdit:true },
-      // { id:2, name:"專業:",     input:"未登入", display:true,   canEdit:true },
-      // { id:3, name:"年級:",     input:"未登入", display:true,   canEdit:true },
-      // { id:4, name:"組織次數:", input:0,        display:true,   canEdit:false },
-      // { id:5, name:"參與次數:", input:0,        display:true,   canEdit:false },
-      // { id:6, name:"星級:",     input:5,        display:true,  canEdit:false },
-      // { id:7, name:"註冊時間:", input:"未登入",  display:true,  canEdit:false },
-      // { id:8, name:"ARKid:",    input:"未登入",  display:true,  canEdit:false },
-      // { id:9, name:"管理員:",   input:false,    display:false, canEdit:false },
-    ],
-// 用戶註冊相關
-    // 登錄狀態
+    userInfoInput: [],
+    // 用戶微信登錄狀態
     isSignIn: false,
-    // 註冊狀態,是否已註冊，包含基礎資料是否填妥、是否同意ARK協議
-    isUserSignUp: false,
 
     // 課程數據全局變量
     courseInfoGlobal: [
@@ -86,11 +72,18 @@ App({
   },
 
 // 全局數據初始化：從雲端寫入全局
-  userInfoInit_empty : function (that) {
+  userInfoInit : function (that,mode) {
+    // mode為empty時為輸入空數據
+    // 為fill時輸入用戶數據
     // 注意此處引用的路徑
-    var cloudData = require('./data/json.js')
-    console.log("雲端的empty數據為",cloudData.userInfoGlobal_empty);
-    that.app.globalData.userInfoGlobal = cloudData.userInfoGlobal_empty;
+    var cloudData = require('./data/cloud.js')
+    if (mode=="empty") {
+      console.log("empty模式 - → 全局 寫入雲端的empty數據",cloudData.userInfoInput_empty);
+      that.app.globalData.userInfoInput = cloudData.userInfoInput_empty;
+    }   else{
+      console.log("fill模式 - → 全局 寫入雲端用戶保存的數據",cloudData.userInfoInput);
+      that.app.globalData.userInfoInput = cloudData.userInfoInput;
+    }
   },
 
 // 計算剩下日期

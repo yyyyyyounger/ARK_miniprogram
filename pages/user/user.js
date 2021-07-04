@@ -2,7 +2,7 @@ var app = getApp();
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
-var cloudData = require('../../data/json.js')
+var cloudData = require('../../data/cloud.js')
 const beforeClose = (action) => new Promise((resolve) => {
   setTimeout(() => {
     if (action === 'confirm') {
@@ -32,7 +32,7 @@ Page({
         name: '大四',
       },
     ],
-    studentYear: ["大一", "大二", "大三", "大四"],
+    studentYear: [],
     show_sheet_major:false,
     actions_sheet_major: [
       {
@@ -45,7 +45,7 @@ Page({
         name: 'xxx',
       },
     ],
-    studentMajor: ["ECE", "CPS", "xxx"],
+    studentMajor: [],
     bindEditMode:false,
 // Vant - end
 // 用戶輸入 - begin
@@ -55,9 +55,9 @@ Page({
     studentMajor_input :'',
 // 用戶輸入 - end
 // 自定義的用戶數據 - begin
-    userInfoGlobal : {},
+    userInfoInput : {},
     isSignIn: false,
-    isUserSignUp: false,
+    isSignUp: false,
 // 自定義的用戶數據 - end
     userInfo: {},
     hasUserInfo: false,
@@ -72,30 +72,44 @@ Page({
     durationDay_sem:0,
   },
 
-  onLoad() { // user頁初始化時，請求user授權
+  onLoad() {
+// 設置app.js的訪問接口
     this.app = getApp();
-    if (!app.globalData.isSignIn) {   // 如果未登錄，則雲端向 全局&局部 輸入 空數據
-      this.app.userInfoInit_empty(this);
-    }
-    else {
-      Toast('Welcome Back~');
-    }
-    this.setData({  userInfoGlobal : app.globalData.userInfoGlobal,  })     // 先讓局部userInfoGlobal讀取全局.js的數據
     // this.app.toastLoadingDIY();   // 模擬向服務器請求的延時
+
+// 拉取數據 - userInfoInput - 雲端 → 本地
+    if (!this.data.isSignIn) {              // if 未登錄，則 雲端 → 局部 → 空數據
+      this.setData({  userInfoInput : cloudData.userInfoInput_empty  });
+      console.log("用戶未登錄 - 當前本地數據：", this.data.userInfoInput);
+    }
+    else {                                  // if 已登錄，歡迎語
+      let obj_isSignUp = cloudData.userInfoInput.find(o => o.shortName === 'isSignUp');   // 查找名為isSignUp的對象
+      if (obj_isSignUp.input) {             // if 已登錄，已註冊，個性化歡迎語
+        this.setData({  userInfoInput : cloudData.userInfoInput  });
+        console.log("用戶已登錄 - 當前本地數據：", this.data.userInfoInput);  
+        let obj_name = cloudData.userInfoInput.find(o => o.shortName === 'name');   // 查找名為isSignUp的對象
+        Toast('Dear '+obj_name.input+' , Welcome Back ~');    // 個性化歡迎語
+      }   
+      else{                                 // 已登錄，未註冊完成的user，提示註冊
+        Toast('請盡快前往個人信息頁完成註冊喔 !');
+      }
+    }
     this.setData({
-      semFinishDay : app.globalData.semFinishDay,           // display : app.globalData.userInfoGlobal.display,
-      studentMajor_input : this.data.userInfoGlobal[2].input,
-      studentYear_input : this.data.userInfoGlobal[3].input,
+      semFinishDay : cloudData.semFinishDay,
+      studentYear : cloudData.studentYear,
+      studentMajor : cloudData.studentMajor,
+      studentMajor_input : cloudData.userInfoInput.find(o => o.shortName === 'studentMajor').input ,
+      studentYear_input : cloudData.userInfoInput.find(o => o.shortName === 'studentYear').input , 
+      isSignUp : this.data.userInfoInput.find(o => o.shortName === 'isSignUp').input , 
     })
-    // 獲取userInfoGlobal裡允許顯示的設置數組
-    let InfoDisplay = this.data.userInfoGlobal.map((item)=>{    return item.display   });
-    // userInfoGlobal裡的“是否顯示”的設置
-    this.setData({    InfoDisplay   });
-    // 獲取userInfoGlobal裡允許顯示的設置數組
-    let canEdit = this.data.userInfoGlobal.map((item)=>{    return item.canEdit    });
-    // userInfoGlobal裡的“是否允許編輯”設置
-    this.setData({    canEdit    });
+    // 生成userInfoInput裡允許顯示的設置數組
+    let InfoDisplay = this.data.userInfoInput.map((item)=>{    return item.display   });
+    // 生成userInfoInput裡允許編輯的設置數組
+    let canEdit = this.data.userInfoInput.map((item)=>{    return item.canEdit    });
+    // 允許編輯/顯示 → setData
+    this.setData({    InfoDisplay, canEdit    });
     
+// 未理解的神秘返回 - 未完成
     if (wx.getUserProfile) {
       // if請求返回用戶信息的授權成功
       this.setData({
@@ -103,41 +117,15 @@ Page({
         canIUseGetUserProfile: true
       })
       console.log("user頁 - onLoad() - GetuserProfile success");
+    }   else{
+      console.log("user頁 - onLoad() - GetuserProfile ***fail***");
     }
-    else{
-      console.log("GetuserProfile fail");
-    }
-    
-    // 可以通过 wx.getSetting 先查询一下用户是否授权了 "scope.record" 这个 scope(權限)
-    // wx.getSetting({
-    //   success(res) {
-    //     if (!res.authSetting['scope.record']) {
-    //       wx.authorize({
-    //         scope: 'scope.record',
-    //         success () {
-    //           // wx.startRecord()
-    //           console.log("用户已经同意或拒絕小程序使用录音功能，不会再弹窗询问");
-    //           wx.showToast({
-    //             title: '成功授權',
-    //           })
-    //         },
-    //         fail (){
-    //           // console.log("接口調用失敗");
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
-    this.calcTime();
   },
 
   onShow () {
     // this.app.sliderAnimaMode(this, 'slide_right1', 100, 1, 1, 0);
     // this.app.sliderAnimaMode(this, 'slide_right2', -100, 1, 1, 0);
-    // 用於刷新editPage更改後的數據
-    this.setData({
-      userInfoGlobal : app.globalData.userInfoGlobal
-    })
+
 // 計算持續時間
     this.calcTime();
 
@@ -153,17 +141,6 @@ Page({
     this.app.onPullDownRefresh(this);
   },
 
-  signUpHintBindButton (e) {
-    console.log(e.detail);
-    if (e.detail.index) {
-      this.getUserProfile();
-    }
-    let that = this;
-    that.setData({
-      show :! that.data.show
-    })
-  },
-
   // Vant - sheet
   onClose_sheet() {
     this.setData({ 
@@ -172,20 +149,23 @@ Page({
     });
   },
   onSelect_sheet(event) {
-    // console.log(event.detail.name);
-    let sheet_select = event.detail.name;
+    let sheet_select = event.detail.name;   // 這是選取項的名
     let studentYearIndex = this.data.studentYear.findIndex(o=> o== sheet_select);
     let studentMajorIndex = this.data.studentMajor.findIndex(o=> o== sheet_select);
     // console.log("所選擇的Yearinput值的索引值：", yearInputIndex );
     // console.log("所選擇的Majorinput值的索引值：", MajorInputIndex );
-    if (studentYearIndex!=-1) {
+    // 索引值是-1則代表：選擇了不屬於這個數組的元素
+    if (studentYearIndex!=-1) {             // 選取了studentYear的數據時，選項 → 本地數據
       this.data.studentYear_input = this.data.studentYear[studentYearIndex];
-    }
-    else{
+    }   else{                               // 選取了studentMajor的數據時，選項 → 本地數據
       this.data.studentMajor_input = this.data.studentMajor[studentMajorIndex];
     }
-    let write2 = "userInfoGlobal[2].input";
-    let write3 = "userInfoGlobal[3].input";
+// 將input寫入本地userInfoInput對象數組
+// 匹配數組的方法，避免雲端改寫順序
+    let userInfoMajorIndex = this.data.userInfoInput.find(o => o.shortName === 'studentMajor').id;
+    let userInfoYearIndex = this.data.userInfoInput.find(o => o.shortName === 'studentYear').id;
+    let write2 = 'userInfoInput['+userInfoMajorIndex+'].input';
+    let write3 = 'userInfoInput['+userInfoYearIndex+'].input';
     this.setData({
       [write2] : this.data.studentMajor_input,
       [write3] : this.data.studentYear_input,
@@ -208,7 +188,7 @@ Page({
   // 調用該方法可以：彈出彈窗，準確獲取用戶信息
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，
-// 开发者妥善保管用户的头像昵称，避免重复弹窗
+// 开发者妥善保管用户的头像昵称，避免重复弹窗 - 未完成
     wx.getUserProfile({
       desc: '展示用戶信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
@@ -218,21 +198,46 @@ Page({
           hasUserInfo: true, // 已獲取用戶信息
           isSignIn:true      // 用戶已登錄
         })
+// 成功登錄後，局部 → 全局isSignIn → true
         app.globalData.isSignIn = true;
-        console.log("用戶點擊同意，userInfo為：",this.data.userInfo);
-// 登錄成功後，判斷該用戶是否已註冊，若已註冊：將數據從雲端（json.js）寫入到全局
-// 未註冊將進入註冊頁，並保存相關信息到雲端
-        cloudData.writeUserInfoGlobal();  //雲端數據寫入全局
-        console.log("全局的userInfo數據為",app.globalData.userInfoGlobal);
+// 登錄成功後，判斷是否已註冊
+        let isSignUp = cloudData.userInfoInput.find(o => o.shortName === 'isSignUp').input;
+        console.log("登錄成功 - 註冊狀態：", isSignUp );
+// 拉取數據 - 雲端 → 本地
+        if (isSignUp) {    // 已註冊：將數據 → 雲端（cloud.js） → 本地
+          this.setData({  
+            userInfoInput : cloudData.userInfoInput,
+          })
+        }
+        else {                // 未註冊，提示進入註冊頁
+          this.setData({  
+            userInfoInput : cloudData.userInfoInput_empty,
+          })
+          Dialog.confirm({
+            title: '系統提示',
+            message: '現在填寫必要資料 (完成註冊) 嗎',
+          })
+            .then(() => {
+              // on confirm
+              this.setData({  bindEditMode : true  });
+            })
+            .catch(() => {
+              // on cancel
+              this.setData({  bindEditMode : false  });
+              Notify({ type: 'warning', message: '現在仍不是正式成員喔' });
+            });
+        }
+        let userInfo_isSignUpIndex = this.data.userInfoInput.findIndex(o=> o.shortName === 'isSignUp' );
+        this.data.userInfoInput[userInfo_isSignUpIndex].input = isSignUp;
 
-// 登錄後不用再按鈕請求登錄 - 未完成
+// 登錄後不用再使用按鈕請求登錄（保存用戶頭像等信息） - 未完成
         this.setData({
           canIUseOpenData : true ,
         })
       },  // success - end
       fail: (res) => {
         console.log("用戶點擊拒絕：",res);
-        Notify({ type: 'warning', message: '登錄失敗QAQ，微信登錄只為了獲取您的頭像暱稱，以及給予一個獨立的標識id喔！' });
+        Notify({ type: 'warning', duration: 3500, message: '登錄失敗QAQ，微信登錄只為了獲取您的頭像暱稱，從而獲得一個獨立的標識id喔！' });
       }   // fail - end
     })
   },
@@ -261,7 +266,7 @@ Page({
     }
   },
 
-  bindCellInput(e){   // 輸入事件
+  bindCellInput(e){   // 輸入事件，數據 → 本地 → UM_ID & studentName
     // console.log(e.detail);
     let cellInput = e.detail;
     switch (this.data.cellindex) {
@@ -279,27 +284,53 @@ Page({
   // 編輯資料的確認按鈕
   bindEditPage_confirm(){
     let that = this;
-// 如果輸入符合條件，才能寫入本地的userInfoGlobal
-    let write0 = "userInfoGlobal[0].input";
-    let write1 = "userInfoGlobal[1].input";
-    let write2 = "userInfoGlobal[2].input";
-    let write3 = "userInfoGlobal[3].input";
-    that.setData({        // 寫入局部userInfoGlobal數據，這種data寫法可以保證展示頁刷新
-      bindEditMode :! that.data.bindEditMode,
+// 如果輸入符合條件，才能寫入本地的userInfoInput - 未完成
+    let w0 = this.data.userInfoInput.findIndex(o=> o.shortName === 'umId' );
+    let w1 = this.data.userInfoInput.findIndex(o=> o.shortName === 'name' );
+    let w2 = this.data.userInfoInput.findIndex(o=> o.shortName === 'studentMajor' );
+    let w3 = this.data.userInfoInput.findIndex(o=> o.shortName === 'studentYear' );
+    let write0 = 'userInfoInput['+w0+'].input';
+    let write1 = 'userInfoInput['+w1+'].input';
+    let write2 = 'userInfoInput['+w2+'].input';
+    let write3 = 'userInfoInput['+w3+'].input';
+    that.setData({        // 寫入局部userInfoInput數據，setData寫法可以保證展示頁刷新
+      bindEditMode : false,
       [write0] : that.data.UM_ID_input,
       [write1] : that.data.studentName_input,
       [write2] : that.data.studentMajor_input,
       [write3] : that.data.studentYear_input,
     });
-    // 寫入全局data記錄
-    app.globalData.userInfoGlobal = that.data.userInfoGlobal;
-    Notify({ type: 'success', message: '修改成功！' });
+
+    let userInfo_isSignUpIndex = that.data.userInfoInput.findIndex(o=> o.shortName === 'isSignUp' );
+    console.log(that.data.userInfoInput[userInfo_isSignUpIndex].input);
+// if 註冊狀態為false，但能來到此的邏輯都是能正確註冊，添加註冊時間
+    if (!that.data.userInfoInput[userInfo_isSignUpIndex].input) {
+      let wTime = that.data.userInfoInput.findIndex(o=> o.shortName === 'signUpTime' );
+      let writeTime = 'userInfoInput['+wTime+'].input';
+      console.log(that.data.today);
+      that.setData({  [writeTime] : that.data.today,  })
+    }
+// 修改本地註冊狀態為 true
+    that.data.userInfoInput[userInfo_isSignUpIndex].input = true;
+// 上傳數據 本地 → 雲端
+    cloudData.userInfoInput = that.data.userInfoInput;
+    Notify({ type: 'success', message: '修改成功！建議使用下拉刷新頁面喔！' });
   },
   // 編輯資料的取消按鈕
   bindEditPage_cancel(){
-    this.setData({      bindEditMode :! this.data.bindEditMode    });
+    this.setData({      bindEditMode :! this.data.bindEditMode   });
+    let notifyText = '';  let notifyMode = '';
     if (this.data.bindEditMode) {
-      Notify({ type: 'primary', message: '進入編輯模式' });
+      notifyText = '進入編輯模式';
+      notifyMode = 'primary';
+    }   else {
+      notifyMode = 'success';
+      notifyText = '離開編輯模式';
+    }
+    Notify({ type: notifyMode, message: notifyText });
+
+    if (!this.data.isSignUp) {    // 如果註冊狀態為false時
+      Notify({ type: 'warning', message: '抓緊時間註冊！現在仍不是正式成員喔！' });
     }
   },
 
@@ -340,7 +371,7 @@ Page({
     }
   },
   calcGraduateDay (today_Year){
-    let studentYear_input = app.globalData.userInfoGlobal[3].input;
+    let studentYear_input = cloudData.userInfoInput[3].input;
     let studentYear = ["未登入","大一","大二","大三","大四"];
     let studentYearIndex = studentYear.findIndex(o=> o== studentYear_input);
     if (studentYearIndex != 0) {

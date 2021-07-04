@@ -1,4 +1,4 @@
-var localData = require('../../data/json.js')
+var localData = require('../../data/cloud.js')
 
 Page({
 

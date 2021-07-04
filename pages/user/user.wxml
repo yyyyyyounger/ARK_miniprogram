@@ -37,7 +37,7 @@
 
 <text class="userinfo" wx:if="{{!isSignIn}}" >小程序使用條款\n</text>
 <!-- 編輯個人資料互動 -->
-<view class="userinfo">
+<view class="userinfo" wx:if="{{isSignIn}}" >
   <view wx:if="{{!bindEditMode}}">
     <van-button plain type="primary" bind:click="bindEditPage_cancel">編輯個人信息</van-button>
   </view>
@@ -68,7 +68,7 @@
 <text>\n</text>
 <!-- for循環渲染方法 -->
 <van-cell-group
-wx:for="{{userInfoGlobal}}"
+wx:for="{{userInfoInput}}"
 wx:key="id"
 wx:if="{{InfoDisplay[index]}}"
 >
@@ -82,10 +82,9 @@ wx:if="{{InfoDisplay[index]}}"
         <van-field
         value="{{ item.input }}"
         data-cellIndex="{{index}}"
-        center
         clearable
+        center
         size = "large"
-        confirm-hold="true"
         label=""
         placeholder="對 我 輸 入 ！"
         bind:change="bindCellInput"
