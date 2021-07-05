@@ -1,6 +1,6 @@
-<van-tabbar active="{{ active }}" bind:change="onChange">
-  <van-tabbar-item icon="home-o">首頁</van-tabbar-item>
-  <van-tabbar-item icon="search">課程</van-tabbar-item>
-  <van-tabbar-item icon="friends-o">我的</van-tabbar-item>
-  <van-tabbar-item icon="setting-o">更多</van-tabbar-item>
+<van-tabbar active="{{ active }}" safe-area-inset-bottom bind:change="onChange">
+  <van-tabbar-item icon="{{active==0 ? 'wap-home' : 'wap-home-o'}}">首頁</van-tabbar-item>
+  <van-tabbar-item icon="{{active==1 ? 'notes' : 'notes-o'}}">課程</van-tabbar-item>
+  <van-tabbar-item icon="{{active==2 ? 'user-circle' : 'user-circle-o'}}">我的</van-tabbar-item>
+  <van-tabbar-item icon="{{active==3 ? 'setting' : 'setting-o'}}">更多</van-tabbar-item>
 </van-tabbar>
