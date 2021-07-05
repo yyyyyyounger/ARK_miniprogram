@@ -74,3 +74,7 @@ input輸入框增加了一鍵清除按鈕。
 
 #### 2021-7-5
 對頁面做了一些美化，指定了課程數據的格式。詳見`根目錄/data/cloudData_Course.js`。
+有空更新Vant！！！！根目錄下運行：
+
+    npm i @vant/weapp -S --production
+
