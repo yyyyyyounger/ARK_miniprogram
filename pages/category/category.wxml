@@ -1,4 +1,4 @@
-<van-button type="primary" size="large" block>我要開課 <van-icon name="plus"/></van-button>
+<van-button type="primary" size="" block>我要開課 <van-icon name="plus"/></van-button>
 
 <!-- <text>\n\n</text> -->
 

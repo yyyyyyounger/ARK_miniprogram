@@ -1,6 +1,13 @@
 <van-popup 
 show="{{ show_popup }}" 
 position="top"
+duration="500"
+safe-area-inset-top	
+safe-area-inset-bottom	
+round
+closeable
+close-on-click-overlay
+close-icon-position="bottom-right"
 bind:close="closePopup"
 >
 	<view class="flexCenter">
@@ -71,7 +78,7 @@ bind:close="closePopup"
 </van-row>
 <van-row>
   <van-col offset="8" span="8">
-		<van-button icon="plus" type="primary" size="normal" bind:click="jumpToCourse_tabBar">整多點 ♂</van-button>
+		<van-button icon="plus" type="primary" round bind:click="jumpToCourse_tabBar">整多點 ♂</van-button>
 	</van-col>
 </van-row>
 

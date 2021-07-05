@@ -2,7 +2,7 @@
 <van-notify id="van-notify"/>
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />
-<!-- <text>\n</text> -->
+<text>\n</text>
 
 <van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" wx:if="{{!isSignIn}}" />
 <!-- WeChat頭像&ID的請求與打印 -->
@@ -22,7 +22,7 @@
   <!-- 如果不能使用openData，且當下沒有用戶信息，則提示授權 -->
   <block wx:elif="{{!hasUserInfo}}">
     <!-- 如果onLoad時查詢程序可以調用用戶信息，則向用戶發出授權按鈕提示，獲取准確的用戶信息 -->
-    <van-button wx:if="{{canIUseGetUserProfile}}" color="#5595D9" bindtap="binSignInButton" type="info">登錄</van-button>
+    <van-button wx:if="{{canIUseGetUserProfile}}" color="#5595D9" bindtap="binSignInButton" type="info" size="normal" round>登錄</van-button>
     <!-- 不可調用則使用匿名的用戶信息 -->
     <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 獲取頭像暱稱canIUse </button>
     <!-- <view wx:else> 请使用1.4.4及以上版本基础库 </view> -->
@@ -39,11 +39,11 @@
 <!-- 編輯個人資料互動 -->
 <view class="userinfo" wx:if="{{isSignIn}}" >
   <view wx:if="{{!bindEditMode}}">
-    <van-button plain type="primary" bind:click="bindEditPage_cancel">編輯個人信息</van-button>
+    <van-button plain type="primary" round bind:click="bindEditPage_cancel">編輯個人信息</van-button>
   </view>
   <view wx:else>
-    <van-button type="primary" plain bind:click="bindEditPage_confirm">保存</van-button><text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
-    <van-button type="danger" plain bind:click="bindEditPage_cancel">取消</van-button>
+    <van-button type="primary" plain round bind:click="bindEditPage_confirm">保存</van-button><text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+    <van-button type="danger" plain round bind:click="bindEditPage_cancel">取消</van-button>
   </view>
 </view>
 
