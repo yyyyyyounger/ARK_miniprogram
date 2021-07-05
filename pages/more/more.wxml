@@ -1,12 +1,13 @@
-<van-skeleton title row="3" loading="true">
+<van-skeleton title row="4" loading="true">
 <!-- loading為false時，顯示隱藏的內容 -->
   <view>實際內容</view>
 </van-skeleton>
 
 <text>\n</text>
 
+
 <van-grid gutter="{{ 10 }}" column-num="2">
-  <van-grid-item icon="apps-o"    text="小功能"         bindtap="jumpToSmallFun" />
+  <van-grid-item icon="apps-o" text="小功能"         bindtap="jumpToSmallFun" />
   <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
   <van-grid-item icon="more-o"    text="關於"           bindtap="jumpToAbout" />
   <van-grid-item icon="chat-o"    text="反饋"           bindtap="jumpToFeedBack" />

@@ -40,7 +40,7 @@ function writeUserInfoInput () {
   }
   app.globalData.userInfoInput = userInfoInput;
 }
-// 數據output
+// 數據對外接口
 module.exports = {
   // 出口名為testJsonList，類型為jsonDIY數據
   userInfoInput :         userInfoInput,

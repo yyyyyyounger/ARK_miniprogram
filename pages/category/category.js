@@ -11,7 +11,7 @@ Page({
     
   },
   onShow: function() {
-    
+    this.getTabBar().init();
   },
   onHide: function() {
 

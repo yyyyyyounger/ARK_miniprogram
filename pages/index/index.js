@@ -74,6 +74,7 @@ Page({
     this.onShow();
   },
   onShow (){  //頁面展示時，觸發動畫
+    this.getTabBar().init();
     // this.app.sliderAnimaMode(this, 'slide_up1', -200, 1, 0, 0);
     // this.app.sliderAnimaMode(this, 'slide_up2', -200, 1, 0, 300);
     // this.app.sliderAnimaMode(this, 'slide_up3', -200, 1, 0, 600);

@@ -170,11 +170,9 @@ Page({
   },
 
   onShow () {
+    this.getTabBar().init();
     // this.app.sliderAnimaMode(this, 'slide_right1', 100, 1, 1, 0);
     // this.app.sliderAnimaMode(this, 'slide_right2', -100, 1, 1, 0);
-
-
-
     console.log("onShow()完成");
   },
 

@@ -4,6 +4,7 @@
 <van-toast id="van-toast" />
 <text>\n</text>
 
+
 <van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" wx:if="{{!isSignIn}}" />
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
