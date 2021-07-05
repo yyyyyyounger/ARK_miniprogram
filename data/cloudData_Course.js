@@ -11,19 +11,20 @@ var classInfo_empty = [
   { id:9, name:"助手id:",   shortName:"helperid",       input:"None",                    canEdit:false ,    canDisplay:false },
   { id:10, name:"追蹤人數:", shortName:"followers",     input:"None",                    canEdit:true,      canDisplay:true },    // 該分享受追蹤的人數
   { id:11, name:"課程狀態:", shortName:"courseState",   input:"None",                    canEdit:true,      canDisplay:true },    // 可設定為 "預備中", "講課中", "已結束"
-  { id:12, name:"簽到密碼:", shortName:"attendCode",    input:"None",                    canEdit:true,      canDisplay:true },    // 簡明易了
+  { id:12, name:"課程星級:", shortName:"courseStars",   input:"None",                    canEdit:true,      canDisplay:true },    // 將影響講者星級
+  { id:13, name:"簽到密碼:", shortName:"attendCode",    input:"None",                    canEdit:true,      canDisplay:true },    // 簡明易了
 ];
 
-// let userInfoInput_empty = [
-//     { id:0, name:"UM ID:",    shortName:"umId",         input:"未登入", display:true,   canEdit:true },
-//     { id:1, name:"姓名:",     shortName:"name",         input:"未登入", display:true,   canEdit:true },
-//     { id:2, name:"專業:",     shortName:"studentMajor", input:"未登入", display:true,   canEdit:true },
-//     { id:3, name:"年級:",     shortName:"studentYear",  input:"未登入", display:true,   canEdit:true },
-//     { id:4, name:"組織次數:", shortName:"holdTimes",    input:0,        display:true,   canEdit:false },
-//     { id:5, name:"參與次數:", shortName:"joinTimes",    input:0,        display:true,   canEdit:false },
-//     { id:6, name:"星級評分:", shortName:"stars",        input:0,        display:true,  canEdit:false },
-//     { id:7, name:"註冊時間:", shortName:"signUpTime",   input:"未登入",  display:true,  canEdit:false },
-//     { id:8, name:"ARKid:",   shortName:"arkId",        input:"未登入",  display:true,  canEdit:false },
-//     { id:9, name:"管理員:",   shortName:"admin",        input:false,    display:false, canEdit:false },
-//     {       name:"isSignUp:", shortName:"isSignUp",    input: false, },
-// ];
+let userInfoInput_empty = [
+    { id:0, name:"UM ID:",    shortName:"umId",         input:"未登入", display:true,   canEdit:true },
+    { id:1, name:"姓名:",     shortName:"name",         input:"未登入", display:true,   canEdit:true },
+    { id:2, name:"專業:",     shortName:"studentMajor", input:"未登入", display:true,   canEdit:true },
+    { id:3, name:"年級:",     shortName:"studentYear",  input:"未登入", display:true,   canEdit:true },
+    { id:4, name:"組織次數:", shortName:"holdTimes",    input:0,        display:true,   canEdit:false },
+    { id:5, name:"參與次數:", shortName:"joinTimes",    input:0,        display:true,   canEdit:false },
+    { id:6, name:"星級評分:", shortName:"stars",        input:0,        display:true,  canEdit:false },
+    { id:7, name:"註冊時間:", shortName:"signUpTime",   input:"未登入",  display:true,  canEdit:false },
+    { id:8, name:"ARKid:",   shortName:"arkId",        input:"未登入",  display:true,  canEdit:false },
+    { id:9, name:"管理員:",   shortName:"admin",        input:false,    display:false, canEdit:false },
+    {       name:"isSignUp:", shortName:"isSignUp",    input: false, },
+];
