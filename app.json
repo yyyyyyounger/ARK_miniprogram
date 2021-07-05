@@ -1,5 +1,6 @@
 {
   "pages":[
+    "pages/user/editPage/editPage",
     "pages/index/index",
     "pages/user/user",
     "pages/test/test",
@@ -10,7 +11,6 @@
     "pages/more/smallFun/smallFun",
     "pages/more/about/about",
     "pages/more/feedBack/feedBack",
-    "pages/user/editPage/editPage",
     "pages/footer/footer",
     "pages/protocol/protocol",
     "pages/category/allCourses/allCourses",

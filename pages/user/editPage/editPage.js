@@ -1,5 +1,6 @@
 var app =  getApp();  // 獲取全局數據
-var cloudData = require('../../../data/json.js')
+var cloudDataPast = require('../../../data/json.js')
+var cloudData = require('../../../data/cloud.js')
 
 Page({
   data: {
@@ -20,7 +21,8 @@ Page({
     clickButton: 0,
   },
   onLoad() {
-    
+
+
   },
   onShow() {
     // 從全局數據中讀取
@@ -52,13 +54,7 @@ Page({
     }
     console.log("onShow() - editPage加載完成");
   },
-  onUnload() {
-    if (this.data.clickbutton) {
-      
 
-      app.globalData.isUserSignUp = true;
-    }
-  },
   formInputChange(e) {
     // 输入监听，該方法可以多個input綁定同一個函數
     let item = e.currentTarget.dataset.model;
