@@ -23,7 +23,7 @@ let userInfoInput = [
   { id:7, name:"註冊時間:", shortName:"signUpTime",   input:"2021/07/04",  display:true,  canEdit:false },
   { id:8, name:"ARKid:",   shortName:"arkId",        input:"001",   display:true,  canEdit:false },
   { id:9, name:"管理員:",   shortName:"admin",        input:true,    display:false, canEdit:false },
-  {       name:"註冊狀態：", shortName:"isSignUp",    input: false, },
+  {       name:"註冊狀態：", shortName:"isSignUp",    input: true, },
 ];
 
 // 完sem日服務器數據

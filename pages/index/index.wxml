@@ -17,14 +17,22 @@ bind:close="closePopup"
 			<text class="devColor">{{durationDay}}</text> 天
 		</view>
 	</view>
-	<view class="flexCenter" wx:if="{{isSignIn && isSignUp}}">
-		歡迎回來！第 {{arkId}} 位ARKer ！ ♂
+	
+	<view class="author">一言：</view>
+	<view>
+		<!-- <view class="bracket left">『</view> -->
+		<view class="word" id="hitokoto_text">{{moto.hitokoto}}</view>
+		<!-- <view class="bracket right">』</view> -->
+		<view class="author" id="hitokoto_author">—— 「{{(!moto.from_who)?moto.from:moto.from_who}}」</view>
 	</view>
-
+	
+	<view class="flexCenter" wx:if="{{isSignIn && isSignUp}}">
+		歡迎回來！第 {{arkId}} 位ARKer ！
+	</view>
 </van-popup>
 
 
-<!-- <text>\n</text> -->
+<text>\n</text>
 <!-- 公告區 -->
 <van-notice-bar
   left-icon="volume-o"

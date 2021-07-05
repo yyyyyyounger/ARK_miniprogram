@@ -15,3 +15,32 @@
     flex-direction: column;
     align-items: center;
 }
+
+/* 一言樣式 */
+.bracket.left {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.word {
+    font-size: 40rpx;
+    text-align: center;
+    line-height: 60rpx;
+    word-break: normal;
+    margin: 0;
+    padding: 15rpx 20rpx;
+}
+.bracket.right {
+    position: absolute;
+    /* position: relative; */
+    top: 200rpx;
+    right: 0;
+    /* bottom: 0; */
+}
+.author {
+    font-size: 35rpx;
+    color: rgb(0, 0, 0);
+    /* float: right; */
+    text-align: center;
+    /* margin-top: 10rpx; */
+}

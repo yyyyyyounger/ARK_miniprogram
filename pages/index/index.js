@@ -32,9 +32,9 @@ Page({
         activeIcon: 'fail',
       },
     ],
-
     show_popup:false,
     // Vant - finish
+    moto:[],    // 一言API
     ARK_Notice:"ARK協議v1.01已發佈！點擊查看",
     isShow : false,
     projStartTime: [],
@@ -44,6 +44,7 @@ Page({
   onLoad: function() {
     this.app = getApp();
     this.showPopup();     // 展示頂部彈出層
+    this.getOneMoto();
 // 模擬向服務器請求的延時
     // this.app.toastLoadingDIY();
     wx.showShareMenu({    // 轉發按鈕所必須
@@ -146,6 +147,26 @@ Page({
     wx.switchTab({
       url: '../category/category'
     });
+  },
+  // 一言API獲取
+  getOneMoto: function() {
+    var that = this;
+    wx.request({
+      // url: 'https://api.xygeng.cn/one',
+      url: 'https://v1.hitokoto.cn/',
+      method: 'GET',
+      dataType: 'json',
+      success: function(res) {
+        that.setData({
+          moto: res.data
+        })
+        console.log(that.data.moto);
+      },
+      fail: function(err) {console.log("獲取一言失敗");}, //请求失败
+      complete: function() {} //请求完成后执行的函数
+    })
+    // 動態設定樣式的間距 - 未完成
+    
   },
   
 }); 

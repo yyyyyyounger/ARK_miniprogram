@@ -9,4 +9,6 @@
 
 <van-tag type="danger" size="large">Vant</van-tag>
 <text>\n\n</text>
+<van-tag type="danger" size="large">一言API</van-tag>
+<text>\n\n</text>
 <van-tag type="danger" size="large">打賞頁</van-tag>
