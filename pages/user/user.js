@@ -90,7 +90,7 @@ Page({
     // this.app.toastLoadingDIY();   // 模擬向服務器請求的延時
 
 // 查詢用戶授權登錄狀態，保存頭像等操作，需要後端融合
-// https://developers.weixin.qq.com/community/develop/article/doc/000a4e9d86002857cf687226851413
+    // https://developers.weixin.qq.com/community/develop/article/doc/000a4e9d86002857cf687226851413
 
     
 // 拉取數據(複製) - userInfoInput - 雲端 → 本地
@@ -140,12 +140,19 @@ Page({
       studentYear :   cloudData.studentYear,
       studentMajor :  cloudData.studentMajor,
     })
+    let studentMajorArray = [];
+    for (let i = 0; i < this.data.studentMajor.length; i++) { // 抽取數組元素 插入對象數組
+      let studentMajorObj = {};
+      studentMajorObj.name = this.data.studentMajor[i];
+      studentMajorArray.push(studentMajorObj);
+    }
     // 生成userInfoInput裡允許顯示的設置數組
     let InfoDisplay = this.data.userInfoInput.map((item)=>{    return item.display   });
     // 生成userInfoInput裡允許編輯的設置數組
     let canEdit     = this.data.userInfoInput.map((item)=>{    return item.canEdit    });
     // 允許編輯/顯示 → setData
-    this.setData({    InfoDisplay, canEdit    });
+    this.setData({    InfoDisplay, canEdit, actions_sheet_major:studentMajorArray    });
+    
     
 // 未理解的神秘執行 - 未完成
     if (wx.getUserProfile) {
