@@ -1,4 +1,5 @@
 var app = getApp(); 
+var cloudData = require('../../data/cloud.js')
 
 Page({
   data: {
@@ -45,19 +46,32 @@ Page({
     this.showPopup();     // 展示頂部彈出層
 // 模擬向服務器請求的延時
     // this.app.toastLoadingDIY();
-    wx.showShareMenu({
+    wx.showShareMenu({    // 轉發按鈕所必須
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
 
+    if (app.globalData.isSignIn) {
+      let isSignIn = true;
+      if (cloudData.userInfoInput[10].input) {
+        var isSignUp = true;
+        var arkId = cloudData.userInfoInput[8].input;
+      }
+      this.setData({
+        isSignIn,
+        isSignUp,
+        arkId
+      })
+    }
+    
+
     this.setData({
       projStartTime : app.globalData.projStartTime[0]
     });
-    console.log("項目開始時間："+this.data.projStartTime.Year +'/'+ this.data.projStartTime.Month +'/'+ this.data.projStartTime.Day);
+    // console.log("項目開始時間："+this.data.projStartTime.Year +'/'+ this.data.projStartTime.Month +'/'+ this.data.projStartTime.Day);
     // 計算已過日期
     this.app.calcDurationDay(this,1,'2021/06/03');
     this.onShow();
-    console.log("onLoad() - index加載完成");
   },
   onShow (){  //頁面展示時，觸發動畫
     // this.app.sliderAnimaMode(this, 'slide_up1', -200, 1, 0, 0);

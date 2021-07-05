@@ -133,6 +133,7 @@ Page({
       studentName_input :   this.data.userInfoInput.find(o => o.shortName === 'name').input ,
       studentMajor_input :  this.data.userInfoInput.find(o => o.shortName === 'studentMajor').input ,
       studentYear_input :   this.data.userInfoInput.find(o => o.shortName === 'studentYear').input , 
+      starsLevel :          this.data.userInfoInput.find(o => o.shortName === 'stars').input , 
       isSignUp :            this.data.userInfoInput.find(o => o.shortName === 'isSignUp').input , 
       bindEditMode :        false,
 
@@ -377,17 +378,29 @@ Page({
       });
   
       let userInfo_isSignUpIndex = that.data.userInfoInput.findIndex(o=> o.shortName === 'isSignUp' );
-// if 本地註冊狀態為false，但能來到此的邏輯都是能正確註冊，因此寫入本地註冊時間
+// if 本地註冊狀態為false，但能來到此的邏輯都是能正確註冊，因此寫入本地註冊時間和ARKid - 未完成
       if (!that.data.userInfoInput[userInfo_isSignUpIndex].input) {
         let wTime = that.data.userInfoInput.findIndex(o=> o.shortName === 'signUpTime' );
         let writeTime = 'userInfoInput['+wTime+'].input';
         // console.log(that.data.today);
         that.setData({  [writeTime] : that.data.today,  })
+        // ARKid
+        let arkIdLocal = Math.round(Math.random()*1000);  // 此處的ARKid用的是隨機數
+        let wArkId = that.data.userInfoInput.findIndex(o=> o.shortName === 'arkId' );
+        let writeArkId = 'userInfoInput['+wArkId+'].input';
+        that.setData({  [writeArkId] : arkIdLocal,  })
       }
 // 修改本地註冊狀態為 true
       that.data.userInfoInput[userInfo_isSignUpIndex].input = true;
 // 上傳數據 本地 → 雲端
-      cloudData.userInfoInput = that.data.userInfoInput;
+      // 轉化為字符串才能對比數組
+      if ( JSON.stringify(cloudData.userInfoInput) == JSON.stringify(that.data.userInfoInput) ) {
+        console.log("完全沒有修改呢！");
+      }
+      else {    // 本地 → 雲端，更新數組
+        console.log("有修改！Update！");
+        cloudData.userInfoInput = that.data.userInfoInput;
+      }
       console.log("上傳後雲端的數據：",cloudData.userInfoInput);
       Notify({ type: 'success', message: '修改成功！建議使用下拉刷新頁面喔！' });
       this.onLoad();

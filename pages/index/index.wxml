@@ -10,9 +10,8 @@ bind:close="closePopup"
 			<text class="devColor">{{durationDay}}</text> 天
 		</view>
 	</view>
-	<text>\n</text>
-	<view class="flexCenter">
-		歡迎回來！第 999 位ARKer ！ ♂
+	<view class="flexCenter" wx:if="{{isSignIn && isSignUp}}">
+		歡迎回來！第 {{arkId}} 位ARKer ！ ♂
 	</view>
 
 </van-popup>

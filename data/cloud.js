@@ -6,7 +6,7 @@ let userInfoInput_empty = [
   { id:3, name:"年級:",     shortName:"studentYear",  input:"未登入", display:true,   canEdit:true },
   { id:4, name:"組織次數:", shortName:"holdTimes",    input:0,        display:true,   canEdit:false },
   { id:5, name:"參與次數:", shortName:"joinTimes",    input:0,        display:true,   canEdit:false },
-  { id:6, name:"星級:",     shortName:"stars",        input:0,        display:true,  canEdit:false },
+  { id:6, name:"星級評分:", shortName:"stars",        input:0,        display:true,  canEdit:false },
   { id:7, name:"註冊時間:", shortName:"signUpTime",   input:"未登入",  display:true,  canEdit:false },
   { id:8, name:"ARKid:",   shortName:"arkId",        input:"未登入",  display:true,  canEdit:false },
   { id:9, name:"管理員:",   shortName:"admin",        input:false,    display:false, canEdit:false },
@@ -19,7 +19,7 @@ let userInfoInput = [
   { id:3, name:"年級:",     shortName:"studentYear",  input:"大二", display:true,   canEdit:true },
   { id:4, name:"組織次數:", shortName:"holdTimes",    input:1,        display:true,   canEdit:false },
   { id:5, name:"參與次數:", shortName:"joinTimes",    input:5,        display:true,   canEdit:false },
-  { id:6, name:"星級:",     shortName:"stars",        input:3,        display:true,  canEdit:false },
+  { id:6, name:"星級評分:", shortName:"stars",        input:3,        display:true,  canEdit:false },
   { id:7, name:"註冊時間:", shortName:"signUpTime",   input:"2021/07/04",  display:true,  canEdit:false },
   { id:8, name:"ARKid:",   shortName:"arkId",        input:"001",   display:true,  canEdit:false },
   { id:9, name:"管理員:",   shortName:"admin",        input:true,    display:false, canEdit:false },
@@ -30,7 +30,7 @@ let userInfoInput = [
 var semFinishDay = '2022/01/05';
 // 雲端可以定義顯示的專業選擇和專業
 var studentYear = ["大一", "大二", "大三", "大四"];
-var studentMajor = ["ECE", "CPS", "xxx", "土木"];
+var studentMajor = ["ECE - 電機", "CIS - 計算機", "CEE - 土木", "EME - 機電", "MMA - 數學", "PHC - 物理化學", ];
 
 
 function writeUserInfoInput () {
