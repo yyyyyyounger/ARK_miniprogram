@@ -13,9 +13,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-     this.setData({
-       showJsonList: localData.testJsonList
-     })
+    // 複製數據test
+    var b = JSON.parse(JSON.stringify(localData.userInfoInput_empty));
+    b[2].input = "CPS";
+    console.log("对象b：",b);
+    console.log("对象empty：",localData.userInfoInput_empty);
   },
 
   /**

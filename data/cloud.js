@@ -26,10 +26,11 @@ let userInfoInput = [
   {       name:"註冊狀態：", shortName:"isSignUp",    input: false, },
 ];
 
-// 完sem日
+// 完sem日服務器數據
 var semFinishDay = '2022/01/05';
+// 雲端可以定義顯示的專業選擇和專業
 var studentYear = ["大一", "大二", "大三", "大四"];
-var studentMajor = ["ECE", "CPS", "xxx"];
+var studentMajor = ["ECE", "CPS", "xxx", "土木"];
 
 
 function writeUserInfoInput () {

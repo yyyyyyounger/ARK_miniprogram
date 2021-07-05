@@ -7,7 +7,7 @@
 <van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" wx:if="{{!isSignIn}}" />
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
-  <!-- 向微信庫詢問是否能使用openData，if可以，展示頭像、WeChat ID -->
+  <!-- 向微信庫詢問是否能使用openData，if可以，直接展示頭像、WeChat ID -->
   <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
     <!-- 設定頭像樣式 -->
     <view class="userinfo-avatar" bindtap="editProfile">
@@ -42,8 +42,8 @@
     <van-button plain type="primary" bind:click="bindEditPage_cancel">編輯個人信息</van-button>
   </view>
   <view wx:else>
-    <van-button type="primary" bind:click="bindEditPage_confirm">保存</van-button>
-    <van-button type="danger" bind:click="bindEditPage_cancel">取消</van-button>
+    <van-button type="primary" plain bind:click="bindEditPage_confirm">保存</van-button><text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;</text>
+    <van-button type="danger" plain bind:click="bindEditPage_cancel">取消</van-button>
   </view>
 </view>
 
@@ -75,8 +75,8 @@ wx:if="{{InfoDisplay[index]}}"
   <van-cell center clickable="{{canEdit[index]}}" size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
     <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
       <view wx:if="{{(index==2)||(index==3)}}">   <!-- 可選取的值 -->
-        <text wx:if="{{index==2}}">{{studentMajor_input}}</text>
-        <text wx:else>{{studentYear_input}}</text>
+        <text wx:if="{{index==2}}">{{studentMajor_input}} </text>
+        <text wx:else>{{studentYear_input}} </text>
         <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>   <!-- 右箭頭 -->
       </view>
       <view wx:else>    <!-- 輸入框 -->
@@ -85,9 +85,14 @@ wx:if="{{InfoDisplay[index]}}"
         data-cellIndex="{{index}}"
         clearable
         center
+        required
+        hold-keyboard	
+        maxlength = "{{index==userInfoInput_umIdIndex?'8':'20'}}"
+        show-word-limit = "{{index==userInfoInput_umIdIndex ? true : false}}"
+        error-message = "{{index==userInfoInput_umIdIndex ? umIdError : nameError}}"
         size = "large"
         label=""
-        placeholder="e.g. {{index===userInfoInput_umIdIndex ? '8位DC123456':'陳大文'}}"
+        placeholder="e.g. {{index===userInfoInput_umIdIndex ? 'DC123456':'陳大文'}}"
         bind:change="bindCellInput"
         >
         </van-field>

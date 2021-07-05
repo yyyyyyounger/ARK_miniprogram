@@ -2,6 +2,8 @@ import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 // import Notify from '../miniprogram_npm/@vant/weapp/notify/notify';
 // import Dialog from '../miniprogram_npm/@vant/weapp/dialog/dialog';
 
+// var b = JSON.parse(JSON.stringify(數組a));  複製一份數組a的數據到數組b
+
 //app.js
 App({
   //onLaunch,onShow: options(path,query,scene,shareTicket,referrerInfo(appId,extraData))
