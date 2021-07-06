@@ -18,7 +18,7 @@ bind:close="closePopup"
 		</view>
 	</view>
 	
-	<view class="author">一言：</view>
+	<!-- <view class="author">一言：</view> -->
 	<view>
 		<!-- <view class="bracket left">『</view> -->
 		<view class="word" id="hitokoto_text">{{moto.hitokoto}}</view>

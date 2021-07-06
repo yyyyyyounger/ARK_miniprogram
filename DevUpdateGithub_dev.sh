@@ -1,5 +1,9 @@
 echo "--------------------- Update to Github ---------------------" 
 echo " "
+# 修改成自己的信息
+git config --global user.name "yyyyyyounger"
+git config --global user.email "1049825685@qq.com"
+
 
 git add -f -A
 
