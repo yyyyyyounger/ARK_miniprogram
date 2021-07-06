@@ -1,3 +1,6 @@
+<!-- 彈出類 -->
+<van-toast id="van-toast" />
+
 <van-button type="primary" size="" block>我要開課 <van-icon name="plus"/></van-button>
 
 <!-- <text>\n\n</text> -->
@@ -13,18 +16,61 @@
 </van-sidebar> -->
 
 <van-tabs sticky swipeable animated color="#56BF63">
-  <van-tab title="所有課程">
-    <!-- <van-skeleton title row="15" loading="true">
-      loading為false時，顯示隱藏的內容
-      <view>實際內容</view>
-    </van-skeleton> -->
-    <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 65 }}" >
-      <view slot="left">选择</view>
-      <van-cell-group>
-        <van-cell title="单元格" value="内容" />
-      </van-cell-group>
-      <view slot="right">删除</view>
-    </van-swipe-cell>
+  <van-tab title="已發佈課程">
+
+  <!-- 下拉菜單 -->
+  <van-dropdown-menu>
+    <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" bind:change="dropDownChange" />
+    <van-dropdown-item value="{{ value1 }}" options="{{ value1==0 ? option3 : option2 }}" />
+    <!-- 按鈕 -->
+    <!-- <van-dropdown-item id="item" title="{{ itemTitle }}">
+      <van-cell title="{{ switchTitle1 }}">
+        <van-switch
+          slot="right-icon"
+          size="24px"
+          style="height: 26px"
+          checked="{{ switch1 }}"
+          active-color="#ee0a24"
+          bind:change="onSwitch1Change"
+        />
+      </van-cell>
+      <van-cell title="{{ switchTitle2 }}">
+        <van-switch
+          slot="right-icon"
+          size="24px"
+          style="height: 26px"
+          checked="{{ switch2 }}"
+          active-color="#ee0a24"
+          bind:change="onSwitch2Change"
+        />
+      </van-cell>
+      <view style="padding: 5px 16px;">
+        <van-button type="danger" block round bind:click="onConfirm">
+          确认
+        </van-button>
+      </view>
+    </van-dropdown-item> -->
+  </van-dropdown-menu>
+
+    <view wx:for="{{4}}">
+      <van-cell value="" clickable use-label-slot>
+        <view slot="title">
+          <view class="van-cell-text">ECEN1008</view>
+          <van-tag type="danger">ECE</van-tag>，<van-tag type="danger">PHC</van-tag>
+        </view>
+        <view slot="label">
+          <view>時間：</view>
+          <view>地點：</view>
+        </view>
+        <!-- <view slot="icon">
+          testIcon
+        </view> -->
+        <view slot="right-icon">
+          <text>\n</text>
+          <van-button icon="star-o" size="small" type="primary">Follow</van-button>
+        </view>
+      </van-cell>
+    </view>
 
   </van-tab>
 

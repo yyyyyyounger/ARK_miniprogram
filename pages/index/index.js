@@ -41,10 +41,13 @@ Page({
     today:'',
     durationDay:0,
   },
-  onLoad: function() {
+  onLoad: function(scene) {
     this.app = getApp();
-    this.showPopup();     // 展示頂部彈出層
-    this.getOneMoto();
+    if (scene!="refresh") {
+      this.showPopup();     // 展示頂部彈出層
+      this.getOneMoto();
+    }
+    console.log(scene);
 // 模擬向服務器請求的延時
     // this.app.toastLoadingDIY();
     wx.showShareMenu({    // 轉發按鈕所必須
@@ -90,6 +93,8 @@ Page({
     console.log("onHide() - index觸發");
   },
   onPullDownRefresh() {
+    this.getOneMoto();
+    this.showPopup();     // 展示頂部彈出層
     this.app.onPullDownRefresh(this);
   },
   // 監聽用戶滾動畫面動作

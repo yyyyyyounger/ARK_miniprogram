@@ -38,7 +38,7 @@ App({
   onPullDownRefresh : function(that) {   
     that.app.toastLoadingDIY();
     setTimeout(() => {
-      that.onLoad();
+      that.onLoad("refresh");
     }, 2500);
     setTimeout(() => {
       wx.stopPullDownRefresh();

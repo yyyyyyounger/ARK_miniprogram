@@ -1,3 +1,5 @@
+<!-- 彈出類 -->
+<van-toast id="van-toast" />
 <van-popup 
 show="{{ show_popup }}" 
 position="top"
