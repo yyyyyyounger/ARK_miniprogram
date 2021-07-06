@@ -34,7 +34,6 @@ bind:close="closePopup"
 </van-popup>
 
 
-<text>\n</text>
 <!-- 公告區 -->
 <van-notice-bar
   left-icon="volume-o"

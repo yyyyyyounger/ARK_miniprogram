@@ -16,7 +16,7 @@ Page({
       { text: '最近', value: 0 },
       { text: '最遠', value: 1 },
     ],
-    value1: 0,
+    dropDownIndex: 0,
 
   },
   onLoad: function() {
@@ -38,7 +38,10 @@ Page({
   },
   // 下拉菜單
   dropDownChange(e) {
-    console.log(e.detail);
+    console.log(e);
+    this.setData({
+      dropDownIndex : e.detail
+    })
   },
 
   onConfirm() {
