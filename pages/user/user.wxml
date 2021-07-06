@@ -4,7 +4,6 @@
 <van-toast id="van-toast" />
 <text>\n</text>
 
-
 <van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" wx:if="{{!isSignIn}}" />
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
@@ -73,7 +72,7 @@ wx:for="{{userInfoInput}}"
 wx:key="id"
 wx:if="{{InfoDisplay[index]}}"
 >
-  <van-cell icon="info-o" center clickable="{{canEdit[index]}}" size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
+  <van-cell title-width="250rpx" icon="info-o" center clickable="{{canEdit[index]}}" size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
     <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
       <view wx:if="{{(index==2)||(index==3)}}">   <!-- 可選取的值 -->
         <text wx:if="{{index==2}}">{{studentMajor_input}} </text>
@@ -92,8 +91,7 @@ wx:if="{{InfoDisplay[index]}}"
         show-word-limit = "{{index==userInfoInput_umIdIndex ? true : false}}"
         error-message = "{{index==userInfoInput_umIdIndex ? umIdError : nameError}}"
         size = "large"
-        label=""
-        placeholder="e.g. {{index===userInfoInput_umIdIndex ? 'DC123456':'陳大文'}}"
+        placeholder="e.g. {{index===userInfoInput_umIdIndex ? 'DC123456':'陳大文, 請輸入全名！'}}"
         bind:change="bindCellInput"
         >
         </van-field>

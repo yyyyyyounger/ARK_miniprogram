@@ -14,14 +14,36 @@
 
 <van-tabs sticky swipeable animated color="#56BF63">
   <van-tab title="所有課程">
-    <van-skeleton title row="15" loading="true">
-      <!-- loading為false時，顯示隱藏的內容 -->
+    <!-- <van-skeleton title row="15" loading="true">
+      loading為false時，顯示隱藏的內容
       <view>實際內容</view>
-    </van-skeleton>
+    </van-skeleton> -->
+    <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 65 }}" >
+      <view slot="left">选择</view>
+      <van-cell-group>
+        <van-cell title="单元格" value="内容" />
+      </van-cell-group>
+      <view slot="right">删除</view>
+    </van-swipe-cell>
+
+    <van-swipe-cell
+      id="swipe-cell2"
+      right-width="{{ 65 }}"
+      left-width="{{ 65 }}"
+      name="示例"
+      bind:open="onOpen"
+    >
+      <view slot="left" class="van-swipe-cell__left">选择</view>
+      <van-cell-group>
+        <van-cell title="单元格" value="内容" />
+      </van-cell-group>
+      <view slot="right" class="van-swipe-cell__right">删除</view>
+    </van-swipe-cell>
+
   </van-tab>
 
   <van-tab title="我的Follow">
-    <van-skeleton title row="2" loading="true">
+    <van-skeleton title row="15" loading="true">
       <!-- loading為false時，顯示隱藏的內容 -->
       <view>實際內容</view>
     </van-skeleton>
@@ -29,7 +51,7 @@
   </van-tab>
 
   <van-tab title="參與記錄">
-    <van-skeleton title row="2" loading="true">
+    <van-skeleton title row="15" loading="true">
       <!-- loading為false時，顯示隱藏的內容 -->
       <view>實際內容</view>
     </van-skeleton>
