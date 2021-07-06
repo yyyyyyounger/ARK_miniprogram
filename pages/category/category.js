@@ -16,24 +16,13 @@ Page({
   onHide: function() {
 
   },
-  onUnload: function() {
-
-  },
   onPullDownRefresh: function() {
     this.app.onPullDownRefresh(this);
   },
-  onReachBottom: function() {
 
-  },
-  onShareAppMessage: function() {
 
-  },
-  onPageScroll: function() {
 
-  },
-  onTabItemTap:function(item) {
-
-  },
+  // 跳轉規則
   jumpToallCourses (){
     wx:wx.navigateTo({
       url: './allCourses/allCourses',
