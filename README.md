@@ -83,3 +83,7 @@ input輸入框增加了一鍵清除按鈕。
 
 #### 2021-7-6
 開始製作 /pages/category 所有課程頁。
+
+
+#### 2021-7-7
+嘗試使用雲服務繞過HTTPS合法域名檢測，參考blog：https://developers.weixin.qq.com/community/develop/doc/000c82801a45e8ca18c7e8fba51800 。

@@ -8,9 +8,10 @@ import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 App({
   //onLaunch,onShow: options(path,query,scene,shareTicket,referrerInfo(appId,extraData))
   onLaunch: function(options) {
-    
+
   },
   onShow: function(options) {
+    wx.cloud.init();
     
   },
   onHide: function() {
