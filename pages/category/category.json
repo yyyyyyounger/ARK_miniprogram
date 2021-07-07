@@ -19,7 +19,9 @@
     "van-switch": "@vant/weapp/switch/index",
 
     "van-grid": "@vant/weapp/grid/index",
-    "van-grid-item": "@vant/weapp/grid-item/index"
+    "van-grid-item": "@vant/weapp/grid-item/index",
+
+    "van-sticky": "@vant/weapp/sticky/index"
 
   },
   "navigationBarTitleText": "課程頁"

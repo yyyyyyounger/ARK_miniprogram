@@ -1,6 +1,7 @@
 <!-- 彈出類 -->
 <van-toast id="van-toast" />
 <van-popup 
+z-index="9999999"
 show="{{ show_popup }}" 
 position="top"
 duration="500"
@@ -101,3 +102,6 @@ bind:close="closePopup"
 </van-skeleton>
 
 <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
+
+<!-- 免除自定義tabbar阻擋 -->
+<view class="bottom-watch"></view>

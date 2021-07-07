@@ -1,5 +1,5 @@
 <!-- 彈出類 -->
-<van-toast id="van-toast" />
+<van-toast id="van-toast" zIndex:9999999/>
 
 <!-- <text>\n</text> -->
 
@@ -14,40 +14,44 @@
 </van-sidebar> -->
 
 <van-tabs sticky swipeable animated color="#5595D9">
+
   <van-tab title="最新發佈">
-    <!-- 下拉菜單 -->
-    <van-dropdown-menu>
-      <van-dropdown-item value="{{ dropDownIndex }}" options="{{ option1 }}" bind:change="dropDownChange" />
-      <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
-      <!-- 按鈕 -->
-      <!-- <van-dropdown-item id="item" title="{{ itemTitle }}">
-        <van-cell title="{{ switchTitle1 }}">
-          <van-switch
-            slot="right-icon"
-            size="24px"
-            style="height: 26px"
-            checked="{{ switch1 }}"
-            active-color="#ee0a24"
-            bind:change="onSwitch1Change"
-          />
-        </van-cell>
-        <van-cell title="{{ switchTitle2 }}">
-          <van-switch
-            slot="right-icon"
-            size="24px"
-            style="height: 26px"
-            checked="{{ switch2 }}"
-            active-color="#ee0a24"
-            bind:change="onSwitch2Change"
-          />
-        </van-cell>
-        <view style="padding: 5px 16px;">
-          <van-button type="danger" block round bind:click="onConfirm">
-            确认
-          </van-button>
-        </view>
-      </van-dropdown-item> -->
-    </van-dropdown-menu>
+  
+    <van-sticky>
+      <!-- 下拉菜單 -->
+      <van-dropdown-menu>
+        <van-dropdown-item value="{{ dropDownIndex }}" options="{{ option1 }}" bind:change="dropDownChange" />
+        <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
+        <!-- 按鈕 -->
+        <!-- <van-dropdown-item id="item" title="{{ itemTitle }}">
+          <van-cell title="{{ switchTitle1 }}">
+            <van-switch
+              slot="right-icon"
+              size="24px"
+              style="height: 26px"
+              checked="{{ switch1 }}"
+              active-color="#ee0a24"
+              bind:change="onSwitch1Change"
+            />
+          </van-cell>
+          <van-cell title="{{ switchTitle2 }}">
+            <van-switch
+              slot="right-icon"
+              size="24px"
+              style="height: 26px"
+              checked="{{ switch2 }}"
+              active-color="#ee0a24"
+              bind:change="onSwitch2Change"
+            />
+          </van-cell>
+          <view style="padding: 5px 16px;">
+            <van-button type="danger" block round bind:click="onConfirm">
+              确认
+            </van-button>
+          </view>
+        </van-dropdown-item> -->
+      </van-dropdown-menu>
+    </van-sticky>
     <van-button type="primary" size="normal" color="#5595D9" round class="flexCenter">我要開課<van-icon name="plus"/></van-button>
 
     <view wx:for="{{6}}">
@@ -69,6 +73,7 @@
         </view>
       </van-cell>
     </view>
+  <view class="bottom-watch"></view>
 
   </van-tab>
 
@@ -101,15 +106,18 @@
 
     <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
 
+  <view class="bottom-watch"></view>
   </van-tab>
 
   <van-tab title="歸檔&記錄">
 
     <text>\n\n\n</text>
     <van-grid gutter="{{ 10 }}" column-num="2">
-      <van-grid-item icon="apps-o" text="所有課程"  bindtap="jumpToSmallFun" />
-      <van-grid-item icon="more-o" text="參與記錄"  bindtap="jumpToAbout" />
+      <van-grid-item icon="apps-o" text="所有課程" />
+      <van-grid-item icon="more-o" text="參與記錄" />
     </van-grid>
 
+  <view class="bottom-watch"></view>
   </van-tab>
+
 </van-tabs>

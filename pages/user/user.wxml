@@ -113,10 +113,13 @@ wx:if="{{InfoDisplay[index]}}"
 </van-cell-group>
 
 <!-- 換行 -->
-<text>\n\n</text>
-<!-- 此處如果能調用UM準確的時間則更好，詳細算法未寫，可以精細到幾幾年的sem 1 or 2 -->
+<!-- <text>\n\n</text> -->
+<!-- 此處如果能調用UM提供的時間則更好，詳細算法未寫，可以精細到幾幾年的sem 1 or 2 - 未完成-->
 <view class="iconfont">離完Sem還有<text class="devColor">{{durationDay_sem}}</text>天</view>
 <view class="iconfont">離畢業還有<text class="devColor">{{durationDay_Grudate}}</text>天，目前進度：</view>
-<text>\n</text>
 <!-- 進度條 -->
 <van-progress percentage="{{durationDay_Grudate_progress}}" />
+<text>\n</text>
+
+<!-- 免除自定義tabbar阻擋 -->
+<view class="bottom-watch"></view>

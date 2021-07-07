@@ -29,3 +29,15 @@ page{
     font-size: 40rpx;
     text-decoration: underline;
 }
+
+/* 避免自定義tabbar遮擋底部內容，需放置一個view */
+.bottom-watch {
+    /* position: absolute; */
+    position: relative;
+    bottom: 0;
+    /* width: 100%; */
+    /* margin-bottom: 100rpx; */
+    height: 110rpx;
+    background: transparent;
+    visibility: hidden;
+}
