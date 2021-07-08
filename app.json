@@ -76,6 +76,5 @@
     "van-dialog": "@vant/weapp/dialog/index",
     "van-transition": "@vant/weapp/transition/index",
     "van-toast": "@vant/weapp/toast/index"
-
   }
 }
