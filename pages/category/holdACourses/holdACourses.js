@@ -152,7 +152,8 @@ Page({
     // 觸發課程信息塊顏色改變
     let varActive = 'activeArray['+currentTap+']';
     this.setData({
-      [varActive] : true
+      [varActive] : true,
+      activeArrayIndex : currentTap
     })
   },
   // 步驟條

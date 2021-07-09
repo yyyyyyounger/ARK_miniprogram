@@ -30,7 +30,7 @@
 
 <view class="grid col-{{4}} padding-sm">
   <view class="padding-sm" wx:for="{{courseNameArray}}" wx:key="id">
-    <view class="bg-{{activeArray[index] ? ColorList[index].name : 'yellow'}} padding radius text-center shadow-blur" data-index="{{index}}" bindtap="BindAddInfo">
+    <view class="bg-{{activeArray[index] ? ColorList[index].name : 'yellow'}} padding radius text-center shadow-blur " data-index="{{index}}" bindtap="BindAddInfo">
         <text class="cuIcon-unfold text-sl" /> 
         <view class="text-lg">{{item}}</view>
       <view class="margin-top-sm text-df">點我添加</view>
