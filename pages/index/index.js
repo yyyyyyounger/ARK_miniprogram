@@ -33,7 +33,31 @@ Page({
       },
     ],
     show_popup:false,
-    // Vant - finish
+    // Vant - end
+    // Color - begin
+    cardCur: 0,
+    swiperList: [{
+      id: 0,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
+    }, {
+      id: 1,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg',
+    }, {
+      id: 2,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
+    }, {
+      id: 3,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
+    }, {
+      id: 4,
+      type: 'image',
+      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
+    }],
+    // Color - end
     moto:[],    // 一言API
     ARK_Notice:"ARK協議v1.01已發佈！點擊查看",
     isShow : false,
@@ -172,6 +196,13 @@ Page({
     })
     // 動態設定樣式的間距 - 未完成
     
+  },
+// Color - 輪播
+  // 獲取輪播圖 index
+  cardSwiper(e) {
+    this.setData({
+      cardCur: e.detail.current
+    })
   },
   
 }); 

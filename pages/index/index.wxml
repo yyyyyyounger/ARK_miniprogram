@@ -34,7 +34,6 @@ bind:close="closePopup"
 	</view>
 </van-popup>
 
-
 <!-- 公告區 -->
 <van-notice-bar
   left-icon="volume-o"
@@ -42,14 +41,17 @@ bind:close="closePopup"
   text="{{ARK_Notice}}" 
 	bindtap="handleTapProtocol"
 />
-<van-notice-bar
-  wrapable
-  scrollable="{{ false }}"
-  text="這裡需要有個很牛逼的公告欄 ♂"
-	bindtap="jumpToNotice"
-/>
+<!-- 輪播 - 未完成 -->
+<swiper class="card-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#5595D9">
+  <swiper-item wx:for="{{swiperList}}" wx:key="id" class="{{cardCur==index?'cur':''}}">
+    <view class="swiper-item">
+      <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+    </view>
+  </swiper-item>
+</swiper>
 
 <van-notice-bar mode="closeable" text="“Follow的分享” 可以在這裡看到喔！" />
+
 <!-- Follow課程展示區 -->
 <van-row>
 	<van-col span="16">

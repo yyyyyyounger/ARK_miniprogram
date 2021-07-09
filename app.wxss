@@ -1,6 +1,9 @@
 @import "./styles/iconfont.wxss";
 @import './miniprogram_npm/@vant/weapp/common/index.wxss';
 
+@import "colorui/main.wxss";
+@import "colorui/icon.wxss";
+
 page,view,text,swiper,swiper-item,image,navigator{
     padding: 0;
     margin: 0;
