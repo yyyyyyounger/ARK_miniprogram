@@ -114,7 +114,7 @@ Page({
       var consoleMeg = '已登錄 - ';
     }
     console.log(consoleMeg+'本地的userInfo為',this.data.userInfoInput);
-    // 生成簡易版(無input版)userInfo數組
+    // 生成簡易版(無input版)userInfo的shortName數組
     let shortNameArray =    this.data.userInfoInput.map((item)=>{    return item.shortName   });
     this.setData({
       userInfoInput_umIdIndex :         shortNameArray.findIndex(o=> o== "umId"),

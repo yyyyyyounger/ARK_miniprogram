@@ -75,7 +75,7 @@ Page({
       name: 'black',
       color: '#333333'
     },
-  ]
+    ],
   },
   //options(Object)
   onLoad: function(){
@@ -83,12 +83,39 @@ Page({
     let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
     this.setData({  courseInfoInput : arrayEmpty  });
 
-    // 生成userInfoInput裡允許顯示的設置數組
+    // 生成簡易版(無input版)userInfo的shortName數組
+    let shortNameArray =    this.data.courseInfoInput.map((item)=>{    return item.shortName   });
+    this.setData({
+      courseInfoInput_courseIdIndex       : shortNameArray.findIndex(o=> o== "courseId"),
+      courseInfoInput_courseNameIndex     : shortNameArray.findIndex(o=> o== "courseName"),
+      courseInfoInput_courseContentIndex  : shortNameArray.findIndex(o=> o== "courseContent"),
+      courseInfoInput_courseTagIndex      : shortNameArray.findIndex(o=> o== "courseTag"),
+      courseInfoInput_courseAdresIndex    : shortNameArray.findIndex(o=> o== "courseAdres"),
+      courseInfoInput_courseTimeIndex     : shortNameArray.findIndex(o=> o== "courseTime"),
+      courseInfoInput_speakerNameIndex    : shortNameArray.findIndex(o=> o== "speakerName"),
+      courseInfoInput_speakeridIndex      : shortNameArray.findIndex(o=> o== "speakerid"),
+      courseInfoInput_helperNameIndex     : shortNameArray.findIndex(o=> o== "helperName"),
+      courseInfoInput_helperidIndex       : shortNameArray.findIndex(o=> o== "helperid"),
+      courseInfoInput_followersIndex      : shortNameArray.findIndex(o=> o== "followers"),
+      courseInfoInput_courseStateIndex    : shortNameArray.findIndex(o=> o== "courseState"),
+      courseInfoInput_courseStarsIndex    : shortNameArray.findIndex(o=> o== "courseStars"),
+      courseInfoInput_attendCodeIndex     : shortNameArray.findIndex(o=> o== "attendCode"),
+    })
+    // 生成 userInfoInput裡允許顯示的設置數組
     let InfoDisplay = this.data.courseInfoInput.map(item=>{    return item.display   });
-    // 生成userInfoInput裡允許編輯的設置數組
+    // 生成 userInfoInput裡允許編輯的設置數組
     let canEdit     = this.data.courseInfoInput.map(item=>{    return item.canEdit    });
+    // 生成 只有"允許顯示"的課程名稱的數組  &  該數組長度下的用戶激活(填寫)課程信息狀態
+    let courseNameArray = [];
+    let activeArray = [];
+    for (let i = 0; i < InfoDisplay.length; i++) { // 抽取數組元素 插入對象數組
+      if (InfoDisplay[i]) {
+        courseNameArray.push(this.data.courseInfoInput[i].name);
+        activeArray.push(false);
+      }
+    }
     // 允許編輯/顯示 → setData
-    this.setData({    InfoDisplay, canEdit,   });
+    this.setData({    InfoDisplay, canEdit, courseNameArray, activeArray,   });
     
   },
   onReady: function(){
@@ -118,6 +145,15 @@ Page({
   //item(index,pagePath,text)
   onTabItemTap:function(item){
 
+  },
+  BindAddInfo(e) {
+    let currentTap = e.currentTarget.dataset.index;
+    console.log(currentTap);
+    // 觸發課程信息塊顏色改變
+    let varActive = 'activeArray['+currentTap+']';
+    this.setData({
+      [varActive] : true
+    })
   },
   // 步驟條
   basicsSteps() {

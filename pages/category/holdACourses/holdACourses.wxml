@@ -1,17 +1,21 @@
-<view>設置步驟條</view>
+<van-sticky>
 
-<view class="action">
-  <button class="cu-btn bg-green shadow" bindtap="numSteps">下一步</button>
-</view>
-
-<view class="cu-steps">
-  <view class="cu-item {{index>num?'':'text-blue'}}" wx:for="{{numList}}" wx:key>
-    <text class="num {{index==2?'err':''}}" data-index="{{index + 1}}"></text> {{item.name}}
+  <view>設置步驟條 - 待定 - 待完成</view>
+  
+  <view class="action">
+    <button class="cu-btn bg-green shadow" bindtap="numSteps">下一步</button>
   </view>
-</view>
+  
+  <view class="cu-steps">
+    <view class="cu-item {{index>num?'':'text-blue'}}" wx:for="{{numList}}" wx:key>
+      <text class="num {{index==2?'err':''}}" data-index="{{index + 1}}"></text> {{item.name}}
+    </view>
+  </view>
+
+</van-sticky>
 
 
-<view>課程信息錄入</view>
+<!-- 課程信息錄入 -->
 
 <!-- 不同格子代表不同課程信息 -->
 <!-- <view class="grid col-3 padding-sm">
@@ -24,7 +28,19 @@
 </view> -->
 
 
-<!-- for循環渲染方法 -->
+<view class="grid col-{{4}} padding-sm">
+  <view class="padding-sm" wx:for="{{courseNameArray}}" wx:key="id">
+    <view class="bg-{{activeArray[index] ? ColorList[index].name : 'yellow'}} padding radius text-center shadow-blur" data-index="{{index}}" bindtap="BindAddInfo">
+        <text class="cuIcon-unfold text-sl" /> 
+        <view class="text-lg">{{item}}</view>
+      <view class="margin-top-sm text-df">點我添加</view>
+    </view>
+  </view>
+</view>
+
+
+
+<!-- for循環渲染方法 - 優勢：渲染方便；劣勢：不美觀 - 未完成 -->
 <van-cell-group
 wx:for="{{courseInfoInput}}"
 wx:key="id"
