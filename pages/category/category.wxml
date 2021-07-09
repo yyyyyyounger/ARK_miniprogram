@@ -16,37 +16,8 @@
 <van-tabs sticky swipeable animated color="#5595D9">
 
   <van-tab title="最新發佈">
-    
-    <!-- 未完成 -->
-    <view class="cu-card dynamic {{isCard?'no-card':''}}">
-      <view class="cu-item shadow">
-        <view class="cu-list menu-avatar">
-          <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
-            <view class="content flex-sub">
-              <view>凯尔</view>
-              <view class="text-gray text-sm flex justify-between">
-                2019年12月3日
-              </view>
-            </view>
-          </view>
-        </view>
-        <view class="text-content">
-          折磨生出苦难，苦难又会加剧折磨，凡间这无穷的循环，将有我来终结！
-        </view>
-        <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
-          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);" wx:for="{{isCard?9:1}}" wx:key="{{index}}">
-          </view>
-        </view>
-        <view class="text-gray text-sm text-right padding">
-          <text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-          <text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-          <text class="cuIcon-messagefill margin-lr-xs"></text> 30
-        </view>
-      </view>
-    </view>
 
-    <text>\n\n</text>
+    <!-- <text>\n\n</text> -->
 
     <van-sticky>
       <!-- 下拉菜單 -->
@@ -83,10 +54,10 @@
         </van-dropdown-item> -->
       </van-dropdown-menu>
     </van-sticky>
-    <van-button type="primary" size="normal" color="#5595D9" round class="flexCenter">我要開課<van-icon name="plus"/></van-button>
+    <van-button type="primary" size="normal" color="#5595D9" round class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
 
     <view wx:for="{{6}}">
-      <van-cell value="" use-label-slot>
+      <!-- <van-cell value="" use-label-slot>
         <view slot="title">
           <view class="van-cell-text">ECEN1008</view>
           <van-tag type="danger">ECE</van-tag>，<van-tag type="danger">PHC</van-tag>
@@ -95,14 +66,50 @@
           <view>時間：</view>
           <view>地點：</view>
         </view>
-        <!-- <view slot="icon">
+        <view slot="icon">
           testIcon
-        </view> -->
+        </view>
         <view slot="right-icon">
           <text>\n</text>
           <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>Follow</van-button>
         </view>
-      </van-cell>
+      </van-cell> -->
+
+      <!-- 課程卡片 - 未完成 -->
+      <view class="cu-card dynamic ">
+        <view class="cu-item shadow">
+          <view class="cu-list menu-avatar">
+            <view class="cu-item">
+              <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+              <view class="content flex-sub">
+                <view>ECEN1008</view>
+                <view class="text-gray text-sm flex justify-between">
+                  發起日：2021-07-09
+                </view>
+              </view>
+              <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
+            </view>
+          </view>
+          <view class="slot text-content">
+            時間：<view>地點：</view>
+          </view>
+          <!-- <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+            <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);" wx:for="{{isCard?9:1}}" wx:key="{{index}}">
+            </view>
+          </view> -->
+          <view class="slot text-right">
+            <!-- 頭像組 -->
+            <view class="cu-avatar-group">
+              <view class="cu-avatar round lg" wx:for="{{5}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
+            </view> <text decode="true">...&nbsp;&nbsp;</text>
+          </view>
+          <!-- <view class="text-gray text-sm text-right padding">
+            <text class="cuIcon-attentionfill margin-lr-xs"></text> 10
+            <text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
+            <text class="cuIcon-messagefill margin-lr-xs"></text> 30
+          </view> -->
+        </view>
+      </view>
     </view>
   <view class="bottom-watch"></view>
 

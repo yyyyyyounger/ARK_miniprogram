@@ -56,24 +56,24 @@ Page({
     this.setData({ switch2: detail });
   },
 
-  // 跳轉規則
+// 頁面跳轉
   jumpToallCourses (){
-    wx:wx.navigateTo({
+    wx.navigateTo({
       url: './allCourses/allCourses',
     })
   },
   jumpTomyFollowCourses (){
-    wx:wx.navigateTo({
+    wx.navigateTo({
       url: './myFollowCourses/myFollowCourses',
     })
   },
   jumpTomyJoinCourses (){
-    wx:wx.navigateTo({
+    wx.navigateTo({
       url: './myJoinCourses/myJoinCourses',
     })
   },
   jumpToholdACourses (){
-    wx:wx.navigateTo({
+    wx.navigateTo({
       url: './holdACourses/holdACourses',
     })
   },
