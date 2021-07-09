@@ -1,71 +1,35 @@
-var localData = require('../../data/cloud.js')
+//获取应用实例
+// const app = getApp();
+var cloudData = require('../../data/cloud');
+var towxml = require('../../towxml/index');
 
 Page({
+    data: {
+        isLoading: true,                    // 判断是否尚在加载中
+        article: {}                     // 内容数据
+    },
+    onLoad: function () {
+      this.setData({  ARK: cloudData.ARK  });
 
-  /**
-   * 页面的初始数据
-   */
-  data: {
+      // let result = app.towxml(`# Markdown`,'markdown',{
+      //     base:'https://xxx.com',             // 相对资源的base路径
+      //     theme:'dark',                   // 主题，默认`light`
+      //     events:{                    // 为元素绑定的事件方法
+      //         tap:(e)=>{
+      //             console.log('tap',e);
+      //         }
+      //     }
+      // });
 
-  },
+      // let result = towxml(`# Markdown渲染`,'markdown',);
+      let result = towxml(this.data.ARK,'markdown',);
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    // 複製數據test
-    var b = JSON.parse(JSON.stringify(localData.userInfoInput_empty));
-    b[2].input = "CPS";
-    console.log("对象b：",b);
-    console.log("对象empty：",localData.userInfoInput_empty);
-  },
+      // 更新解析数据
+      this.setData({
+          article:result,
+          isLoading: false,
+      });
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+      // console.log(cloudData.ARK);
+    }
 })
