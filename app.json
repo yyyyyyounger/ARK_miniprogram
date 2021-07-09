@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/category/holdACourses/holdACourses",
     "pages/category/category",
-    "pages/index/index",
     "pages/user/user",
     "pages/more/more",
     "pages/test/test",
