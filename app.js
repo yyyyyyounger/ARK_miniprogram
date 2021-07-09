@@ -6,6 +6,8 @@ import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 
 //app.js
 App({
+  // 引入`towxml3.0`解析方法
+  // towxml:require('./towxml/index'),
   //onLaunch,onShow: options(path,query,scene,shareTicket,referrerInfo(appId,extraData))
   onLaunch: function(options) {
 
