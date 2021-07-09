@@ -79,20 +79,17 @@ input輸入框增加了一鍵清除按鈕。
     npm i @vant/weapp -S --production
 
 
-
-
 #### 2021-7-6
 開始製作 /pages/category 所有課程頁。
 
 
-<<<<<<< HEAD
 #### 2021-7-7
 嘗試使用雲服務繞過HTTPS合法域名檢測，參考blog：~~https://developers.weixin.qq.com/community/develop/doc/000c82801a45e8ca18c7e8fba51800~~ 。
 ~~失敗~~
-=======
+
+
 #### 2021-7-9
 成功實現Markdown在小程序的渲染。
 關鍵實現：使用 `` 符號 ` `` 括住markdown，進行無視空格的引用。然後匯入變量。
 小程序使用towxml作為markdown組件庫解析渲染，該組件庫還有html渲染模式！
 詳情前往 ``pages/protocol/`` 查看具體實現！
->>>>>>> c0b4a351f7867a13f934fbadc5045aaa900eeef8
