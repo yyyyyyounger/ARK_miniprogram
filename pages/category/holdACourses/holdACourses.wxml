@@ -1,25 +1,30 @@
-<!-- <van-sticky> -->
+<!-- 全局彈出類 -->
+<!-- 日期選擇器，增加以當天時間一個月內的選擇限制 - 未完成 -->
+<van-calendar show="{{ show_calendar }}" show-confirm="{{ false }}" bind:close="onClose" bind:confirm="onConfirm" 
+  max-date="{{ maxDate_calendar }}" />
+<!-- 時間選擇器，增加Overlay遮罩層控制顯示 - 未完成 -->
+<van-datetime-picker
+  type="time"
+  value="{{ currentDate }}"
+  filter="{{ filter }}"
+/>
 
 <!-- 設置步驟條 - 待定 - 待完成 -->
-  
-  <view class="action">
-    <button class="cu-btn bg-green shadow" bindtap="numSteps">下一步</button>
-  </view>
-  
-  <view class="cu-steps">
-  
-    <view class="cu-item {{index>num?'':'text-blue'}}" wx:for="{{numList}}" wx:key="item">
-      <text class="num {{index==2?'err':''}}" data-index="{{index + 1}}"></text> {{item.name}}
-    </view>
+<view class="action">
+  <button class="cu-btn bg-green shadow" bindtap="numSteps">下一步</button>
+</view>
+<view class="cu-steps">
 
+  <view class="cu-item {{index>num?'':'text-blue'}}" wx:for="{{numList}}" wx:key="item">
+    <text class="num {{index==2?'err':''}}" data-index="{{index + 1}}"></text> {{item.name}}
   </view>
 
-<!-- </van-sticky> -->
+</view>
 
 
 <!-- 課程信息錄入 -->
 
-<!-- 不同格子代表不同課程信息 -->
+<!-- 不同格仔代表不同課程信息 -->
 <!-- <view class="grid col-3 padding-sm">
   <view class="padding-sm" wx:for="{{ColorList}}" wx:key="title">
     <view class="bg-{{item.name}} padding radius text-center shadow-blur">
@@ -30,61 +35,76 @@
 </view> -->
 
 <view class="grid col-{{1}} padding-sm">
-  <view class="bg-{{ColorList[0].name}} padding radius text-center shadow-blur " data-index="{{index}}" >
+  <view class="bg-{{ColorList[0].name}} padding radius text-center shadow-blur " data-index="{{index}}" >   <!-- 必填 -->
       <text class="text-lg">必填 </text>
       <text class="cuIcon-unfold text-sl" /> 
     <!-- <view class="margin-top-sm text-df">點我添加</view> -->
   </view>
   <view class="card-menu">
 
-  <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
-    <view class="cu-item">                                            <!-- 多行文本輸入框 -->
-      <view class="content">
-        <textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="多行文本输入框"></textarea>
-      </view>
-    </view>
-    
-    <view class="cu-item" wx:for="{{mustEditArray}}" wx:key="item">   <!-- for循環式項目標題 -->
-      <view class="content">
-        <text class="cuIcon-circlefill text-{{ColorList[index].name}}"></text>
-        <text class="text-grey">{{item}}</text>
-      </view>
-      <view class="action">
-          
-        <text class="text-grey">文本內容</text>
-      </view>
-    </view>
-    <!-- <view class="cu-item {{menuArrow?'arrow':''}}">
-      <view class="content">
-        <text class="cuIcon-tagfill text-red"></text>
-        <text class="text-grey">标签</text>
-      </view>
-      <view class="action">
-        <view class="cu-tag round bg-orange light">音乐</view>
-        <view class="cu-tag round bg-olive light">电影</view>
-        <view class="cu-tag round bg-blue light">旅行</view>
-      </view>
-    </view> -->
-  </view>
-
-  </view>
-</view>
-
-<view class="grid col-{{1}} padding-sm">
-  <view class="bg-{{ColorList[1].name}} padding radius text-center shadow-blur " data-index="{{index}}" >
-      <text class="text-lg">選填 </text>
-      <text class="cuIcon-unfold text-sl" /> 
-    <!-- <view class="margin-top-sm text-df">點我添加</view> -->
-  </view>
-  <view class="card-menu">
-
-    <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
-      <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{chooseEditArray}}" wx:key="item">
+    <view class="cu-list menu sm-border card-menu margin-top">
+      
+      <view class="cu-item">    <!-- 分享主題 -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[index].name}}"></text>
-          <text class="text-grey">{{item}}</text>
+          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="text-grey">分享主題</text>
+        </view>
+        <view class="action">
+          <!-- <text class="text-grey">文本內容</text> -->
         </view>
       </view>
+      <van-field
+        clearable
+        value="{{ value }}"
+        placeholder="在此輸入分享主題"
+        border="{{ false }}"
+        bind:change="onChange"
+      />
+
+      <view class="cu-item">    <!-- 分享內容 -->
+        <view class="content">
+          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="text-grey">分享內容</text>
+        </view>
+        <view class="action">
+          <!-- <text class="text-grey">文本內容</text> -->
+        </view>
+      </view>
+      <view class="cu-item">    <!-- 多行文本輸入框 -->
+        <view class="content">
+          <textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="多行文本输入框"></textarea>
+        </view>
+      </view>
+
+      <view class="cu-item">    <!-- 分享地址 -->
+        <view class="content">
+          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="text-grey">分享地址</text>
+        </view>
+        <view class="action">
+          <!-- <text class="text-grey">文本內容</text> -->
+        </view>
+      </view>
+      <van-field
+        clearable
+        value="{{ value }}"
+        placeholder="在此輸入分享的地址"
+        border="{{ false }}"
+        bind:change="onChange"
+      />
+
+      <view class="cu-item">    <!-- 分享時間 -->
+        <view class="content">
+          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="text-grey">分享時間</text>
+        </view>
+        <view class="action">
+          <!-- <text class="text-grey">文本內容</text> -->
+        </view>
+      </view>
+      <van-cell title="选择Date" value="{{ date }}" bind:click="onDisplay" is-link/>
+      <van-cell title="选择Time" value="{{  }}" bind:click="" is-link/>
+
       <!-- <view class="cu-item {{menuArrow?'arrow':''}}">
         <view class="content">
           <text class="cuIcon-tagfill text-red"></text>
@@ -96,6 +116,26 @@
           <view class="cu-tag round bg-blue light">旅行</view>
         </view>
       </view> -->
+    </view>
+
+  </view>
+</view>
+
+<view class="grid col-{{1}} padding-sm">    <!-- 選填 -->
+  <view class="bg-{{ColorList[1].name}} padding radius text-center shadow-blur " data-index="{{index}}" >
+      <text class="text-lg">選填 </text>
+      <text class="cuIcon-unfold text-sl" /> 
+    <!-- <view class="margin-top-sm text-df">點我添加</view> -->
+  </view>
+  <view class="card-menu">
+
+    <view class="cu-list menu sm-border card-menu margin-top">
+      <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{chooseEditArray}}" wx:key="item">
+        <view class="content">
+          <text class="cuIcon-circlefill text-{{ColorList[index].name}}"></text>
+          <text class="text-grey">{{item}}</text>
+        </view>
+      </view>
     </view>
 
     </view>

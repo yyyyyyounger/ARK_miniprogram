@@ -3,6 +3,22 @@ var cloudData = require('../../../data/cloud.js')
 
 Page({
   data: {
+    // 日期選擇器
+    date: '',
+    show_calendar: false,
+    minDate_calendar: new Date(2021, 7, 1).getTime(),
+    maxDate_calendar: new Date(2021, 7, 31).getTime(),
+    // 日期選擇器 - end
+    // 時間選擇器
+    currentDate: '12:00',
+    filter(type, options) {
+      if (type === 'minute') {
+        return options.filter((option) => option % 5 === 0);
+      }
+
+      return options;
+    },
+    // 時間選擇器 - end
     basics: 0,
     numList: [{
       name: '开始'
@@ -92,7 +108,7 @@ Page({
     let InfoDisplay = this.data.courseInfoInput.map(item=>{    return item.display   });
     // 生成 userInfoInput裡允許編輯的設置數組
     let canEdit     = this.data.courseInfoInput.map(item=>{    return item.canEdit    });
-    // 生成 只有“必填”項目的名稱的數組
+    // 生成 只有“必填”項目的名稱的數組 - 待刪除
     let mustEditArray = [];
     mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseName').name ) ,
     mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseContent').name ) ,
@@ -157,5 +173,25 @@ Page({
       num: this.data.num == this.data.numList.length - 1 ? 0 : this.data.num + 1
     })
   },
+// 日期選擇器
+  onDisplay() {
+    this.setData({ show_calendar: true });
+  },
+  onClose() {
+    this.setData({ show_calendar: false });
+  },
+  formatDate(date) {
+    date = new Date(date);
+    return `${date.getMonth() + 1}/${date.getDate()}`;
+  },
+  onConfirm(event) {
+    console.log(event);
+    this.setData({
+      show_calendar: false,
+      date: this.formatDate(event.detail),
+    });
+    console.log(this.data.date);
+  },
+// 日期選擇器 - end
 
 });
