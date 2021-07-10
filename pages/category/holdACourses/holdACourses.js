@@ -3,19 +3,6 @@ var cloudData = require('../../../data/cloud.js')
 
 Page({
   data: {
-    basicsList: [{
-      icon: 'usefullfill',
-      name: '开始'
-    }, {
-      icon: 'radioboxfill',
-      name: '等待'
-    }, {
-      icon: 'roundclosefill',
-      name: '错误'
-    }, {
-      icon: 'roundcheckfill',
-      name: '完成'
-    }, ],
     basics: 0,
     numList: [{
       name: '开始'
@@ -105,17 +92,19 @@ Page({
     let InfoDisplay = this.data.courseInfoInput.map(item=>{    return item.display   });
     // 生成 userInfoInput裡允許編輯的設置數組
     let canEdit     = this.data.courseInfoInput.map(item=>{    return item.canEdit    });
-    // 生成 只有"允許顯示"的課程名稱的數組  &  該數組長度下的用戶激活(填寫)課程信息狀態
-    let courseNameArray = [];
-    let activeArray = [];
-    for (let i = 0; i < InfoDisplay.length; i++) { // 抽取數組元素 插入對象數組
-      if (InfoDisplay[i]) {
-        courseNameArray.push(this.data.courseInfoInput[i].name);
-        activeArray.push(false);
-      }
-    }
+    // 生成 只有“必填”項目的名稱的數組
+    let mustEditArray = [];
+    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseName').name ) ,
+    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseContent').name ) ,
+    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseTag').name ) ,
+    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseAdres').name ) ,
+    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseTime').name ) ;
+    // 生成 只有“選填”項目的名稱的數組
+    let chooseEditArray = [];
+    chooseEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'helperid').name ) ,
+    chooseEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'attendCode').name ) ,
     // 允許編輯/顯示 → setData
-    this.setData({    InfoDisplay, canEdit, courseNameArray, activeArray,   });
+    this.setData({    InfoDisplay, canEdit, mustEditArray, chooseEditArray,   });
     
   },
   onReady: function(){

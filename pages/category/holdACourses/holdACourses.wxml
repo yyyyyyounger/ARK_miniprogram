@@ -1,18 +1,20 @@
-<van-sticky>
+<!-- <van-sticky> -->
 
-  <view>設置步驟條 - 待定 - 待完成</view>
+<!-- 設置步驟條 - 待定 - 待完成 -->
   
   <view class="action">
     <button class="cu-btn bg-green shadow" bindtap="numSteps">下一步</button>
   </view>
   
   <view class="cu-steps">
-    <view class="cu-item {{index>num?'':'text-blue'}}" wx:for="{{numList}}" wx:key>
+  
+    <view class="cu-item {{index>num?'':'text-blue'}}" wx:for="{{numList}}" wx:key="item">
       <text class="num {{index==2?'err':''}}" data-index="{{index + 1}}"></text> {{item.name}}
     </view>
+
   </view>
 
-</van-sticky>
+<!-- </van-sticky> -->
 
 
 <!-- 課程信息錄入 -->
@@ -27,21 +29,81 @@
   </view>
 </view> -->
 
+<view class="grid col-{{1}} padding-sm">
+  <view class="bg-{{ColorList[0].name}} padding radius text-center shadow-blur " data-index="{{index}}" >
+      <text class="text-lg">必填 </text>
+      <text class="cuIcon-unfold text-sl" /> 
+    <!-- <view class="margin-top-sm text-df">點我添加</view> -->
+  </view>
+  <view class="card-menu">
 
-<view class="grid col-{{4}} padding-sm">
-  <view class="padding-sm" wx:for="{{courseNameArray}}" wx:key="id">
-    <view class="bg-{{activeArray[index] ? ColorList[index].name : 'yellow'}} padding radius text-center shadow-blur " data-index="{{index}}" bindtap="BindAddInfo">
-        <text class="cuIcon-unfold text-sl" /> 
-        <view class="text-lg">{{item}}</view>
-      <view class="margin-top-sm text-df">點我添加</view>
+  <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+    <view class="cu-item">                                            <!-- 多行文本輸入框 -->
+      <view class="content">
+        <textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="多行文本输入框"></textarea>
+      </view>
     </view>
+    
+    <view class="cu-item" wx:for="{{mustEditArray}}" wx:key="item">   <!-- for循環式項目標題 -->
+      <view class="content">
+        <text class="cuIcon-circlefill text-{{ColorList[index].name}}"></text>
+        <text class="text-grey">{{item}}</text>
+      </view>
+      <view class="action">
+          
+        <text class="text-grey">文本內容</text>
+      </view>
+    </view>
+    <!-- <view class="cu-item {{menuArrow?'arrow':''}}">
+      <view class="content">
+        <text class="cuIcon-tagfill text-red"></text>
+        <text class="text-grey">标签</text>
+      </view>
+      <view class="action">
+        <view class="cu-tag round bg-orange light">音乐</view>
+        <view class="cu-tag round bg-olive light">电影</view>
+        <view class="cu-tag round bg-blue light">旅行</view>
+      </view>
+    </view> -->
+  </view>
+
   </view>
 </view>
 
+<view class="grid col-{{1}} padding-sm">
+  <view class="bg-{{ColorList[1].name}} padding radius text-center shadow-blur " data-index="{{index}}" >
+      <text class="text-lg">選填 </text>
+      <text class="cuIcon-unfold text-sl" /> 
+    <!-- <view class="margin-top-sm text-df">點我添加</view> -->
+  </view>
+  <view class="card-menu">
+
+    <view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+      <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{chooseEditArray}}" wx:key="item">
+        <view class="content">
+          <text class="cuIcon-circlefill text-{{ColorList[index].name}}"></text>
+          <text class="text-grey">{{item}}</text>
+        </view>
+      </view>
+      <!-- <view class="cu-item {{menuArrow?'arrow':''}}">
+        <view class="content">
+          <text class="cuIcon-tagfill text-red"></text>
+          <text class="text-grey">标签</text>
+        </view>
+        <view class="action">
+          <view class="cu-tag round bg-orange light">音乐</view>
+          <view class="cu-tag round bg-olive light">电影</view>
+          <view class="cu-tag round bg-blue light">旅行</view>
+        </view>
+      </view> -->
+    </view>
+
+    </view>
+</view>
 
 
 <!-- for循環渲染方法 - 優勢：渲染方便；劣勢：不美觀 - 未完成 -->
-<van-cell-group
+<!-- <van-cell-group
 wx:for="{{courseInfoInput}}"
 wx:key="id"
 wx:if="{{InfoDisplay[index]}}"
@@ -49,6 +111,6 @@ wx:if="{{InfoDisplay[index]}}"
   <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
     <view>{{item.input}}</view>
   </van-cell>
-</van-cell-group>
+</van-cell-group> -->
 
 
