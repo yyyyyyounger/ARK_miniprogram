@@ -7,7 +7,11 @@
 
     "van-field": "@vant/weapp/field/index",
 
-    "van-calendar": "@vant/weapp/calendar/index"
+    "van-calendar": "@vant/weapp/calendar/index",
+
+    "van-popup": "@vant/weapp/popup/index",
+
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index"
     
   }
 }

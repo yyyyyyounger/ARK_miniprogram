@@ -21,14 +21,13 @@ Page({
     // 時間選擇器 - end
     basics: 0,
     numList: [{
-      name: '开始'
-    }, {
-      name: '等待'
-    }, {
-      name: '错误'
-    }, {
-      name: '完成'
-    }, ],
+      name: '填寫信息'
+      }, {
+        name: '提交管理員審核'
+      }, {
+        name: '課程發佈'
+      }, 
+    ],
     num: 0,
     scroll: 0,
 
@@ -174,11 +173,14 @@ Page({
     })
   },
 // 日期選擇器
-  onDisplay() {
+  onDisplay_date() {
     this.setData({ show_calendar: true });
   },
   onClose() {
-    this.setData({ show_calendar: false });
+    this.setData({ 
+      show_calendar: false,
+      show_timePicker: false
+    });
   },
   formatDate(date) {
     date = new Date(date);
@@ -193,5 +195,33 @@ Page({
     console.log(this.data.date);
   },
 // 日期選擇器 - end
-
+// 時間選擇器
+  onDisplay_time() {
+    this.setData({ show_timePicker: true });
+  },
+  onCancel_timerPicker () {
+    this.setData({ show_timePicker: false });
+  },
+  handleTimePicker(e) {
+    console.log(e.detail);
+    this.setData({ 
+      show_timePicker: false, 
+      timePick : e.detail
+    });
+  },
+  onChange_field(e) {
+    let attendCode = e.detail;
+    let userInput = e.currentTarget.dataset.model;
+    // console.log("field輸入為：", attendCode );
+    // console.log("model為：", userInput );
+    // 输入监听，該方法可以多個input綁定同一個函數
+    this.setData({
+      [userInput]: attendCode
+    });
+  },
+// 簽到密碼
+  onChange_attendCode(e) {
+    let attendCode = e.detail;
+    console.log("簽到密碼輸入為：", attendCode );
+  },
 });

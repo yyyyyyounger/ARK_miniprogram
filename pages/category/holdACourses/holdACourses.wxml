@@ -2,12 +2,22 @@
 <!-- 日期選擇器，增加以當天時間一個月內的選擇限制 - 未完成 -->
 <van-calendar show="{{ show_calendar }}" show-confirm="{{ false }}" bind:close="onClose" bind:confirm="onConfirm" 
   max-date="{{ maxDate_calendar }}" />
-<!-- 時間選擇器，增加Overlay遮罩層控制顯示 - 未完成 -->
-<van-datetime-picker
-  type="time"
-  value="{{ currentDate }}"
-  filter="{{ filter }}"
-/>
+<!-- 彈出層 -->
+<van-popup
+  round
+  safe-area-inset-bottom	
+  show="{{ show_timePicker }}"
+  position="right"
+  bind:close="onClose"
+>
+  <!-- 時間選擇器，增加彈出層控制顯示 - 未完成 -->
+  <van-datetime-picker
+    type="time"
+    filter="{{ filter }}"
+    bind:confirm="handleTimePicker"
+    bind:cancel="onCancel_timerPicker"
+  />
+</van-popup>
 
 <!-- 設置步驟條 - 待定 - 待完成 -->
 <view class="action">
@@ -16,13 +26,13 @@
 <view class="cu-steps">
 
   <view class="cu-item {{index>num?'':'text-blue'}}" wx:for="{{numList}}" wx:key="item">
-    <text class="num {{index==2?'err':''}}" data-index="{{index + 1}}"></text> {{item.name}}
+    <text class="num" data-index="{{index + 1}}"></text> {{item.name}}
   </view>
 
 </view>
 
 
-<!-- 課程信息錄入 -->
+<!-- 課程信息錄入 - 臨時本地保存 - 未完成 -->
 
 <!-- 不同格仔代表不同課程信息 -->
 <!-- <view class="grid col-3 padding-sm">
@@ -40,7 +50,7 @@
       <text class="cuIcon-unfold text-sl" /> 
     <!-- <view class="margin-top-sm text-df">點我添加</view> -->
   </view>
-  <view class="card-menu">
+  <!-- <view class="card-menu"> -->
 
     <view class="cu-list menu sm-border card-menu margin-top">
       
@@ -52,13 +62,16 @@
         <view class="action">
           <!-- <text class="text-grey">文本內容</text> -->
         </view>
-      </view>
-      <van-field
+      </view>              
+      <!-- 使用data-xxx分隔兩個數據共用同一個綁定事件，數據必須在data{}中定義 -->
+      <van-field 
+        hold-keyboard
+        data-model="courseName_input" 
         clearable
         value="{{ value }}"
         placeholder="在此輸入分享主題"
         border="{{ false }}"
-        bind:change="onChange"
+        bind:change="onChange_field"
       />
 
       <view class="cu-item">    <!-- 分享內容 -->
@@ -70,11 +83,20 @@
           <!-- <text class="text-grey">文本內容</text> -->
         </view>
       </view>
-      <view class="cu-item">    <!-- 多行文本輸入框 -->
-        <view class="content">
-          <textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="多行文本输入框"></textarea>
-        </view>
-      </view>
+        <van-field
+          hold-keyboard
+          data-model="courseContent_input" 
+          type='textarea'
+          autosize
+          border="{{ false }}"
+          show-word-limit
+          maxlength="100"
+          clearable
+          value="{{ value }}"
+          placeholder="輸入分享內容簡介（可分行，不多於100字）"
+          bind:change="onChange_field"
+        />
+      <!-- </view> -->
 
       <view class="cu-item">    <!-- 分享地址 -->
         <view class="content">
@@ -86,11 +108,13 @@
         </view>
       </view>
       <van-field
+        hold-keyboard
+        data-model="courseAdres_input" 
         clearable
         value="{{ value }}"
         placeholder="在此輸入分享的地址"
         border="{{ false }}"
-        bind:change="onChange"
+        bind:change="onChange_field"
       />
 
       <view class="cu-item">    <!-- 分享時間 -->
@@ -102,8 +126,8 @@
           <!-- <text class="text-grey">文本內容</text> -->
         </view>
       </view>
-      <van-cell title="选择Date" value="{{ date }}" bind:click="onDisplay" is-link/>
-      <van-cell title="选择Time" value="{{  }}" bind:click="" is-link/>
+      <van-cell title="选择Date" value="{{ date }}"     bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
+      <van-cell title="选择Time" value="{{ timePick }}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
 
       <!-- <view class="cu-item {{menuArrow?'arrow':''}}">
         <view class="content">
@@ -118,7 +142,7 @@
       </view> -->
     </view>
 
-  </view>
+  <!-- </view> -->
 </view>
 
 <view class="grid col-{{1}} padding-sm">    <!-- 選填 -->
@@ -130,15 +154,58 @@
   <view class="card-menu">
 
     <view class="cu-list menu sm-border card-menu margin-top">
-      <view class="cu-item {{menuArrow?'arrow':''}}" wx:for="{{chooseEditArray}}" wx:key="item">
+      
+      <view class="cu-item">    <!-- 助手id -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[index].name}}"></text>
-          <text class="text-grey">{{item}}</text>
+          <text class="cuIcon-circlefill text-{{ColorList[1].name}}"></text>
+          <text class="text-grey">助手id</text>
+        </view>
+        <view class="action">
+          <!-- <text class="text-grey">文本內容</text> -->
         </view>
       </view>
-    </view>
+      <van-field
+        hold-keyboard
+        data-model="helperid_input" 
+        clearable
+        value="{{ value }}"
+        placeholder="在此輸入助手ARKid"
+        border="{{ false }}"
+        bind:change="onChange"
+      />
+      <view class="cu-item">    <!-- 助手頭像，以寫入的id顯示對應頭像 - 代商討 - 未完成 -->
+        <view class="content">
+          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="text-grey">助手頭像</text>
+        </view>
+        <view class="action">
+          <!-- <text class="text-grey">文本內容</text> -->
+        </view>
+      </view>
+
+      <view class="cu-item">    <!-- 簽到密碼 -->
+        <view class="content">
+          <text class="cuIcon-circlefill text-{{ColorList[1].name}}"></text>
+          <text class="text-grey">簽到密碼</text>
+        </view>
+        <view class="action">
+          <!-- <text class="text-grey">文本內容</text> -->
+        </view>
+      </view>
+      <van-field
+        hold-keyboard
+        data-model="attendCode_input" 
+        type="password"
+        maxlength='4'
+        clearable
+        value="{{ value }}"
+        placeholder="在此輸入簽到密碼（4位，不區分大小寫）"
+        bind:change="onChange_attendCode"
+      />
 
     </view>
+
+  </view>
 </view>
 
 
