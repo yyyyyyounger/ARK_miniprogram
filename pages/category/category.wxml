@@ -17,64 +17,17 @@
 
   <van-tab title="最新發佈">
 
-    <!-- <text>\n\n</text> -->
-
     <van-sticky>
-      <!-- 下拉菜單 -->
+<!-- 下拉菜單 -->
       <van-dropdown-menu>
         <van-dropdown-item value="{{ dropDownIndex }}" options="{{ option1 }}" bind:change="dropDownChange" />
         <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
-        <!-- 按鈕 -->
-        <!-- <van-dropdown-item id="item" title="{{ itemTitle }}">
-          <van-cell title="{{ switchTitle1 }}">
-            <van-switch
-              slot="right-icon"
-              size="24px"
-              style="height: 26px"
-              checked="{{ switch1 }}"
-              active-color="#ee0a24"
-              bind:change="onSwitch1Change"
-            />
-          </van-cell>
-          <van-cell title="{{ switchTitle2 }}">
-            <van-switch
-              slot="right-icon"
-              size="24px"
-              style="height: 26px"
-              checked="{{ switch2 }}"
-              active-color="#ee0a24"
-              bind:change="onSwitch2Change"
-            />
-          </van-cell>
-          <view style="padding: 5px 16px;">
-            <van-button type="danger" block round bind:click="onConfirm">
-              确认
-            </van-button>
-          </view>
-        </van-dropdown-item> -->
       </van-dropdown-menu>
     </van-sticky>
     <van-button type="primary" size="normal" color="#5595D9" round class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
 
-    <view wx:for="{{6}}">
-      <!-- <van-cell value="" use-label-slot>
-        <view slot="title">
-          <view class="van-cell-text">ECEN1008</view>
-          <van-tag type="danger">ECE</van-tag>，<van-tag type="danger">PHC</van-tag>
-        </view>
-        <view slot="label">
-          <view>時間：</view>
-          <view>地點：</view>
-        </view>
-        <view slot="icon">
-          testIcon
-        </view>
-        <view slot="right-icon">
-          <text>\n</text>
-          <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>Follow</van-button>
-        </view>
-      </van-cell> -->
-
+    <view wx:for="{{recentCourseInfoArray}}" wx:key="courseId">
+      
       <!-- 課程卡片 - 未完成 -->
       <view class="cu-card dynamic ">
         <view class="cu-item shadow">
@@ -82,32 +35,22 @@
             <view class="cu-item">
               <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
               <view class="content flex-sub">
-                <view>ECEN1008</view>
-                <view class="text-gray text-sm flex justify-between">
-                  發起日：2021-07-09
-                </view>
+                <view>{{recentCourseInfoArray[index].courseInfo[1].input}}</view>
               </view>
               <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
             </view>
           </view>
           <view class="slot text-content">
-            時間：<view>地點：</view>
+            日期：{{recentCourseInfoArray[index].courseInfo[5].input[0]}} 
+            <view>時間：{{recentCourseInfoArray[index].courseInfo[5].input[1]}}</view>
+            <view>地點：{{recentCourseInfoArray[index].courseInfo[4].input}}</view>
           </view>
-          <!-- <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
-            <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);" wx:for="{{isCard?9:1}}" wx:key="{{index}}">
-            </view>
-          </view> -->
           <view class="slot text-right">
             <!-- 頭像組 -->
             <view class="cu-avatar-group">
               <view class="cu-avatar round lg" wx:for="{{5}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
             </view> <text decode="true">...&nbsp;&nbsp;</text>
           </view>
-          <!-- <view class="text-gray text-sm text-right padding">
-            <text class="cuIcon-attentionfill margin-lr-xs"></text> 10
-            <text class="cuIcon-appreciatefill margin-lr-xs"></text> 20
-            <text class="cuIcon-messagefill margin-lr-xs"></text> 30
-          </view> -->
         </view>
       </view>
     </view>

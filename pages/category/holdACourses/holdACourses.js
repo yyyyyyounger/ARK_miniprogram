@@ -1,4 +1,5 @@
 var app = getApp();
+const { userInfoInput } = require('../../../data/cloud.js');
 var cloudData = require('../../../data/cloud.js')
 
 Page({
@@ -186,13 +187,13 @@ Page({
     date = new Date(date);
     return `${date.getMonth() + 1}/${date.getDate()}`;
   },
-  onConfirm(event) {
+  onConfirm_calendar(event) {
     console.log(event);
     this.setData({
       show_calendar: false,
-      date: this.formatDate(event.detail),
+      datePick: this.formatDate(event.detail),
     });
-    console.log(this.data.date);
+    console.log(this.data.datePick);
   },
 // 日期選擇器 - end
 // 時間選擇器
@@ -209,19 +210,53 @@ Page({
       timePick : e.detail
     });
   },
+// 輸入框匯總監聽
   onChange_field(e) {
-    let attendCode = e.detail;
-    let userInput = e.currentTarget.dataset.model;
-    // console.log("field輸入為：", attendCode );
-    // console.log("model為：", userInput );
-    // 输入监听，該方法可以多個input綁定同一個函數
-    this.setData({
-      [userInput]: attendCode
-    });
+    let userInputValue = e.detail;
+    let userInputType = e.currentTarget.dataset.model;
+    if (userInputType=="attendCode_input") {
+      // 簽到密碼的字母不區分大小寫
+      this.setData({    [userInputType]: userInputValue.toUpperCase()    });
+    }
+    else {
+      // 输入监听，該方法可以多個input綁定同一個函數
+      this.setData({    [userInputType]: userInputValue    });
+    }
   },
-// 簽到密碼
-  onChange_attendCode(e) {
-    let attendCode = e.detail;
-    console.log("簽到密碼輸入為：", attendCode );
+// 提交或突出按鈕綁定事件
+  onClick_saveSubmit (e) {
+    let userClickType = e.currentTarget.dataset.model;
+    this.setData({    [userClickType]: true    });
+    if (this.data.btn_quit) {
+      // 已輸入的數據保存到本地 - 未完成
+      wx.navigateBack({    delta: 0,   })   // 回退上一頁
+    }
+    if (this.data.btn_submit) {
+      console.log("用戶請求submit");
+// 如數據無誤，提交到雲端，管理員端提示 - 未完成
+      // 與本地的courseInfoInput的index匹配，然後寫入
+      let w0 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseName' );
+      let w1 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseContent' );
+      let w2 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseAdres' );
+      let w3 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseTime' );
+      let write0 = 'courseInfoInput['+w0+'].input';
+      let write1 = 'courseInfoInput['+w1+'].input';
+      let write2 = 'courseInfoInput['+w2+'].input';
+      let write3_1 = 'courseInfoInput['+w3+'].input[0]';  // datePick
+      let write3_2 = 'courseInfoInput['+w3+'].input[1]';  // timePick
+      this.setData({        // 寫入局部courseInfoInput數據
+        bindEditMode : false,
+        [write0] : this.data.courseName_input,
+        [write1] : this.data.courseContent_input,
+        [write2] : this.data.courseAdres_input,
+        [write3_1] : this.data.datePick,
+        [write3_2] : this.data.timePick,
+      })
+      console.log("上傳前本地數據（修改後，模擬向本地儲存數據）",this.data.courseInfoInput);
+      // 上傳數據 本地 → 雲端
+      cloudData.courseInfoInput = this.data.courseInfoInput;
+      console.log("上傳後雲端的數據：",cloudData.courseInfoInput);
+
+    } // if如果點擊了submit的button - end
   },
 });

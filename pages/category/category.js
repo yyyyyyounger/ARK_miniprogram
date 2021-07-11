@@ -1,9 +1,8 @@
+var cloudData = require('../../data/cloud.js')
+
 Page({
   data: {
     // 下拉菜單
-    switchTitle1: '包邮',
-    switchTitle2: '团购',
-    itemTitle: '筛选',
     option1: [
       { text: '按日期排序', value: 0 },
       { text: '按字母排序', value: 1 },
@@ -19,10 +18,17 @@ Page({
     dropDownIndex: 0,
 
   },
-  onLoad: function() {
+  onLoad: function(page) {
     this.app = getApp();
     // 模擬向服務器請求的延時
     // this.app.toastLoadingDIY();
+    
+    // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 雲端操作未完成
+    if (cloudData.recentCourseIdRecord) {
+      this.setData({  recentCourseIdRecord:cloudData.recentCourseIdRecord  })
+      // 向雲端請求返回該些courseId代表的課程數據 - 未完成
+      this.setData({  recentCourseInfoArray:cloudData.recentCourseInfoArray  })
+    }
   },
   onReady: function() {
     

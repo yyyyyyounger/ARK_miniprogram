@@ -69,7 +69,8 @@ Page({
     this.app = getApp();
     if (scene!="refresh") {
       this.showPopup();     // 展示頂部彈出層
-      this.getOneMoto();
+      // this.getOneMoto();
+      this.cloudGetOneMoto();  // 雲函數請求返回api
     }
     console.log(scene);
 // 模擬向服務器請求的延時
@@ -177,7 +178,7 @@ Page({
       url: '../category/category'
     });
   },
-  // 一言API獲取
+  // wx本地請求一言API返回 - 該方法需要開發者網站配置可信域名 - 暫未使用
   getOneMoto: function() {
     var that = this;
     wx.request({
@@ -196,6 +197,16 @@ Page({
     })
     // 動態設定樣式的間距 - 未完成
     
+  },
+// http雲函數請求一言api後的返回，http雲函數應該設計為可對其寫入url - 未完成
+  cloudGetOneMoto(e) {
+    wx.cloud.callFunction({
+      name:'http'
+    }).then(res=>{
+      let result = JSON.parse(res.result);
+      console.log(result);
+      this.setData({    moto : result  })
+    })
   },
 // Color - 輪播
   // 獲取輪播圖 index

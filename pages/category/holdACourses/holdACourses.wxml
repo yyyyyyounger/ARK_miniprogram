@@ -1,6 +1,6 @@
 <!-- 全局彈出類 -->
 <!-- 日期選擇器，增加以當天時間一個月內的選擇限制 - 未完成 -->
-<van-calendar show="{{ show_calendar }}" show-confirm="{{ false }}" bind:close="onClose" bind:confirm="onConfirm" 
+<van-calendar show="{{ show_calendar }}" show-confirm="{{ false }}" bind:close="onClose" bind:confirm="onConfirm_calendar" 
   max-date="{{ maxDate_calendar }}" />
 <!-- 彈出層 -->
 <van-popup
@@ -126,7 +126,7 @@
           <!-- <text class="text-grey">文本內容</text> -->
         </view>
       </view>
-      <van-cell title="选择Date" value="{{ date }}"     bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
+      <van-cell title="选择Date" value="{{ datePick }}" bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
       <van-cell title="选择Time" value="{{ timePick }}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
 
       <!-- <view class="cu-item {{menuArrow?'arrow':''}}">
@@ -171,12 +171,16 @@
         value="{{ value }}"
         placeholder="在此輸入助手ARKid"
         border="{{ false }}"
-        bind:change="onChange"
-      />
+        bind:change="onChange_field"
+      >
+        <van-button slot="button" size="normal" type="primary">
+          確認選擇
+        </van-button>
+      </van-field>
       <view class="cu-item">    <!-- 助手頭像，以寫入的id顯示對應頭像 - 代商討 - 未完成 -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
-          <text class="text-grey">助手頭像</text>
+          <text class="cuIcon-circlefill text-{{ColorList[1].name}}"></text>
+          <text class="text-grey">助手頭像(確認後會顯示，最多兩位)</text>
         </view>
         <view class="action">
           <!-- <text class="text-grey">文本內容</text> -->
@@ -199,8 +203,8 @@
         maxlength='4'
         clearable
         value="{{ value }}"
-        placeholder="在此輸入簽到密碼（4位，不區分大小寫）"
-        bind:change="onChange_attendCode"
+        placeholder="4位，數字/字母皆可，不區分大小寫"
+        bind:change="onChange_field"
       />
 
     </view>
@@ -208,16 +212,9 @@
   </view>
 </view>
 
-
-<!-- for循環渲染方法 - 優勢：渲染方便；劣勢：不美觀 - 未完成 -->
-<!-- <van-cell-group
-wx:for="{{courseInfoInput}}"
-wx:key="id"
-wx:if="{{InfoDisplay[index]}}"
->
-  <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
-    <view>{{item.input}}</view>
-  </van-cell>
-</van-cell-group> -->
-
-
+<!-- 提交審核按鈕 -->
+<view class="padding flex flex-direction">
+  <!-- 本地緩存 - 未完成 -->
+  <button class="shadow cu-btn bg-grey lg"                data-model="btn_quit"   bindtap="onClick_saveSubmit">保存後退出</button>
+  <button class="shadow cu-btn bg-olive margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">保存並提交審核</button>
+</view>
