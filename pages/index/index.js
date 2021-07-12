@@ -118,7 +118,8 @@ Page({
     console.log("onHide() - index觸發");
   },
   onPullDownRefresh() {
-    this.getOneMoto();
+    // this.getOneMoto();
+    this.cloudGetOneMoto();
     this.showPopup();     // 展示頂部彈出層
     this.app.onPullDownRefresh(this);
   },
