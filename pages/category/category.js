@@ -17,6 +17,10 @@ Page({
     ],
     dropDownIndex: 0,
 
+    // 課程渲染相關
+    followCourseArray:[],
+    haveFollowArray:[],
+
   },
   onLoad: function(page) {
     this.app = getApp();
@@ -60,6 +64,27 @@ Page({
 
   onSwitch2Change({ detail }) {
     this.setData({ switch2: detail });
+  },
+
+  // 添加follow的課程
+  addFollow (e) {
+    // 記錄課程id
+    let selectCourse = e.currentTarget.dataset.courseid;
+    let followCourseArrayTemp = JSON.parse(JSON.stringify(this.data.followCourseArray));
+    followCourseArrayTemp.push(selectCourse);
+    let haveFollowTemp = JSON.parse(JSON.stringify(this.data.haveFollowArray));
+    let haveFollowObj = {};
+    haveFollowObj.courseid = selectCourse;
+    haveFollowObj.followState = true;
+    haveFollowTemp.push(haveFollowObj);
+    this.setData({
+      followCourseArray : followCourseArrayTemp,
+      haveFollowArray   : haveFollowTemp,
+    })
+  },
+  // 刪除follow的課程
+  deleteFollow(e){
+
   },
 
 // 頁面跳轉

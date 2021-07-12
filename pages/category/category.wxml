@@ -37,7 +37,15 @@
               <view class="content flex-sub">
                 <view>{{recentCourseInfoArray[index].courseInfo[1].input}}</view>
               </view>
-              <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
+              <!-- add/cancel Follow按鈕 -->
+              <van-button 
+                icon="star-o" 
+                size="small" 
+                color="#5595D9" 
+                type="primary" 
+                round 
+                data-courseid="{{recentCourseInfoArray[index].courseId}}" 
+                bind:click="addFollow">Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
             </view>
           </view>
           <view class="slot text-content">
@@ -59,13 +67,13 @@
   </van-tab>
 
   <van-tab title="我的Follow">
-    <!-- 下拉菜單 -->
+    <!-- 下拉菜單 - 排序未完成 -->
     <van-dropdown-menu>
       <van-dropdown-item value="{{ dropDownIndex }}" options="{{ option1 }}" bind:change="dropDownChange" />
       <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
     </van-dropdown-menu>
 
-    <view wx:for="{{6}}">
+    <!-- <view wx:for="{{6}}">
       <van-cell value="" use-label-slot>
         <view slot="title">
           <view class="van-cell-text">ECEN1008</view>
@@ -78,11 +86,39 @@
         <!-- <view slot="icon">
           testIcon
         </view> -->
-        <view slot="right-icon">
+        <!-- <view slot="right-icon">
           <text>\n</text>
           <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>查看</van-button>
         </view>
       </van-cell>
+    </view> -->
+    <view wx:for="{{recentCourseInfoArray}}" wx:key="courseId">
+      
+      <!-- 課程卡片 - 未完成 -->
+      <view class="cu-card dynamic ">
+        <view class="cu-item shadow">
+          <view class="cu-list menu-avatar">
+            <view class="cu-item">
+              <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+              <view class="content flex-sub">
+                <view>{{recentCourseInfoArray[index].courseInfo[1].input}}</view>
+              </view>
+              <!-- <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text> -->
+            </view>
+          </view>
+          <view class="slot text-content">
+            日期：{{recentCourseInfoArray[index].courseInfo[5].input[0]}} 
+            <view>時間：{{recentCourseInfoArray[index].courseInfo[5].input[1]}}</view>
+            <view>地點：{{recentCourseInfoArray[index].courseInfo[4].input}}</view>
+          </view>
+          <view class="slot text-right">
+            <!-- 頭像組 -->
+            <view class="cu-avatar-group">
+              <view class="cu-avatar round lg" wx:for="{{5}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
+            </view> <text decode="true">...&nbsp;&nbsp;</text>
+          </view>
+        </view>
+      </view>
     </view>
 
     <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
