@@ -1,7 +1,5 @@
 {
   "usingComponents": {
-    "van-button": "@vant/weapp/button/index",
-
-    "towxml": "../../towxml/towxml"
+    "van-button": "@vant/weapp/button/index"
   }
 }

@@ -179,6 +179,12 @@ Page({
       url: '../category/category'
     });
   },
+  // 跳轉“測試”頁
+  jumpToTestPage () {
+    wx.navigateTo({
+      url: '../test/test'
+    });
+  },
   // wx本地請求一言API返回 - 該方法需要開發者網站配置可信域名 - 暫未使用
   getOneMoto: function() {
     var that = this;

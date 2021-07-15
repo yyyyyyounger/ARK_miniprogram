@@ -76,5 +76,6 @@
     "miniprogram": {
       "list": []
     }
-  }
+  },
+  "cloudfunctionRoot": "cloud/"
 }
