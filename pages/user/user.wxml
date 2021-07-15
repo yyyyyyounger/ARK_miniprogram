@@ -79,7 +79,7 @@ wx:if="{{InfoDisplay[index]}}"
         <text wx:else>{{studentYear_input}} </text>
         <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>   <!-- 右箭頭 -->
       </view>
-      <view wx:else>                              <!-- 輸入框 -->
+      <view wx:else>                  <!-- 輸入框 -->
         <van-field
         value="{{ item.input }}"
         data-cellIndex="{{index}}"

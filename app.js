@@ -18,12 +18,12 @@ App({
     
   },
   onHide: function() {
-
+    
   },
   onError: function(msg) {
-
+    
   },
-  //options(path,query,isEntryPage)
+//options(path,query,isEntryPage)
   onPageNotFound: function(options) {
 
   },
@@ -41,9 +41,9 @@ App({
 // 下拉刷新函數，調用該函數可保證刷新完回彈
   onPullDownRefresh : function(that) {   
     that.app.toastLoadingDIY();
-    setTimeout(() => {
-      that.onLoad("refresh");
-    }, 2500);
+    // setTimeout(() => {
+    that.onLoad("refresh");
+    // }, 2500);
     setTimeout(() => {
       wx.stopPullDownRefresh();
     }, 1000);

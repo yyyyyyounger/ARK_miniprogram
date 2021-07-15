@@ -44,10 +44,10 @@
   </view>
 </view> -->
 
-<view class="grid col-{{1}} padding-sm">
-  <view class="bg-{{ColorList[0].name}} padding radius text-center shadow-blur " data-index="{{index}}" >   <!-- 必填 -->
+<view class="grid col-{{1}} padding-sm">    <!-- 必填 -->
+  <view class="bg-{{ColorList[0].name}} padding radius text-center shadow-blur " data-index="{{index}}" >   
       <text class="text-lg">必填 </text>
-      <text class="cuIcon-unfold text-sl" /> 
+      <text class="cuIcon-unfold text-sl" />
     <!-- <view class="margin-top-sm text-df">點我添加</view> -->
   </view>
   <!-- <view class="card-menu"> -->

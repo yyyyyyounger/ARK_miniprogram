@@ -1,5 +1,6 @@
 var app = getApp(); 
 var cloudData = require('../../data/cloud.js')
+let xxx = 23423;
 
 Page({
   data: {
@@ -93,9 +94,8 @@ Page({
       })
     }
     
-
     this.setData({
-      projStartTime : app.globalData.projStartTime[0]
+      projStartTime : app.globalData.projStartTime[0] ,
     });
     // console.log("項目開始時間："+this.data.projStartTime.Year +'/'+ this.data.projStartTime.Month +'/'+ this.data.projStartTime.Day);
     // 計算已過日期
@@ -197,7 +197,6 @@ Page({
       complete: function() {} //请求完成后执行的函数
     })
     // 動態設定樣式的間距 - 未完成
-    
   },
 // http雲函數請求一言api後的返回，http雲函數應該設計為可對其寫入url - 未完成
   cloudGetOneMoto(e) {

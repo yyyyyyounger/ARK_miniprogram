@@ -359,7 +359,7 @@ Page({
     else {    // 如果輸入符合條件，此處應添加向服務端詢問是否允許的步驟(學號檢驗是否重合) - 未完成
       let that = this;
 // 寫入本地的userInfoInput
-      let w0 = this.data.userInfoInput.findIndex(o=> o.shortName === 'umId' );
+      let w0 = this.data.userInfoInput.findIndex(o=> o.shortName === 'umId' );    // 1
       let w1 = this.data.userInfoInput.findIndex(o=> o.shortName === 'name' );
       let w2 = this.data.userInfoInput.findIndex(o=> o.shortName === 'studentMajor' );
       let w3 = this.data.userInfoInput.findIndex(o=> o.shortName === 'studentYear' );
@@ -374,7 +374,7 @@ Page({
         [write2] : that.data.studentMajor_input,
         [write3] : that.data.studentYear_input,
       });
-  
+      
       let userInfo_isSignUpIndex = that.data.userInfoInput.findIndex(o=> o.shortName === 'isSignUp' );
 // if 本地註冊狀態為false，但能來到此的邏輯都是能正確註冊，因此寫入本地註冊時間和ARKid - 未完成
       if (!that.data.userInfoInput[userInfo_isSignUpIndex].input) {
@@ -478,4 +478,3 @@ Page({
   },
 
 })
-

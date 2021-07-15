@@ -26,7 +26,7 @@ bind:close="closePopup"
 		<!-- <view class="bracket left">『</view> -->
 		<view class="word" id="hitokoto_text">{{moto.hitokoto}}</view>
 		<!-- <view class="bracket right">』</view> -->
-		<view class="author" id="hitokoto_author">—— 「{{(!moto.from_who)?moto.from:moto.from_who}}」</view>
+		<view class="author" id="hitokoto_author">—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
 	</view>
 	
 	<view class="flexCenter" wx:if="{{isSignIn && isSignUp}}">
