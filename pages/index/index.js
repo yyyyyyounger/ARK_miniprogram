@@ -207,6 +207,8 @@ Page({
       let result = JSON.parse(res.result);
       console.log(result);
       this.setData({    moto : result  })
+    }).catch(res=>{
+      console.log("雲函數cloudGetOneMoto請求失敗",res);
     })
   },
 // Color - 輪播
