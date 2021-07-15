@@ -32,7 +32,7 @@ bind:close="closePopup"
 	<view class="flexCenter" wx:if="{{isSignIn && isSignUp}}">
 		歡迎回來！第 {{arkId}} 位ARKer ！
 	</view>
-	<button bindtap="jumpToTestPage">跳轉測試頁</button>
+	<button bindtap="jumpToTestPage">跳轉測試頁（請不要擅自進入）</button>
 </van-popup>
 
 <!-- 公告區 -->
