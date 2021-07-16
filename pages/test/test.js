@@ -70,7 +70,7 @@ Page({
     deleteTest() {
         // 只能在雲函數端刪除多條記錄
         // 服務端只能刪除一條記錄
-        wx.cloud.callFunction({     // 多記錄delete專用
+        wx.cloud.callFunction({     // 多記錄delete專用，最高權限
             name: 'cloudDeleteRecord',
             data:{
                 folder : 'user',
@@ -108,5 +108,34 @@ Page({
                 })
             }
         });
+    },
+    updateTemp () {
+        // wx.cloud.callFunction({
+        //     name: 'cloudUpdateTemp',
+        //     data:{
+        //         // folder : 'user',
+        //         // objectName : '_id',
+        //         // objectInfo : "b00064a760f0625227a1c374081cb672",
+        //     },
+        // }) .then(res=>{
+        //     console.log(res);
+        // }) .catch(res=>{
+        //     console.error(res);
+        // })
+        wx.cloud.callFunction({         // 向數據庫插入user的empty數據
+            name: 'cloudUpdateTemp',
+            data:{
+                writeMode : 'add',
+                updateClass : 'course',
+                updateName : 'userInfoInput',
+                // updateName : 'userInfoInput_empty',
+                updateData : cloudData.userInfoInput,
+                // updateData : cloudData.userInfoInput_empty,
+            },
+        }) .then(res=>{
+            console.log(res);
+        }) .catch(res=>{
+            console.error(res);
+        })
     },
 });

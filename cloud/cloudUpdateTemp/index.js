@@ -10,32 +10,39 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   // 前端才可以返回用戶頭像
   console.log(event);
-  let updateType = event.updateType;
+  let writeMode  = event.writeMode;
+  let updateClass = event.updateClass;  // 數據庫中集合的名稱
+  let updateName  = event.updateName;
   let updateData  = event.updateData;
+  let recordId  = event.recordId;
 
-  if (在config找不到對應的數據) {
-    // 插入數據 - 未完成
-    await db.collection('config').add({   // 對 user 集合插入新用戶數據
-      data: {
-        updateType,
-        updateData,
-      },
-    })
-  } else {    // 在config中更新對應數據
-    // update 局部更新一個記錄
-    // set 替換更新
-    // 雲函數更新的寫法，數組需要用 . 引出索引
-    db.collection('course').doc('cbddf0af60f04196170ea3cd011fd498').update({
-      data: {
-          'courseInfo_empty.0.input' : "Yes"
-      },
-      success: function(res) {
-        console.log(res.data)
-      },
-      fail: function(res) {
-        console.log(res)
-      }
-    })
+  switch (writeMode) {
+    case 'add':
+      db.collection(updateClass).add({
+        data: {
+          [updateName] : updateData,
+          _id          : recordId,
+        },
+      })
+      // .then(res => {
+      //     console.log("插入",res)
+      // })
+      break;
+    case 'update':
+      db.collection(updateClass).doc(recordId).update({
+        data: {
+            [updateName] : updateData
+        },
+        // success: function(res) {
+        //   console.log(res.data)
+        // },
+        // fail: function(res) {
+        //   console.log(res)
+        // }
+      })
+      break;
+    default:
+      break;
   }
 
 
