@@ -1,6 +1,5 @@
 var app = getApp(); 
 var cloudData = require('../../data/cloud.js')
-let xxx = 23423;
 
 Page({
   data: {
