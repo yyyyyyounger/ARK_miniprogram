@@ -23,9 +23,10 @@ Page({
 
     // 雲函數test
     addTest(){
-        db.collection('course').add({
+        db.collection('config').add({
             data: {
-                courseInfo_empty : this.data.courseInfo_empty
+                _id                 : 'userInfoArray1.0.0',
+                userInfoInput_empty : cloudData.userInfoInput_empty,
             },
         }).then(res => {
             console.log("插入",res)
@@ -55,27 +56,27 @@ Page({
         // update 局部更新一個記錄
         // set 替換更新
         // 雲函數更新的寫法，數組需要用 . 引出索引
-        db.collection('course').doc('cbddf0af60f04196170ea3cd011fd498').update({
-            data: {
-                'courseInfo_empty.0.input' : "Yes"
-            },
-            success: function(res) {
-              console.log(res.data)
-            },
-            fail: function(res) {
-              console.log(res)
-            }
-          })
+        // db.collection('course').doc('cbddf0af60f04196170ea3cd011fd498').update({
+        //     data: {
+        //         'courseInfo_empty.0.input' : "Yes"
+        //     },
+        //     success: function(res) {
+        //       console.log(res.data)
+        //     },
+        //     fail: function(res) {
+        //       console.log(res)
+        //     }
+        // })
     },
     deleteTest() {
-        // 只能在雲函數端刪除多條記錄
+        // 刪除多條記錄只能在雲函數端進行
         // 服務端只能刪除一條記錄
         wx.cloud.callFunction({     // 多記錄delete專用，最高權限
             name: 'cloudDeleteRecord',
             data:{
-                folder : 'user',
-                objectName : '_id',
-                objectInfo : "b00064a760f0625227a1c374081cb672",
+                objectClass : 'user',
+                subjectName : '_id',
+                subjectInfo : "b00064a760f0625227a1c374081cb672",
             },
             complete: res => {
               console.log('result: ', res)
@@ -110,27 +111,16 @@ Page({
         });
     },
     updateTemp () {
-        // wx.cloud.callFunction({
-        //     name: 'cloudUpdateTemp',
-        //     data:{
-        //         // folder : 'user',
-        //         // objectName : '_id',
-        //         // objectInfo : "b00064a760f0625227a1c374081cb672",
-        //     },
-        // }) .then(res=>{
-        //     console.log(res);
-        // }) .catch(res=>{
-        //     console.error(res);
-        // })
         wx.cloud.callFunction({         // 向數據庫插入user的empty數據
             name: 'cloudUpdateTemp',
             data:{
-                writeMode : 'add',
+                writeMode : 'update',
                 updateClass : 'course',
                 updateName : 'userInfoInput',
                 // updateName : 'userInfoInput_empty',
                 updateData : cloudData.userInfoInput,
                 // updateData : cloudData.userInfoInput_empty,
+                recordId : '79550af260f1b203272518e7532568a2',
             },
         }) .then(res=>{
             console.log(res);

@@ -23,28 +23,20 @@ exports.main = async (event, context) => {
           [updateName] : updateData,
           _id          : recordId,
         },
+      }) .then(res=>{
+        return res;
       })
-      // .then(res => {
-      //     console.log("插入",res)
-      // })
       break;
     case 'update':
-      db.collection(updateClass).doc(recordId).update({
-        data: {
-            [updateName] : updateData
-        },
-        // success: function(res) {
-        //   console.log(res.data)
-        // },
-        // fail: function(res) {
-        //   console.log(res)
-        // }
+      db.collection(updateClass).doc(recordId).update({   // update方法可以向已存在的記錄增添字段
+        data: {      [updateName] : updateData      },
+      }) .then(res=>{
+        return res;
       })
       break;
     default:
       break;
   }
-
 
   return {
     // event,

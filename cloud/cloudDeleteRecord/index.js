@@ -8,12 +8,12 @@ const db = cloud.database()
 const _ = db.command
 
 exports.main = async (event, context) => {
-  let folder      = event.folder;
-  let objectName  = event.objectName;
-  let objectInfo  = event.objectInfo;
+  let objectClass = event.objectClass;
+  let subjectName  = event.subjectName;
+  let subjectInfo  = event.subjectInfo;
   try {
-    return await db.collection(folder).where({
-      [objectName]: objectInfo
+    return await db.collection(objectClass).where({
+      [subjectName]: subjectInfo
     }).remove()
   } catch(e) {
     console.error(e)
