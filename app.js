@@ -61,6 +61,7 @@ App({
     }],
     // 用戶信息全局變量
     userInfoInput: [],
+    userInfoInput_empty: [],
     // 用戶微信登錄狀態
     isSignIn: false,
 
