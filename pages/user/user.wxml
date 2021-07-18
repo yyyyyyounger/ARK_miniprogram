@@ -4,7 +4,13 @@
 <van-toast id="van-toast" />
 <text>\n</text>
 
-<van-icon name="user-o" size="80rpx" color="#5595D9" class="userinfo" wx:if="{{!isSignIn}}" />
+<view class="userinfo">     <!-- 用戶頭像 -->
+  <!-- 圖標式頭像 -->
+  <!-- <van-icon name="user-o" size="80rpx" color="#5595D9" wx:if="{{!isSignIn}}" /> -->
+  <!-- 調用open-data的user頭像 -->
+  <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+</view>
+
 <!-- WeChat頭像&ID的請求與打印 -->
 <view class="userinfo">
   <!-- 向微信庫詢問是否能使用openData，if可以，直接展示頭像、WeChat ID -->
@@ -35,7 +41,7 @@
   </block>
 </view>
 
-<text class="userinfo" wx:if="{{!isSignIn}}" >小程序使用條款\n</text>
+<text class="userinfo" wx:if="{{!isSignIn}}" bindtap="jumpToProtocol">小程序使用條款\n</text>
 <!-- 編輯個人資料互動 -->
 <view class="userinfo" wx:if="{{isSignIn}}" >
   <view wx:if="{{!bindEditMode}}">

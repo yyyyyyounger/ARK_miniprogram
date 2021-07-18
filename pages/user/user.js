@@ -85,8 +85,8 @@ Page({
   },
 
   onLoad() {
-    var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字
-    console.log("data為",date);
+    var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
+    // console.log("data為",date);
     console.log(date.toLocaleDateString());
     //年
     var Y = date.getFullYear();
@@ -239,11 +239,11 @@ Page({
   // 獲取用戶信息
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，
-// 开发者妥善保管用户的头像昵称，避免重复弹窗 - 未完成
+// 保管用户的头像昵称，避免重复弹窗 - 未完成
     wx.getUserProfile({
       desc: '展示用戶信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
     }) 
-    .then(res=>{
+    .then(res=>{    // 提示 與 部分狀態指標記錄
         Notify({ type: 'success', message: '登錄成功！' });
         this.setData({
           userInfo: res.userInfo,
@@ -254,7 +254,7 @@ Page({
         app.globalData.isSignIn = true;
     })
     .then(res=>{
-// 登錄成功後，判斷是否已註冊
+// 登錄成功後，判斷是否已註冊 - 數據庫是否存在該用戶openid（查找_id）
         let isSignUp = cloudData.userInfoInput.find(o => o.shortName === 'isSignUp').input;
         console.log("登錄成功 - 註冊狀態：", isSignUp );
 // 拉取數據 - 雲端 → 本地
@@ -286,7 +286,7 @@ Page({
     }) 
     .catch(res=>{
       console.log("用戶點擊拒絕：",res);
-      Notify({ type: 'warning', duration: 3500, message: '登錄失敗QAQ，微信登錄只為了獲取您的頭像暱稱，從而獲得一個獨立的標識id喔！' });
+      Notify({ type: 'warning', duration: 3500, message: '登錄失敗QAQ' });
     })
   },
   // 調用該方法可以：不彈出彈窗，直接返回匿名用戶信息
@@ -492,6 +492,13 @@ Page({
       console.log("畢業日期為",today_Year+(4-studentYearIndexFun)+'/'+'06'+'/'+'23');
       return(today_Year+(4-studentYearIndexFun)+'/'+'06'+'/'+'23');
     }
+  },
+
+  // 跳轉 協議 頁
+  jumpToProtocol () {
+    wx.navigateTo({
+      url: '../protocol/protocol',
+    })
   },
 
 })
