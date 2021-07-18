@@ -94,7 +94,7 @@ Page({
 
     
 // 拉取數據(複製) - userInfoInput - 雲端 → 本地
-    if (!this.data.isSignIn) {              // if 未登錄，則 複製雲端空數據 → 本地
+    if (!this.data.isSignIn) {              // if 未登錄，則 複製cloudData的空數據 → 本地
       let arrayEmpty = JSON.parse(JSON.stringify(cloudData.userInfoInput_empty));
       this.setData({  userInfoInput : arrayEmpty  });
       var consoleMeg = '未登錄 - ';
@@ -102,7 +102,7 @@ Page({
     else {                                  // if 已登錄，歡迎語
       let userSignUpState = cloudData.userInfoInput.find(o => o.shortName === 'isSignUp').input;   // 查找名為isSignUp的對象
       if (userSignUpState) {             // if 已登錄，已註冊，個性化歡迎語
-        // 從雲端複製有意義的數據 → 本地
+        // 從雲端複製用戶設置的數據 → 本地
         let arraySignUp = JSON.parse(JSON.stringify(cloudData.userInfoInput));
         this.setData({  userInfoInput : arraySignUp  });
         let userNameInput = cloudData.userInfoInput.find(o => o.shortName === 'name');   // 查找名為isSignUp的對象
@@ -228,7 +228,8 @@ Page({
 // 开发者妥善保管用户的头像昵称，避免重复弹窗 - 未完成
     wx.getUserProfile({
       desc: '展示用戶信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
+    }) 
+    .then(res=>{
         Notify({ type: 'success', message: '登錄成功！' });
         this.setData({
           userInfo: res.userInfo,
@@ -237,6 +238,8 @@ Page({
         })
 // 成功登錄後，局部 → 全局isSignIn → true
         app.globalData.isSignIn = true;
+    })
+    .then(res=>{
 // 登錄成功後，判斷是否已註冊
         let isSignUp = cloudData.userInfoInput.find(o => o.shortName === 'isSignUp').input;
         console.log("登錄成功 - 註冊狀態：", isSignUp );
@@ -244,7 +247,7 @@ Page({
         if (isSignUp) {       // 已註冊：將 雲端數據（cloud.js）複製 → 本地
           let arraySignUp = JSON.parse(JSON.stringify(cloudData.userInfoInput));
           this.setData({  userInfoInput : arraySignUp  });
-          this.onLoad();
+          // this.onLoad(); // 重新載入本頁
         }
         else {                // 未註冊，提示進入註冊頁
           Dialog.confirm({
@@ -265,11 +268,11 @@ Page({
         this.setData({
           canIUseOpenData : true ,
         })
-      },  // success - end
-      fail: (res) => {
-        console.log("用戶點擊拒絕：",res);
-        Notify({ type: 'warning', duration: 3500, message: '登錄失敗QAQ，微信登錄只為了獲取您的頭像暱稱，從而獲得一個獨立的標識id喔！' });
-      }   // fail - end
+
+    }) 
+    .catch(res=>{
+      console.log("用戶點擊拒絕：",res);
+      Notify({ type: 'warning', duration: 3500, message: '登錄失敗QAQ，微信登錄只為了獲取您的頭像暱稱，從而獲得一個獨立的標識id喔！' });
     })
   },
   // 調用該方法可以：不彈出彈窗，直接返回匿名用戶信息
