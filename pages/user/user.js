@@ -85,6 +85,20 @@ Page({
   },
 
   onLoad() {
+    var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字
+    console.log("data為",date);
+    console.log(date.toLocaleDateString());
+    //年
+    var Y = date.getFullYear();
+    //月
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    //日
+    var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    //时
+    var h = date.getHours();
+    //分
+    var m = date.getMinutes();
+
 // 設置app.js的訪問接口
     this.app = getApp();
     // this.app.toastLoadingDIY();   // 模擬向服務器請求的延時
