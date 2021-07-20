@@ -18,5 +18,8 @@
   "homepage": "https://github.com/yyyyyyounger/ARK#readme",
   "dependencies": {
     "@vant/weapp": "^1.7.1"
+  },
+  "devDependencies": {
+    "miniprogram-api-typings": "^3.4.1"
   }
 }

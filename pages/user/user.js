@@ -260,16 +260,19 @@ Page({
   // 點擊登錄按鈕 - 綁定事件
   binSignInButton() {
     // 提示閱讀使用條款
-    Dialog.alert({
-      message: '繼續登錄將表示您已閱讀並同意該小程序的使用條款',
-    }).then(() => {
-      // on close
-      this.getUserProfile();
-    });
+    this.setData({  show_dialog:true  })
+
+    // Dialog.alert({
+    //   message: '繼續登錄將表示您已閱讀並同意該小程序的使用條款',
+    // }).then(() => {
+    //   // on close
+    //   // this.getUserProfile();
+    // });
   },
 
   // 點擊登錄 - 獲取用戶信息
   getUserProfile(e) {
+    this.setData({  show_dialog:false  })
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，
     const getUserProfilePro = () => {    // 新增promise，抓取所調用api的返回值，準備鏈式調用
       return new Promise((resolve, reject) => {
@@ -280,7 +283,7 @@ Page({
           resolve(res);
         }) 
         .catch(err => {
-          console.log(err);
+          console.error(err);
           reject(err);
         })
       });
@@ -359,12 +362,8 @@ Page({
       })
 
     })// 同意登錄 - end
-    // .then(res=>{  // 重新載入本頁
-    //   console.log("自動刷新本頁");
-    //   this.onLoad();
-    // })
     .catch(err=>{                      // 拒絕登錄
-      console.log("用戶點擊拒絕：",err);
+      console.error("用戶點擊拒絕：",err);
       Notify({ type: 'warning', duration: 3500, message: '登錄失敗QAQ' });
     })
 
@@ -529,10 +528,10 @@ Page({
       wx.cloud.callFunction({ 
         name: 'userSignUp',
         data:{
-            avatarUrl     : this.data.userInfo.avatarUrl,
-            nickName      : this.data.userInfo.nickName,
-            gender        : this.data.userInfo.gender,        // 1：男        2：女
-            userInfoInput : this.data.userInfoInput,
+            avatarUrl     : that.data.userInfo.avatarUrl,
+            nickName      : that.data.userInfo.nickName,
+            gender        : that.data.userInfo.gender,        // 1：男        2：女
+            userInfoInput : that.data.userInfoInput,
         }
       }) .catch(err=>{  console.error(err);  })
   },

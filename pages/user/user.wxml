@@ -1,6 +1,15 @@
 <!-- 彈出類 -->
 <van-notify id="van-notify"/>
-<van-dialog id="van-dialog" />
+<van-dialog id="van-dialog"/>
+<van-dialog
+  use-slot
+  title="註冊須知"
+  show="{{ show_dialog }}"
+  bind:confirm="getUserProfile"
+>
+  <view>  我已閱讀並願意遵守ARK協議（缺個打√ - 未完成）</view>
+</van-dialog>
+<!-- id="van-dialog" -->
 <van-toast id="van-toast" />
 <text>\n</text>
 
