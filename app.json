@@ -19,7 +19,7 @@
   ],
   "window":{
     "backgroundTextStyle":"dark",
-    "navigationBarBackgroundColor": "#3498db",
+    "navigationBarBackgroundColor": "#5595D9",
     "navigationBarTitleText": "ARK-Dev version",
     "navigationBarTextStyle":"white",
     "enablePullDownRefresh": true
