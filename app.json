@@ -1,10 +1,10 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/user/user",
     "pages/test/test",
     "pages/category/category",
     "pages/category/holdACourses/holdACourses",
-    "pages/user/user",
     "pages/more/more",
     "pages/launch/launch",
     "pages/notice/notice",

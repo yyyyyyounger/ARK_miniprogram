@@ -41,10 +41,11 @@ Page({
 
         // 搜索符合 where中條件的記錄
         // 此外還可使用查詢指令：https://developers.weixin.qq.com/miniprogram/dev/wxcloud/guide/database/query.html
-        db.collection('course').where({
-            // _openid: 'oDWgf48GBbH1PqgkMMVIEHZldF60',
-            // 只要有一個元素符合即返回
-            courseInfo_empty : { input:"None", }
+        db.collection('user').where({
+            _openid: 'oDWgf48GBbH1PqgkMMVIEHZldF60',
+            // _id: 'oDWgf48GBbH1PqgkMMVIEHZldF60',
+            // _id                 : 'userInfoArray1.0.0',
+            // courseInfo_empty : { input:"None", }
         })
         .get({
             success: function(res) {
@@ -91,24 +92,18 @@ Page({
     cloudGetUserInfo() {
         wx.getUserProfile({
             desc: '展示用戶信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-            success: (res) => {
-                console.log(res.userInfo);
-                let avatarUrl = res.userInfo.avatarUrl;
-                let nickName  = res.userInfo.nickName;
-                let gender    = res.userInfo.gender;        // 1：男        2：女
-                wx.cloud.callFunction({
-                    name: 'cloudGetUserInfo',
-                    data:{
-                        avatarUrl : avatarUrl,
-                        nickName  : nickName,
-                        gender    : gender,
-                    },
-                    complete: res => {
-                      console.log('cloudGetUserInfo result: ', res)
-                    }
-                })
-            }
-        });
+        })
+        .then (res => {
+            wx.cloud.callFunction({
+                name: 'userSignUp',
+                data:{
+                    avatarUrl : res.userInfo.avatarUrl,
+                    nickName  : res.userInfo.nickName,
+                    gender    : res.userInfo.gender,        // 1：男        2：女
+                    userInfoInput    : cloudData.userInfoInput,
+                }
+            }) .then(res=>{    console.log('userSignUp result: ', res)    })
+        }) .catch (res=>{   console.error(res);   })
     },
     updateTemp () {
         wx.cloud.callFunction({         // 向數據庫插入user的empty數據

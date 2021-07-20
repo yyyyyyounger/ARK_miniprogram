@@ -1,3 +1,5 @@
+// 全局備註：用戶信息等的讀取權限，應好好配置，當前階段為方便設置為所有人可讀
+
 import cloud from './data/cloud';
 import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 // import Notify from '../miniprogram_npm/@vant/weapp/notify/notify';

@@ -23,7 +23,7 @@ let userInfoInput = [
   { id:7, name:"註冊時間:", shortName:"signUpTime",   input:"2021/07/04",  display:true,  canEdit:false },
   { id:8, name:"ARKid:",   shortName:"arkId",        input:"001",   display:true,  canEdit:false },
   { id:9, name:"管理員:",   shortName:"admin",        input:true,    display:true, canEdit:false },
-  {       name:"註冊狀態：", shortName:"isSignUp",    input: true, },
+  {       name:"註冊狀態：", shortName:"isSignUp",    input: false, },
 ];
 var courseInfo_empty = [
     { id:0, name:"分享编號", shortName:"courseId",       input:"None",                    canEdit:false,     display:false },  // 雲端給該課程分配的編號
@@ -113,7 +113,6 @@ var studentYear = ["大一", "大二", "大三", "大四"];
 var studentMajor = ["ECE - 電機", "CIS - 計算機", "CEE - 土木", "EME - 機電", "MMA - 數學", "PHC - 物理化學", ];
 
 // ARK協議
-// var ARK = JSON.stringify('../ARK.md');
 const ARK = 
 `ECE 方舟活動 協議 1.01 ：
 =================
