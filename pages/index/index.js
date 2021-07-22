@@ -172,12 +172,6 @@ Page({
       url: '../notice/notice',
     });
   },
-  // 跳轉“所有課程”頁
-  jumpToCourse_tabBar () {
-    wx.switchTab({
-      url: '../category/category'
-    });
-  },
   // 跳轉“測試”頁
   jumpToTestPage () {
     wx.navigateTo({

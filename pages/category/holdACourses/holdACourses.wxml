@@ -1,13 +1,13 @@
 <!-- 全局彈出類 -->
 <!-- 日期選擇器，增加以當天時間一個月內的選擇限制 - 未完成 -->
 <van-calendar show="{{ show_calendar }}" show-confirm="{{ false }}" bind:close="onClose" bind:confirm="onConfirm_calendar" 
-  max-date="{{ maxDate_calendar }}" />
-<!-- 彈出層 -->
+  max-date="{{ maxDate_calendar }}" color="#3498DB"/>
+<!-- 彈出層 - 時間選擇器 -->
 <van-popup
   round
   safe-area-inset-bottom	
   show="{{ show_timePicker }}"
-  position="right"
+  position="bottom"
   bind:close="onClose"
 >
   <!-- 時間選擇器，增加彈出層控制顯示 - 未完成 -->
@@ -25,7 +25,7 @@
 </view>
 <view class="cu-steps">
 
-  <view class="cu-item {{index>num?'':'text-blue'}}" wx:for="{{numList}}" wx:key="item">
+  <view class="cu-item {{index>num?'':'text-themeBlue'}}" wx:for="{{numList}}" wx:key="item">
     <text class="num" data-index="{{index + 1}}"></text> {{item.name}}
   </view>
 
@@ -45,9 +45,9 @@
 </view> -->
 
 <view class="grid col-{{1}} padding-sm">    <!-- 必填 -->
-  <view class="bg-{{ColorList[0].name}} padding radius text-center shadow-blur " data-index="{{index}}" >   
+  <view class="bg-themeBlue padding radius text-center shadow-blur " data-index="{{index}}" >   
       <text class="text-lg">必填 </text>
-      <text class="cuIcon-unfold text-sl" />
+      <!-- <text class="cuIcon-unfold text-sl" /> -->
     <!-- <view class="margin-top-sm text-df">點我添加</view> -->
   </view>
   <!-- <view class="card-menu"> -->
@@ -56,7 +56,7 @@
       
       <view class="cu-item">    <!-- 分享主題 -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享主題</text>
         </view>
         <view class="action">
@@ -76,7 +76,7 @@
 
       <view class="cu-item">    <!-- 分享內容 -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享內容</text>
         </view>
         <view class="action">
@@ -100,7 +100,7 @@
 
       <view class="cu-item">    <!-- 分享地址 -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享地址</text>
         </view>
         <view class="action">
@@ -119,7 +119,7 @@
 
       <view class="cu-item">    <!-- 分享時間 -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[0].name}}"></text>
+          <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享時間</text>
         </view>
         <view class="action">
@@ -146,10 +146,8 @@
 </view>
 
 <view class="grid col-{{1}} padding-sm">    <!-- 選填 -->
-  <view class="bg-{{ColorList[1].name}} padding radius text-center shadow-blur " data-index="{{index}}" >
+  <view class="bg-themeBlue-light padding radius text-center shadow-blur " data-index="{{index}}" >
       <text class="text-lg">選填 </text>
-      <text class="cuIcon-unfold text-sl" /> 
-    <!-- <view class="margin-top-sm text-df">點我添加</view> -->
   </view>
   <view class="card-menu">
 
@@ -157,7 +155,7 @@
       
       <view class="cu-item">    <!-- 助手id -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[1].name}}"></text>
+          <text class="cuIcon-circlefill text-themeOrange-light"></text>
           <text class="text-grey">助手id</text>
         </view>
         <view class="action">
@@ -173,13 +171,13 @@
         border="{{ false }}"
         bind:change="onChange_field"
       >
-        <van-button slot="button" size="normal" type="primary">
+        <van-button slot="button" size="small" plain type="primary" color="#64b1e3">
           確認選擇
         </van-button>
       </van-field>
       <view class="cu-item">    <!-- 助手頭像，以寫入的id顯示對應頭像 - 代商討 - 未完成 -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[1].name}}"></text>
+          <text class="cuIcon-circlefill text-themeOrange-light"></text>
           <text class="text-grey">助手頭像(確認後會顯示，最多兩位)</text>
         </view>
         <view class="action">
@@ -189,7 +187,7 @@
 
       <view class="cu-item">    <!-- 簽到密碼 -->
         <view class="content">
-          <text class="cuIcon-circlefill text-{{ColorList[1].name}}"></text>
+          <text class="cuIcon-circlefill text-themeOrange-light"></text>
           <text class="text-grey">簽到密碼</text>
         </view>
         <view class="action">
@@ -216,5 +214,5 @@
 <view class="padding flex flex-direction">
   <!-- 本地緩存 - 未完成 -->
   <button class="shadow cu-btn bg-grey lg"                data-model="btn_quit"   bindtap="onClick_saveSubmit">保存後退出</button>
-  <button class="shadow cu-btn bg-olive margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">保存並提交審核</button>
+  <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">保存並提交審核</button>
 </view>

@@ -1,9 +1,9 @@
 {
   "pages":[
     "pages/index/index",
+    "pages/category/category",
     "pages/user/user",
     "pages/test/test",
-    "pages/category/category",
     "pages/category/holdACourses/holdACourses",
     "pages/more/more",
     "pages/launch/launch",
@@ -19,7 +19,7 @@
   ],
   "window":{
     "backgroundTextStyle":"dark",
-    "navigationBarBackgroundColor": "#5595D9",
+    "navigationBarBackgroundColor": "#3498DB",
     "navigationBarTitleText": "ARK-Dev version",
     "navigationBarTextStyle":"white",
     "enablePullDownRefresh": true

@@ -25,12 +25,39 @@ page{
     
     /* 定義統一的字體大小 */
     font-size: 35rpx;
+
+    /* 定義主題色 */
+    --themeBlue: #3498DB;
 }
 
 .devColor{
     color: var(--devColor);
     font-size: 40rpx;
     text-decoration: underline;
+}
+
+.text-themeBlue{
+    color: var(--themeBlue);
+}
+.text-themeBlue-light{
+    color: #64b1e3;
+}
+
+.text-themeOrange{
+    color: #f37b1d;
+}
+.text-themeOrange-light{
+    color: #f8ad72;
+}
+
+.bg-themeBlue{
+    background-color: var(--themeBlue);
+	color: var(--white);
+}
+.bg-themeBlue-light{
+    /* background-color: var(--themeBlue); */
+    background-color: #64b1e3;
+	color: var(--white);
 }
 
 /* 避免自定義tabbar遮擋底部內容，需放置一個view */
