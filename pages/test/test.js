@@ -11,8 +11,6 @@ Page({
             courseInfo_empty : cloudData.courseInfo_empty
         })
 
-        
-
     },
     onReady: function(){
         

@@ -1,5 +1,8 @@
 // 在.js文件中獲取時間的辦法：
 
+// let date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
+// new Date(時間戳)來查看具體時間
+
 //获取当前时间戳
 var timestamp = Date.parse(new Date());
 timestamp = timestamp / 1000;
