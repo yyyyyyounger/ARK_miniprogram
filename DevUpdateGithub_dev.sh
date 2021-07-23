@@ -10,6 +10,7 @@ git add -f -A
 git commit -m "update"
 
 git push -f origin dev
+git push -f origin master
 git push -f local dev
 
 echo " "

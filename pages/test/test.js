@@ -10,6 +10,9 @@ Page({
         this.setData({
             courseInfo_empty : cloudData.courseInfo_empty
         })
+
+        
+
     },
     onReady: function(){
         
@@ -121,6 +124,16 @@ Page({
             console.log(res);
         }) .catch(res=>{
             console.error(res);
+        })
+    },
+
+    subscribeTest() {
+        wx.requestSubscribeMessage({
+            tmplIds: ['W_ZYI60mhdcv9zbbIZUtsadXBAKKgdz0EmJqjiEO-9I'],
+            success (res) {
+                console.log(res);
+            },
+            fail (res) { console.error(res);},
         })
     },
 });
