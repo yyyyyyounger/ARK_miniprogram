@@ -10,24 +10,23 @@ exports.main = async (event, context) => {
   try {
     const result = await cloud.openapi.subscribeMessage.send({
         "touser": wxContext.OPENID,
-        "page": 'index',
-        "lang": 'zh_CN',
+        "templateId": 'W_ZYI60mhdcv9zbbIZUtsadXBAKKgdz0EmJqjiEO-9I',
+        "page" : './pages/index',
         "data": {
-          "number01": {
-            "value": '339208499'
+          "thing2": {
+            "value": 'test2'
           },
-          "date01": {
-            "value": '2015年01月05日'
+          "thing1": {
+            "value": 'test1'
           },
-          "site01": {
-            "value": 'TIT创意园'
+          "time3": {
+            "value": '15:01'
           },
-          "site02": {
-            "value": '广州市新港中路397号'
-          }
+          "thing4": {
+            "value": 'test4'
+          },
         },
-        "templateId": 'TEMPLATE_ID',
-        "miniprogramState": 'developer'
+        // "miniprogramState": 'developer'
       })
     return result
   } catch (err) {

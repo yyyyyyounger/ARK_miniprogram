@@ -14,8 +14,7 @@
     "pages/footer/footer",
     "pages/protocol/protocol",
     "pages/category/allCourses/allCourses",
-    "pages/category/myFollowCourses/myFollowCourses",
-    "pages/category/myJoinCourses/myJoinCourses"
+    "pages/category/myFollowCourses/myFollowCourses"
   ],
   "window":{
     "backgroundTextStyle":"dark",
