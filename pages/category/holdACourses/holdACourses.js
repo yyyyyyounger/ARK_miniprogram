@@ -85,25 +85,9 @@ Page({
     // 複製雲端數組
     let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
     this.setData({  courseInfoInput : arrayEmpty  });
-
     // 生成簡易版(無input版)userInfo的shortName數組
     let shortNameArray =    this.data.courseInfoInput.map((item)=>{    return item.shortName   });
-    this.setData({
-      courseInfoInput_courseIdIndex       : shortNameArray.findIndex(o=> o== "courseId"),
-      courseInfoInput_courseNameIndex     : shortNameArray.findIndex(o=> o== "courseName"),
-      courseInfoInput_courseContentIndex  : shortNameArray.findIndex(o=> o== "courseContent"),
-      courseInfoInput_courseTagIndex      : shortNameArray.findIndex(o=> o== "courseTag"),
-      courseInfoInput_courseAdresIndex    : shortNameArray.findIndex(o=> o== "courseAdres"),
-      courseInfoInput_courseTimeIndex     : shortNameArray.findIndex(o=> o== "courseTime"),
-      courseInfoInput_speakerNameIndex    : shortNameArray.findIndex(o=> o== "speakerName"),
-      courseInfoInput_speakeridIndex      : shortNameArray.findIndex(o=> o== "speakerid"),
-      courseInfoInput_helperNameIndex     : shortNameArray.findIndex(o=> o== "helperName"),
-      courseInfoInput_helperidIndex       : shortNameArray.findIndex(o=> o== "helperid"),
-      courseInfoInput_followersIndex      : shortNameArray.findIndex(o=> o== "followers"),
-      courseInfoInput_courseStateIndex    : shortNameArray.findIndex(o=> o== "courseState"),
-      courseInfoInput_courseStarsIndex    : shortNameArray.findIndex(o=> o== "courseStars"),
-      courseInfoInput_attendCodeIndex     : shortNameArray.findIndex(o=> o== "attendCode"),
-    })
+    this.findSetData(shortNameArray); // 初始化所有index
     // 生成 userInfoInput裡允許顯示的設置數組
     let InfoDisplay = this.data.courseInfoInput.map(item=>{    return item.display   });
     // 生成 userInfoInput裡允許編輯的設置數組
@@ -122,6 +106,24 @@ Page({
     // 允許編輯/顯示 → setData
     this.setData({    InfoDisplay, canEdit, mustEditArray, chooseEditArray,   });
     
+  },
+  findSetData(shortNameArray) { // 初始化所有index，匹配對應input值用於顯示
+    this.setData({
+      courseInfoInput_courseIdIndex       : shortNameArray.findIndex(o=> o== "courseId"),
+      courseInfoInput_courseNameIndex     : shortNameArray.findIndex(o=> o== "courseName"),
+      courseInfoInput_courseContentIndex  : shortNameArray.findIndex(o=> o== "courseContent"),
+      courseInfoInput_courseTagIndex      : shortNameArray.findIndex(o=> o== "courseTag"),
+      courseInfoInput_courseAdresIndex    : shortNameArray.findIndex(o=> o== "courseAdres"),
+      courseInfoInput_courseTimeIndex     : shortNameArray.findIndex(o=> o== "courseTime"),
+      courseInfoInput_speakerNameIndex    : shortNameArray.findIndex(o=> o== "speakerName"),
+      courseInfoInput_speakeridIndex      : shortNameArray.findIndex(o=> o== "speakerid"),
+      courseInfoInput_helperNameIndex     : shortNameArray.findIndex(o=> o== "helperName"),
+      courseInfoInput_helperidIndex       : shortNameArray.findIndex(o=> o== "helperid"),
+      courseInfoInput_followersIndex      : shortNameArray.findIndex(o=> o== "followers"),
+      courseInfoInput_courseStateIndex    : shortNameArray.findIndex(o=> o== "courseState"),
+      courseInfoInput_courseStarsIndex    : shortNameArray.findIndex(o=> o== "courseStars"),
+      courseInfoInput_attendCodeIndex     : shortNameArray.findIndex(o=> o== "attendCode"),
+    })
   },
   onReady: function(){
     
