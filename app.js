@@ -26,6 +26,7 @@ App({
     } else {
       if (Date.now() - userInfoStorage.time > 7*24*60*60*1000 ) {  // 7天有效期
         console.log("userInfo數據已過期");
+        // 緩存過期，刪除
         wx.removeStorageSync('userInfo');
       } else {
         console.log("app - userInfo緩存為：",userInfoStorage);
