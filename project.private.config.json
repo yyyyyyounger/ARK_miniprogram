@@ -23,6 +23,12 @@
           "pathName": "pages/category/holdACourses/holdACourses",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "user頁",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
         }
       ]
     }

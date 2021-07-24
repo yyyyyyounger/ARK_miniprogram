@@ -213,6 +213,6 @@
 <!-- 提交審核按鈕 -->
 <view class="padding flex flex-direction">
   <!-- 本地緩存 - 未完成 -->
-  <button class="shadow cu-btn bg-grey lg"                data-model="btn_quit"   bindtap="onClick_saveSubmit">保存後退出</button>
+  <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">保存後退出</button>
   <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">保存並提交審核</button>
 </view>

@@ -229,11 +229,11 @@ Page({
   onClick_saveSubmit (e) {
     let userClickType = e.currentTarget.dataset.model;
     this.setData({    [userClickType]: true    });
-    if (this.data.btn_quit) {
+    if (this.data.btn_quit) {  // 點擊了保存並退出按鈕
       // 已輸入的數據保存到本地 - 未完成
       wx.navigateBack({    delta: 0,   })   // 回退上一頁
     }
-    if (this.data.btn_submit) {
+    if (this.data.btn_submit) { // 點擊了保存並上傳按鈕
       console.log("用戶請求submit");
 // 如數據無誤，提交到雲端，管理員端提示 - 未完成
       // 與本地的courseInfoInput的index匹配，然後寫入
@@ -241,24 +241,25 @@ Page({
       let w1 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseContent' );
       let w2 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseAdres' );
       let w3 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseTime' );
-      let write0 = 'courseInfoInput['+w0+'].input';
-      let write1 = 'courseInfoInput['+w1+'].input';
-      let write2 = 'courseInfoInput['+w2+'].input';
-      let write3_1 = 'courseInfoInput['+w3+'].input[0]';  // datePick
-      let write3_2 = 'courseInfoInput['+w3+'].input[1]';  // timePick
-      this.setData({        // 寫入局部courseInfoInput數據
+      this.setData({        // 寫入當前js的courseInfoInput數據
         bindEditMode : false,
-        [write0] : this.data.courseName_input,
-        [write1] : this.data.courseContent_input,
-        [write2] : this.data.courseAdres_input,
-        [write3_1] : this.data.datePick,
-        [write3_2] : this.data.timePick,
+        ['courseInfoInput['+w0+'].input'] : this.data.courseName_input,
+        ['courseInfoInput['+w1+'].input'] : this.data.courseContent_input,
+        ['courseInfoInput['+w2+'].input'] : this.data.courseAdres_input,
+        ['courseInfoInput['+w3+'].input[0]'] : this.data.datePick,
+        ['courseInfoInput['+w3+'].input[1]'] : this.data.timePick,
       })
-      console.log("上傳前本地數據（修改後，模擬向本地儲存數據）",this.data.courseInfoInput);
-      // 上傳數據 本地 → 雲端
-      cloudData.courseInfoInput = this.data.courseInfoInput;
-      console.log("上傳後雲端的數據：",cloudData.courseInfoInput);
-
+      // 上傳數據 本地 → 雲端 - 未完成
+      wx.cloud.callFunction({
+        name : 'courseAdd',
+        data : {
+          
+        }
+      }) .then (res=>{
+        console.log(res);
+      }) .catch (err=>{
+        console.error(err);
+      })
     } // if如果點擊了submit的button - end
   },
 });

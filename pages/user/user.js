@@ -103,42 +103,35 @@ Page({
   },
 
   onLoad() {
-    var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
-    console.log(date.toLocaleDateString());
-
-// app.toastLoadingDIY();   // 模擬向服務器請求的延時
-// 設置app.js的訪問接口
+    // 設置app.js的訪問接口
     this.app = getApp();
+
+    // 獲取緩存，打開小程序時就會判斷是否有頭像緩存，然後寫入globalData.isSignIn
+    const userInfoStorage = wx.getStorageSync('userInfo');
+    if (app.globalData.isSignIn) {      // 存在頭像緩存，老用戶 or 非第一次登錄
+      this.setData({
+        userInfo: userInfoStorage.data, // 用戶暱稱、頭像數據
+        hasUserInfo: true,      // 已獲取用戶信息
+        isSignIn:true           // 成功登錄後，局部isSignIn → true：用戶已登錄
+      })
+      var needWait = true;
+    }
+
+    // 定義控制台log的部分字段
     var consoleMeg = '';
 
-// 查詢用戶授權登錄狀態，保存頭像等操作，需要後端融合
-
-// 拉取數據(複製) - userInfoInput - 雲端 → 本地
+// 拉取cloudData的模擬數據(複製) - userInfoInput - 雲端 → 本地
+    let arrayEmpty = JSON.parse(JSON.stringify(cloudData.userInfoInput_empty));
+    this.setData({  
+      userInfoInput       : arrayEmpty,
+      userInfoInput_empty : arrayEmpty,
+    });
     if (!this.data.isSignIn) {              // if 未登錄，則 複製cloudData.js的空數據 → 本地
-      let arrayEmpty = JSON.parse(JSON.stringify(cloudData.userInfoInput_empty));
-      this.setData({  
-        userInfoInput       : arrayEmpty,
-        userInfoInput_empty : arrayEmpty,
-      });
       consoleMeg = '未登錄 - ';
     }
     else {                                  // if 已登錄，歡迎語
       // 返回majorTagArray的信息
-      db.collection('config').doc('studentMajor') .get().then(res=>{
-        // res.data為'studentMajor'記錄的數據
-        this.setData({
-          majorTagArray : res.data.majorTagArray, 
-          studentMajor  : res.data.studentMajor, 
-        })
-      }) .then(res=>{ // 將元素寫入major的選項對象
-        let studentMajorArray = [];
-        for (let i = 0; i < this.data.studentMajor.length; i++) { 
-          let studentMajorObj = {};
-          studentMajorObj.name = this.data.studentMajor[i];
-          studentMajorArray.push(studentMajorObj)
-        }
-        this.setData({  actions_sheet_major:studentMajorArray  })
-      }).catch(err=>{  console.error(err);  })
+      this.returnMajorTagArray(this);
 
       getUserCloudData().then(res => {  // 鏈式調用，返回用戶登記的數據
         console.log("鏈式調用getUserCloudData，返回數組長度為：",res.result.userCloudData.data.length)
@@ -162,29 +155,51 @@ Page({
 
       consoleMeg = '已登錄 - ';
     }
-    console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); // log出提示消息
-    // 生成 無input版 userInfo的shortName數組
-    let shortNameArray =    this.data.userInfoInput.map((item)=>{    return item.shortName   });
-    // 生成userInfoInput裡允許顯示的設置數組
-    let InfoDisplay = this.data.userInfoInput.map((item)=>{    return item.display   });
-    // 生成userInfoInput裡允許編輯的設置數組
-    let canEdit     = this.data.userInfoInput.map((item)=>{    return item.canEdit    });
-    // 允許編輯/顯示 → setData
-    this.setData({    InfoDisplay, canEdit, shortNameArray    });
-    this.findSetData(this.data.shortNameArray); // 初始化所有index值
-    
-// 未理解的神秘執行 - 未完成
-    if (wx.getUserProfile) {
-      this.setData({
-        // 用戶授權狀態設為true
-        canIUseGetUserProfile: true
-      })
-    }   else{
-      console.log("user頁 - onLoad() - GetuserProfile ***fail***");
-    }
 
+    if (needWait) {   // 存在緩存，需要等待異步請求返回
+      // 向服務器請求的延時動畫
+      app.toastLoadingDIY();
+
+    getUserCloudData().then(res => {
+      // log出提示消息
+      console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
+
+      // 初始化各種數組
+      this.ArrayDataInit(this);
+
+// 未理解的神秘執行 - 未完成
+      if (wx.getUserProfile) {
+        console.log("wx.getUserProfile為true");
+        this.setData({
+          // 用戶授權狀態設為true
+          canIUseGetUserProfile: true
+        })
+      }   else{
+        console.log("user頁 - onLoad() - GetuserProfile ***fail***");
+      }
+      
 // 計算持續時間
-    this.calcTime();
+      this.calcTime();
+      }) .catch(err => {    console.log(err);    });
+    } 
+    else {
+      // log出提示消息
+      console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
+
+      // 初始化各種數組
+      this.ArrayDataInit(this);
+
+      // 未理解的神秘執行 - 未完成
+      if (wx.getUserProfile) {
+        console.log("wx.getUserProfile為true");
+        this.setData({
+          // 用戶授權狀態設為true
+          canIUseGetUserProfile: true
+        })
+      }   else{
+        console.log("user頁 - onLoad() - GetuserProfile ***fail***");
+      }
+    }
   },
   findSetData(shortNameArray) { // 初始化所有index，匹配對應input值用於顯示
     this.setData({
@@ -212,6 +227,19 @@ Page({
       studentYear :   cloudData.studentYear,
       // studentMajor :  cloudData.studentMajor,
     })
+  },
+  // 初始化各種數組
+  ArrayDataInit(that) {
+    // 生成 無input版 userInfo的shortName數組
+    let shortNameArray =    that.data.userInfoInput.map((item)=>{    return item.shortName   });
+    // 生成userInfoInput裡允許顯示的設置數組
+    let InfoDisplay = that.data.userInfoInput.map((item)=>{    return item.display   });
+    // 生成userInfoInput裡允許編輯的設置數組
+    let canEdit     = that.data.userInfoInput.map((item)=>{    return item.canEdit    });
+    // 允許編輯/顯示 → setData
+    that.setData({    InfoDisplay, canEdit, shortNameArray    });
+    // 初始化所有index值
+    that.findSetData(that.data.shortNameArray);
   },
 
   onShow () {
@@ -293,27 +321,18 @@ Page({
       Notify({ type: 'success', message: '登錄成功！' });
       this.setData({
         userInfo: res.userInfo, // 用戶暱稱、頭像數據
-        hasUserInfo: true, // 已獲取用戶信息
-        isSignIn:true      // 成功登錄後，局部isSignIn → true：用戶已登錄
+        hasUserInfo: true,      // 已獲取用戶信息
+        isSignIn:true           // 成功登錄後，局部isSignIn → true：用戶已登錄
       })
+
+      // 設置userInfo帶時間的緩存
+      wx.setStorageSync('userInfo', {time:Date.now() ,data:this.data.userInfo});
+
       // 成功登錄後，局部 → 全局isSignIn → true
       app.globalData.isSignIn = true;
 
       // 返回majorTagArray的信息
-      db.collection('config').doc('studentMajor') .get().then(res=>{
-        this.setData({
-          majorTagArray : res.data.majorTagArray, 
-          studentMajor  : res.data.studentMajor, 
-        })
-        // 抽取數組元素 插入major選項數組
-        let studentMajorArray = [];
-        for (let i = 0; i < this.data.studentMajor.length; i++) { 
-          let studentMajorObj = {};
-          studentMajorObj.name = this.data.studentMajor[i];
-          studentMajorArray.push(studentMajorObj)
-        }
-        this.setData({  actions_sheet_major:studentMajorArray  })
-      }) .catch(err=>{  console.error(err);  })
+      this.returnMajorTagArray(this);
 
       // 登錄成功後，判斷是否已註冊 - 數據庫是否存在該用戶openid（查找_id）
       getUserCloudData().then(res => {    // 鏈式調用，能在該鏈上使用該promise的返回值
@@ -328,18 +347,9 @@ Page({
           this.onLoad();
         }
         else {    // 未註冊，拉取雲端的empty數據模板
-          db.collection('config').where({
-            userInfoInput_empty : {shortName:"name"},
-          }) .get() .then(res =>{
-            let userCloudData = res.data[0];
-// 拉取empty數據 - 雲端 → 本地&全局
-            let emptyUserInfoInput = JSON.parse(JSON.stringify(userCloudData.userInfoInput_empty));  // 複製數據
-            app.globalData.userInfoInput_empty = emptyUserInfoInput;
-            this.setData({  // 更新本地userInfo模板
-              userInfoInput_empty : emptyUserInfoInput,
-              userInfoInput       : emptyUserInfoInput,
-            });
-          })
+          // 拉取空數據模板
+          this.returnUserInfoEmpty(this); 
+
           Dialog.confirm({  // 提示註冊
             title: '系統提示',
             message: '現在填寫必要資料 (完成註冊) 嗎',
@@ -353,7 +363,7 @@ Page({
               this.setData({  bindEditMode : false  }); 
               Notify({ type: 'warning', message: '現在仍不是正式成員喔' });
             });
-        }
+        } // else - end
       }) .catch(err => {    console.log(err);    });
 
       // 登錄後不再按鈕請求登錄（保存用戶頭像等信息） - 未完成
@@ -368,7 +378,40 @@ Page({
     })
 
   },
-  // 調用該方法可以：不彈出彈窗，直接返回匿名用戶信息
+  // 返回數據庫中新的majorTagArray
+  returnMajorTagArray (that) {
+    db.collection('config').doc('studentMajor') .get().then(res=>{
+      that.setData({
+        majorTagArray : res.data.majorTagArray, 
+        studentMajor  : res.data.studentMajor, 
+      })
+      // 抽取數組元素 插入major選項數組
+      let studentMajorArray = [];
+      for (let i = 0; i < that.data.studentMajor.length; i++) { 
+        let studentMajorObj = {};
+        studentMajorObj.name = that.data.studentMajor[i];
+        studentMajorArray.push(studentMajorObj)
+      }
+      that.setData({  actions_sheet_major:studentMajorArray  })
+    }) .catch(err=>{  console.error(err);  })
+  },
+  // 返回數據庫config集合中最新的 empty 模板數據
+  returnUserInfoEmpty (that) {
+    db.collection('config').where({
+      userInfoInput_empty : {shortName:"name"},
+    }) .get() .then(res =>{
+      let userCloudData = res.data[0];
+// 拉取empty數據 - 雲端 → 本地&全局
+      let emptyUserInfoInput = JSON.parse(JSON.stringify(userCloudData.userInfoInput_empty));  // 複製數據
+      app.globalData.userInfoInput_empty = emptyUserInfoInput;
+      that.setData({  // 更新本地userInfo模板
+        userInfoInput_empty : emptyUserInfoInput,
+        userInfoInput       : emptyUserInfoInput,
+      });
+    })
+  },
+
+  // 不彈出彈窗，直接返回匿名用戶信息
   getUserInfo(e) {
     console.log(e)
     this.setData({

@@ -6,6 +6,8 @@ import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 // import Dialog from '../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 // var b = JSON.parse(JSON.stringify(數組a));  複製一份數組a的數據到數組b
+// var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
+// console.log(date.toLocaleDateString());
 
 //app.js
 App({
@@ -17,6 +19,20 @@ App({
       env: 'cloud1-5gtulf1g864cd4ea'
     })
     // const db = wx.cloud.database();
+
+    const userInfoStorage = wx.getStorageSync('userInfo');
+    if (!userInfoStorage) { //如果不存在userInfo的緩存
+      console.log("目前沒有userInfo的緩存");
+    } else {
+      if (Date.now() - userInfoStorage.time > 7*24*60*60*1000 ) {  // 7天有效期
+        console.log("userInfo數據已過期");
+        wx.removeStorageSync('userInfo');
+      } else {
+        console.log("app - userInfo緩存為：",userInfoStorage);
+        this.globalData.isSignIn = true;
+      }
+    }
+
   },
   onShow: function(options) {
     

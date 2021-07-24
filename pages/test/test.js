@@ -1,3 +1,4 @@
+var app = getApp();
 const db = wx.cloud.database();
 var cloudData = require('../../data/cloud.js')
 
@@ -20,6 +21,15 @@ Page({
     },
     onHide: function(){
 
+    },
+    onPullDownRefresh : function() {
+        app.toastLoadingDIY();
+        // setTimeout(() => {
+        this.onLoad("refresh");
+        // }, 2500);
+        setTimeout(() => {
+          wx.stopPullDownRefresh();
+        }, 1000);
     },
 
     // 雲函數test
@@ -95,15 +105,17 @@ Page({
             desc: '展示用戶信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
         })
         .then (res => {
-            wx.cloud.callFunction({
-                name: 'userSignUp',
-                data:{
-                    avatarUrl : res.userInfo.avatarUrl,
-                    nickName  : res.userInfo.nickName,
-                    gender    : res.userInfo.gender,        // 1：男        2：女
-                    userInfoInput    : cloudData.userInfoInput,
-                }
-            }) .then(res=>{    console.log('userSignUp result: ', res)    })
+            // wx.cloud.callFunction({
+            //     name: 'userSignUp',
+            //     data:{
+            //         avatarUrl : res.userInfo.avatarUrl,
+            //         nickName  : res.userInfo.nickName,
+            //         gender    : res.userInfo.gender,        // 1：男        2：女
+            //         userInfoInput    : cloudData.userInfoInput,
+            //     }
+            // }) .then(res=>{    console.log('userSignUp result: ', res)    })
+            console.log(res.userInfo);
+            wx.setStorageSync('userInfo', { time:Date.now(),  data: res.userInfo});
         }) .catch (res=>{   console.error(res);   })
     },
     updateTemp () {
