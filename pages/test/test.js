@@ -10,6 +10,7 @@ Page({
         this.setData({
             courseInfo_empty : cloudData.courseInfo_empty
         })
+
     },
     onReady: function(){
         
@@ -123,4 +124,22 @@ Page({
             console.error(res);
         })
     },
+
+    subscribeTest() {   // 推送
+        wx.requestSubscribeMessage({
+            tmplIds: ['W_ZYI60mhdcv9zbbIZUtsadXBAKKgdz0EmJqjiEO-9I'],
+            success (res) {
+                console.log("用戶同意接受推送：",res);
+                wx.cloud.callFunction({
+                    name:'subscribeMessageSend',
+                }) .then(res=>{
+                    console.log("雲函數調用成功：",res);
+                }) .catch(err=>{
+                    console.error("雲函數調用失敗：",err);
+                })
+            },
+            fail (res) { console.error(res);},
+        })
+    },
+
 });

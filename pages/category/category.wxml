@@ -12,8 +12,10 @@
   <van-sidebar-item title="參與記錄" bindtap="jumpTomyJoinCourses" badge="99+" />
   <van-sidebar-item title="我要開課" bindtap="jumpToholdACourses" />
 </van-sidebar> -->
+<van-button type="primary" size="normal" color="#3498DB" block class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
 
-<van-tabs sticky swipeable animated color="#5595D9">
+
+<van-tabs sticky swipeable animated color="#3498DB">
 
   <van-tab title="最新發佈">
 
@@ -24,7 +26,6 @@
         <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
       </van-dropdown-menu>
     </van-sticky>
-    <van-button type="primary" size="normal" color="#5595D9" round class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
 
     <view wx:for="{{recentCourseInfoArray}}" wx:key="courseId">
       
@@ -41,7 +42,7 @@
               <van-button 
                 icon="star-o" 
                 size="small" 
-                color="#5595D9" 
+                color="#3498DB" 
                 type="primary" 
                 round 
                 data-courseid="{{recentCourseInfoArray[index].courseId}}" 
@@ -88,7 +89,7 @@
         </view> -->
         <!-- <view slot="right-icon">
           <text>\n</text>
-          <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>查看</van-button>
+          <van-button icon="star-o" size="small" color="#3498DB" type="primary" round>查看</van-button>
         </view>
       </van-cell>
     </view> -->
@@ -103,7 +104,7 @@
               <view class="content flex-sub">
                 <view>{{recentCourseInfoArray[index].courseInfo[1].input}}</view>
               </view>
-              <!-- <van-button icon="star-o" size="small" color="#5595D9" type="primary" round>Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text> -->
+              <!-- <van-button icon="star-o" size="small" color="#3498DB" type="primary" round>Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text> -->
             </view>
           </view>
           <view class="slot text-content">
@@ -135,6 +136,11 @@
     </van-grid>
 
   <view class="bottom-watch"></view>
+  </van-tab>
+  
+  <van-tab title="我要開課">
+    <view>此處可以加一些開課前的說明</view>
+    <van-button type="primary" size="normal" color="#3498DB" round class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
   </van-tab>
 
 </van-tabs>

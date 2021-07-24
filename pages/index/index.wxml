@@ -36,14 +36,14 @@ bind:close="closePopup"
 </van-popup>
 
 <!-- 公告區 -->
+<!-- scrollable -->
 <van-notice-bar
   left-icon="volume-o"
-	scrollable 
   text="{{ARK_Notice}}" 
 	bindtap="handleTapProtocol"
 />
-<!-- 輪播 - 未完成 -->
-<swiper class="card-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#5595D9">
+<!-- 輪播 - 輪播內容未完成 -->
+<swiper class="card-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#3498DB">
   <swiper-item wx:for="{{swiperList}}" wx:key="id" class="{{cardCur==index?'cur':''}}">
     <view class="swiper-item">
       <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
@@ -51,9 +51,10 @@ bind:close="closePopup"
   </swiper-item>
 </swiper>
 
-<van-notice-bar mode="closeable" text="“Follow的分享” 可以在這裡看到喔！" />
+<!-- <van-notice-bar mode="closeable" text="“Follow的分享” 可以在這裡看到喔！" /> -->
 
 <!-- Follow課程展示區 -->
+<van-divider contentPosition="center">我Follow的分享</van-divider>
 <van-row>
 	<van-col span="16">
 		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange">
@@ -84,14 +85,9 @@ bind:close="closePopup"
 			steps="{{ steps }}"
 			active="{{ active_col }}"
 			direction="vertical"
-			active-color="#5595D9"
+			active-color="#3498DB"
 			bind:click-step="bindTapSteps"
 		/>
-	</van-col>
-</van-row>
-<van-row>
-  <van-col offset="8" span="8">
-		<van-button icon="plus" type="primary" round bind:click="jumpToCourse_tabBar">整多點 ♂</van-button>
 	</van-col>
 </van-row>
 
