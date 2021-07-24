@@ -343,8 +343,9 @@ Page({
           let signUpUserInfoInput = JSON.parse(JSON.stringify(userCloudData.userInfoInput));  // 複製數據
           app.globalData.userInfoInput = signUpUserInfoInput;
           this.setData({  userInfoInput : signUpUserInfoInput  });
-          console.log("自動刷新本頁");
-          this.onLoad();
+          // 更新顯示的內容
+          this.findSetData(this.data.shortNameArray);
+          this.calcTime();
         }
         else {    // 未註冊，拉取雲端的empty數據模板
           // 拉取空數據模板
