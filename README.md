@@ -1,4 +1,4 @@
-# ARK_Developing_log
+# ARK Develop log
 
 ## 項目文件目錄結構說明
 
