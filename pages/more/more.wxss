@@ -6,4 +6,5 @@
   align-items: center;
 } */
 
-.page{background-color:var(--weui-BG-2)}
+/* .page{background-color:var(--weui-BG-2)} */
+page{background-color:#FFFFFF;}

@@ -18,7 +18,6 @@ App({
     wx.cloud.init({
       env: 'cloud1-5gtulf1g864cd4ea'
     })
-    // const db = wx.cloud.database();
 
     const userInfoStorage = wx.getStorageSync('userInfo');
     if (!userInfoStorage) { //如果不存在userInfo的緩存
@@ -28,6 +27,7 @@ App({
         console.log("userInfo數據已過期");
         // 緩存過期，刪除
         wx.removeStorageSync('userInfo');
+        wx.removeStorageSync('userCloudData');
       } else {
         console.log("app - userInfo緩存為：",userInfoStorage);
         this.globalData.isSignIn = true;
@@ -50,10 +50,6 @@ App({
   },
 // 自定義Toast樣式，保證全局一樣
   toastLoadingDIY : function() {
-    // wx.showToast({
-    //   title: '作者真帥😎',
-    //   icon: 'loading'
-    // })
     Toast.loading({
       message: '拼命加載中...',
       forbidClick: true,

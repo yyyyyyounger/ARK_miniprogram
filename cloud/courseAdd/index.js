@@ -26,6 +26,7 @@ exports.main = async (event, context) => {
           avatarUrl   : event.avatarUrl,
           nickName    : event.nickName,
           courseInfoInput    : event.courseInfoInput,
+          allowVote          : event.allowVote,
         }
       }) .catch(err=>{  console.error(err);  })
     }) .catch(err=>{    

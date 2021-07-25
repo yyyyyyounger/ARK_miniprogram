@@ -2,7 +2,7 @@
 <button bindtap="searchTest0">查詢</button>
 <button bindtap="updateTest0">更新</button>
 <button bindtap="deleteTest0">刪除</button>
-<button bindtap="cloudGetUserInfo">GetUserInfo</button>
+<button bindtap="cloudGetUserInfo0">GetUserInfo</button>
 <button bindtap="updateTemp0">updateTemp_test</button>
 
 

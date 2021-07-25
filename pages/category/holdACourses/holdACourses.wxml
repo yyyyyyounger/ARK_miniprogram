@@ -1,7 +1,7 @@
 <!-- 全局彈出類 -->
 <!-- 日期選擇器，增加以當天時間一個月內的選擇限制 - 未完成 -->
-<van-calendar show="{{ show_calendar }}" show-confirm="{{ false }}" bind:close="onClose" bind:confirm="onConfirm_calendar" 
-  max-date="{{ maxDate_calendar }}" color="#3498DB"/>
+<van-calendar show="{{ show_calendar }}" show-confirm="{{ true }}" bind:close="onClose" bind:confirm="onConfirm_calendar" 
+  max-date="{{ maxDate_calendar }}" color="#3498DB" type="{{  allowVote ? 'multiple' : 'single'  }}"/>
 <!-- 彈出層 - 時間選擇器 -->
 <van-popup
   round
@@ -20,7 +20,7 @@
 </van-popup>
 
 <!-- 設置步驟條 - 待定 - 待完成 -->
-<view class="action">
+<!-- <view class="action">
   <button class="cu-btn bg-green shadow" bindtap="numSteps">下一步</button>
 </view>
 <view class="cu-steps">
@@ -29,7 +29,7 @@
     <text class="num" data-index="{{index + 1}}"></text> {{item.name}}
   </view>
 
-</view>
+</view> -->
 
 
 <!-- 課程信息錄入 - 臨時本地保存 - 未完成 -->
@@ -126,8 +126,21 @@
           <!-- <text class="text-grey">文本內容</text> -->
         </view>
       </view>
-      <van-cell title="选择Date" value="{{ datePick }}" bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
-      <van-cell title="选择Time" value="{{ timePick }}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
+      <van-cell title-class="text-grey cu-item">    <!-- 允許投票switch -->
+        <view slot="title">
+          <view class="van-cell-text">允許投票(默認不允許)</view>
+        </view>
+        <van-switch
+          checked="{{ allowVote }}"
+          active-color="#3498DB"
+          inactive-color="#8B98A3"
+          bind:change="onChange_Switch"
+          size="46rpx"
+        />
+      </van-cell>
+      <van-cell title="{{allowVote?'投票日期範圍':'选择Date'}}" value="{{ datePick }}" bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
+      <!-- 不允許投票，則由開課者定義時間 -->
+      <van-cell wx:if="{{  !allowVote  }}" title="选择Time" value="{{ timePick }}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
 
       <!-- <view class="cu-item {{menuArrow?'arrow':''}}">
         <view class="content">
@@ -171,19 +184,33 @@
         border="{{ false }}"
         bind:change="onChange_field"
       >
-        <van-button slot="button" size="small" plain type="primary" color="#64b1e3">
+        <van-button slot="button" size="small" plain type="primary" color="#64b1e3" bind:click="confirmHelper">
           確認選擇
         </van-button>
       </van-field>
-      <view class="cu-item">    <!-- 助手頭像，以寫入的id顯示對應頭像 - 代商討 - 未完成 -->
+      <!-- 助手頭像，以寫入的id顯示對應頭像 - 代商討 - 未完成 -->
+      <!-- <view class="cu-item">    
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange-light"></text>
           <text class="text-grey">助手頭像(確認後會顯示，最多兩位)</text>
         </view>
         <view class="action">
-          <!-- <text class="text-grey">文本內容</text> -->
         </view>
-      </view>
+      </view> -->
+      <van-cell title-class="text-grey cu-item" wx:if="{{displayHelper}}">    <!-- 允許投票switch -->
+        <!-- <view slot="title" > -->
+          <van-row >
+            <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name">
+              <text class="cu-avatar round" style="background-image:url( {{helperInfoArray[index].Avatar}} );"></text>
+            </van-col>
+          </van-row>
+          <van-row >
+            <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name">
+              <text  >{{helperInfoArray[index].name}}</text>
+            </van-col>
+          </van-row>
+        <!-- </view> -->
+      </van-cell>
 
       <view class="cu-item">    <!-- 簽到密碼 -->
         <view class="content">

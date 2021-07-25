@@ -161,11 +161,13 @@ Page({
       app.toastLoadingDIY();
 
     getUserCloudData().then(res => {
-      // log出提示消息
-      console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
-
-      // 初始化各種數組
-      this.ArrayDataInit(this);
+      setTimeout(() => {
+        // log出提示消息
+        console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
+  
+        // 初始化各種數組
+        this.ArrayDataInit(this);
+      }, 700);
 
 // 未理解的神秘執行 - 未完成
       if (wx.getUserProfile) {
@@ -339,9 +341,11 @@ Page({
         console.log("鏈式調用getUserCloudData，返回數組長度為：",res.result.userCloudData.data.length)
         if (res.result.userCloudData.data.length!=0) {  // 已註冊，將 數據庫user數據複製 → 本地&全局
           let userCloudData = res.result.userCloudData.data[0];
-// 拉取user數據 - 雲端 → 本地&全局
+// 拉取user數據 - 雲端 → 本地&全局，緩存
           let signUpUserInfoInput = JSON.parse(JSON.stringify(userCloudData.userInfoInput));  // 複製數據
           app.globalData.userInfoInput = signUpUserInfoInput;
+          // 將userInfoInput寫入緩存
+          wx.setStorageSync('userCloudData', {time:Date.now() ,data:userCloudData});
           this.setData({  userInfoInput : signUpUserInfoInput  });
           // 更新顯示的內容
           this.findSetData(this.data.shortNameArray);

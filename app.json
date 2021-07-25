@@ -4,6 +4,7 @@
     "pages/category/category",
     "pages/user/user",
     "pages/test/test",
+    "pages/category/courseDetail/courseDetail",
     "pages/category/holdACourses/holdACourses",
     "pages/more/more",
     "pages/launch/launch",

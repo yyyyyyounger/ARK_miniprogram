@@ -36,10 +36,11 @@ var courseInfo_empty = [
     { id:7, name:"講師id",   shortName:"speakerid",      input:"None",                    canEdit:false,     display:false },   // 講者的ARKid或UMid
     { id:8, name:"助手",     shortName:"helperName",     input:"None",                    canEdit:false,     display:false },   // 同上
     { id:9, name:"助手id",   shortName:"helperid",       input:"None",                    canEdit:true,      display:true },
-    { id:10, name:"追蹤人數", shortName:"followers",     input:"None",                    canEdit:false,      display:false },    // 該分享受追蹤的人數
-    { id:11, name:"課程狀態", shortName:"courseState",   input:"None",                    canEdit:false,      display:false },    // 可設定為 "預備中", "講課中", "已結束"
-    { id:12, name:"課程星級", shortName:"courseStars",   input:"None",                    canEdit:false,      display:false },    // 將影響講者星級
-    { id:13, name:"簽到密碼", shortName:"attendCode",    input:"None",                    canEdit:true,       display:true },    // 簡明易了
+    { id:10, name:"助手頭像", shortName:"helperAvatar",  input:"None",                    canEdit:false,      display:true },
+    { id:11, name:"追蹤人數", shortName:"followers",     input:"None",                    canEdit:false,      display:false },    // 該分享受追蹤的人數
+    { id:12, name:"課程狀態", shortName:"courseState",   input:"None",                    canEdit:false,      display:false },    // 可設定為 "預備中", "講課中", "已結束"
+    { id:13, name:"課程星級", shortName:"courseStars",   input:"None",                    canEdit:false,      display:false },    // 將影響講者星級
+    { id:14, name:"簽到密碼", shortName:"attendCode",    input:"None",                    canEdit:true,       display:true },    // 簡明易了
 ];
 var courseInfoInput = [
     { id:0, name:"分享编號", shortName:"courseId",       input:"None",                    canEdit:false,     display:false },  // 雲端給該課程分配的編號
@@ -57,54 +58,6 @@ var courseInfoInput = [
     { id:12, name:"課程星級", shortName:"courseStars",   input:"None",                    canEdit:false,      display:false },    // 將影響講者星級
     { id:13, name:"簽到密碼", shortName:"attendCode",    input:"None",                    canEdit:true,       display:true },    // 簡明易了
 ];
-var courseInfoStorge0 = [
-    { id:0, name:"分享编號", shortName:"courseId",       input:"001",                    canEdit:false,     display:false },  // 雲端給該課程分配的編號
-    { id:1, name:"分享主題", shortName:"courseName",     input:"開學第一課",                    canEdit:true,      display:true },   // 講者設定的主體
-    { id:2, name:"分享內容", shortName:"courseContent",  input:"None",                    canEdit:true,      display:true },   // 建設設定的課程詳細說明
-    { id:3, name:"分享分類", shortName:"courseTag",      input:["None", "None", "None",], canEdit:true,      display:true },   // 設定標籤，便於搜索，例如ECEN、編程
-    { id:4, name:"分享地址", shortName:"courseAdres",    input:"None",                    canEdit:true,      display:true },   // 講者設定的課程地址
-    { id:5, name:"分享時間", shortName:"courseTime",     input:["8/16", "16:00",],         canEdit:true,      display:true },   // 講者設定的課程舉辦時間，input[0]為date，input[1]為time
-    { id:6, name:"講師",     shortName:"speakerName",    input:"None",                    canEdit:false,     display:false },   // 講者設定名稱(可編輯) 或 直接獲取講者的名稱(不可編輯)
-    { id:7, name:"講師id",   shortName:"speakerid",      input:"None",                    canEdit:false,     display:false },   // 講者的ARKid或UMid
-    { id:8, name:"助手",     shortName:"helperName",     input:"None",                    canEdit:false,     display:false },   // 同上
-    { id:9, name:"助手id",   shortName:"helperid",       input:"None",                    canEdit:true,      display:true },
-    { id:10, name:"追蹤人數", shortName:"followers",     input:"None",                    canEdit:false,      display:false },    // 該分享受追蹤的人數
-    { id:11, name:"課程狀態", shortName:"courseState",   input:"None",                    canEdit:false,      display:false },    // 可設定為 "預備中", "講課中", "已結束"
-    { id:12, name:"課程星級", shortName:"courseStars",   input:"None",                    canEdit:false,      display:false },    // 將影響講者星級
-    { id:13, name:"簽到密碼", shortName:"attendCode",    input:"None",                    canEdit:true,       display:true },    // 簡明易了
-];
-var courseInfoStorge1 = [
-    { id:0, name:"分享编號", shortName:"courseId",       input:"002",                    canEdit:false,     display:false },  // 雲端給該課程分配的編號
-    { id:1, name:"分享主題", shortName:"courseName",     input:"噩夢般的ECE生活分享",                    canEdit:true,      display:true },   // 講者設定的主體
-    { id:2, name:"分享內容", shortName:"courseContent",  input:"None",                    canEdit:true,      display:true },   // 建設設定的課程詳細說明
-    { id:3, name:"分享分類", shortName:"courseTag",      input:["None", "None", "None",], canEdit:true,      display:true },   // 設定標籤，便於搜索，例如ECEN、編程
-    { id:4, name:"分享地址", shortName:"courseAdres",    input:"None",                    canEdit:true,      display:true },   // 講者設定的課程地址
-    { id:5, name:"分享時間", shortName:"courseTime",     input:["9/4", "18:00",],         canEdit:true,      display:true },   // 講者設定的課程舉辦時間，input[0]為date，input[1]為time
-    { id:6, name:"講師",     shortName:"speakerName",    input:"None",                    canEdit:false,     display:false },   // 講者設定名稱(可編輯) 或 直接獲取講者的名稱(不可編輯)
-    { id:7, name:"講師id",   shortName:"speakerid",      input:"None",                    canEdit:false,     display:false },   // 講者的ARKid或UMid
-    { id:8, name:"助手",     shortName:"helperName",     input:"None",                    canEdit:false,     display:false },   // 同上
-    { id:9, name:"助手id",   shortName:"helperid",       input:"None",                    canEdit:true,      display:true },
-    { id:10, name:"追蹤人數", shortName:"followers",     input:"None",                    canEdit:false,      display:false },    // 該分享受追蹤的人數
-    { id:11, name:"課程狀態", shortName:"courseState",   input:"None",                    canEdit:false,      display:false },    // 可設定為 "預備中", "講課中", "已結束"
-    { id:12, name:"課程星級", shortName:"courseStars",   input:"None",                    canEdit:false,      display:false },    // 將影響講者星級
-    { id:13, name:"簽到密碼", shortName:"attendCode",    input:"None",                    canEdit:true,       display:true },    // 簡明易了
-];
-// 模擬雲端寫的算法：將近期的courseId整合為數組
-var recentCourseIdRecord = ["001","002"];
-var recentCourseInfoArray = [];
-for (let i = 0; i < recentCourseIdRecord.length; i++) {
-  let recentCourseInfoObj = {};
-  recentCourseInfoObj.courseId = recentCourseIdRecord[i];
-  switch (i) {
-    case 0:
-      recentCourseInfoObj.courseInfo = JSON.parse(JSON.stringify(courseInfoStorge0));
-      break;
-    case 1:
-      recentCourseInfoObj.courseInfo = JSON.parse(JSON.stringify(courseInfoStorge1));
-      break;
-  }
-  recentCourseInfoArray.push(recentCourseInfoObj);
-}
 
 // 完sem日服務器數據
 var semFinishDay = '2022/01/05';
@@ -201,7 +154,6 @@ const ARK =
  - 由活動組織決定最終條例修改。 |´・ω・)ノ 
 `;
 
-
 function writeUserInfoInput () {
   if (userInfoInput[9].input) {
     userInfoInput[9].display = true;
@@ -219,12 +171,6 @@ module.exports = {
   studentMajor :          studentMajor,
   courseInfo_empty :      courseInfo_empty,
   courseInfoInput  :      courseInfoInput,
-
-  courseInfoStorge0  :      courseInfoStorge0,
-  courseInfoStorge1  :      courseInfoStorge1,
-
-  recentCourseIdRecord  :      recentCourseIdRecord,
-  recentCourseInfoArray :      recentCourseInfoArray,
   
   writeUserInfoInput :    writeUserInfoInput,
   ARK :    ARK,

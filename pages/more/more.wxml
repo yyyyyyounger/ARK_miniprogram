@@ -14,6 +14,9 @@
 </van-grid>
 
 <text>\n</text>
+<button bindtap="clearStorage">清除緩存！會要求重新登錄！</button>
+
+<text>\n</text>
 
 <van-skeleton title row="3" loading="true">
 <!-- loading為false時，顯示隱藏的內容 -->
@@ -23,3 +26,4 @@
 <text>\n</text>
 
 <van-divider />
+

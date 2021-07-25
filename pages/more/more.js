@@ -60,4 +60,7 @@ Page({
       }
     })
   },
+  clearStorage () {
+    wx.clearStorage();
+  }
 });

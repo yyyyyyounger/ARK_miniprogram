@@ -1,9 +1,27 @@
 var app = getApp();
 const { userInfoInput } = require('../../../data/cloud.js');
 var cloudData = require('../../../data/cloud.js')
+const db = wx.cloud.database();   // 數據庫
+
+const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用
+  return new Promise((resolve, reject) => {
+    db.collection('config') .doc("courseInfoArray") .get() 
+    .then(res => {
+      resolve(res);
+    }) 
+    .catch(err => {
+      reject(err);
+      console.log(err);
+    })
+  });
+};
 
 Page({
   data: {
+    // helperInfoArray
+    helperInfoArray : [],
+    // 允許投票
+    allowVote:false,
     // 日期選擇器
     date: '',
     show_calendar: false,
@@ -82,29 +100,22 @@ Page({
   },
   //options(Object)
   onLoad: function(){
-    // 複製雲端數組
-    let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
-    this.setData({  courseInfoInput : arrayEmpty  });
-    // 生成簡易版(無input版)userInfo的shortName數組
-    let shortNameArray =    this.data.courseInfoInput.map((item)=>{    return item.shortName   });
-    this.findSetData(shortNameArray); // 初始化所有index
-    // 生成 userInfoInput裡允許顯示的設置數組
-    let InfoDisplay = this.data.courseInfoInput.map(item=>{    return item.display   });
-    // 生成 userInfoInput裡允許編輯的設置數組
-    let canEdit     = this.data.courseInfoInput.map(item=>{    return item.canEdit    });
-    // 生成 只有“必填”項目的名稱的數組 - 待刪除
-    let mustEditArray = [];
-    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseName').name ) ,
-    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseContent').name ) ,
-    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseTag').name ) ,
-    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseAdres').name ) ,
-    mustEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'courseTime').name ) ;
-    // 生成 只有“選填”項目的名稱的數組
-    let chooseEditArray = [];
-    chooseEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'helperid').name ) ,
-    chooseEditArray.push( this.data.courseInfoInput.find(o => o.shortName === 'attendCode').name ) ,
-    // 允許編輯/顯示 → setData
-    this.setData({    InfoDisplay, canEdit, mustEditArray, chooseEditArray,   });
+    getCourseInfoArray().then(res => {
+      // console.log(res.data.courseInfo_empty);
+
+      // 複製雲端數組
+      let arrayEmpty = JSON.parse(JSON.stringify( res.data.courseInfo_empty ));
+      this.setData({  courseInfoInput : arrayEmpty  });
+      // 生成簡易版(無input版)userInfo的shortName數組
+      let shortNameArray =    this.data.courseInfoInput.map((item)=>{    return item.shortName   });
+
+      // 初始化所有index
+      this.findSetData(shortNameArray);
+
+    }) .catch(err => {
+      let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
+      console.error(err);
+    })
     
   },
   findSetData(shortNameArray) { // 初始化所有index，匹配對應input值用於顯示
@@ -119,6 +130,7 @@ Page({
       courseInfoInput_speakeridIndex      : shortNameArray.findIndex(o=> o== "speakerid"),
       courseInfoInput_helperNameIndex     : shortNameArray.findIndex(o=> o== "helperName"),
       courseInfoInput_helperidIndex       : shortNameArray.findIndex(o=> o== "helperid"),
+      courseInfoInput_helperAvatarIndex   : shortNameArray.findIndex(o=> o== "helperAvatar"),
       courseInfoInput_followersIndex      : shortNameArray.findIndex(o=> o== "followers"),
       courseInfoInput_courseStateIndex    : shortNameArray.findIndex(o=> o== "courseState"),
       courseInfoInput_courseStarsIndex    : shortNameArray.findIndex(o=> o== "courseStars"),
@@ -134,35 +146,10 @@ Page({
   onHide: function(){
 
   },
-  onUnload: function(){
-
-  },
   onPullDownRefresh: function(){
 
   },
-  onReachBottom: function(){
 
-  },
-  onShareAppMessage: function(){
-
-  },
-  onPageScroll: function(){
-
-  },
-  //item(index,pagePath,text)
-  onTabItemTap:function(item){
-
-  },
-  BindAddInfo(e) {
-    let currentTap = e.currentTarget.dataset.index;
-    console.log(currentTap);
-    // 觸發課程信息塊顏色改變
-    let varActive = 'activeArray['+currentTap+']';
-    this.setData({
-      [varActive] : true,
-      activeArrayIndex : currentTap
-    })
-  },
   // 步驟條
   basicsSteps() {
     this.setData({
@@ -175,6 +162,11 @@ Page({
       num: this.data.num == this.data.numList.length - 1 ? 0 : this.data.num + 1
     })
   },
+
+// 允許投票switch的開關
+  onChange_Switch(){
+    this.setData({  allowVote:!this.data.allowVote  })
+  },
 // 日期選擇器
   onDisplay_date() {
     this.setData({ show_calendar: true });
@@ -185,17 +177,39 @@ Page({
       show_timePicker: false
     });
   },
-  formatDate(date) {
+  formatDate(date) {    // 日期選擇器確認後獲取 選取的值
     date = new Date(date);
-    return `${date.getMonth() + 1}/${date.getDate()}`;
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
   },
   onConfirm_calendar(event) {
     console.log(event);
     this.setData({
       show_calendar: false,
-      datePick: this.formatDate(event.detail),
     });
-    console.log(this.data.datePick);
+
+    if (this.data.allowVote) {    // 投票mode 設定聽者投票範圍
+      let datePickStr = "";
+      let datePickArray = [];
+      for (let i = 0; i < event.detail.length; i++) {
+        console.log(  this.formatDate((event.detail[i]))  );
+        datePickArray.push(  this.formatDate((event.detail[i]))  );
+        datePickStr += this.formatDate((event.detail[i]))+", ";
+      }
+      datePickArray.sort(function(a, b){
+        return a > b ? 1 : -1; // 这里改为大于号
+      });
+      console.log("日期選擇的數組形式",datePickArray);
+      console.log("日期選擇的字符串形式",datePickStr);
+      this.setData({  
+        datePick: datePickStr,
+        datePickArray,
+      })
+    } 
+    else {                        // 講者設定日期mode
+      this.setData({  datePick: this.formatDate( event.detail ),  })
+      console.log(this.data.datePick);    // datePick為 yyyy/m/d格式
+    }
+
   },
 // 日期選擇器 - end
 // 時間選擇器
@@ -225,41 +239,105 @@ Page({
       this.setData({    [userInputType]: userInputValue    });
     }
   },
-// 提交或突出按鈕綁定事件
+// 提交 / 退出 按鈕綁定事件
   onClick_saveSubmit (e) {
     let userClickType = e.currentTarget.dataset.model;
     this.setData({    [userClickType]: true    });
-    if (this.data.btn_quit) {  // 點擊了保存並退出按鈕
+    if (this.data.btn_quit) {   // 點擊了保存並退出按鈕
       // 已輸入的數據保存到本地 - 未完成
       wx.navigateBack({    delta: 0,   })   // 回退上一頁
     }
     if (this.data.btn_submit) { // 點擊了保存並上傳按鈕
       console.log("用戶請求submit");
 // 如數據無誤，提交到雲端，管理員端提示 - 未完成
-      // 與本地的courseInfoInput的index匹配，然後寫入
-      let w0 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseName' );
-      let w1 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseContent' );
-      let w2 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseAdres' );
-      let w3 = this.data.courseInfoInput.findIndex(o=> o.shortName === 'courseTime' );
-      this.setData({        // 寫入當前js的courseInfoInput數據
+      // 寫入當前js的courseInfoInput數據，缺helper、講師等數據寫入 - 未完成
+      this.setData({        
         bindEditMode : false,
-        ['courseInfoInput['+w0+'].input'] : this.data.courseName_input,
-        ['courseInfoInput['+w1+'].input'] : this.data.courseContent_input,
-        ['courseInfoInput['+w2+'].input'] : this.data.courseAdres_input,
-        ['courseInfoInput['+w3+'].input[0]'] : this.data.datePick,
-        ['courseInfoInput['+w3+'].input[1]'] : this.data.timePick,
+        ['courseInfoInput['+this.data.courseInfoInput_courseNameIndex+'].input']    : this.data.courseName_input,
+        ['courseInfoInput['+this.data.courseInfoInput_courseContentIndex+'].input'] : this.data.courseContent_input,
+        ['courseInfoInput['+this.data.courseInfoInput_courseAdresIndex+'].input']   : this.data.courseAdres_input,
+        ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[0]'] : this.data.datePick,
+        ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[1]'] : this.data.timePick,
       })
       // 上傳數據 本地 → 雲端 - 未完成
-      wx.cloud.callFunction({
-        name : 'courseAdd',
-        data : {
-          
-        }
-      }) .then (res=>{
-        console.log(res);
-      }) .catch (err=>{
-        console.error(err);
-      })
-    } // if如果點擊了submit的button - end
+      const userInfoStorage = wx.getStorageSync('userInfo');
+      // wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
+      //   name : 'courseAdd',
+      //   data : {
+      //     courseInfoInput : this.data.courseInfoInput ,
+      //     avatarUrl       : userInfoStorage.data.avatarUrl,
+      //     nickName        : userInfoStorage.data.nickName,
+      //     allowVote       : this.data.allowVote,
+      //     datePickArray   : this.data.datePickArray,
+      //   }
+      // }) .then (res=>{
+      //   console.log(res);
+      // }) .catch (err=>{
+      //   console.error(err);
+      // })
+    } // if點擊了submit button - end
+  },
+
+  // 選填區
+  // 選擇helper - 確認按鈕
+  confirmHelper() {
+    // 1 數據庫查詢 arkid 是否存在
+      // 存在，返回頭像，寫入本地js的helper數據
+      // 不存在，提示不存在
+    const searchArkid = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用
+      return new Promise((resolve, reject) => {
+        db.collection('user') .where({
+          arkid : parseInt(this.data.helperid_input),   // 需要轉為數字再查詢
+        }) .field({
+          avatarUrl : true,
+          userInfoInput :true,
+        }) .get() 
+        .then(res => {
+          resolve(res);
+        }) 
+        .catch(err => {
+          reject(err);
+          console.log(err);
+        })
+      });
+    };
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');
+
+    if (this.data.helperInfoArray.length<2) {   // Helper數未滿
+      if (this.data.helperid_input == userCloudDataStorage.data.arkid ) {    // 如果搜索的是自己，提示不可以
+        console.log("Helper不能是自己！");  // 缺面板提示 - 未完成
+      } else if ( this.data.helperInfoArray[0] && this.data.helperInfoArray[0].arkid==this.data.helperid_input) {
+        console.log("第二位Helper不能是同一個人！");
+      } else {                      // 搜索的是別人，允許，但每天只有3次機會添加 - 提示，未完成
+        // 詢問是否確認添加，一旦確認，不能更改
+        searchArkid().then(res => {
+          if (res.data.length!=0) {  // 用戶存在
+            console.log("該用戶存在！");
+            console.log("數據為：",res.data[0]);
+            let helperName  = res.data[0].userInfoInput[1].input;
+            console.log("HelperName為：",helperName);
+            let helperInfoObj = {
+              name    : helperName,
+              Avatar  : res.data[0].avatarUrl,
+              arkid   : this.data.helperid_input,
+            }
+            let arrayTemp = this.data.helperInfoArray;    // 曲線插入data中，先引用，再push，再setData
+            arrayTemp.push(helperInfoObj);
+  
+            this.setData({
+              helperInfoArray : arrayTemp,
+              helperAvatarUrl : res.data[0].avatarUrl,
+              helperName,
+              displayHelper   : true,   // wxml顯示helper頭像
+            })
+          } else {  // 用戶不存在
+            console.log("該用戶不存在，請協商或反饋！");
+          }
+        }) .catch(err=>{  console.error(err);  })
+      }
+    } else {                                    // Helper數已滿（2人）
+      console.log("Helper數已滿！不能再添加");
+    }
+
   },
 });

@@ -36,8 +36,9 @@ Page({
     addTest(){
         db.collection('config').add({
             data: {
-                _id                 : 'userInfoArray1.0.0',
+                _id                 : 'courseInfoArray',
                 userInfoInput_empty : cloudData.userInfoInput_empty,
+                createAt            : Date.now()
             },
         }).then(res => {
             console.log("插入",res)
@@ -68,17 +69,18 @@ Page({
         // update 局部更新一個記錄
         // set 替換更新
         // 雲函數更新的寫法，數組需要用 . 引出索引
-        // db.collection('course').doc('cbddf0af60f04196170ea3cd011fd498').update({
-        //     data: {
-        //         'courseInfo_empty.0.input' : "Yes"
-        //     },
-        //     success: function(res) {
-        //       console.log(res.data)
-        //     },
-        //     fail: function(res) {
-        //       console.log(res)
-        //     }
-        // })
+        db.collection('config').doc("courseInfoArray").update({
+            data: {
+                courseInfo_empty  : cloudData.courseInfo_empty ,
+                createAt          : Date.now()
+            },
+            success: function(res) {
+              console.log(res.data)
+            },
+            fail: function(err) {
+              console.error(err)
+            }
+        })
     },
     deleteTest() {
         // 刪除多條記錄只能在雲函數端進行
