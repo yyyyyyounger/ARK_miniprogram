@@ -196,11 +196,14 @@ Page({
       for (let i = 0; i < event.detail.length; i++) {
         console.log(  this.formatDate((event.detail[i]))  );
         datePickArray.push(  this.formatDate((event.detail[i]))  );
-        datePickStr += this.formatDate((event.detail[i]))+", ";
+        // datePickStr += this.formatDate((event.detail[i]))+", ";
       }
       datePickArray.sort(function(a, b){
         return a > b ? 1 : -1; // 这里改为大于号
       });
+      for (let i = 0; i < datePickArray.length; i++) {
+        datePickStr += datePickArray[i]+", ";
+      }
       console.log("日期選擇的數組形式",datePickArray);
       console.log("日期選擇的字符串形式",datePickStr);
       this.setData({  
