@@ -34,13 +34,11 @@ var courseInfo_empty = [
     { id:5, name:"分享時間", shortName:"courseTime",     input:["None", "None",],         canEdit:true,      display:true },   // 講者設定的課程舉辦時間，input[0]為date，input[1]為time
     { id:6, name:"講師",     shortName:"speakerName",    input:"None",                    canEdit:false,     display:false },   // 講者設定名稱(可編輯) 或 直接獲取講者的名稱(不可編輯)
     { id:7, name:"講師id",   shortName:"speakerid",      input:"None",                    canEdit:false,     display:false },   // 講者的ARKid或UMid
-    { id:8, name:"助手",     shortName:"helperName",     input:"None",                    canEdit:false,     display:false },   // 同上
-    { id:9, name:"助手id",   shortName:"helperid",       input:"None",                    canEdit:true,      display:true },
-    { id:10, name:"助手頭像", shortName:"helperAvatar",  input:"None",                    canEdit:false,      display:true },
-    { id:11, name:"追蹤人數", shortName:"followers",     input:"None",                    canEdit:false,      display:false },    // 該分享受追蹤的人數
-    { id:12, name:"課程狀態", shortName:"courseState",   input:"None",                    canEdit:false,      display:false },    // 可設定為 "預備中", "講課中", "已結束"
-    { id:13, name:"課程星級", shortName:"courseStars",   input:"None",                    canEdit:false,      display:false },    // 將影響講者星級
-    { id:14, name:"簽到密碼", shortName:"attendCode",    input:"None",                    canEdit:true,       display:true },    // 簡明易了
+    { id:8, name:"助手",     shortName:"helper",         input:[],                        canEdit:false,     display:false },   // 同上
+    { id:9, name:"追蹤人數", shortName:"followers",      input:"None",                    canEdit:false,      display:false },    // 該分享受追蹤的人數
+    { id:10, name:"課程狀態", shortName:"courseState",   input:"None",                    canEdit:false,      display:false },    // 可設定為 "預備中", "講課中", "已結束"
+    { id:11, name:"課程星級", shortName:"courseStars",   input:"None",                    canEdit:false,      display:false },    // 將影響講者星級
+    { id:12, name:"簽到密碼", shortName:"attendCode",    input:"None",                    canEdit:true,       display:true },    // 簡明易了
 ];
 var courseInfoInput = [
     { id:0, name:"分享编號", shortName:"courseId",       input:"None",                    canEdit:false,     display:false },  // 雲端給該課程分配的編號

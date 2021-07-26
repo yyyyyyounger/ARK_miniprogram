@@ -1,3 +1,4 @@
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
   data: {
@@ -61,6 +62,26 @@ Page({
     })
   },
   clearStorage () {
-    wx.clearStorage();
+    let that = this;
+    Dialog.confirm({
+      // title: '标题',
+      message: '確認要清除緩存嗎？將會重新啟動。',
+    })
+      .then(() => {
+        // on confirm
+        that.app.toastLoadingDIY();
+        // this.app.globalData.isSignIn = false;
+        wx.clearStorage({
+          success(){
+            that.app.reload(that);
+            wx.reLaunch({
+              url: '../user/user'
+            })
+          }
+        })
+      }) .catch(() => {
+        // on cancel
+      });
+    
   }
 });

@@ -1,4 +1,6 @@
 <!-- 全局彈出類 -->
+<van-notify id="van-notify" />
+<van-dialog id="van-dialog" />
 <!-- 日期選擇器，增加以當天時間一個月內的選擇限制 - 未完成 -->
 <van-calendar show="{{ show_calendar }}" show-confirm="{{ true }}" bind:close="onClose" bind:confirm="onConfirm_calendar" 
   max-date="{{ maxDate_calendar }}" color="#3498DB" type="{{  allowVote ? 'multiple' : 'single'  }}"/>
@@ -240,6 +242,6 @@
 <!-- 提交審核按鈕 -->
 <view class="padding flex flex-direction">
   <!-- 本地緩存 - 未完成 -->
-  <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">保存後退出</button>
+  <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
   <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">保存並提交審核</button>
 </view>

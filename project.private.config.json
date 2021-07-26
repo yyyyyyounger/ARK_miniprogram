@@ -35,6 +35,12 @@
           "pathName": "pages/more/more",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "課程詳情頁",
+          "pathName": "pages/category/courseDetail/courseDetail",
+          "query": "",
+          "scene": null
         }
       ]
     }

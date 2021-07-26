@@ -17,6 +17,10 @@ exports.main = async (event, context) => {
       let courseId = res.data[0]._id;
       console.log("最新courseId為",courseId);
       console.log("賦值的courseId為",(parseInt(courseId)+1)+"");
+
+      let courseInfoInput = event.courseInfoInput;
+      courseInfoInput[0].input = (parseInt(courseId)+1)+"";
+
       db.collection('course').add({   // 對 user 集合插入新用戶的數據
         data: {
           _id         : (parseInt(courseId)+1)+"",
@@ -25,8 +29,10 @@ exports.main = async (event, context) => {
           // 通過前端傳入開課用戶的頭像、暱稱信息
           avatarUrl   : event.avatarUrl,
           nickName    : event.nickName,
-          courseInfoInput    : event.courseInfoInput,
+          courseInfoInput ,
           allowVote          : event.allowVote,
+          datePickArray   : event.datePickArray,
+          timePickArray   : event.timePickArray,
         }
       }) .catch(err=>{  console.error(err);  })
     }) .catch(err=>{    

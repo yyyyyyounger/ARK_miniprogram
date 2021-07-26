@@ -140,6 +140,9 @@ user頁與數據庫互動基本完成。
 更新了README.md，**對目前的程序結構寫了新說明，放在 `/備註/協同開發.md` 上。**
 
 
+#### 2021-7-25
+寫好了添加helper的邏輯。**但沒加前端的輔助提示。**
+
 
 
   [1]: https://youzan.github.io/vant-weapp/#/home

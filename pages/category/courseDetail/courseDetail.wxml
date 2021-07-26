@@ -1,2 +1,3 @@
-<!--pages/category/courseDetail/courseDetail.wxml-->
-<text>pages/category/courseDetail/courseDetail.wxml</text>
+<!-- 課程詳情頁 courseDetail -->
+
+<view>不同權限有不同視角</view>

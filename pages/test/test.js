@@ -36,8 +36,8 @@ Page({
     addTest(){
         db.collection('config').add({
             data: {
-                _id                 : 'courseInfoArray',
-                userInfoInput_empty : cloudData.userInfoInput_empty,
+                _id                 : 'clearStorage',
+                order               : true,
                 createAt            : Date.now()
             },
         }).then(res => {

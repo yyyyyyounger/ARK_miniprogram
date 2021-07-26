@@ -2,8 +2,6 @@
 
 import cloud from './data/cloud';
 import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
-// import Notify from '../miniprogram_npm/@vant/weapp/notify/notify';
-// import Dialog from '../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 // var b = JSON.parse(JSON.stringify(數組a));  複製一份數組a的數據到數組b
 // var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
@@ -11,28 +9,64 @@ import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 
 //app.js
 App({
-  // 引入`towxml3.0`解析方法
-  // towxml:require('./towxml/index'),
-  //onLaunch,onShow: options(path,query,scene,shareTicket,referrerInfo(appId,extraData))
   onLaunch: function(options) {
     wx.cloud.init({
       env: 'cloud1-5gtulf1g864cd4ea'
     })
+    .then(res=>{
+      const db = wx.cloud.database();   // 數據庫
+      db.collection('config') .doc('clearStorage') .field({
+        _openid : false,
+      }) .get() 
+      .then(res => {
+        console.log("返回結果為",res.data);
 
-    const userInfoStorage = wx.getStorageSync('userInfo');
-    if (!userInfoStorage) { //如果不存在userInfo的緩存
-      console.log("目前沒有userInfo的緩存");
-    } else {
-      if (Date.now() - userInfoStorage.time > 7*24*60*60*1000 ) {  // 7天有效期
-        console.log("userInfo數據已過期");
-        // 緩存過期，刪除
-        wx.removeStorageSync('userInfo');
-        wx.removeStorageSync('userCloudData');
-      } else {
-        console.log("app - userInfo緩存為：",userInfoStorage);
-        this.globalData.isSignIn = true;
-      }
-    }
+        const clearStorageOrder = wx.getStorage('clearStorageOrder'); // bug在這裡，異步請求內執行同步請求太慢，需要轉為異步請求。
+        console.log(clearStorageOrder);
+        if (!clearStorageOrder) { //如果不存在clearStorageOrder的緩存
+          console.log("目前沒有clearStorageOrder的緩存，現在獲取！");
+          wx.setStorageSync('clearStorage', { time:res.data.createAt, order:res.data.order } )
+        } else {
+          console.log("存在緩存");
+          console.log("緩存為",clearStorageOrder);
+          console.log(res.data);
+          if ( clearStorageOrder.time != res.data.createAt ) {  // 與雲端設置的時間不符
+            console.log("order數據已過期");
+            // 緩存過期，刪除
+            // wx.clearStorageSync();
+            wx.setStorageSync('clearStorage', { time:res.data.createAt, order:res.data.order } )
+          } else {
+            console.log("已經執行雲端的clearOrder");
+          }
+        }
+
+      }) 
+      .then(res=> {
+        const userInfoStorage = wx.getStorageSync('userInfo');
+        if (!userInfoStorage) { //如果不存在userInfo的緩存
+          console.log("目前沒有userInfo的緩存");
+        } else {
+          if (Date.now() - userInfoStorage.time > 7*24*60*60*1000 ) {  // 7天有效期
+            console.log("userInfo數據已過期");
+            // 緩存過期，刪除
+            wx.removeStorageSync('userInfo');
+            wx.removeStorageSync('userCloudData');
+          } else {
+            console.log("app - userInfo緩存為：",userInfoStorage);
+            this.globalData.isSignIn = true;
+          }
+        }
+      })
+      .catch(err=>{
+        console.error(err);
+      })
+    })
+    .catch(err=>{
+      console.error(err);
+    })
+
+
+    
 
   },
   onShow: function(options) {
@@ -80,19 +114,29 @@ App({
     // 用戶微信登錄狀態
     isSignIn: false,
 
-    // 課程數據全局變量
-    courseInfoGlobal: [
-      { item:"主題: ", input:"xx" },
-      { item:"時間: ", input:"xx" },
-      { item:"地點: ", input:"xx" },
-      { item:"Follow人數: ", input:"xx" },
-      { item:"課程狀態: ", input:"xx" },
-      { item:"簽到密碼: ", input:"xx" },
-    ],
     // 完sem日
     semFinishDay:'2022/01/05',
     // 畢業日
     graduateDay:'',
+  },
+  // 重設app.js的值，用於清除緩存，重啟小程式
+  reload(that) {
+    // 項目運作時間
+    that.app.globalData.projStartTime= [{
+      Year: '2021',
+      Month: '06',
+      Day: '03',
+    }];
+    // 用戶信息全局變量
+    that.app.globalData.userInfoInput = [];
+    that.app.globalData.userInfoInput_empty = [];
+    // 用戶微信登錄狀態
+    that.app.globalData.isSignIn = false;
+
+    // 完sem日
+    that.app.globalData.semFinishDay='2022/01/05';
+    // 畢業日
+    that.app.globalData.graduateDay='';
   },
 
 // 計算剩下日期

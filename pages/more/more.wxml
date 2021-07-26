@@ -1,3 +1,6 @@
+<van-dialog id="van-dialog" />
+
+
 <van-skeleton title row="4" loading="true">
 <!-- loading為false時，顯示隱藏的內容 -->
   <view>實際內容</view>
@@ -14,7 +17,7 @@
 </van-grid>
 
 <text>\n</text>
-<button bindtap="clearStorage">清除緩存！會要求重新登錄！</button>
+<button bindtap="clearStorage">點我清除緩存</button>
 
 <text>\n</text>
 
