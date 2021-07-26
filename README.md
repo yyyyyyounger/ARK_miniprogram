@@ -144,6 +144,10 @@ user頁與數據庫互動基本完成。
 寫好了添加helper的邏輯。**但沒加前端的輔助提示。**
 
 
+#### 2021-7-26
+我要開課頁完成與數據庫的綁定，添加了頁面的提示邏輯和跳轉。
+
+
 
   [1]: https://youzan.github.io/vant-weapp/#/home
   [2]: http://demo.color-ui.com/
