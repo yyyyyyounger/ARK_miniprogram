@@ -33,6 +33,10 @@ Page({
     show_calendar: false,
     minDate_calendar: new Date(2021, 7, 1).getTime(),
     maxDate_calendar: new Date(2021, 7, 31).getTime(),
+    show_timeTag: {
+      primary: true,
+      success: true,
+    },
     // 日期選擇器 - end
     // 時間選擇器
     currentDate: '12:00',
@@ -141,9 +145,7 @@ Page({
       courseInfoInput_attendCodeIndex     : shortNameArray.findIndex(o=> o== "attendCode"),
     })
   },
-  onReady: function(){
-    
-  },
+
   onShow: function(){
     
   },
@@ -169,12 +171,14 @@ Page({
 
 // 允許投票switch的開關
   onChange_Switch(){
-    this.setData({  
+    this.setData({    // 清空之前的選擇
       allowVote     :!this.data.allowVote,
       datePick      : '',
       datePickArray : '',
+      datePickStr   : '',
       timePick      : '',
       timePickArray : '',
+      timePickStr   : '',
     })
   },
 // 日期選擇器
@@ -235,6 +239,11 @@ Page({
     this.setData({ 
       show_timePicker: false, 
       timePick : e.detail
+    });
+  },
+  onClose_timeTag(event) {
+    this.setData({
+      [`show_timeTag.${event.target.id}`]: false,
     });
   },
 // 輸入框匯總監聽

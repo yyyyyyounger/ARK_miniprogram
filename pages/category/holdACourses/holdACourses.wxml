@@ -49,8 +49,6 @@
 <view class="grid col-{{1}} padding-sm">    <!-- 必填 -->
   <view class="bg-themeBlue padding radius text-center shadow-blur " data-index="{{index}}" >   
       <text class="text-lg">必填 </text>
-      <!-- <text class="cuIcon-unfold text-sl" /> -->
-    <!-- <view class="margin-top-sm text-df">點我添加</view> -->
   </view>
   <!-- <view class="card-menu"> -->
 
@@ -141,8 +139,23 @@
         />
       </van-cell>
       <van-cell title="{{allowVote?'投票日期範圍':'选择Date'}}" bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
-      <van-cell wx:if="{{datePick?true:false}}" value="{{ datePick }}" title-class="text-grey cu-item" />
-      <van-cell title="{{allowVote?'投票時間區間':'选择Time'}}" value="{{ timePick }}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
+      <van-cell wx:if="{{datePick}}" value="{{ datePick }}" title-class="text-grey cu-item" />
+      <van-cell title="{{allowVote?'投票時間區間':'选择Time'}}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
+      <van-cell wx:if="{{timePick}}" title-class="text-grey cu-item" >
+        <!-- value="{{ timePick }}" -->
+        <!-- 日期範圍，幾點-幾點。 - 開發中 -->
+        <van-tag
+          wx:if="{{ show_timeTag.primary }}"
+          closeable
+          size="medium"
+          type="primary"
+          id="primary"
+          bind:close="onClose_timeTag"
+        >
+        {{ timePick }}
+        </van-tag><text decode="true">&nbsp;</text>
+
+      </van-cell>
     </view>
 
   <!-- </view> -->
@@ -229,7 +242,6 @@
 
 <!-- 提交審核按鈕 -->
 <view class="padding flex flex-direction">
-  <!-- 本地緩存 - 未完成 -->
   <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
   <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">保存並提交審核</button>
 </view>

@@ -13,6 +13,9 @@
 
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
 
-    "van-switch": "@vant/weapp/switch/index"
+    "van-switch": "@vant/weapp/switch/index",
+
+    "van-tag": "@vant/weapp/tag/index"
+
   }
 }
