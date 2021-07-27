@@ -140,21 +140,9 @@
           size="46rpx"
         />
       </van-cell>
-      <van-cell title="{{allowVote?'投票日期範圍':'选择Date'}}" value="{{ datePick }}" bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
-      <!-- 不允許投票，則由開課者定義時間 -->
-      <van-cell wx:if="{{  !allowVote  }}" title="选择Time" value="{{ timePick }}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
-
-      <!-- <view class="cu-item {{menuArrow?'arrow':''}}">
-        <view class="content">
-          <text class="cuIcon-tagfill text-red"></text>
-          <text class="text-grey">标签</text>
-        </view>
-        <view class="action">
-          <view class="cu-tag round bg-orange light">音乐</view>
-          <view class="cu-tag round bg-olive light">电影</view>
-          <view class="cu-tag round bg-blue light">旅行</view>
-        </view>
-      </view> -->
+      <van-cell title="{{allowVote?'投票日期範圍':'选择Date'}}" bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
+      <van-cell wx:if="{{datePick?true:false}}" value="{{ datePick }}" title-class="text-grey cu-item" />
+      <van-cell title="{{allowVote?'投票時間區間':'选择Time'}}" value="{{ timePick }}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
     </view>
 
   <!-- </view> -->

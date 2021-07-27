@@ -169,7 +169,13 @@ Page({
 
 // 允許投票switch的開關
   onChange_Switch(){
-    this.setData({  allowVote:!this.data.allowVote  })
+    this.setData({  
+      allowVote     :!this.data.allowVote,
+      datePick      : '',
+      datePickArray : '',
+      timePick      : '',
+      timePickArray : '',
+    })
   },
 // 日期選擇器
   onDisplay_date() {
