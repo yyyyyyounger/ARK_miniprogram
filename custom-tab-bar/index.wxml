@@ -1,5 +1,16 @@
-<van-tabbar active="{{ active }}" active-color="#3498DB"	bind:change="onChange" placeholder="{{true}}" safe-area-inset-bottom >
-  <van-tabbar-item wx:for="{{ list }}" wx:key="index" icon="{{ item.icon }}{{active==index?'':'-o'}}">{{
-    item.text
-  }}</van-tabbar-item>
+<van-tabbar 
+active="{{ active }}" 
+active-color="#3498DB"	
+bind:change="onChange" 
+fixed
+placeholder
+safe-area-inset-bottom 
+>
+  <van-tabbar-item 
+  wx:for="{{ list }}" 
+  wx:key="index" 
+  icon="{{ item.icon }}{{active==index?'':'-o'}}"
+  >
+  {{item.text}}
+  </van-tabbar-item>
 </van-tabbar>

@@ -261,6 +261,7 @@ Page({
   onHide () {
     // this.app.sliderAnimaMode(this, 'slide_right1', -100, 0, 1, 0);
     // this.app.sliderAnimaMode(this, 'slide_right2', 100, 0, 1, 0);
+    this.setData({  bindEditMode:false  })
   },
 
   onPullDownRefresh() {   // 觸發下拉刷新時

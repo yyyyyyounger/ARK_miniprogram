@@ -11,7 +11,6 @@
 >
   <view>  我已閱讀並願意遵守ARK協議（缺個打√ - 未完成）</view>
 </van-dialog>
-<!-- id="van-dialog" -->
 <van-toast id="van-toast" />
 <text>\n</text>
 
@@ -72,6 +71,7 @@
   bind:close="onClose_sheet"
   bind:cancel="onClose_sheet"
   bind:select="onSelect_sheet"
+  z-index="99999"
 />
 <van-action-sheet
   show="{{ show_sheet_major && bindEditMode }}"
@@ -80,6 +80,7 @@
   bind:close="onClose_sheet"
   bind:cancel="onClose_sheet"
   bind:select="onSelect_sheet"
+  z-index="99999"
 />
 
 <text>\n</text>
