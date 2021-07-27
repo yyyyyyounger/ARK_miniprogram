@@ -7,7 +7,6 @@ var cloudData = require('../../../data/cloud.js')
 const db = wx.cloud.database();   // 數據庫
 const userInfoStorage = wx.getStorage('userInfo');  // 用戶緩存
 const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
-const courseInfoInputStorage = wx.getStorageSync('courseInfoInput');
 
 const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用
   return new Promise((resolve, reject) => {
@@ -33,13 +32,8 @@ Page({
     show_calendar: false,
     minDate_calendar: new Date(2021, 7, 1).getTime(),
     maxDate_calendar: new Date(2021, 7, 31).getTime(),
-    show_timeTag: {
-      primary: true,
-      success: true,
-    },
     // 日期選擇器 - end
     // 時間選擇器
-    currentDate: '12:00',
     filter(type, options) {
       if (type === 'minute') {
         return options.filter((option) => option % 5 === 0);
@@ -47,19 +41,8 @@ Page({
 
       return options;
     },
+    timePickArray:[],
     // 時間選擇器 - end
-    basics: 0,
-    numList: [{
-      name: '填寫信息'
-      }, {
-        name: '提交管理員審核'
-      }, {
-        name: '課程發佈'
-      }, 
-    ],
-    num: 0,
-    scroll: 0,
-
     ColorList: [
     {
       title: '桔橙',
@@ -127,6 +110,13 @@ Page({
       console.error(err);
     })
 
+    if (this.data.allowVote) {
+      for (let i = 0; i < 4; i++) {
+        this.data.timePickArray.push({begin:'',end:''})
+      }
+    } else {
+      this.data.timePickArray.splice(0,3);
+    }
   },
   findSetData(shortNameArray) { // 初始化所有index，匹配對應input值用於顯示
     this.setData({
@@ -156,19 +146,6 @@ Page({
 
   },
 
-  // 步驟條
-  basicsSteps() {
-    this.setData({
-      basics: this.data.basics == this.data.basicsList.length - 1 ? 0 : this.data.basics + 1
-    })
-  },
-  // 下一步 - 按鈕觸發
-  numSteps() {
-    this.setData({
-      num: this.data.num == this.data.numList.length - 1 ? 0 : this.data.num + 1
-    })
-  },
-
 // 允許投票switch的開關
   onChange_Switch(){
     this.setData({    // 清空之前的選擇
@@ -177,9 +154,16 @@ Page({
       datePickArray : '',
       datePickStr   : '',
       timePick      : '',
-      timePickArray : '',
       timePickStr   : '',
     })
+    if (this.data.allowVote) {
+      for (let i = 0; i < 4; i++) {
+        this.data.timePickArray.push({begin:'',end:''})
+      }
+    } else {
+      this.data.timePickArray.splice(0,3);
+    }
+    console.log("timePickArray為",this.data.timePickArray);
   },
 // 日期選擇器
   onDisplay_date() {
@@ -228,23 +212,71 @@ Page({
   },
 // 日期選擇器 - end
 // 時間選擇器
-  onDisplay_time() {
-    this.setData({ show_timePicker: true });
+  onDisplay_time(e) {
+    this.setData({ 
+      show_timePicker : true,
+      timePickModel   : e.currentTarget.dataset.model,    // 用於判斷 當前選擇為begin還是end時間
+    });
   },
   onCancel_timerPicker () {
     this.setData({ show_timePicker: false });
   },
   handleTimePicker(e) {
-    console.log(e.detail);
-    this.setData({ 
-      show_timePicker: false, 
-      timePick : e.detail
-    });
+    console.log("選擇的時間：",e.detail);
+    let timePick = e.detail;
+
+    if (this.data.allowVote) {    // 投票mode
+      // 獲取當前目標輸入的數據的索引，if [0]輸滿了，則開始判斷[1]
+      for (let i = 0; i < this.data.timePickArray.length; i++) {
+        if ( !this.data.timePickArray[i].end || !this.data.timePickArray[i].begin ) {
+          this.setData({  timePickArrayLength : i  })
+          break
+        }
+      }
+      console.log("timePickArray的目標索引為：",this.data.timePickArrayLength);
+      let arrLength = this.data.timePickArrayLength;  // 當前目標的索引
+  
+      // 判斷狀態
+      let writeBeginFirst = !(!this.data.timePickArray[arrLength].begin && this.data.timePickModel=='end');
+      let noSameInput     = !(timePick==this.data.timePickArray[arrLength].begin || timePick==this.data.timePickArray[arrLength].end);
+      let noEarlyBegin    = !(e.detail < this.data.timePickArray[arrLength].begin);
+  
+      if ( !writeBeginFirst ) {  // 請先輸入開始時間
+        Notify({ type: 'warning', message: '請先輸入開始時間！' });  
+      }
+      if ( !noSameInput ) {      // 兩次輸入不能相同
+        Notify({ type: 'warning', message: '兩次輸入不能相同！' });  
+      }
+      if ( !noEarlyBegin ) {      // End比Begin早
+        Notify({ type: 'warning', message: '結束時間不能比開始時間早！' });  
+      }
+      if (writeBeginFirst && noSameInput && noEarlyBegin && arrLength < 4) { // 將輸入的數據寫入timePickArray
+        let model = this.data.timePickModel;
+        this.setData({  ['timePickArray['+arrLength+'].'+model] : timePick  })
+        console.log(this.data.timePickArray[arrLength]);
+        if ( this.data.timePickArray[arrLength].begin && this.data.timePickArray[arrLength].end ) { // 成功添加 提示
+          Notify({ type: 'success', message: '成功添加！（ '+(arrLength+1)+' / 4 ）' });
+        }
+      }
+      if ( arrLength==3 && this.data.timePickArray[arrLength].begin && timePick==this.data.timePickArray[arrLength].end ) {        // 只能添加最多 4 個時間段
+        Notify({ type: 'warning', message: '只能添加最多 4 個時間段！' });
+      }
+    }
+    else {                        // 非投票mode，已刪除剩下3個元素，只對[0]操作
+      let model = this.data.timePickModel;
+      this.setData({  ['timePickArray[0].'+model] : e.detail  })
+    }
+
+    this.setData({  show_timePicker: false });    // 關閉wxml上的timePicker
   },
+  // Tag標籤刪除
   onClose_timeTag(event) {
-    this.setData({
-      [`show_timeTag.${event.target.id}`]: false,
-    });
+    // console.log(event.target.id);
+    // 刪除timePickArray數組元素
+    let timePickArr = this.data.timePickArray;
+    timePickArr.splice(event.target.id,1);
+    timePickArr.push({begin:'',end:''});
+    this.setData({  timePickArray : timePickArr  })
   },
 // 輸入框匯總監聽
   onChange_field(e) {
@@ -287,7 +319,9 @@ Page({
     if (!this.data.allowVote) {    // 講者設定時間mode，直接將具體時間寫入courseInfoInput數組內
       this.setData({
         ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[0]'] : this.data.datePick,
-        ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[1]'] : this.data.timePick,
+        // ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[1]'] : this.data.timePick,
+        // input[1]為timeBegin
+        // input[2]為timeEnd
       })
     }
   },
@@ -371,7 +405,7 @@ Page({
             courseInfoInput : this.data.courseInfoInput ,
             allowVote       : this.data.allowVote,
             datePickArray   : this.data.datePickArray,
-            timePickArray   : this.data.allowVote ? "未決定" : this.data.timePick,
+            timePickArray   : this.data.timePickArray,
           }
         }) .then (res=>{
           console.log(res);

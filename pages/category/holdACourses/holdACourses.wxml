@@ -21,19 +21,6 @@
   />
 </van-popup>
 
-<!-- 設置步驟條 - 待定 - 待完成 -->
-<!-- <view class="action">
-  <button class="cu-btn bg-green shadow" bindtap="numSteps">下一步</button>
-</view>
-<view class="cu-steps">
-
-  <view class="cu-item {{index>num?'':'text-themeBlue'}}" wx:for="{{numList}}" wx:key="item">
-    <text class="num" data-index="{{index + 1}}"></text> {{item.name}}
-  </view>
-
-</view> -->
-
-
 <!-- 課程信息錄入 - 臨時本地保存 - 未完成 -->
 
 <!-- 不同格仔代表不同課程信息 -->
@@ -140,21 +127,23 @@
       </van-cell>
       <van-cell title="{{allowVote?'投票日期範圍':'选择Date'}}" bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
       <van-cell wx:if="{{datePick}}" value="{{ datePick }}" title-class="text-grey cu-item" />
-      <van-cell title="{{allowVote?'投票時間區間':'选择Time'}}" bind:click="onDisplay_time" is-link title-class="text-grey cu-item" />
-      <van-cell wx:if="{{timePick}}" title-class="text-grey cu-item" >
-        <!-- value="{{ timePick }}" -->
-        <!-- 日期範圍，幾點-幾點。 - 開發中 -->
-        <van-tag
-          wx:if="{{ show_timeTag.primary }}"
-          closeable
-          size="medium"
-          type="primary"
-          id="primary"
-          bind:close="onClose_timeTag"
-        >
-        {{ timePick }}
-        </van-tag><text decode="true">&nbsp;</text>
-
+      <van-cell title="{{allowVote ? '投票時間區間（開始）' : '选择Time（開始）'}}" value="{{ allowVote ? '' : timePickArray[0].begin }}" bind:click="onDisplay_time" data-model="begin" is-link title-class="text-grey cu-item" />
+      <van-cell title="{{allowVote ? '投票時間區間（結束）' : '选择Time（結束）'}}" value="{{ allowVote ? '' : timePickArray[0].end }}" bind:click="onDisplay_time" data-model="end"   is-link title-class="text-grey cu-item" />
+      <van-cell wx:if="{{ timePickArray[0].begin && allowVote }}" title-class="text-grey cu-item" center >
+        <!-- 日期範圍，幾點-幾點 -->
+        <view wx:for="{{ timePickArray }}" wx:key="index">
+          <van-tag
+            wx:if="{{ timePickArray[index] && timePickArray[index].begin }}"
+            color="#3498DB"
+            closeable
+            size="medium"
+            type="primary"
+            id="{{index}}"
+            bind:close="onClose_timeTag"
+          >
+          {{ timePickArray[index].begin }} - {{ timePickArray[index].end }}
+          </van-tag>
+        </view>
       </van-cell>
     </view>
 

@@ -31,7 +31,7 @@ var courseInfo_empty = [
     { id:2, name:"分享內容", shortName:"courseContent",  input:"None",                    canEdit:true,      display:true },   // 建設設定的課程詳細說明
     { id:3, name:"分享分類", shortName:"courseTag",      input:["None", "None", "None",], canEdit:true,      display:true },   // 設定標籤，便於搜索，例如ECEN、編程
     { id:4, name:"分享地址", shortName:"courseAdres",    input:"None",                    canEdit:true,      display:true },   // 講者設定的課程地址
-    { id:5, name:"分享時間", shortName:"courseTime",     input:["None", "None",],         canEdit:true,      display:true },   // 講者設定的課程舉辦時間，input[0]為date，input[1]為time
+    { id:5, name:"分享時間", shortName:"courseTime",     input:["None", "None","None",],  canEdit:true,      display:true },   // 講者設定的課程舉辦時間，input[0]為date，input[1]為timeBegin，input[2]為timeEnd
     { id:6, name:"講師",     shortName:"speakerName",    input:"None",                    canEdit:false,     display:false },   // 講者設定名稱(可編輯) 或 直接獲取講者的名稱(不可編輯)
     { id:7, name:"講師id",   shortName:"speakerid",      input:"None",                    canEdit:false,     display:false },   // 講者的ARKid或UMid
     { id:8, name:"助手",     shortName:"helper",         input:[],                        canEdit:false,     display:false },   // 同上

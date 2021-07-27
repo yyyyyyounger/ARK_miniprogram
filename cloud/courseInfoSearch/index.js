@@ -9,13 +9,22 @@ const db = cloud.database()
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
+  // let courseCloudData = await db.collection('course') .orderBy("_id","desc") .field({ _id:true }) .limit(1) .get()
+  //   .then(res=>{
+  //     console.log(res.data[0]._id);
+  //   })
+  //   .catch(err=>{
+  //     console.error(err);
+  //   })
+
+
   // **關鍵** 在解析時加上 await，應該是轉為同步操作？
-  let userCloudData = await db.collection('user').where({
-    arkid : event.arkid,
+  let courseCloudData = await db.collection('course').where({
+    _id : event.courseId,
   }) .get();
 
   return {
-    userCloudData,
+    courseCloudData,
     // event,
     // openid: wxContext.OPENID,
     // appid: wxContext.APPID,

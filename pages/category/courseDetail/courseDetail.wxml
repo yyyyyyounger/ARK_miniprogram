@@ -2,8 +2,29 @@
 <view>不同權限有不同視角</view>
 
 <!-- 講者視角 -->
+<!-- 設置步驟條 - 待完成 -->
+<view class="action">
+  <button class="cu-btn bg-green shadow" bindtap="numSteps">下一步</button>
+</view>
+<view class="cu-steps">
+
+  <view class="cu-item {{index>num?'':'text-themeBlue'}}" wx:for="{{numList}}" wx:key="item">
+    <text class="num" data-index="{{index + 1}}"></text> {{item.name}}
+  </view>
+
+</view>
 
 
+<van-cell-group
+wx:for="{{userInfoInput}}"
+wx:key="id"
+wx:if="{{InfoDisplay[index]}}"
+>
+  <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
+    <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
+    </view>
+  </van-cell>
+</van-cell-group>
 
 <!-- 管理員視角 -->
 
