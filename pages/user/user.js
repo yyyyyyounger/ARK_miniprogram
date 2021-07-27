@@ -31,6 +31,7 @@ const getUserCloudData = () => {    // 新增promise，抓取所調用雲函數�
   });
 };
 
+const userCloudDataStorage = wx.getStorageSync('userCloudData');
 
 Page({
   data: {
@@ -108,7 +109,7 @@ Page({
 
     // 獲取緩存，打開小程序時就會判斷是否有頭像緩存，然後寫入globalData.isSignIn
     const userInfoStorage = wx.getStorageSync('userInfo');
-    if (app.globalData.isSignIn) {      // 存在頭像緩存，老用戶 or 非第一次登錄
+    if (app.globalData.isSignIn) {      // 全局已登錄
       this.setData({
         userInfo: userInfoStorage.data, // 用戶暱稱、頭像數據
         hasUserInfo: true,      // 已獲取用戶信息
@@ -133,6 +134,10 @@ Page({
       // 返回majorTagArray的信息
       this.returnMajorTagArray(this);
 
+      if (userCloudDataStorage) {
+        this.setData({  userInfoInput:userCloudDataStorage.data.userInfoInput  })
+      }
+
       getUserCloudData().then(res => {  // 鏈式調用，返回用戶登記的數據
         console.log("鏈式調用getUserCloudData，返回數組長度為：",res.result.userCloudData.data.length)
         if (res.result.userCloudData.data.length!=0) {  // 已註冊，將 數據庫user數據複製 → 本地&全局
@@ -144,6 +149,8 @@ Page({
             isSignUp      : signUpUserInfoInput.find(o => o.shortName === 'isSignUp').input , 
           });
           app.globalData.userInfoInput = JSON.parse(JSON.stringify(signUpUserInfoInput));
+          // 設置緩存
+          wx.setStorageSync('userCloudData', {time:Date.now(), data:userCloudData})
           // 個性化歡迎語
           let userNameInput = this.data.userInfoInput.find(o => o.shortName === 'name');   // 查找用戶修改的姓名
           Toast('Dear '+userNameInput.input+' , Welcome Back ~');    // 個性化歡迎語  
@@ -346,6 +353,7 @@ Page({
           app.globalData.userInfoInput = signUpUserInfoInput;
           // 將userInfoInput寫入緩存
           wx.setStorageSync('userCloudData', {time:Date.now() ,data:userCloudData});
+          console.log("已經設置好userCloudData緩存");
           this.setData({  userInfoInput : signUpUserInfoInput  });
           // 更新顯示的內容
           this.findSetData(this.data.shortNameArray);
@@ -358,6 +366,7 @@ Page({
           Dialog.confirm({  // 提示註冊
             title: '系統提示',
             message: '現在填寫必要資料 (完成註冊) 嗎',
+            zIndex:99999999,
           })
             .then(() => {   // 進入編輯mode
               // on confirm
@@ -369,12 +378,20 @@ Page({
               Notify({ type: 'warning', message: '現在仍不是正式成員喔' });
             });
         } // else - end
-      }) .catch(err => {    console.log(err);    });
-
-      // 登錄後不再按鈕請求登錄（保存用戶頭像等信息） - 未完成
-      this.setData({
-        canIUseOpenData : true ,
+      }) 
+      .then(res=>{
+        // 登錄後不再按鈕請求登錄（保存用戶頭像等信息） - 未完成
+        this.setData({
+          canIUseOpenData : true ,
+        })
       })
+      .then(res=>{
+        wx.reLaunch({
+          url: './user',
+        })
+        console.log("已經重啟頁面");
+      })
+      .catch(err => {    console.log(err);    });
 
     })// 同意登錄 - end
     .catch(err=>{                      // 拒絕登錄

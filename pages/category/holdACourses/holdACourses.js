@@ -5,8 +5,9 @@ import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 const { userInfoInput, courseInfoInput } = require('../../../data/cloud.js');
 var cloudData = require('../../../data/cloud.js')
 const db = wx.cloud.database();   // 數據庫
-const userInfoStorage = wx.getStorageSync('userInfo');  // 用戶緩存
+const userInfoStorage = wx.getStorage('userInfo');  // 用戶緩存
 const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+const courseInfoInputStorage = wx.getStorageSync('courseInfoInput');
 
 const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用
   return new Promise((resolve, reject) => {
@@ -105,8 +106,6 @@ Page({
   },
   //options(Object)
   onLoad: function(){
-    const courseInfoInputStorage = wx.getStorageSync('courseInfoInput');
-    
     getCourseInfoArray().then(res => {
       // console.log(res.data.courseInfo_empty);
 
@@ -250,6 +249,15 @@ Page({
   },
   // update當前js的courseInfo
   updateLocalData(){
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    if (userCloudDataStorage) {
+      console.log("存在userCloudDataStorage緩存");
+      console.log("if裡面",userCloudDataStorage.data);
+    }
+    else {
+      console.log("不存在userCloudDataStorage緩存");
+    }
+    console.log(userCloudDataStorage.data);
     // 寫入當前js的courseInfoInput數據，缺helper、講師等數據寫入 - 未完成
     this.setData({
       ['courseInfoInput['+this.data.courseInfoInput_courseNameIndex+'].input']    : this.data.courseName_input,
@@ -387,7 +395,6 @@ Page({
         })
       });
     };
-    const userCloudDataStorage = wx.getStorageSync('userCloudData');
 
     if (this.data.helperInfoArray.length<2 && !!this.data.helperid_input) {   // Helper數未滿
       if (this.data.helperid_input == userCloudDataStorage.data.arkid ) {                                         // 如果搜索的是自己，提示不可以

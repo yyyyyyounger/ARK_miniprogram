@@ -1,4 +1,7 @@
+import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
+
 var cloudData = require('../../data/cloud.js')
+var app = getApp();
 
 Page({
   data: {
@@ -104,9 +107,29 @@ Page({
     })
   },
   jumpToholdACourses (){
-    wx.navigateTo({
-      url: './holdACourses/holdACourses',
-    })
+    // 獲取只有註冊完畢才能有的緩存數據
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');
+
+    if (userCloudDataStorage) {   // 有緩存，代表已登錄且完成註冊，擁有arkid的用戶
+      wx.navigateTo({
+        url: './holdACourses/holdACourses',
+      })
+    } else {
+      Dialog.confirm({
+        title: '重要提示',
+        message: '該功能需要登錄後操作！\n現在去登錄嗎？',
+        zIndex:99999999,
+      })
+        .then(() => {
+          // on confirm
+          wx.switchTab({
+            url: '../user/user',
+          })
+        })
+        .catch(() => {
+          // on cancel
+        });
+    }
   },
 });
   

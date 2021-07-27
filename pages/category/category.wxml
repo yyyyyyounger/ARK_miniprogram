@@ -1,5 +1,6 @@
 <!-- 彈出類 -->
 <van-toast id="van-toast" zIndex:9999999/>
+<van-dialog id="van-dialog" zIndex:9999999/>
 
 <!-- <text>\n</text> -->
 

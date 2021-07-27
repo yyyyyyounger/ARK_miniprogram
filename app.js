@@ -6,6 +6,7 @@ import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 // var b = JSON.parse(JSON.stringify(數組a));  複製一份數組a的數據到數組b
 // var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
 // console.log(date.toLocaleDateString());
+const clearStorageOrder = wx.getStorageSync('clearStorage'); // bug在這裡，異步請求內執行同步請求太慢，需要轉為異步請求。
 
 //app.js
 App({
@@ -21,26 +22,22 @@ App({
       .then(res => {
         console.log("返回結果為",res.data);
 
-        const clearStorageOrder = wx.getStorage('clearStorageOrder'); // bug在這裡，異步請求內執行同步請求太慢，需要轉為異步請求。
-        console.log(clearStorageOrder);
-        if (!clearStorageOrder) { //如果不存在clearStorageOrder的緩存
+        if (!clearStorageOrder) { // 如果不存在clearStorageOrder的緩存
           console.log("目前沒有clearStorageOrder的緩存，現在獲取！");
           wx.setStorageSync('clearStorage', { time:res.data.createAt, order:res.data.order } )
-        } else {
-          console.log("存在緩存");
-          console.log("緩存為",clearStorageOrder);
-          console.log(res.data);
+        } else {                  // 存在clearStorageOrder緩存
+          console.log("存在clearStorageOrder緩存",clearStorageOrder);
           if ( clearStorageOrder.time != res.data.createAt ) {  // 與雲端設置的時間不符
-            console.log("order數據已過期");
+            console.log("order數據已過期，清除緩存並設置新order時間戳");
             // 緩存過期，刪除
-            // wx.clearStorageSync();
+            wx.clearStorageSync();
             wx.setStorageSync('clearStorage', { time:res.data.createAt, order:res.data.order } )
           } else {
-            console.log("已經執行雲端的clearOrder");
+            console.log("已執行過雲端的clearOrder");
           }
         }
 
-      }) 
+      })
       .then(res=> {
         const userInfoStorage = wx.getStorageSync('userInfo');
         if (!userInfoStorage) { //如果不存在userInfo的緩存
@@ -64,9 +61,6 @@ App({
     .catch(err=>{
       console.error(err);
     })
-
-
-    
 
   },
   onShow: function(options) {
