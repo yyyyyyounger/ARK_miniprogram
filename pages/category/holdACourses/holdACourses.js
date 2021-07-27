@@ -393,31 +393,37 @@ Page({
         }
       }
       if (this.data.haveSetArr[this.data.haveSetArr.length-1].state) {
-        Notify({ type: 'success', message: '提交成功！' });
-        console.log(this.data.courseInfoInput);
-
-        // 上傳數據 本地 → 雲端 - 未完成
-        wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
-          name : 'courseAdd',
-          data : {
-            avatarUrl       : userInfoStorage.data.avatarUrl,
-            nickName        : userInfoStorage.data.nickName,
-            courseInfoInput : this.data.courseInfoInput ,
-            allowVote       : this.data.allowVote,
-            datePickArray   : this.data.datePickArray,
-            timePickArray   : this.data.timePickArray,
-          }
-        }) .then (res=>{
-          console.log(res);
-        }) .catch (err=>{
-          console.error(err);
+        Dialog.confirm({
+          title: '重要提示',
+          message: '確認提交審核嗎？',
         })
-
-        // 跳轉課程詳情頁
-        wx.redirectTo({
-          url: '../courseDetail/courseDetail',
-        })
-      }
+        .then(res=>{
+          Notify({ type: 'success', message: '提交成功！' });
+          console.log(this.data.courseInfoInput);
+  
+          // 上傳數據 本地 → 雲端 - 未完成
+          wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
+            name : 'courseAdd',
+            data : {
+              avatarUrl       : userInfoStorage.data.avatarUrl,
+              nickName        : userInfoStorage.data.nickName,
+              courseInfoInput : this.data.courseInfoInput ,
+              allowVote       : this.data.allowVote,
+              datePickArray   : this.data.datePickArray,
+              timePickArray   : this.data.timePickArray,
+            }
+          }) .then (res=>{
+            console.log(res);
+          }) .catch (err=>{
+            console.error(err);
+          })
+  
+          // 跳轉課程詳情頁
+          wx.redirectTo({
+            url: '../courseDetail/courseDetail',
+          })
+        }) .catch(err=>{  console.error(err);  })
+      } // if輸入校驗 - end
     } // if點擊了submit button - end
   },
 

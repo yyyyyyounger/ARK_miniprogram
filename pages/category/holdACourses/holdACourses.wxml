@@ -115,7 +115,7 @@
       </view>
       <van-cell title-class="text-grey cu-item">    <!-- 允許投票switch -->
         <view slot="title">
-          <view class="van-cell-text">允許投票(默認不允許)</view>
+          <view class="van-cell-text" bindtap="onChange_Switch">允許投票(默認不允許)</view>
         </view>
         <van-switch
           checked="{{ allowVote }}"
