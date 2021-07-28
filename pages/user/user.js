@@ -35,6 +35,8 @@ const userCloudDataStorage = wx.getStorageSync('userCloudData');
 
 Page({
   data: {
+    // 骨架屏
+    loading:true,
 // Vant - begin
     show_sheet_year:false,
     actions_sheet_year: [
@@ -174,6 +176,7 @@ Page({
   
         // 初始化各種數組
         this.ArrayDataInit(this);
+        this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
       }, 700);
 
 // 未理解的神秘執行 - 未完成

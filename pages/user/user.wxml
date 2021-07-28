@@ -84,60 +84,63 @@
 />
 
 <text>\n</text>
-<!-- for循環渲染方法 -->
-<van-cell-group
-wx:for="{{userInfoInput}}"
-wx:key="id"
-wx:if="{{InfoDisplay[index]}}"
->
-  <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
-    <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
-      <view wx:if="{{(index==2)||(index==3)}}">   <!-- 可選取的值 -->
-        <text wx:if="{{index==2}}">{{studentMajor_input}} </text>
-        <text wx:else>{{studentYear_input}} </text>
-        <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>   <!-- 右箭頭 -->
+<!-- 骨架屏懶加載 -->
+<van-skeleton title avatar row="12" loading="{{ loading }}">
+  <!-- for循環渲染方法 -->
+  <van-cell-group
+    wx:for="{{userInfoInput}}"
+    wx:key="id"
+    wx:if="{{InfoDisplay[index]}}"
+  >
+    <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
+      <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
+        <view wx:if="{{(index==2)||(index==3)}}">   <!-- 可選取的值 -->
+          <text wx:if="{{index==2}}">{{studentMajor_input}} </text>
+          <text wx:else>{{studentYear_input}} </text>
+          <van-icon name="arrow" wx:if="{{(index==2)||(index==3)}}"/>   <!-- 右箭頭 -->
+        </view>
+        <view wx:else>                  <!-- 輸入框 -->
+          <van-field
+          value="{{ item.input }}"
+          data-cellIndex="{{index}}"
+          clearable
+          center
+          required
+          hold-keyboard	
+          maxlength = "{{index==userInfoInput_umIdIndex?'8':'20'}}"
+          show-word-limit = "{{index==userInfoInput_umIdIndex ? true : false}}"
+          error-message = "{{index==userInfoInput_umIdIndex ? umIdError : nameError}}"
+          size = "large"
+          placeholder="e.g. {{index===userInfoInput_umIdIndex ? 'DC123456':'陳大文, 請輸入全名！'}}"
+          bind:change="bindCellInput"
+          >
+          </van-field>
+        </view>
       </view>
-      <view wx:else>                  <!-- 輸入框 -->
-        <van-field
-        value="{{ item.input }}"
-        data-cellIndex="{{index}}"
-        clearable
-        center
-        required
-        hold-keyboard	
-        maxlength = "{{index==userInfoInput_umIdIndex?'8':'20'}}"
-        show-word-limit = "{{index==userInfoInput_umIdIndex ? true : false}}"
-        error-message = "{{index==userInfoInput_umIdIndex ? umIdError : nameError}}"
-        size = "large"
-        placeholder="e.g. {{index===userInfoInput_umIdIndex ? 'DC123456':'陳大文, 請輸入全名！'}}"
-        bind:change="bindCellInput"
-        >
-        </van-field>
-      </view>
-    </view>
-    <view wx:elif="{{index==6}}">     <!-- 星級 -->
-        <van-rate
-          value="{{ starsLevel }}"
-          size="{{ 25 }}"
-          color="#ffd21e"
-          void-icon="star"
-          void-color="#eee"
-          readonly
-          bind:change="onChange"
-        />
-      </view>
-    <view wx:else>{{item.input}}</view>
-  </van-cell>
-</van-cell-group>
+      <view wx:elif="{{index==6}}">     <!-- 星級 -->
+          <van-rate
+            value="{{ starsLevel }}"
+            size="{{ 25 }}"
+            color="#ffd21e"
+            void-icon="star"
+            void-color="#eee"
+            readonly
+            bind:change="onChange"
+          />
+        </view>
+      <view wx:else>{{item.input}}</view>
+    </van-cell>
+  </van-cell-group>
 
-<!-- 換行 -->
-<!-- <text>\n\n</text> -->
-<!-- 此處如果能調用UM提供的時間則更好，詳細算法未寫，可以精細到幾幾年的sem 1 or 2 - 未完成-->
-<view class="iconfont">離完Sem還有<text class="devColor">{{durationDay_sem}}</text>天</view>
-<view class="iconfont">離畢業還有<text class="devColor">{{durationDay_Grudate}}</text>天，目前進度：</view>
-<!-- 進度條 -->
-<van-progress percentage="{{durationDay_Grudate_progress}}" />
+
+  <!-- 此處如果能調用UM提供的時間則更好，詳細算法未寫，可以精細到幾幾年的sem 1 or 2 - 未完成-->
+  <view class="iconfont">離完Sem還有<text class="devColor">{{durationDay_sem}}</text>天</view>
+  <view class="iconfont">離畢業還有<text class="devColor">{{durationDay_Grudate}}</text>天，目前進度：</view>
+  <!-- 進度條 -->
+  <van-progress percentage="{{durationDay_Grudate_progress}}" />
+
+</van-skeleton>
+
 <text>\n</text>
-
 <!-- 免除自定義tabbar阻擋 -->
 <view class="bottom-watch"></view>

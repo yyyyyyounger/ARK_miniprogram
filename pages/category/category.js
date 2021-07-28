@@ -61,14 +61,6 @@ Page({
     this.selectComponent('#item').toggle();
   },
 
-  onSwitch1Change({ detail }) {
-    this.setData({ switch1: detail });
-  },
-
-  onSwitch2Change({ detail }) {
-    this.setData({ switch2: detail });
-  },
-
   // 添加follow的課程
   addFollow (e) {
     // 記錄課程id
