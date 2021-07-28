@@ -19,20 +19,26 @@ Page({
   },
   onLoad: function(options){
     // 請求雲端的courseInfo數據
-    db.collection('course') .orderBy("_id","desc") .field({ _id:true }) .limit(1) .get()
+    // db.collection('course') .orderBy("_id","desc") .field({ _id:true }) .limit(1) .get()
+    // .then(res=>{
+    //   console.log(res.data[0]._id);
+    //   wx.cloud.callFunction({
+    //     name:'courseInfoSearch',
+    //     data:{
+    //       courseId : res.data[0]._id
+    //     }
+    //   })
+    //   .then(res=>{
+    //     console.log("最新的課程信息為：",res.result.courseCloudData.data[0]);
+    //   })
+    // }) .catch(err=>{
+    //   console.error(err);
+    // })
+    db.collection('course') .where({
+      _id:'3'
+    }) .get()
     .then(res=>{
-      console.log(res.data[0]._id);
-      wx.cloud.callFunction({
-        name:'courseInfoSearch',
-        data:{
-          courseId : res.data[0]._id
-        }
-      })
-      .then(res=>{
-        console.log("最新的課程信息為：",res.result.courseCloudData.data[0]);
-      })
-    }) .catch(err=>{
-      console.error(err);
+      console.log(res.data[0]);
     })
   },
   onShow: function(){

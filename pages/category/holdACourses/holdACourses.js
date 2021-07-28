@@ -181,10 +181,13 @@ Page({
     return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
   },
   onConfirm_calendar(event) {
-    console.log(event);
+    console.log(event.detail);
     this.setData({ show_calendar: false, });
 
-    if (this.data.allowVote) {    // 投票mode 設定聽者投票範圍
+    if (this.data.allowVote && event.detail.length>4) {
+      Notify({ type: 'warning', message: '最多設置4個投票日期！' });
+    }
+    if (this.data.allowVote && event.detail.length<=4) {    // 投票mode 設定聽者投票範圍
       let datePickStr = "";
       let datePickArray = [];
       for (let i = 0; i < event.detail.length; i++) {
@@ -204,8 +207,9 @@ Page({
         datePick: datePickStr,
         datePickArray,
       })
+      Notify({ type: 'success', message: '投票日期設定成功！（ '+event.detail.length+' / 4 ）' });  
     } 
-    else {                        // 講者設定日期mode
+    else if (!this.data.allowVote) {                 // 講者設定日期mode
       this.setData({  datePick: this.formatDate( event.detail ),  })
       console.log(this.data.datePick);    // datePick為 yyyy/m/d格式
     }
@@ -362,6 +366,8 @@ Page({
     } else if (!!this.data.attendCode_input) {
       // console.log("設定了attendCode",true);
       haveSetArr.push({name:'attendCode',state:true});
+    } else if (!this.data.attendCode_input) {
+      this.data.courseInfoInput[this.data.courseInfoInput_attendCodeIndex].input = "None"
     }
     if (this.data.helperInfoArray.length!=0) {
       // console.log("設定了helper",true);

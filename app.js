@@ -20,7 +20,7 @@ App({
         _openid : false,
       }) .get() 
       .then(res => {
-        console.log("返回結果為",res.data);
+        // console.log("雲端控制清除緩存信息：",res.data);
         if (!clearStorageOrder) { // 如果不存在clearStorageOrder的緩存
           console.log("目前沒有clearStorageOrder的緩存，現在獲取！");
           wx.setStorageSync('clearStorage', { time:res.data.createAt, order:res.data.order } )
