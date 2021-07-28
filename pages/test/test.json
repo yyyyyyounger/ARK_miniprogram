@@ -1,5 +1,7 @@
 {
   "usingComponents": {
     "van-button": "@vant/weapp/button/index"
-  }
+  },
+  "navigationBarTitleText": "測試頁"
+
 }

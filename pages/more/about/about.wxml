@@ -1,3 +1,11 @@
+<view class="cu-bar bg-white">
+  <view class="action">
+    <text class="cuIcon-title text-themeBlue"></text>
+    <text class="text-xl text-bold">关于我们</text>
+  </view>
+</view>
+<text>\n</text>
+
 <view class="iconfont">
   <text>項目開始時間：2021/06/03
   今天是：{{today}}</text>

@@ -445,8 +445,12 @@ Page({
           })
   
           // 跳轉課程詳情頁
+          let detailInfo = {
+            user:"speaker",
+            courseId:2,
+          }
           wx.redirectTo({
-            url: '../courseDetail/courseDetail',
+            url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
           })
         }) .catch(err=>{  console.error(err);  })
       } // if輸入校驗 - end

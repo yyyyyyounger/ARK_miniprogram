@@ -7,3 +7,5 @@
 
 
 <button bindtap="subscribeTest">subscribeTest</button>
+
+<button bindtap="jumpToCourseDetail">帶參跳轉Test</button>

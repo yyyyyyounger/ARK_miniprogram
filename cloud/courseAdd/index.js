@@ -30,15 +30,15 @@ exports.main = async (event, context) => {
           avatarUrl   : event.avatarUrl,
           nickName    : event.nickName,
           courseInfoInput ,
-          allowVote          : event.allowVote,
+          allowVote       : event.allowVote,
           datePickArray   : event.datePickArray,
           timePickArray   : event.timePickArray,
+          courseState     : "checking",
         }
       }) .catch(err=>{  console.error(err);  })
-    }) .catch(err=>{    
-      return err;
-    })
 
+    }) .catch(err=>{  return err; })
+    
 
   // 2 寫入課程暫存區,提示管理員審核
 }

@@ -152,6 +152,16 @@ user頁與數據庫互動基本完成。
 新增日期投票模式下的時間段設置。優化了一些視覺和交互小細節。**待添加輸入校驗，修改了timePicker的數據格式還未進行校驗**
 
 
+#### 2021-7-28
+究極優化的生成對象算法！But單個設定/渲染時適用對象形式數據，for循環時適用數組數據操作。
+```
+  let shortNameIndex={};
+  this.data.courseInfoInput.map(function (e, item) {    // 究極優化！本質上一行代碼匹配出所有index
+    shortNameIndex[e.shortName] = e.id;
+  });
+```
+
+
 
   [1]: https://youzan.github.io/vant-weapp/#/home
   [2]: http://demo.color-ui.com/

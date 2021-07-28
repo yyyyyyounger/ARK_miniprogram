@@ -156,4 +156,15 @@ Page({
         })
     },
 
+    jumpToCourseDetail () { // 带參跳轉頁面
+        // 跳轉課程詳情頁
+        let detailInfo = {
+            user:"speaker",
+            courseId:5,
+        }
+        detailInfo = JSON.stringify(detailInfo);
+        wx.redirectTo({
+        url: '../category/courseDetail/courseDetail?detailInfo=' + detailInfo,
+        })
+    },
 });
