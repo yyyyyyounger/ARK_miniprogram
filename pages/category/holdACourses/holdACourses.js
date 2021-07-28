@@ -109,12 +109,11 @@ Page({
       let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
       console.error(err);
     })
-
-    if (this.data.allowVote) {
-      for (let i = 0; i < 4; i++) {
-        this.data.timePickArray.push({begin:'',end:''})
-      }
-    } else {
+    
+    for (let i = 0; i < 4; i++) {
+      this.data.timePickArray.push({begin:'',end:''})
+    }
+    if (!this.data.allowVote) {
       this.data.timePickArray.splice(0,3);
     }
   },
@@ -156,14 +155,16 @@ Page({
       timePick      : '',
       timePickStr   : '',
     })
-    if (this.data.allowVote) {
-      for (let i = 0; i < 4; i++) {
-        this.data.timePickArray.push({begin:'',end:''})
-      }
-    } else {
-      this.data.timePickArray.splice(0,3);
+    let timePickArr = this.data.timePickArray;
+    timePickArr.splice(0,3);
+    for (let i = 0; i < 4; i++) {
+      timePickArr.push({begin:'',end:''})
     }
-    console.log("timePickArray為",this.data.timePickArray);
+    if (!this.data.allowVote) {
+      timePickArr.splice(0,3);
+    }
+    this.setData({  timePickArray:timePickArr  })
+    console.log("timePickArray為",timePickArr);
   },
 // 日期選擇器
   onDisplay_date() {
@@ -254,12 +255,26 @@ Page({
         let model = this.data.timePickModel;
         this.setData({  ['timePickArray['+arrLength+'].'+model] : timePick  })
         console.log(this.data.timePickArray[arrLength]);
-        if ( this.data.timePickArray[arrLength].begin && this.data.timePickArray[arrLength].end ) { // 成功添加 提示
-          Notify({ type: 'success', message: '成功添加！（ '+(arrLength+1)+' / 4 ）' });
-        }
       }
       if ( arrLength==3 && this.data.timePickArray[arrLength].begin && timePick==this.data.timePickArray[arrLength].end ) {        // 只能添加最多 4 個時間段
         Notify({ type: 'warning', message: '只能添加最多 4 個時間段！' });
+      }
+      for (let i = 0; i < this.data.timePickArray.length; i++) {    // 判斷有無相同時間段的輸入
+        for (let j = i+1; j < this.data.timePickArray.length; j++) {
+          if ( JSON.stringify(this.data.timePickArray[i]) == JSON.stringify(this.data.timePickArray[j]) ) {
+            if (!this.data.timePickArray[i].begin || !this.data.timePickArray[j].begin) {   // 如果i或j都不存在，沒有對比意義
+              break
+            }
+            console.log("timePickArray第",i,"與第",j,"項相同！");
+            console.log("刪除",this.data.timePickArray[j]);
+            Notify({ type: 'warning', message: '不能有兩個相同時間段！已自動刪除' });
+            let event = {target:{id:j}};
+            this.onClose_timeTag(event);    // 調用刪標籤的function，同原理
+          }
+        }
+      }
+      if ( this.data.timePickArray[arrLength].begin && this.data.timePickArray[arrLength].end ) { // 成功添加 提示
+        Notify({ type: 'success', message: '成功添加！（ '+(arrLength+1)+' / 4 ）' });
       }
     }
     else {                        // 非投票mode，已刪除剩下3個元素，只對[0]操作
@@ -271,7 +286,6 @@ Page({
   },
   // Tag標籤刪除
   onClose_timeTag(event) {
-    // console.log(event.target.id);
     // 刪除timePickArray數組元素
     let timePickArr = this.data.timePickArray;
     timePickArr.splice(event.target.id,1);
@@ -299,7 +313,6 @@ Page({
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     if (userCloudDataStorage) {
       console.log("存在userCloudDataStorage緩存");
-      console.log("if裡面",userCloudDataStorage.data);
     }
     else {
       console.log("不存在userCloudDataStorage緩存");
@@ -319,7 +332,8 @@ Page({
     if (!this.data.allowVote) {    // 講者設定時間mode，直接將具體時間寫入courseInfoInput數組內
       this.setData({
         ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[0]'] : this.data.datePick,
-        // ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[1]'] : this.data.timePick,
+        ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[1]'] : this.data.timePickArray[0].begin,
+        ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[2]'] : this.data.timePickArray[0].end,
         // input[1]為timeBegin
         // input[2]為timeEnd
       })
@@ -328,26 +342,29 @@ Page({
   // 輸入校驗
   inputCheck () {
     let haveSetArr = [];
-    this.setData({  haveSetArr  })
+    // this.setData({  haveSetArr  })
     haveSetArr.push({name:'courseName',   state:!!this.data.courseName_input});
     haveSetArr.push({name:'courseContent',state:!!this.data.courseContent_input});
     haveSetArr.push({name:'courseAdres',  state:!!this.data.courseAdres_input});
     haveSetArr.push({name:'date',         state:!!this.data.datePick});
-
-    if (!this.data.allowVote) { // 非投票mode，需要檢查時間選擇
-      // console.log("設定了time",!!this.data.timePick);
-      haveSetArr.push({name:'time',state:!!this.data.timePick});
+    haveSetArr.push({name:'time',         state:!!this.data.timePickArray[0].end});
+    
+    for (let i = 0; i < this.data.timePickArray.length; i++) {
+      if (this.data.timePickArray[i].begin && !this.data.timePickArray[i].end) {
+        console.log("刪除",this.data.timePickArray[i]);
+        let event = {target:{id:i}};
+        this.onClose_timeTag(event);    // 調用刪標籤的function，同原理
+        break
+      }
     }
     if ( !!this.data.attendCode_input && this.data.attendCode_input.length < 4) {
       console.log("attendCode輸入太少");
     } else if (!!this.data.attendCode_input) {
       // console.log("設定了attendCode",true);
-      // this.setData({  haveSetAttendCode:true  })
       haveSetArr.push({name:'attendCode',state:true});
     }
     if (this.data.helperInfoArray.length!=0) {
       // console.log("設定了helper",true);
-      // this.setData({  haveSetHelper:true  })
       haveSetArr.push({name:'helper',state:true});
     }
     console.log(haveSetArr);
@@ -382,6 +399,7 @@ Page({
     }
     if (this.data.btn_submit) { // 點擊了保存並上傳按鈕
       console.log("用戶請求submit");
+      let ok = false;
 // 如數據無誤，提交到雲端，管理員端提示 - 未完成
       // 輸入校驗
       this.inputCheck();
@@ -389,18 +407,20 @@ Page({
         if (!this.data.haveSetArr[i].state) {
           console.log(this.data.haveSetArr[i].name,"有問題");
           Notify({ type: 'danger', message: this.data.haveSetArr[i].name+' 未填入！' });
+          ok = false;
           break
+        } else {
+          ok = true;
         }
       }
-      if (this.data.haveSetArr[this.data.haveSetArr.length-1].state) {
+      if ( ok ) {
+        console.log("當前courseInfoInput：",this.data.courseInfoInput);
+        const userInfoStorage = wx.getStorageSync('userInfo');  // 用戶緩存
         Dialog.confirm({
           title: '重要提示',
           message: '確認提交審核嗎？',
         })
-        .then(res=>{
-          Notify({ type: 'success', message: '提交成功！' });
-          console.log(this.data.courseInfoInput);
-  
+        .then(res=>{    // 點擊確認！
           // 上傳數據 本地 → 雲端 - 未完成
           wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
             name : 'courseAdd',
