@@ -28,16 +28,16 @@
       </van-dropdown-menu>
     </van-sticky>
 
-    <view wx:for="{{recentCourseInfoArray}}" wx:key="courseId">
+    <!-- <view wx:for="{{recentCourseInfoArray}}" wx:key="courseId"> -->
       
       <!-- 課程卡片 - 未完成 -->
       <view class="cu-card dynamic ">
         <view class="cu-item shadow">
           <view class="cu-list menu-avatar">
             <view class="cu-item">
-              <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
+              <view class="cu-avatar round lg" style="background-image:url({{courseCloudData.avatarUrl}});"></view>
               <view class="content flex-sub">
-                <view>{{recentCourseInfoArray[index].courseInfo[1].input}}</view>
+                <view>{{courseInfoInput[shortNameIndex.speakerName].input}}</view>
               </view>
               <!-- add/cancel Follow按鈕 -->
               <van-button 
@@ -50,10 +50,10 @@
                 bind:click="addFollow">Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
             </view>
           </view>
-          <view class="slot text-content">
-            日期：{{recentCourseInfoArray[index].courseInfo[5].input[0]}} 
-            <view>時間：{{recentCourseInfoArray[index].courseInfo[5].input[1]}}</view>
-            <view>地點：{{recentCourseInfoArray[index].courseInfo[4].input}}</view>
+          <view class="slot text-content" bindtap="jumpToCourseDetail">
+            日期：{{courseInfoInput[shortNameIndex.courseTime].input[0]}} 
+            <view>時間：{{courseInfoInput[shortNameIndex.courseTime].input[1]}} - {{courseInfoInput[shortNameIndex.courseTime].input[2]}}</view>
+            <view>地點：{{courseInfoInput[shortNameIndex.courseAdres].input}}</view>
           </view>
           <view class="slot text-right">
             <!-- 頭像組 -->
@@ -63,7 +63,7 @@
           </view>
         </view>
       </view>
-    </view>
+    <!-- </view> -->
   <view class="bottom-watch"></view>
 
   </van-tab>

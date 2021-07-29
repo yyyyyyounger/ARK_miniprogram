@@ -83,6 +83,11 @@ Page({
   },
 
 // 頁面跳轉
+  jumpToCourseDetail (){
+    wx.navigateTo({
+      url: './courseDetail/courseDetail',
+    })
+  },
   jumpToallCourses (){
     wx.navigateTo({
       url: './allCourses/allCourses',

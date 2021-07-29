@@ -1,8 +1,7 @@
 <!-- 課程詳情頁 courseDetail -->
 <!-- 不同權限有不同視角 -->
 
-<!-- 講者視角 -->
-<!-- 設置步驟條 - 待完成 -->
+<!-- 設置步驟條 - 未完成 -->
 <view class="cu-steps">
   <view class="cu-item {{index > stepsActive ?'':'text-themeBlue'}}" wx:for="{{numList}}" wx:key="item">
   <!-- 該處判斷 >0為第0位active，>1為第1位active，如此類推 -->
@@ -10,32 +9,156 @@
   </view>
 </view>
 
-<van-skeleton title avatar row="10" loading="{{ loading }}">
-  <van-notice-bar
-    color="#ed6a0c"
-    background="#ecf9ff"
-    left-icon="star-o"
-    wrapable
-    text="在審核通過後，你仍然可以修改部分課程信息和上傳文件！"
-  />
-  <van-cell-group
-  wx:for="{{courseInfoInput}}"
-  wx:key="id"
-  >
-  <!-- wx:if="{{InfoDisplay[index]}}" -->
-    <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
-      <view>{{item.input}}</view>
-    </van-cell>
-  </van-cell-group>
+<van-skeleton title avatar row="15" loading="{{ loading }}">
+  <!-- 講者剛提交雲端的視角 -->
+  <block wx:if="{{courseCloudData.courseState=='checking' || courseCloudData.courseState=='editing'}}">
+    <van-notice-bar
+      color="#ed6a0c"
+      background="#ecf9ff"
+      left-icon="star-o"
+      wrapable
+      text="在審核通過後，你仍然可以修改部分課程信息和上傳文件！"
+    />
+    <van-cell-group
+    wx:for="{{courseInfoInput}}"
+    wx:key="id"
+    >
+      <!-- wx:if="{{InfoDisplay[index]}}" -->
+      <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
+        <view>{{item.input}}</view>
+      </van-cell>
+    </van-cell-group>
+  </block>
+
+  <!-- 路人視角 -->
+  <block wx:if="{{courseCloudData.courseState=='opening'}}">
+
+  <view class="grid col-1 padding-sm">
+    <view class="bg-themeBlue padding radius text-center shadow-blur " >
+      <text class="text-lg" decode="true">&nbsp;&nbsp;發起人</text>
+    </view>
+  </view>
+  <view style="text-align: center;">
+    <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
+      <!-- <view class="cu-tag badge cuIcon-male bg-blue"></view> -->
+      <view class="cu-tag badge bg-blue">講者</view>
+    </view>
+    <!-- {{courseInfoInput[shortNameIndex.speakerName].input}} -->
+  </view>
+  <view style="text-align: center;">{{courseInfoInput[shortNameIndex.speakerName].input}}</view>
+
+  <view style="text-align: center;">
+    <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
+      <!-- <view class="cu-tag badge cuIcon-male bg-blue"></view> -->
+      <view class="cu-tag badge bg-blue">助手</view>
+    </view>
+    <!-- {{courseInfoInput[shortNameIndex.speakerName].input}} -->
+  </view>
+  <view style="text-align: center;">{{courseInfoInput[shortNameIndex.speakerName].input}}</view>
+  <view style="text-align: center;">
+    <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
+      <!-- <view class="cu-tag badge cuIcon-male bg-blue"></view> -->
+      <view class="cu-tag badge bg-blue">助手</view>
+    </view>
+    <!-- {{courseInfoInput[shortNameIndex.speakerName].input}} -->
+  </view>
+  <view style="text-align: center;">{{courseInfoInput[shortNameIndex.speakerName].input}}</view>
+
+
+
+    <text>\n\n\n\n\n</text>
+    <view>開放Follow中</view>
+    <view>Vant頭像法</view>
+    <van-image
+      round
+      fit="cover"
+      width="160rpx"
+      height="160rpx"
+      src="{{courseCloudData.avatarUrl}}"
+    />
+
+    <text>\n\n</text>
+    <view>ColorUI頭像法</view>
+    <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}});">
+      <!-- <view class="cu-tag badge cuIcon-male bg-blue"></view> -->
+      <view class="cu-tag badge bg-blue">講者</view>
+    </view>
+
+    <view class="content flex-sub">
+      <view>{{courseInfoInput[shortNameIndex.speakerName].input}}</view>
+    </view>
+    <text>\n\n</text>
+
+
+    <!-- add/cancel Follow按鈕 -->
+    <van-button 
+      icon="star-o" 
+      size="small" 
+      color="#3498DB" 
+      type="primary" 
+      round 
+      data-courseid="{{recentCourseInfoArray[index].courseId}}" 
+      bind:click="addFollow"
+    >
+      Follow
+    </van-button>
+
+    <view class="slot text-content">
+      日期：{{courseInfoInput[shortNameIndex.courseTime].input[0]}} 
+      <view>時間：{{courseInfoInput[shortNameIndex.courseTime].input[1]}} - {{courseInfoInput[shortNameIndex.courseTime].input[2]}}</view>
+      <view>地點：{{courseInfoInput[shortNameIndex.courseAdres].input}}</view>
+    </view>
+
+    <text>\n\n</text>
+    <view>Vant的佈局法 - 分列</view>
+    <van-row>
+      <van-col span="6">
+        <!-- 講者頭像 -->
+        <!-- <text decode="true">&nbsp;&nbsp;&nbsp;&nbsp;</text> -->
+        <van-image
+          lazy-load	
+          round
+          fit="cover"
+          width="114rpx"
+          height="114rpx"
+          src="{{courseCloudData.avatarUrl}}"
+          custom-class="shadow-blur"
+        />
+        <text decode="true">\n{{courseInfoInput[shortNameIndex.speakerName].input}}</text>
+        <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
+      </van-col>
+      <van-col span="17">
+        <view class="bg-themeBlue padding radius text-center shadow-blur " >
+        <!-- style="margin-top:34rpx;" -->
+          <van-icon name="success" />
+          <text class="text-lg" decode="true">&nbsp;&nbsp;講者</text>
+        </view>
+      </van-col>
+    </van-row>
+
+
+    <view class="slot text-content">
+      日期：{{courseInfoInput[shortNameIndex.courseTime].input[0]}} 
+      <view>時間：{{courseInfoInput[shortNameIndex.courseTime].input[1]}} - {{courseInfoInput[shortNameIndex.courseTime].input[2]}}</view>
+      <view>地點：{{courseInfoInput[shortNameIndex.courseAdres].input}}</view>
+    </view>
+
+    <text>\n\n</text>
+    <view>ColorUI的佈局法</view>
+    <view class="flex flex-wrap">
+      <view class="basis-xs bg-grey margin-xs padding-sm radius">xs(20%)</view>
+      <!-- <view class="basis-df"></view> -->
+      <!-- <view class="basis-sm bg-grey margin-xs padding-sm radius">sm(40%)</view> -->
+      <!-- <view class="basis-df"></view> -->
+      <!-- <view class="basis-df bg-grey margin-xs padding-sm radius">sub(50%)</view> -->
+      <view class="basis-lg bg-grey margin-xs padding-sm radius">lg(60%)</view>
+      <!-- <view class="basis-xl bg-grey margin-xs padding-sm radius">xl(80%)</view> -->
+    </view>
+  </block>
+
 </van-skeleton>
 
 
 <!-- 管理員視角 -->
-
-
-
-<!-- 路人視角 -->
-
-
 
 <!-- follower視角 -->

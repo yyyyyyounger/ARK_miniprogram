@@ -163,6 +163,13 @@ user頁與數據庫互動基本完成。
 ```
 
 
+#### 2021-7-29
+製作課程詳情頁中。。。稍有頭緒，仍在試探。今天還修了幾個bug。
+
+
+
+
+
 
   [1]: https://youzan.github.io/vant-weapp/#/home
   [2]: http://demo.color-ui.com/

@@ -23,6 +23,17 @@ const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函�
 
 Page({
   data: {
+    // 步驟條 - begin
+    numList: [{
+      name: '填寫信息'
+      }, {
+        name: '提交管理員審核'
+      }, {
+        name: '課程發佈'
+      }, 
+    ],
+    stepsActive:0,    // 控制步驟條active
+    // 步驟條 - end
     // helperInfoArray
     helperInfoArray : [],
     // 允許投票
