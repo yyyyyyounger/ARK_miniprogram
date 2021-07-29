@@ -1,5 +1,6 @@
 var app = getApp();
 const db = wx.cloud.database();
+const { courseInfo_empty } = require('../../data/cloud.js');
 var cloudData = require('../../data/cloud.js')
 
 Page({
@@ -11,7 +12,6 @@ Page({
         this.setData({
             courseInfo_empty : cloudData.courseInfo_empty
         })
-
     },
     onReady: function(){
         
@@ -36,9 +36,9 @@ Page({
     addTest(){
         db.collection('config').add({
             data: {
-                _id                 : 'clearStorage',
-                order               : true,
-                createAt            : Date.now()
+                _id                         : 'recentCourseIdRecord',
+                recentCourseIdRecord        : [],
+                createAt                    : Date.now()
             },
         }).then(res => {
             console.log("插入",res)
@@ -69,10 +69,9 @@ Page({
         // update 局部更新一個記錄
         // set 替換更新
         // 雲函數更新的寫法，數組需要用 . 引出索引
-        db.collection('config').doc("courseInfoArray").update({
+        db.collection('course').doc("5").update({
             data: {
-                courseInfo_empty  : cloudData.courseInfo_empty ,
-                createAt          : Date.now()
+                createAt              : Date.now()
             },
             success: function(res) {
               console.log(res.data)

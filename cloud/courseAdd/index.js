@@ -9,13 +9,15 @@ const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
+  var ok = false;
+
 
   // 1 判斷主題、時間等信息是否與已有的分享重合
     // 是,返回錯誤提示.   否,繼續
-  await db.collection('course') .orderBy("_id","desc") .field({  _id:true  }) .limit(1) .get()
+    await db.collection('course') .orderBy("_id","desc") .field({  _id:true  }) .limit(1) .get()
     .then(res=>{
       let courseId = res.data[0]._id;
-      console.log("最新courseId為",courseId);
+      console.log("數據庫最新courseId為",courseId);
       console.log("賦值的courseId為",(parseInt(courseId)+1)+"");
 
       let courseInfoInput = event.courseInfoInput;
@@ -39,6 +41,5 @@ exports.main = async (event, context) => {
 
     }) .catch(err=>{  return err; })
     
-
   // 2 寫入課程暫存區,提示管理員審核
 }

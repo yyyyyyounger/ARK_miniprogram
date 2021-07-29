@@ -17,8 +17,8 @@ exports.main = async (event, context) => {
   await db.collection('user').doc(wxContext.OPENID) .update({   // 對 user 集合插入新用戶的數據
     data: {
       // 通過前端傳入用戶的頭像、暱稱信息
-      avatarUrl   : event.avatarUrl,
-      nickName    : event.nickName,
+      avatarUrl     : event.avatarUrl,
+      nickName      : event.nickName,
       // 前端傳入的用戶個人填寫的註冊信息
       userInfoInput : event.userInfoInput,    // 前端更新isSignUp的狀態 - 但不夠安全
     }

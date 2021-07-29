@@ -547,16 +547,17 @@ Page({
       console.log("app的數據為",app.globalData.userInfoInput);
       console.log("本js的數據為",that.data.userInfoInput);
       if ( JSON.stringify(app.globalData.userInfoInput) == JSON.stringify(that.data.userInfoInput) ) {
+        Notify({ type: 'primary', message: '完全沒有修改呢！' });
         console.log("完全沒有修改呢！");
       }
       else {    // 本地 → 雲端，更新數組
+        Notify({ type: 'primary', message: '有修改！Update！' });
         console.log("有修改！Update！");
         app.globalData.userInfoInput = JSON.parse(JSON.stringify(that.data.userInfoInput));
         this.userInfoUpdate(that);  // 向數據庫更新用戶的信息
         this.findSetData(this.data.shortNameArray);
       }
       // this.onLoad();
-      Notify({ type: 'success', message: '修改成功！建議使用下拉刷新頁面喔！' });
     }// 輸入符合條件的else - end
     if (this.data.mesError) {
       Toast(this.data.mesError);
@@ -580,6 +581,29 @@ Page({
 
     if (!this.data.isSignUp) {    // 如果註冊狀態為false時
       Notify({ type: 'warning', message: '抓緊時間註冊！現在仍不是正式成員喔！' });
+    }
+  },
+  // 檢查是否 2分鐘內多於3次請求操作數據庫，檢查操作頻繁程度
+  callCloudCheck () {
+    let timeNow = Date.now();  // 希望請求更新數據的時間(當前)
+    const callCloudStorage = wx.getStorageSync('callCloud');
+    if (!callCloudStorage) {    // 如果記錄操作次數的緩存不存在，則創建
+      wx.setStorageSync('callCloud', {editTime:timeNow, callCloudTimes:1})  // 記錄時間，已操作過 1次
+      return true;              // 允許通信
+    }
+    else if ( (timeNow-callCloudStorage.editTime)>(2*60*1000) ) { // 如果上一次操作已經等待超過2分鐘
+      wx.setStorageSync('callCloud', {editTime:timeNow, callCloudTimes:1}) // 重設記錄時間，已操作過 1次
+      return true;
+    }
+    else if (callCloudStorage.callCloudTimes < 3) {
+      wx.setStorageSync('callCloud', {
+        editTime:callCloudStorage.editTime,
+        callCloudTimes:callCloudStorage.callCloudTimes+1    // 操作次數+1
+      }) 
+      return true;
+    }
+    else {
+      return false;
     }
   },
   // 調用雲函數, 新增用戶
@@ -606,14 +630,22 @@ Page({
   },
   // 用戶資料更新
   userInfoUpdate(that) {
-    wx.cloud.callFunction({ //調用雲函數 userSignUp 完成數據上傳
-      name: 'userInfoUpdate',
-      data:{
-          avatarUrl     : that.data.userInfo.avatarUrl,
-          nickName      : that.data.userInfo.nickName,
-          userInfoInput : that.data.userInfoInput,
-      }
-    }) .catch(err=>{  console.error(err);  })
+    let callCloudTimes = that.callCloudCheck();
+    if (callCloudTimes) {
+      wx.cloud.callFunction({ //調用雲函數 userSignUp 完成數據上傳
+        name: 'userInfoUpdate',
+        data:{
+            avatarUrl     : that.data.userInfo.avatarUrl,
+            nickName      : that.data.userInfo.nickName,
+            userInfoInput : that.data.userInfoInput,
+        }
+      }) .then(res=>{
+        Notify({ type: 'success', message: '修改成功！建議使用下拉刷新頁面喔！' });
+      }).catch(err=>{  console.error(err);  })
+    }
+    else {
+      Notify({ type: 'warning', message: '未上傳！請求過於頻繁，請稍後再來吧！' });
+    }
   },
 
   calcTime (){

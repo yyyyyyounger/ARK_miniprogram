@@ -440,18 +440,26 @@ Page({
             }
           }) .then (res=>{
             console.log(res);
+            // 獲取提交成功後返回的該課程的courseId
+            db.collection('course') 
+            .where({ nickName : userInfoStorage.data.nickName }) .orderBy("_id","desc") .field({  _id:true  }) .limit(1) .get()
+            .then(res=>{
+                console.log("創建的courseId為",res.data[0]._id);
+                // 跳轉課程詳情頁
+                let detailInfo = {
+                  user:"speaker",
+                  courseId:res.data[0]._id,
+                }
+                detailInfo = JSON.stringify(detailInfo);
+                wx.redirectTo({   // 銷毀當前頁的帶參跳轉
+                  url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
+                })
+            })
+
           }) .catch (err=>{
             console.error(err);
           })
   
-          // 跳轉課程詳情頁
-          let detailInfo = {
-            user:"speaker",
-            courseId:2,
-          }
-          wx.redirectTo({
-            url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
-          })
         }) .catch(err=>{  console.error(err);  })
       } // if輸入校驗 - end
     } // if點擊了submit button - end
