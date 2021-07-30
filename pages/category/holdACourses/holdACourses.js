@@ -110,11 +110,16 @@ Page({
       // 複製雲端數組
       let arrayEmpty = JSON.parse(JSON.stringify( res.data.courseInfo_empty ));
       this.setData({  courseInfoInput : arrayEmpty  });
-      // 生成簡易版(無input版)userInfo的shortName數組
-      let shortNameArray =    this.data.courseInfoInput.map((item)=>{    return item.shortName   });
+
+      // 拿取緩存數據
+      const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+      this.setData({  userInfoInput : userCloudDataStorage.data.userInfoInput  })
 
       // 初始化所有index
-      this.findSetData(shortNameArray);
+      this.findSetData();
+
+      // 從緩存中獲取該用戶是否管理員
+      this.setData({  admin : this.data.userInfoInput[this.data.userInfoShortNameIndex.admin].input  })
 
     }) .catch(err => {
       let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
@@ -128,22 +133,26 @@ Page({
       this.data.timePickArray.splice(0,3);
     }
   },
-  findSetData(shortNameArray) { // 初始化所有index，匹配對應input值用於顯示
-    this.setData({
-      courseInfoInput_courseIdIndex       : shortNameArray.findIndex(o=> o== "courseId"),
-      courseInfoInput_courseNameIndex     : shortNameArray.findIndex(o=> o== "courseName"),
-      courseInfoInput_courseContentIndex  : shortNameArray.findIndex(o=> o== "courseContent"),
-      courseInfoInput_courseTagIndex      : shortNameArray.findIndex(o=> o== "courseTag"),
-      courseInfoInput_courseAdresIndex    : shortNameArray.findIndex(o=> o== "courseAdres"),
-      courseInfoInput_courseTimeIndex     : shortNameArray.findIndex(o=> o== "courseTime"),
-      courseInfoInput_speakerNameIndex    : shortNameArray.findIndex(o=> o== "speakerName"),
-      courseInfoInput_speakeridIndex      : shortNameArray.findIndex(o=> o== "speakerid"),
-      courseInfoInput_helperIndex         : shortNameArray.findIndex(o=> o== "helper"),
-      courseInfoInput_followersIndex      : shortNameArray.findIndex(o=> o== "followers"),
-      courseInfoInput_courseStateIndex    : shortNameArray.findIndex(o=> o== "courseState"),
-      courseInfoInput_courseStarsIndex    : shortNameArray.findIndex(o=> o== "courseStars"),
-      courseInfoInput_attendCodeIndex     : shortNameArray.findIndex(o=> o== "attendCode"),
-    })
+  findSetData() { // 初始化所有index，匹配對應input值用於顯示
+    // courseInfo的shortName
+    let shortNameIndex={};
+    this.data.courseInfoInput.map(function (e, item) {    // 究極優化！本質上一行代碼匹配出所有index
+      shortNameIndex[e.shortName] = e.id;
+    });
+    this.setData({  shortNameIndex  })
+
+    // userInfo的shortName
+    let userInfoShortNameIndex={};
+    this.data.userInfoInput.map(function (e, item) {    // 究極優化！本質上一行代碼匹配出所有index
+      userInfoShortNameIndex[e.shortName] = e.id;
+    });
+    this.setData({  userInfoShortNameIndex  })
+
+    // 生成userInfoInput裡允許顯示的設置數組
+    let canDisplay = this.data.courseInfoInput.map((item)=>{    return item.display   });
+    // 生成userInfoInput裡允許編輯的設置數組
+    let canEdit     = this.data.courseInfoInput.map((item)=>{    return item.canEdit    });
+    this.setData({  canDisplay , canEdit ,   })
   },
 
   onShow: function(){
@@ -176,6 +185,18 @@ Page({
     }
     this.setData({  timePickArray:timePickArr  })
     console.log("timePickArray為",timePickArr);
+  },
+// 允許編輯開關
+  onChange_Switch_edit(e){
+    let change = !this.data.canEdit[e.currentTarget.dataset.index];
+    console.log(e.currentTarget.dataset.index);
+    this.setData({  ['canEdit['+e.currentTarget.dataset.index+']'] : change  })
+  },
+// 允許顯示開關
+  onChange_Switch_display(e){
+    let change = !this.data.canDisplay[e.currentTarget.dataset.index];
+    console.log(e.currentTarget.dataset.index);
+    this.setData({  ['canDisplay['+e.currentTarget.dataset.index+']'] : change  })
   },
 // 日期選擇器
   onDisplay_date() {
@@ -335,23 +356,35 @@ Page({
     console.log(userCloudDataStorage.data);
     // 寫入當前js的courseInfoInput數據，缺helper、講師等數據寫入 - 未完成
     this.setData({
-      ['courseInfoInput['+this.data.courseInfoInput_courseNameIndex+'].input']    : this.data.courseName_input,
-      ['courseInfoInput['+this.data.courseInfoInput_courseContentIndex+'].input'] : this.data.courseContent_input,
-      ['courseInfoInput['+this.data.courseInfoInput_courseAdresIndex+'].input']   : this.data.courseAdres_input,
-      ['courseInfoInput['+this.data.courseInfoInput_attendCodeIndex+'].input']    : this.data.attendCode_input,
-      ['courseInfoInput['+this.data.courseInfoInput_speakerNameIndex+'].input']   : userCloudDataStorage.data.userInfoInput[1].input, // 寫入講者姓名
-      ['courseInfoInput['+this.data.courseInfoInput_speakeridIndex+'].input']     : userCloudDataStorage.data.userInfoInput[8].input,   // 寫入講者arkid
-      ['courseInfoInput['+this.data.courseInfoInput_helperIndex+'].input[0]']     : this.data.helperInfoArray[0],  // 寫入helper 1的信息
-      ['courseInfoInput['+this.data.courseInfoInput_helperIndex+'].input[1]']     : this.data.helperInfoArray[1],  // 寫入helper 2的信息
+      ['courseInfoInput['+this.data.shortNameIndex.courseName+'].input']    : this.data.courseName_input,
+      ['courseInfoInput['+this.data.shortNameIndex.courseContent+'].input'] : this.data.courseContent_input,
+      ['courseInfoInput['+this.data.shortNameIndex.courseAdres+'].input']   : this.data.courseAdres_input,
+      ['courseInfoInput['+this.data.shortNameIndex.attendCode+'].input']    : this.data.attendCode_input,
+      ['courseInfoInput['+this.data.shortNameIndex.speakerName+'].input']   : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.name].input, // 寫入講者姓名
+      ['courseInfoInput['+this.data.shortNameIndex.speakerid+'].input']     : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.arkId].input,   // 寫入講者arkid
+      ['courseInfoInput['+this.data.shortNameIndex.helper+'].input[0]']     : this.data.helperInfoArray[0],  // 寫入helper 1的信息
+      ['courseInfoInput['+this.data.shortNameIndex.helper+'].input[1]']     : this.data.helperInfoArray[1],  // 寫入helper 2的信息
     })
     if (!this.data.allowVote) {    // 講者設定時間mode，直接將具體時間寫入courseInfoInput數組內
       this.setData({
-        ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[0]'] : this.data.datePick,
-        ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[1]'] : this.data.timePickArray[0].begin,
-        ['courseInfoInput['+this.data.courseInfoInput_courseTimeIndex+'].input[2]'] : this.data.timePickArray[0].end,
+        ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[0]'] : this.data.datePick,
+        ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[1]'] : this.data.timePickArray[0].begin,
+        ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[2]'] : this.data.timePickArray[0].end,
         // input[1]為timeBegin
         // input[2]為timeEnd
       })
+    }
+
+    // 管理員的修改
+    if (this.data.admin) {
+      for (let i = 0; i < this.data.courseInfoInput.length; i++) {
+        this.setData({
+          ['this.data.courseInfoInput['+i+'].canEdit'] : this.data.canEdit[i],
+          ['this.data.courseInfoInput['+i+'].display'] : this.data.canDisplay[i],  
+        })
+        // this.data.courseInfoInput[i].canEdit = this.data.canEdit[i];
+        // this.data.courseInfoInput[i].display = this.data.canDisplay[i];
+      }
     }
   },
   // 輸入校驗
@@ -378,7 +411,7 @@ Page({
       // console.log("設定了attendCode",true);
       haveSetArr.push({name:'attendCode',state:true});
     } else if (!this.data.attendCode_input) {
-      this.data.courseInfoInput[this.data.courseInfoInput_attendCodeIndex].input = "None"
+      this.data.courseInfoInput[this.data.shortNameIndex.attendCode].input = "None"
     }
     if (this.data.helperInfoArray.length!=0) {
       // console.log("設定了helper",true);

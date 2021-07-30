@@ -33,11 +33,12 @@
   <view class="bg-themeBlue padding radius text-center shadow-blur " data-index="{{index}}" >   
       <text class="text-lg">必填 </text>
   </view>
-  <!-- <view class="card-menu"> -->
 
-    <view class="cu-list menu sm-border card-menu margin-top">
-      
-      <view class="cu-item">    <!-- 分享主題 -->
+  <view class="cu-list menu sm-border card-menu margin-top">
+    
+    <!-- 分享主題 -->
+    <block wx:if="{{courseInfoInput[shortNameIndex.courseName].display}}">
+      <view class="cu-item">
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享主題</text>
@@ -51,37 +52,41 @@
         hold-keyboard
         data-model="courseName_input" 
         clearable
+        disabled = "{{ !courseInfoInput[shortNameIndex.courseName].canEdit }}"
         value="{{ value }}"
         placeholder="在此輸入分享主題"
         border="{{ false }}"
         bind:change="onChange_field"
       />
+    </block>
 
-      <view class="cu-item">    <!-- 分享內容 -->
+    <!-- 分享內容 -->
+    <block wx:if="{{courseInfoInput[shortNameIndex.courseContent].display}}">
+      <view class="cu-item">    
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享內容</text>
         </view>
-        <view class="action">
-          <!-- <text class="text-grey">文本內容</text> -->
-        </view>
       </view>
-        <van-field
-          hold-keyboard
-          data-model="courseContent_input" 
-          type='textarea'
-          autosize
-          border="{{ false }}"
-          show-word-limit
-          maxlength="100"
-          clearable
-          value="{{ value }}"
-          placeholder="輸入分享內容簡介（可分行，不多於100字）"
-          bind:change="onChange_field"
-        />
-      <!-- </view> -->
+      <van-field
+        hold-keyboard
+        data-model="courseContent_input" 
+        type='textarea'
+        autosize
+        border="{{ false }}"
+        show-word-limit
+        maxlength="100"
+        clearable
+        disabled = "{{ !courseInfoInput[shortNameIndex.courseContent].canEdit }}"
+        value="{{ value }}"
+        placeholder="輸入分享內容簡介（可分行，不多於100字）"
+        bind:change="onChange_field"
+      />
+    </block>
 
-      <view class="cu-item">    <!-- 分享地址 -->
+    <!-- 分享地址 -->
+    <block wx:if="{{courseInfoInput[shortNameIndex.courseContent].display}}">
+      <view class="cu-item">    
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享地址</text>
@@ -94,13 +99,17 @@
         hold-keyboard
         data-model="courseAdres_input" 
         clearable
+        disabled = "{{ !courseInfoInput[shortNameIndex.courseAdres].canEdit }}"
         value="{{ value }}"
         placeholder="在此輸入分享的地址"
         border="{{ false }}"
         bind:change="onChange_field"
       />
+    </block>
 
-      <view class="cu-item">    <!-- 分享時間 -->
+    <!-- 分享時間 -->
+    <block wx:if="{{courseInfoInput[shortNameIndex.courseTime].display}}">
+      <view class="cu-item">    
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享時間</text>
@@ -121,10 +130,10 @@
           size="46rpx"
         />
       </van-cell>
-      <van-cell title="{{allowVote?'投票日期範圍':'选择Date'}}" bind:click="onDisplay_date" is-link title-class="text-grey cu-item" />
+      <van-cell title="{{allowVote?'投票日期範圍':'选择Date'}}" bind:click="{{ courseInfoInput[shortNameIndex.courseTime].canEdit ? 'onDisplay_date' : '' }}" is-link title-class="text-grey cu-item"/>
       <van-cell wx:if="{{datePick}}" value="{{ datePick }}" title-class="text-grey cu-item" />
-      <van-cell title="{{allowVote ? '投票時間區間（開始）' : '选择Time（開始）'}}" value="{{ allowVote ? '' : timePickArray[0].begin }}" bind:click="onDisplay_time" data-model="begin" is-link title-class="text-grey cu-item" />
-      <van-cell title="{{allowVote ? '投票時間區間（結束）' : '选择Time（結束）'}}" value="{{ allowVote ? '' : timePickArray[0].end }}" bind:click="onDisplay_time" data-model="end"   is-link title-class="text-grey cu-item" />
+      <van-cell title="{{allowVote ? '投票時間區間（開始）' : '选择Time（開始）'}}" value="{{ allowVote ? '' : timePickArray[0].begin }}" bind:click="{{ courseInfoInput[shortNameIndex.courseTime].canEdit ? 'onDisplay_time' : '' }}" data-model="begin" is-link title-class="text-grey cu-item" />
+      <van-cell title="{{allowVote ? '投票時間區間（結束）' : '选择Time（結束）'}}" value="{{ allowVote ? '' : timePickArray[0].end }}" bind:click="{{ courseInfoInput[shortNameIndex.courseTime].canEdit ? 'onDisplay_time' : '' }}" data-model="end" is-link title-class="text-grey cu-item" />
       <van-cell wx:if="{{ timePickArray[0].begin && allowVote }}" title-class="text-grey cu-item" center >
         <!-- 日期範圍，幾點-幾點 -->
         <view wx:for="{{ timePickArray }}" wx:key="index">
@@ -141,9 +150,10 @@
           </van-tag>
         </view>
       </van-cell>
-    </view>
+    </block>
 
-  <!-- </view> -->
+  </view>
+
 </view>
 
 <view class="grid col-{{1}} padding-sm">    <!-- 選填 -->
@@ -228,5 +238,32 @@
 <!-- 提交審核按鈕 -->
 <view class="padding flex flex-direction">
   <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
-  <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">保存並提交審核</button>
+  <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">提交審核</button>
 </view>
+
+<!-- 管理員權限修改edit和display -->
+<block wx:if="{{admin}}">
+  <van-divider contentPosition="center">左switch為edit，右為display</van-divider>
+  <van-cell-group wx:for="{{courseInfoInput}}" wx:key="index">
+    <van-cell center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
+      <!-- 控制edit權限的switch -->
+      <van-switch
+        data-index="{{ index }}"
+        checked="{{ canEdit[index] }}"
+        active-color="#3498DB"
+        inactive-color="#8B98A3"
+        bind:change="onChange_Switch_edit"
+        size="46rpx"
+      /> <text decode="true">&nbsp;&nbsp;</text>
+      <!-- 控制display權限的switch -->
+      <van-switch
+        data-index="{{ index }}"
+        checked="{{ canDisplay[index] }}"
+        active-color="#3498DB"
+        inactive-color="#8B98A3"
+        bind:change="onChange_Switch_display"
+        size="46rpx"
+      />
+    </van-cell>
+  </van-cell-group>
+</block>
