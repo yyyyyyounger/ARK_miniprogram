@@ -2,6 +2,8 @@ import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 var cloudData = require('../../data/cloud.js')
 var app = getApp();
+const db = wx.cloud.database();
+
 
 Page({
   data: {
@@ -30,12 +32,29 @@ Page({
     // 模擬向服務器請求的延時
     // this.app.toastLoadingDIY();
     
-    // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 雲端操作未完成
-    if (cloudData.recentCourseIdRecord) {
-      this.setData({  recentCourseIdRecord:cloudData.recentCourseIdRecord  })
-      // 向雲端請求返回該些courseId代表的課程數據 - 未完成
-      this.setData({  recentCourseInfoArray:cloudData.recentCourseInfoArray  })
-    }
+    // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 未完成
+    // 獲取 距今一個月內未進行的課程
+    let date = new Date(Date.now());
+    let today = date.toLocaleDateString();
+    console.log( "今天是：", today );
+    let todayTimeStamp = (new Date(today)).getTime();   // 今天的時間戳
+    console.log( "今天的時間戳：", todayTimeStamp );
+
+    const _ = db.command
+    db.collection('course').where({
+        timeStampPick : _.gte(todayTimeStamp) ,
+    })
+    .field({
+        _openid : false,
+        _createAt : false,
+    })
+    .orderBy("timeStampPick","asc") .get()
+    .then(res=>{
+        console.log("符合條件的數據為",res.data)
+        this.setData({  recentCourseInfoArray : res.data  })
+    }) .catch(err=>{
+        console.error(err);
+    })
   },
   onReady: function() {
     

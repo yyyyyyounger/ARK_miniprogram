@@ -13,7 +13,7 @@
   <van-sidebar-item title="參與記錄" bindtap="jumpTomyJoinCourses" badge="99+" />
   <van-sidebar-item title="我要開課" bindtap="jumpToholdACourses" />
 </van-sidebar> -->
-<van-button type="primary" size="normal" color="#3498DB" block class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
+<!-- <van-button type="primary" size="normal" color="#3498DB" block class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button> -->
 
 
 <van-tabs sticky swipeable animated color="#3498DB">
@@ -31,13 +31,13 @@
     <!-- <view wx:for="{{recentCourseInfoArray}}" wx:key="courseId"> -->
       
       <!-- 課程卡片 - 未完成 -->
-      <view class="cu-card dynamic ">
+      <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}">
         <view class="cu-item shadow">
           <view class="cu-list menu-avatar">
             <view class="cu-item">
-              <view class="cu-avatar round lg" style="background-image:url({{courseCloudData.avatarUrl}});"></view>
+              <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );"></view>
               <view class="content flex-sub">
-                <view>{{courseInfoInput[shortNameIndex.speakerName].input}}</view>
+                <view>{{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
               </view>
               <!-- add/cancel Follow按鈕 -->
               <van-button 
@@ -51,9 +51,9 @@
             </view>
           </view>
           <view class="slot text-content" bindtap="jumpToCourseDetail">
-            日期：{{courseInfoInput[shortNameIndex.courseTime].input[0]}} 
-            <view>時間：{{courseInfoInput[shortNameIndex.courseTime].input[1]}} - {{courseInfoInput[shortNameIndex.courseTime].input[2]}}</view>
-            <view>地點：{{courseInfoInput[shortNameIndex.courseAdres].input}}</view>
+            日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }} 
+            <view>時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
+            <view>地點：{{ recentCourseInfoArray[index].courseInfoInput[4].input }}</view>
           </view>
           <view class="slot text-right">
             <!-- 頭像組 -->

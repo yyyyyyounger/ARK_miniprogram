@@ -103,6 +103,15 @@ Page({
   },
 
   onLoad: function(){
+    // 日期選擇器最大最小日期選擇
+    let nowTimeStamp = new Date(Date.now()).getTime();
+    let maxTimeStamp = nowTimeStamp+30*24*60*60*1000;
+    console.log(  "可選的開課時間直到(未來30天)：", new Date(maxTimeStamp).toLocaleDateString() );
+    this.setData({
+      minDate_calendar : nowTimeStamp,
+      maxDate_calendar : maxTimeStamp,
+    })
+
     getCourseInfoArray().then(res => {
       // console.log(res.data.courseInfo_empty);
 
@@ -346,14 +355,7 @@ Page({
   // update當前js的courseInfo
   updateLocalData(){
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
-    if (userCloudDataStorage) {
-      console.log("存在userCloudDataStorage緩存");
-    }
-    else {
-      console.log("不存在userCloudDataStorage緩存");
-    }
-    console.log(userCloudDataStorage.data);
-    // 寫入當前js的courseInfoInput數據，缺helper、講師等數據寫入 - 未完成
+    // 寫入當前js的courseInfoInput數據
     this.setData({
       ['courseInfoInput['+this.data.shortNameIndex.courseName+'].input']    : this.data.courseName_input,
       ['courseInfoInput['+this.data.shortNameIndex.courseContent+'].input'] : this.data.courseContent_input,
@@ -367,11 +369,22 @@ Page({
     if (!this.data.allowVote) {    // 講者設定時間mode，直接將具體時間寫入courseInfoInput數組內
       this.setData({
         ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[0]'] : this.data.datePick,
-        ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[1]'] : this.data.timePickArray[0].begin,
-        ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[2]'] : this.data.timePickArray[0].end,
-        // input[1]為timeBegin
-        // input[2]為timeEnd
+        ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[1]'] : this.data.timePickArray[0].begin,   // input[1]為timeBegin
+        ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[2]'] : this.data.timePickArray[0].end,     // input[2]為timeEnd        
       })
+      console.log("DatePick", this.data.datePick );
+      console.log("TimePick", this.data.timePickArray[0].begin );
+      console.log("時間str為：", this.data.datePick + " " + this.data.timePickArray[0].begin );
+      let timeStampPick = new Date(this.data.datePick + " " + this.data.timePickArray[0].begin).getTime();
+      console.log("時間戳為：", timeStampPick );
+      this.setData({  timeStampPick   })
+    } else {    // 投票模式下寫入當前所選擇的最早的時間戳
+      console.log("DatePick", this.data.datePickArray[0] );
+      console.log("TimePick", this.data.timePickArray[0].begin );
+      console.log("時間str為：", this.data.datePickArray[0] + " " + this.data.timePickArray[0].begin );
+      let timeStampPick = new Date(this.data.datePickArray[0] + " " + this.data.timePickArray[0].begin).getTime();
+      console.log("時間戳為：", timeStampPick );
+      this.setData({  timeStampPick   })
     }
 
     // 管理員的修改
@@ -478,8 +491,9 @@ Page({
               nickName        : userInfoStorage.data.nickName,
               courseInfoInput : this.data.courseInfoInput ,
               allowVote       : this.data.allowVote,
-              datePickArray   : this.data.datePickArray,
-              timePickArray   : this.data.timePickArray,
+              datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
+              timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
+              timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
             }
           }) .then (res=>{
             console.log(res);

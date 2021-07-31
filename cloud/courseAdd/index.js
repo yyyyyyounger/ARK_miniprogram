@@ -35,6 +35,7 @@ exports.main = async (event, context) => {
           allowVote       : event.allowVote,
           datePickArray   : event.datePickArray,
           timePickArray   : event.timePickArray,
+          timeStampPick   : event.timeStampPick,
           courseState     : "checking",
         }
       }) .catch(err=>{  console.error(err);  })

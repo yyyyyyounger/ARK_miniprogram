@@ -13,27 +13,6 @@ Page({
             courseInfo_empty : cloudData.courseInfo_empty
         })
 
-        // 獲取 距今一個月內未進行的課程
-        let date = new Date(Date.now());
-        let today = date.toLocaleDateString();
-        console.log( "今天是：", today );
-
-        const _ = db.command
-        // db.collection('user').where({
-        //     _openid: 'oDWgf48GBbH1PqgkMMVIEHZldF60',
-        //     // _id: 'oDWgf48GBbH1PqgkMMVIEHZldF60',
-        //     // _id                 : 'userInfoArray1.0.0',
-        //     // courseInfo_empty : { input:"None", }
-        // })
-        // .get({
-        //     success: function(res) {
-        //         console.log(res.data)
-        //     },
-        //     fail: function(res) {
-        //         console.error(res);
-        //     }
-        // })
-
     },
     onReady: function(){
         
