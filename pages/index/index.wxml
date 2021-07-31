@@ -95,10 +95,7 @@ bind:close="closePopup"
 <text>\n</text>
 
 <!-- 骨架 -->
-<van-skeleton title row="2" loading="true">
-<!-- loading為false時，顯示隱藏的內容 -->
-  <view>實際內容</view>
-</van-skeleton>
+<van-skeleton row="4" />
 
 <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
 

@@ -29,9 +29,10 @@
   </view>
 </view>
 
-<view class="grid col-{{1}} padding-sm">    <!-- 必填 -->
+<!-- 必填 -->
+<view class="grid col-{{1}} padding-sm">    
   <view class="bg-themeBlue padding radius text-center shadow-blur " data-index="{{index}}" >   
-      <text class="text-lg">必填 </text>
+      <text class="text-lg">必填</text>
   </view>
 
   <view class="cu-list menu sm-border card-menu margin-top">
@@ -156,9 +157,10 @@
 
 </view>
 
-<view class="grid col-{{1}} padding-sm">    <!-- 選填 -->
+<!-- 選填 -->
+<view class="grid col-{{1}} padding-sm">    
   <view class="bg-themeBlue-light padding radius text-center shadow-blur " data-index="{{index}}" >
-      <text class="text-lg">選填 </text>
+      <text class="text-lg">選填</text>
   </view>
   <view class="card-menu">
 
@@ -235,14 +237,22 @@
   </view>
 </view>
 
+<!-- 附加 - 上傳文件 --> 
+<!-- <view class="grid col-{{1}} padding-sm">    
+  <view class="bg-themeBlue-light padding radius text-center shadow-blur " data-index="{{index}}" >
+      <text class="text-lg">附加</text>
+  </view>
+</view> -->
+
 <!-- 提交審核按鈕 -->
 <view class="padding flex flex-direction">
   <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
-  <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">提交審核</button>
+  <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">提交{{admin?'修改':'審核'}}</button>
 </view>
 
-<!-- 管理員權限修改edit和display -->
+<!-- 管理員權限修改 edit 和 display -->
 <block wx:if="{{admin}}">
+
   <van-divider contentPosition="center">左switch為edit，右為display</van-divider>
   <van-cell-group wx:for="{{courseInfoInput}}" wx:key="index">
     <van-cell center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
@@ -266,4 +276,6 @@
       />
     </van-cell>
   </van-cell-group>
+  <!-- iPhoneX用戶安全留底 -->
+  <text>\n</text>
 </block>

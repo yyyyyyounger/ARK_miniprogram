@@ -130,18 +130,37 @@
 
   <van-tab title="歸檔&記錄">
 
-    <text>\n\n\n</text>
-    <van-grid gutter="{{ 10 }}" column-num="2">
-      <van-grid-item icon="apps-o" text="所有課程" />
-      <van-grid-item icon="more-o" text="參與記錄" />
-    </van-grid>
+    <view style="margin-top:30rpx">
+      <van-grid gutter="{{ 10 }}" column-num="2">
+        <van-grid-item icon="apps-o" text="所有課程" />
+        <van-grid-item icon="more-o" text="參與記錄" />
+      </van-grid>
+    </view>
 
   <view class="bottom-watch"></view>
   </van-tab>
   
   <van-tab title="我要開課">
-    <view>此處可以加一些開課前的說明</view>
-    <van-button type="primary" size="normal" color="#3498DB" round class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
+
+    <view class="cu-bar bg-white margin-top">
+      <view class="action">
+        <text class="cuIcon-title text-blue"></text>開課須知
+      </view>
+    </view>
+    <van-skeleton row="4" />
+
+    <view class="cu-bar bg-white margin-top">
+      <view class="action">
+        <text class="cuIcon-title text-blue"></text>流程說明
+      </view>
+    </view>
+    <van-skeleton row="4" />
+
+
+    <view style="margin-top:150rpx">
+      <van-button type="primary" size="normal" color="#3498DB" round class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
+    </view>
+
   </van-tab>
 
 </van-tabs>

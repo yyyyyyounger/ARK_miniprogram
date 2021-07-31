@@ -2,7 +2,6 @@ var app = getApp();
 import Notify from '../../../miniprogram_npm/@vant/weapp/notify/notify';
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
-const { userInfoInput, courseInfoInput } = require('../../../data/cloud.js');
 var cloudData = require('../../../data/cloud.js')
 const db = wx.cloud.database();   // 數據庫
 const userInfoStorage = wx.getStorage('userInfo');  // 用戶緩存
@@ -102,7 +101,7 @@ Page({
     },
     ],
   },
-  //options(Object)
+
   onLoad: function(){
     getCourseInfoArray().then(res => {
       // console.log(res.data.courseInfo_empty);

@@ -15,7 +15,9 @@
 
     "van-switch": "@vant/weapp/switch/index",
 
-    "van-tag": "@vant/weapp/tag/index"
+    "van-tag": "@vant/weapp/tag/index",
+
+    "van-uploader": "@vant/weapp/uploader/index"
 
   }
 }

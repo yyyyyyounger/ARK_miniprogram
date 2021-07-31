@@ -1,4 +1,6 @@
-.page{background-color:var(--weui-BG-2)}
+page{background-color:#FFFFFF;}
+
+/* .page{background-color:var(--weui-BG-2)} */
 
 .flexCenter {
   display: flex;

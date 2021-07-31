@@ -12,6 +12,28 @@ Page({
         this.setData({
             courseInfo_empty : cloudData.courseInfo_empty
         })
+
+        // 獲取 距今一個月內未進行的課程
+        let date = new Date(Date.now());
+        let today = date.toLocaleDateString();
+        console.log( "今天是：", today );
+
+        const _ = db.command
+        // db.collection('user').where({
+        //     _openid: 'oDWgf48GBbH1PqgkMMVIEHZldF60',
+        //     // _id: 'oDWgf48GBbH1PqgkMMVIEHZldF60',
+        //     // _id                 : 'userInfoArray1.0.0',
+        //     // courseInfo_empty : { input:"None", }
+        // })
+        // .get({
+        //     success: function(res) {
+        //         console.log(res.data)
+        //     },
+        //     fail: function(res) {
+        //         console.error(res);
+        //     }
+        // })
+
     },
     onReady: function(){
         
@@ -69,9 +91,10 @@ Page({
         // update 局部更新一個記錄
         // set 替換更新
         // 雲函數更新的寫法，數組需要用 . 引出索引
-        db.collection('course').doc("5").update({
+        db.collection('config').doc("courseInfoArray").update({
             data: {
-                createAt              : Date.now()
+                createAt              : Date.now(),
+                courseInfo_empty      : cloudData.courseInfo_empty,
             },
             success: function(res) {
               console.log(res.data)
