@@ -2,7 +2,7 @@
 <van-dialog id="van-dialog" />
 
 <view style="margin-top:20rpx">
-  <van-grid gutter="{{ 10 }}" column-num="2">
+  <van-grid gutter="{{ 10 }}" column-num="1">
     <van-grid-item icon="apps-o" text="小功能"         bindtap="jumpToSmallFun" />
     <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
     <van-grid-item icon="more-o"    text="關於"           bindtap="jumpToAbout" />
@@ -10,6 +10,9 @@
   </van-grid>
 </view>
 
-<button bindtap="clearStorage" style="margin-top:560rpx">點我清除緩存</button>
 
-<van-divider />
+<view style="padding-top:20vh">
+  <button bindtap="clearStorage">點我清除緩存</button>
+</view>
+
+<view class="bottom-watch"></view>

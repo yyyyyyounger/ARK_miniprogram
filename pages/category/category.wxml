@@ -2,21 +2,10 @@
 <van-toast id="van-toast" zIndex:9999999/>
 <van-dialog id="van-dialog" zIndex:9999999/>
 
-<!-- <text>\n</text> -->
-
-<!-- <van-sidebar active-key="{{ activeKey }}">
-  <van-sidebar-item title="所有課程"    dot > </van-sidebar-item>
-  <van-sidebar-item title="我的Follow"  badge="5" />
-  <van-sidebar-item title="參與記錄"    badge="99+" />
-  <van-sidebar-item title="所有課程" bindtap="jumpToallCourses" dot />
-  <van-sidebar-item title="我的Follow" bindtap="jumpTomyFollowCourses" badge="5" />
-  <van-sidebar-item title="參與記錄" bindtap="jumpTomyJoinCourses" badge="99+" />
-  <van-sidebar-item title="我要開課" bindtap="jumpToholdACourses" />
-</van-sidebar> -->
+<!-- 橫向大開課按鈕 - 棄用狀態 -->
 <!-- <van-button type="primary" size="normal" color="#3498DB" block class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button> -->
 
-
-<van-tabs sticky swipeable animated color="#3498DB">
+<van-tabs sticky swipeable animated color="#3498DB" bind:click="onClick_tabs">
 
   <van-tab title="最新發佈">
 
@@ -28,9 +17,8 @@
       </van-dropdown-menu>
     </van-sticky>
 
-    <!-- <view wx:for="{{recentCourseInfoArray}}" wx:key="courseId"> -->
-      
       <!-- 課程卡片 - 未完成 -->
+      <!-- 缺課程標籤，或者頭像上專業標籤，例如ECE -->
       <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}">
         <view class="cu-item shadow">
           <view class="cu-list menu-avatar">
@@ -41,13 +29,13 @@
               </view>
               <!-- add/cancel Follow按鈕 -->
               <van-button 
-                icon="star-o" 
+                icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
                 size="small" 
-                color="#3498DB" 
+                color="{{ recentCourseInfoArray[index].haveFollow ? '#f8ad72' : '#3498DB'}}" 
                 type="primary" 
                 round 
-                data-courseid="{{recentCourseInfoArray[index].courseId}}" 
-                bind:click="addFollow">Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
+                data-courseid="{{recentCourseInfoArray[index]._id}}" 
+                bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
             </view>
           </view>
           <view class="slot text-content" bindtap="jumpToCourseDetail">
@@ -62,9 +50,11 @@
             </view> <text decode="true">...&nbsp;&nbsp;</text>
           </view>
         </view>
+        <!-- 分割線 -->
+        <van-divider />
       </view>
-    <!-- </view> -->
-  <view class="bottom-watch"></view>
+
+      <van-divider contentPosition="center">“最新發佈” 只顯示最近30日的新增課程~</van-divider>
 
   </van-tab>
 
@@ -75,69 +65,57 @@
       <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
     </van-dropdown-menu>
 
-    <!-- <view wx:for="{{6}}">
-      <van-cell value="" use-label-slot>
-        <view slot="title">
-          <view class="van-cell-text">ECEN1008</view>
-          <van-tag type="danger">ECE</van-tag>，<van-tag type="danger">PHC</van-tag>
-        </view>
-        <view slot="label">
-          <view>時間：</view>
-          <view>地點：</view>
-        </view>
-        <!-- <view slot="icon">
-          testIcon
-        </view> -->
-        <!-- <view slot="right-icon">
-          <text>\n</text>
-          <van-button icon="star-o" size="small" color="#3498DB" type="primary" round>查看</van-button>
-        </view>
-      </van-cell>
-    </view> -->
-    <view wx:for="{{recentCourseInfoArray}}" wx:key="courseId">
-      
-      <!-- 課程卡片 - 未完成 -->
-      <view class="cu-card dynamic ">
-        <view class="cu-item shadow">
-          <view class="cu-list menu-avatar">
-            <view class="cu-item">
-              <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
-              <view class="content flex-sub">
-                <view>{{recentCourseInfoArray[index].courseInfo[1].input}}</view>
-              </view>
-              <!-- <van-button icon="star-o" size="small" color="#3498DB" type="primary" round>Follow</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text> -->
+    <!-- 課程卡片 - 未完成 -->
+    <!-- 缺課程標籤，或者頭像上專業標籤，例如ECE -->
+    <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" wx:if="{{recentCourseInfoArray[index].haveFollow}}">
+      <view class="cu-item shadow">
+        <view class="cu-list menu-avatar">
+          <view class="cu-item">
+            <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );"></view>
+            <view class="content flex-sub">
+              <view>{{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
             </view>
+            <!-- add/cancel Follow按鈕 -->
+            <van-button 
+              icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
+              size="small" 
+              color="{{ recentCourseInfoArray[index].haveFollow ? '#f8ad72' : '#3498DB'}}" 
+              type="primary" 
+              round 
+              data-courseid="{{recentCourseInfoArray[index]._id}}" 
+              bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
           </view>
-          <view class="slot text-content">
-            日期：{{recentCourseInfoArray[index].courseInfo[5].input[0]}} 
-            <view>時間：{{recentCourseInfoArray[index].courseInfo[5].input[1]}}</view>
-            <view>地點：{{recentCourseInfoArray[index].courseInfo[4].input}}</view>
-          </view>
-          <view class="slot text-right">
-            <!-- 頭像組 -->
-            <view class="cu-avatar-group">
-              <view class="cu-avatar round lg" wx:for="{{5}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
-            </view> <text decode="true">...&nbsp;&nbsp;</text>
-          </view>
+        </view>
+        <view class="slot text-content" bindtap="jumpToCourseDetail">
+          日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }} 
+          <view>時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
+          <view>地點：{{ recentCourseInfoArray[index].courseInfoInput[4].input }}</view>
+        </view>
+        <view class="slot text-right">
+          <!-- 頭像組 -->
+          <view class="cu-avatar-group">
+            <view class="cu-avatar round lg" wx:for="{{5}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
+          </view> <text decode="true">...&nbsp;&nbsp;</text>
         </view>
       </view>
+      <!-- 分割線 -->
+      <van-divider />
     </view>
 
+    <van-divider contentPosition="center">“我的Follow” 只顯示最近30日的Follow</van-divider>
     <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
 
-  <view class="bottom-watch"></view>
   </van-tab>
 
   <van-tab title="歸檔&記錄">
 
     <view style="margin-top:30rpx">
-      <van-grid gutter="{{ 10 }}" column-num="2">
+      <van-grid gutter="{{ 10 }}" column-num="1" clickable icon-size="60rpx">
         <van-grid-item icon="apps-o" text="所有課程" />
         <van-grid-item icon="more-o" text="參與記錄" />
       </van-grid>
     </view>
 
-  <view class="bottom-watch"></view>
   </van-tab>
   
   <van-tab title="我要開課">
@@ -164,3 +142,5 @@
   </van-tab>
 
 </van-tabs>
+
+<view class="bottom-watch"></view>

@@ -13,6 +13,8 @@ Page({
             courseInfo_empty : cloudData.courseInfo_empty
         })
 
+
+
     },
     onReady: function(){
         
@@ -70,10 +72,10 @@ Page({
         // update 局部更新一個記錄
         // set 替換更新
         // 雲函數更新的寫法，數組需要用 . 引出索引
-        db.collection('config').doc("courseInfoArray").update({
+        db.collection('user').doc("oDWgf48GBbH1PqgkMMVIEHZldF60").update({
             data: {
-                createAt              : Date.now(),
-                courseInfo_empty      : cloudData.courseInfo_empty,
+                // createAt              : Date.now(),
+                recentFollowCourseArray  : [],
             },
             success: function(res) {
               console.log(res.data)

@@ -67,7 +67,7 @@ page{
     bottom: 0;
     /* width: 100%; */
     /* margin-bottom: 100rpx; */
-    height: 110rpx;
+    height: 12vh;
     background: transparent;
     visibility: hidden;
 }
