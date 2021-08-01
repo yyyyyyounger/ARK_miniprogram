@@ -160,6 +160,17 @@ Page({
       }
     }) .then(res=>{
       Toast('Follow成功！課程編號：'+selectCourse+'\n可前往 “我的Follow” 查看');
+
+      // 將該user的基本信息導入到該courseId的followMember數組內
+      db.collection('course').doc(selectCourse).update({
+        data: {
+          followMember : _.push([{
+            arkid     : userCloudDataStorage.data.arkid,
+            avatarUrl : userCloudDataStorage.data.avatarUrl,
+            name      : userCloudDataStorage.data.userInfoInput[1].input,
+          }]),
+        }
+      }) .catch(err=>{  console.error(err);  })
     }) .catch(err=>{
       console.error(err);
     })
@@ -186,9 +197,16 @@ Page({
       }
     }) .then(res=>{
       Toast('刪除成功！');
-    }) .catch(err=>{
-      console.error(err);
-    })
+
+      // 刪除followMember數組內該user的arkid等數據
+      db.collection('course').doc(selectCourse).update({
+        data: {
+          followMember : _.pull( {
+            arkid     : _.eq(userCloudDataStorage.data.arkid),
+          } ),
+        }
+      }) .catch(err=>{ console.error(err); })
+    }) .catch(err=>{ console.error(err); })
 
   },
 
