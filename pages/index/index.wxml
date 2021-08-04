@@ -74,9 +74,6 @@ bind:close="closePopup"
 				<view>時間：</view>
 				<view>地點：</view>
 			</van-collapse-item>
-			<!-- <van-collapse-item title="有赞美业" name="3" disabled>
-				线上拓客，随时预约，贴心顺手的开单收银
-			</van-collapse-item> -->
 		</van-collapse>
 	</van-col>
 
@@ -91,12 +88,15 @@ bind:close="closePopup"
 	</van-col>
 </van-row>
 
-
-<text>\n</text>
-
-<!-- 骨架 -->
+<!-- 使用小貼士 -->
+<view class="cu-bar bg-white margin-top">
+	<view class="action">
+		<text class="cuIcon-title text-blue"></text>使用小貼士
+	</view>
+</view>
 <van-skeleton row="4" />
 
+<text>\n</text>
 <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
 
 <!-- 免除自定義tabbar阻擋 -->

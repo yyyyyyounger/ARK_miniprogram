@@ -1,5 +1,8 @@
 var app = getApp(); 
 var cloudData = require('../../data/cloud.js')
+const db = wx.cloud.database();
+const _ = db.command
+
 
 Page({
   data: {
@@ -96,25 +99,74 @@ Page({
     this.setData({
       projStartTime : app.globalData.projStartTime[0] ,
     });
-    // console.log("項目開始時間："+this.data.projStartTime.Year +'/'+ this.data.projStartTime.Month +'/'+ this.data.projStartTime.Day);
+
     // 計算已過日期
     this.app.calcDurationDay(this,1,'2021/06/03');
-    this.onShow();
+    
+    // 獲取已follow的課程列表
+    // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 未完成
+    let date = new Date(Date.now());                    // 現在時刻的時間戳
+    let today = date.toLocaleDateString();              // 今天的文本時間 yyyy/m/d
+    let todayTimeStamp = (new Date(today)).getTime();   // 今天的時間戳
+    console.log( "今天的時間戳：", todayTimeStamp );
+
+    // 查詢course集合中，大於等於今天時間戳的課程，（距今一個月內未進行的課程） - 未完成
+    db.collection('course').where({
+        timeStampPick : _.gte(todayTimeStamp) ,
+    }) .field({
+        _openid : false,
+        _createAt : false,
+    }) .orderBy("timeStampPick","asc") .get()
+    .then(res=>{
+        console.log("符合條件的數據為",res.data)
+        let recentCourseInfoArray = res.data;
+        // 生成已經Follow了的課程Info的數組形式
+        this.setData({  recentCourseInfoArray  })
+
+        // 返回user集合中自己的follow列表
+        const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
+        db.collection('user').where({
+          _id : userCloudDataStorage.data._openid,
+        }) .field({
+          recentFollowCourseArray : true
+        }) .get() .then(res=>{
+          console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowCourseArray);
+          this.setData({  followCourseArray : res.data[0].recentFollowCourseArray  })
+          
+          // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
+          for (let i = 0; i < recentCourseInfoArray.length; i++) {
+            if ( !!this.data.followCourseArray ) {
+              for (let j = 0; j < this.data.followCourseArray.length; j++) {
+                if ( this.data.followCourseArray[j] == recentCourseInfoArray[i]._id ) {   // 對比course的最近課程和user的已follow課程
+                  recentCourseInfoArray[i].haveFollow = true;
+                  break
+                } else {
+                  console.log("沒有follow");
+                  recentCourseInfoArray[i].haveFollow = false;
+                }
+              }
+            }
+            else {
+              console.log("沒有follow");
+              recentCourseInfoArray[i].haveFollow = false;
+            }
+          }
+          console.log("操作已follow的數據後",recentCourseInfoArray);
+
+          // 生成已經Follow了的課程Info的數組形式
+          this.setData({  recentCourseInfoArray  })
+        }) .catch(err=>{ console.error(err); })
+
+    }) .catch(err=>{
+        console.error(err);
+    })
+
   },
   onShow (){  //頁面展示時，觸發動畫
     this.getTabBar().init();
-    // this.app.sliderAnimaMode(this, 'slide_up1', -200, 1, 0, 0);
-    // this.app.sliderAnimaMode(this, 'slide_up2', -200, 1, 0, 300);
-    // this.app.sliderAnimaMode(this, 'slide_up3', -200, 1, 0, 600);
-    // this.app.sliderAnimaMode(this, 'slide_up4', -200, 1, 0, 900);
   },
   onHide (){  //頁面隱藏時，觸發漸出動畫
-    // this.app.sliderAnimaMode(this, 'slide_up1', 200, 0, 0, 0);
-    // this.app.sliderAnimaMode(this, 'slide_up2', 200, 0, 0, 300);
-    // this.app.sliderAnimaMode(this, 'slide_up3', 200, 0, 0, 600);
-    // this.app.sliderAnimaMode(this, 'slide_up4', 200, 0, 0, 900);
-
-    console.log("onHide() - index觸發");
+    
   },
   onPullDownRefresh() {
     // this.getOneMoto();
@@ -124,7 +176,6 @@ Page({
   },
   // 監聽用戶滾動畫面動作
   onPageScroll(e) {
-    // console.log(e.scrollTop);
 
   },
   // Vant - 頂部彈出層
