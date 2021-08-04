@@ -19,11 +19,14 @@
 
       <!-- 課程卡片 - 未完成 -->
       <!-- 缺課程標籤，或者頭像上專業標籤，例如ECE -->
-      <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}">
+      <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" >
         <view class="cu-item shadow">
           <view class="cu-list menu-avatar">
             <view class="cu-item">
-              <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );"></view>
+              <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );">
+                <view class="tag" style="top:35px;">ECE</view>
+                <!-- 這裡應該給course的info加上speaker的tag -->
+              </view>
               <view class="content flex-sub">
                 <view>{{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
               </view>
@@ -38,7 +41,7 @@
                 bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
             </view>
           </view>
-          <view class="slot text-content" bindtap="jumpToCourseDetail">
+          <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}">
             日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }} 
             <view>時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
             <view>地點：{{ recentCourseInfoArray[index].courseInfoInput[4].input }}</view>

@@ -211,9 +211,17 @@ Page({
   },
 
 // 頁面跳轉
-  jumpToCourseDetail (){
+  jumpToCourseDetail (e){
+    // 跳轉課程詳情頁
+    let detailInfo = {
+      user      : "normal",
+      courseId  : e.currentTarget.dataset.courseid,
+    }
+    // 缺少用戶組的判斷 - 未完成
+    detailInfo = JSON.stringify(detailInfo);
+    console.log(detailInfo);
     wx.navigateTo({
-      url: './courseDetail/courseDetail',
+      url: './courseDetail/courseDetail?detailInfo=' + detailInfo,
     })
   },
   jumpToallCourses (){

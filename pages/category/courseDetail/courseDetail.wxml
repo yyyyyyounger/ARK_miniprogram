@@ -2,14 +2,56 @@
 <!-- 不同權限有不同視角 -->
 
 <!-- 設置步驟條 - 未完成 -->
-<view class="cu-steps">
+<!-- <view class="cu-steps">
   <view class="cu-item {{index > stepsActive ?'':'text-themeBlue'}}" wx:for="{{numList}}" wx:key="item">
-  <!-- 該處判斷 >0為第0位active，>1為第1位active，如此類推 -->
+  該處判斷 >0為第0位active，>1為第1位active，如此類推
     <text class="num" data-index="{{index + 1}}"></text> {{item.name}}
   </view>
-</view>
+</view> -->
 
 <van-skeleton title avatar row="15" loading="{{ loading }}">
+
+  <!-- 課程大標題 -->
+  <van-row class="grid col-1 padding-sm">
+    <van-col>
+      <view class="text-xxl padding text-shadow text-grey">
+        <text class="cuIcon-title text-themeBlue"></text>
+        <text style="font-weight: bold;">ECEN1008 mid-term前總結</text>
+      </view>
+    </van-col>
+  </van-row>
+  
+  <!-- 頭像與Follow按鈕 -->
+  <van-row>
+    <!-- add/cancel Follow按鈕 -->
+    <van-col offset="2">
+      <van-button 
+        icon="star-o" 
+        size="small" 
+        color="#3498DB" 
+        type="primary" 
+        round 
+        data-courseid="{{recentCourseInfoArray[index].courseId}}" 
+        bind:click="addFollow"
+      >
+        Follow
+      </van-button>
+    </van-col>
+    <!-- 頭像 -->
+    <van-col offset="{{courseInfoInput[shortNameIndex.helper].input[1] ? '6' : (courseInfoInput[shortNameIndex.helper].input[0]?'8':'12')}}">
+      <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
+        <view class="tag">講者</view>
+      </view>
+      <!-- Helper頭像 -->
+      <block wx:for="{{courseInfoInput[shortNameIndex.helper].input}}">
+        <view wx:if="{{courseInfoInput[shortNameIndex.helper].input[index]}}"  class="cu-avatar round lg shadow-blur" style="background-image:url({{courseInfoInput[shortNameIndex.helper].input[index].Avatar}}); {{index==0 ? 'margin-left:15px;' : ''}}">
+          <view class="tag">助手</view>
+        </view>
+      </block>
+    </van-col>
+  </van-row>
+  <!-- <view>講者：{{courseInfoInput[shortNameIndex.speakerName].input}}</view> -->
+
   <!-- 講者剛提交雲端的視角 -->
   <block wx:if="{{courseCloudData.courseState=='checking' || courseCloudData.courseState=='editing'}}">
     <van-notice-bar
@@ -33,102 +75,129 @@
   <!-- 路人視角 -->
   <block wx:if="{{courseCloudData.courseState=='opening'}}">
 
-  <!-- 發起人 -->
+<!-- 講者頭像 - 添加點擊彈出層顯示講者信息 - 未完成 -->
+<!-- <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
+        <view class="tag">講者</view>
+      </view>
+      <view style="text-align: center;">{{courseInfoInput[shortNameIndex.speakerName].input}}</view> -->
+
+  <!-- 課程信息 -->
   <view class="grid col-1 padding-sm">
     <view class="bg-themeBlue padding radius text-center shadow-blur " >
-      <text class="text-lg" decode="true">&nbsp;&nbsp;發起人</text>
+      <text>課程信息</text>
+    </view>
+
+    <view class="cu-list menu sm-border card-menu margin-top">
+
+      <!-- 課程id -->
+      <van-cell title-class="text-grey cu-item">
+        <view slot="title" class="text-grey" style="font-weight: bold;">
+          課程id
+        </view>
+        <view class="van-cell-text" >{{ courseInfoInput[shortNameIndex.courseId].input }}</view>
+      </van-cell>
+
+      <!-- 課程狀態 -->
+      <van-cell title-class="text-grey cu-item">
+        <view slot="title" class="text-grey" style="font-weight: bold;">
+          課程狀態
+        </view>
+        <view class="van-cell-text" >{{ courseCloudData.courseState }}</view>
+      </van-cell>
+
+      <!-- 主題 -->
+      <block wx:if="{{courseInfoInput[shortNameIndex.courseName].display}}">
+        <view class="cu-item">
+          <view class="content">
+            <text class="cuIcon-circlefill text-themeOrange"></text>
+            <text class="text-grey" style="font-weight: bold;">主題</text>
+          </view>
+        </view>              
+        <van-cell title-class="text-grey cu-item">
+          <view slot="title">
+            <view class="van-cell-text" >{{ courseInfoInput[shortNameIndex.courseName].input }}</view>
+          </view>
+        </van-cell>
+      </block>
+
+      <!-- 分享內容 -->
+      <block wx:if="{{courseInfoInput[shortNameIndex.courseContent].display}}">
+        <view class="cu-item">    
+          <view class="content">
+            <text class="cuIcon-circlefill text-themeOrange"></text>
+            <text class="text-grey" style="font-weight: bold;">簡介</text>
+          </view>
+        </view>
+        <van-cell title-class="text-grey cu-item">
+          <view slot="title">
+            <view class="van-cell-text" >{{ courseInfoInput[shortNameIndex.courseContent].input }}</view>
+          </view>
+        </van-cell>
+      </block>
+
+      <!-- 分享地址 -->
+      <block wx:if="{{courseInfoInput[shortNameIndex.courseContent].display}}">
+        <view class="cu-item">    
+          <view class="content">
+            <text class="cuIcon-circlefill text-themeOrange"></text>
+            <text class="text-grey" style="font-weight: bold;">分享地址</text>
+          </view>
+        </view>
+        <van-cell title-class="text-grey cu-item">
+          <view slot="title">
+            <view class="van-cell-text" >{{ courseInfoInput[shortNameIndex.courseAdres].input }}</view>
+          </view>
+        </van-cell>
+      </block>
+
+      <!-- 分享時間 -->
+      <block wx:if="{{courseInfoInput[shortNameIndex.courseTime].display}}">
+        <view class="cu-item">    
+          <view class="content">
+            <text class="cuIcon-circlefill text-themeOrange"></text>
+            <text class="text-grey" style="font-weight: bold;">分享時間</text>
+          </view>
+        </view>
+        <van-cell title-class="text-grey cu-item">
+          <view slot="title">
+            <text class="van-cell-text" decode="{{true}}">{{ courseInfoInput[shortNameIndex.courseTime].input[0] }}&nbsp;&nbsp;&nbsp;{{ courseInfoInput[shortNameIndex.courseTime].input[1] }} - {{ courseInfoInput[shortNameIndex.courseTime].input[2] }}</text>
+          </view>
+        </van-cell>
+      </block>
+
     </view>
   </view>
 
-  <van-row class="grid col-1 padding-sm">
-    <van-col span="4" offset="4" style="text-align: center;">
-      <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
-        <view class="tag">講者</view>
-      </view>
-      <view style="text-align: center;">{{courseInfoInput[shortNameIndex.speakerName].input}}</view>
-    </van-col>
-    <van-col span="4" offset="2" style="text-align: center;">
-      <view class="cu-avatar round lg shadow-blur" style="background-image:url(https://thirdwx.qlogo.cn/mmopen/vi_32/mL9gbPeKdN5I5VzfWs4FiaaTL9ybXicW18PibIfLSsHHHZ4drWzkT3up6CzmSZcGiavXxSX4KocgpH8QAvujOakbVA/132); ">
-        <view class="tag">助手</view>
-      </view>
-      <view style="text-align: center;">凱哥</view>
-    </van-col>
-    <van-col span="4" offset="2" style="text-align: center;">
-      <view class="cu-avatar round lg shadow-blur" style="background-image:url(https://thirdwx.qlogo.cn/mmopen/vi_32/ZZNunGlGNicicC8e91RichBsVUX97dVUjnjIrKkAe1qzzo8Q5pUyrw7RMwKfKvUBb3LXTVAsvdzhbUic4W3U989R0g/132); ">
-        <view class="tag">助手</view>
-      </view>
-      <view style="text-align: center;">Bil</view>
-    </van-col>
-  </van-row>
+  <!-- 簽到 -->
+  <view class="grid col-1 padding-sm">
 
-<!-- <view class="padding" style="text-align: center;">
-  <view class="cu-avatar lg round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"><view class="tag">講者</view></view>
-  <view class="cu-avatar lg round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg);"><view class="tag">助手</view></view>
-  <view class="cu-avatar lg round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg);"><view class="tag">助手</view></view>
-</view> -->
+    <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
+      <text>簽到</text>
+    </view>
+    
+    <view class="cu-list menu sm-border card-menu margin-top">
+      <van-cell title-class="text-grey cu-item">
+        <view slot="title">
+          <view class="van-cell-text" >未到開始時間！</view>
+        </view>
+      </van-cell>
+    </view>
 
-<!-- 課程信息 -->
-<view class="grid col-1 padding-sm">
-  <view class="bg-themeBlue padding radius text-center shadow-blur " >
-    <text class="text-lg" decode="true">&nbsp;&nbsp;課程信息</text>
-  </view>
-</view>
-
-<!-- 簽到 -->
-<view class="grid col-1 padding-sm">
-  <view class="bg-themeBlue padding radius text-center shadow-blur " >
-    <text class="text-lg" decode="true">&nbsp;&nbsp;簽到</text>
-  </view>
-</view>
-
-<!-- 文件 -->
-<view class="grid col-1 padding-sm">
-  <view class="bg-themeBlue padding radius text-center shadow-blur " >
-    <text class="text-lg" decode="true">&nbsp;&nbsp;文件</text>
-  </view>
-</view>
-
-
-  <text>\n\n\n\n\n</text>
-  <view>Vant頭像法</view>
-  <van-image
-    round
-    fit="cover"
-    width="160rpx"
-    height="160rpx"
-    src="{{courseCloudData.avatarUrl}}"
-  />
-
-  <text>\n\n</text>
-  <view>ColorUI頭像法</view>
-  <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}});">
-    <!-- <view class="cu-tag badge cuIcon-male bg-blue"></view> -->
-    <view class="cu-tag badge bg-blue">講者</view>
   </view>
 
-  <view class="content flex-sub">
-    <view>{{courseInfoInput[shortNameIndex.speakerName].input}}</view>
-  </view>
-  <text>\n\n</text>
+  <!-- 文件 -->
+  <view class="grid col-1 padding-sm">
+    <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
+      <text>文件</text>
+    </view>
 
-
-  <!-- add/cancel Follow按鈕 -->
-  <van-button 
-    icon="star-o" 
-    size="small" 
-    color="#3498DB" 
-    type="primary" 
-    round 
-    data-courseid="{{recentCourseInfoArray[index].courseId}}" 
-    bind:click="addFollow"
-  >
-    Follow
-  </van-button>
-
-  <view class="slot text-content">
-    日期：{{courseInfoInput[shortNameIndex.courseTime].input[0]}} 
-    <view>時間：{{courseInfoInput[shortNameIndex.courseTime].input[1]}} - {{courseInfoInput[shortNameIndex.courseTime].input[2]}}</view>
-    <view>地點：{{courseInfoInput[shortNameIndex.courseAdres].input}}</view>
+    <view class="cu-list menu sm-border card-menu margin-top">
+      <van-cell title-class="text-grey cu-item">
+        <view slot="title">
+          <view class="van-cell-text" >這裡會展示講者上傳的文件</view>
+        </view>
+      </van-cell>
+    </view>
   </view>
 
   </block>
@@ -136,6 +205,4 @@
 </van-skeleton>
 
 
-<!-- 管理員視角 -->
-
-<!-- follower視角 -->
+<view class="bottom-watch"></view>

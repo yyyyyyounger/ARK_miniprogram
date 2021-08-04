@@ -30,6 +30,21 @@ page{
     --themeBlue: #3498DB;
 }
 
+/* 頭像右上方的tag */
+.tag {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #3498DB;
+    border-radius: 2px;
+    display: inline-block;
+    font-size: 12px;
+    color: #3498DB;
+    padding: 0 3px;
+    top: -10px;
+    right: -10px;
+    white-space: nowrap;
+  }
+
 .devColor{
     color: var(--devColor);
     font-size: 40rpx;

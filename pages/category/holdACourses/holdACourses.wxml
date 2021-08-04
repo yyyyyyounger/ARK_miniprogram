@@ -55,7 +55,7 @@
         clearable
         disabled = "{{ !courseInfoInput[shortNameIndex.courseName].canEdit }}"
         value="{{ value }}"
-        placeholder="在此輸入分享主題"
+        placeholder="e.g. ECEN1008 的 Mid-Term 前總結"
         border="{{ false }}"
         bind:change="onChange_field"
       />
@@ -74,13 +74,12 @@
         data-model="courseContent_input" 
         type='textarea'
         autosize
-        border="{{ false }}"
         show-word-limit
         maxlength="100"
         clearable
         disabled = "{{ !courseInfoInput[shortNameIndex.courseContent].canEdit }}"
         value="{{ value }}"
-        placeholder="輸入分享內容簡介（可分行，不多於100字）"
+        placeholder="分享簡介。e.g. 今日的風兒甚是喧囂~"
         bind:change="onChange_field"
       />
     </block>
@@ -102,7 +101,7 @@
         clearable
         disabled = "{{ !courseInfoInput[shortNameIndex.courseAdres].canEdit }}"
         value="{{ value }}"
-        placeholder="在此輸入分享的地址"
+        placeholder="e.g. 圖書館1111。請盡早預約！"
         border="{{ false }}"
         bind:change="onChange_field"
       />
@@ -279,3 +278,5 @@
   <!-- iPhoneX用戶安全留底 -->
   <text>\n</text>
 </block>
+
+<view class="bottom-watch"></view>

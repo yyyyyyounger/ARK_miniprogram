@@ -528,6 +528,7 @@ Page({
     // 1 數據庫查詢 arkid 是否存在
       // 存在，返回頭像，寫入本地js的helper數據
       // 不存在，提示不存在
+    // 必須所有用戶可讀才能查詢，或者後期轉成雲函數 - 未完成
     const searchArkid = () => {    // 新增promise，準備鏈式調用
       return new Promise((resolve, reject) => {
         db.collection('user') .where({

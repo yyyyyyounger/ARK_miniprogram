@@ -47,6 +47,12 @@
           "pathName": "pages/category/category",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "詳情頁 8",
+          "pathName": "pages/category/courseDetail/courseDetail",
+          "query": "detailInfo={\"user\":\"normal\",\"courseId\":\"8\"}",
+          "scene": null
         }
       ]
     }

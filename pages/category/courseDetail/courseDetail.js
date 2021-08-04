@@ -19,13 +19,12 @@ Page({
   },
   onLoad: function(options){
     // 獲取上個頁面傳遞的參數，說明用戶組和需要渲染的courseId
-    // let detailInfo = JSON.parse(options.detailInfo);
-    // this.setData({  detailInfo  })
-    // console.log("上個頁面傳遞值為：",this.data.detailInfo)
+    let detailInfo = JSON.parse(options.detailInfo);
+    this.setData({  detailInfo  })
+    console.log("上個頁面傳遞值為：",this.data.detailInfo)
 
     // 請求雲端的courseInfo數據
-    // db.collection('course') .doc(this.data.detailInfo.courseId+"") .get()
-    db.collection('course') .doc("2") .get()
+    db.collection('course') .doc(this.data.detailInfo.courseId+"") .get()
     .then(res=>{
       console.log("該courseId在數據庫儲存的數據為：",res.data);
       this.setData({  courseCloudData : res.data  })
