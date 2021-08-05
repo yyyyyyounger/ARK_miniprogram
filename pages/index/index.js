@@ -1,3 +1,5 @@
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+
 var app = getApp(); 
 var cloudData = require('../../data/cloud.js')
 const db = wx.cloud.database();
@@ -7,34 +9,9 @@ const _ = db.command
 Page({
   data: {
     // Vant - begin
-    active_collapse: '0',
+    active_collapse: 0,
     active_col:0,
-    steps: [
-      {
-        text: 'ECEN1005',
-        desc: '2天後',
-        inactiveIcon: 'location-o',
-        activeIcon: 'success',
-      },
-      {
-        text: 'ECEN1008',
-        desc: '4天後',
-        inactiveIcon: 'like-o',
-        activeIcon: 'plus',
-      },
-      {
-        text: 'ECEN1007',
-        desc: '7天後',
-        inactiveIcon: 'star-o',
-        activeIcon: 'cross',
-      },
-      {
-        text: 'CISC1000',
-        desc: '半個月後',
-        inactiveIcon: 'phone-o',
-        activeIcon: 'fail',
-      },
-    ],
+    steps: [],
     show_popup:false,
     // Vant - end
     // Color - begin
@@ -70,42 +47,40 @@ Page({
   },
   onLoad: function(scene) {
     this.app = getApp();
+
+    // 查看開啟場景
     if (scene!="refresh") {
       this.showPopup();     // 展示頂部彈出層
-      // this.getOneMoto();
       this.cloudGetOneMoto();  // 雲函數請求返回api
     }
-    console.log(scene);
-// 模擬向服務器請求的延時
-    // this.app.toastLoadingDIY();
+    console.log("開啟情景為：",scene);
+
+    // 沒有登錄則提醒
+    const userCloudData = wx.getStorageSync('userCloudData')
+    if (!userCloudData) {
+      console.log("沒有登錄");
+      Toast({
+        message : '登錄後才能體驗完整功能哦！',
+        zIndex  : 99999999999999
+      });
+    }
+
     wx.showShareMenu({    // 轉發按鈕所必須
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
-
-    if (app.globalData.isSignIn) {
-      let isSignIn = true;
-      if (cloudData.userInfoInput[10].input) {
-        var isSignUp = true;
-        var arkId = cloudData.userInfoInput[8].input;
-      }
-      this.setData({
-        isSignIn,
-        isSignUp,
-        arkId
-      })
-    }
     
+    // 項目開始日期
     this.setData({
       projStartTime : app.globalData.projStartTime[0] ,
     });
 
-    // 計算已過日期
+    // 計算開發已過日期
     this.app.calcDurationDay(this,1,'2021/06/03');
     
     // 獲取已follow的課程列表
     // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 未完成
-    let date = new Date(Date.now());                    // 現在時刻的時間戳
+    let date = new Date(Date.now());                    // 現在時刻的文字時間戳
     let today = date.toLocaleDateString();              // 今天的文本時間 yyyy/m/d
     let todayTimeStamp = (new Date(today)).getTime();   // 今天的時間戳
     console.log( "今天的時間戳：", todayTimeStamp );
@@ -127,9 +102,7 @@ Page({
         const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
         db.collection('user').where({
           _id : userCloudDataStorage.data._openid,
-        }) .field({
-          recentFollowCourseArray : true
-        }) .get() .then(res=>{
+        }) .field({ recentFollowCourseArray : true }) .get() .then(res=>{
           console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowCourseArray);
           this.setData({  followCourseArray : res.data[0].recentFollowCourseArray  })
           
@@ -155,6 +128,9 @@ Page({
 
           // 生成已經Follow了的課程Info的數組形式
           this.setData({  recentCourseInfoArray  })
+
+          // 豎向步驟條設定
+          this.stepsSetup();
         }) .catch(err=>{ console.error(err); })
 
     }) .catch(err=>{
@@ -162,22 +138,53 @@ Page({
     })
 
   },
+  // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
+  findSetData() {
+    // 匹配出shortName的index，生成為一個對象形式
+    let shortNameIndex={};
+    this.data.courseInfoInput.map(function (e, item) {    // 究極優化！本質上一行代碼匹配出所有index
+      shortNameIndex[e.shortName] = e.id;
+    });
+    this.setData({  shortNameIndex  })
+    // console.log("shortNameIndex為",shortNameIndex);
+
+    // 匹配出shortName的display權限，生成為一個對象形式
+    let shortNameDisplay={};
+    this.data.courseInfoInput.map(function (e, item) {
+      shortNameDisplay[e.shortName] = e.display;
+    });
+    this.setData({  shortNameDisplay  })
+    // console.log("shortNameDisplay為",shortNameDisplay);
+  },
+  // 初始化各種數組
+  ArrayDataInit(that) {
+    // 生成 無input版 courseInfo的shortName數組
+    let shortNameArray = that.data.courseInfoInput.map((item)=>{    return item.shortName   });
+    // 生成userInfoInput裡允許顯示的設置數組
+    let InfoDisplay = that.data.courseInfoInput.map((item)=>{    return item.display   });
+    // 生成userInfoInput裡允許編輯的設置數組
+    let canEdit     = that.data.courseInfoInput.map((item)=>{    return item.canEdit    });
+    // 允許編輯/顯示 → setData
+    that.setData({    InfoDisplay, canEdit, shortNameArray    });
+    // 初始化所有index值
+    that.findSetData(shortNameArray);
+  },
+
   onShow (){  //頁面展示時，觸發動畫
     this.getTabBar().init();
   },
   onHide (){  //頁面隱藏時，觸發漸出動畫
     
   },
+
+  // 下拉刷新
   onPullDownRefresh() {
     // this.getOneMoto();
     this.cloudGetOneMoto();
     this.showPopup();     // 展示頂部彈出層
     this.app.onPullDownRefresh(this);
   },
-  // 監聽用戶滾動畫面動作
-  onPageScroll(e) {
 
-  },
   // Vant - 頂部彈出層
   showPopup() {
     this.setData({ show_popup: true });
@@ -186,49 +193,51 @@ Page({
   closePopup() {
     this.setData({ show_popup: false });
   },
+
   // Vant - 折疊面板
-  onChange(event) {
+  onChange_collapse(event) {
     console.log("折疊面板",event.detail);
     let detail = event.detail;
     this.setData({
-      active_collapse: detail,
-      active_col : detail
-    });
+      active_collapse : detail,
+      active_col      : detail
+    })
   },
   // Vant - 豎向步驟條
   bindTapSteps(event){
     console.log("豎向步驟條",event.detail);
-    let detail = event.detail+""; //num+"" 可以實現數字轉字符串
+    let detail = event.detail;
     this.setData({
-      active_col : detail,
-      active_collapse: detail
+      active_col      : detail,
+      active_collapse : detail
     })
   },
-  // 跳轉“協議”頁
-  handleTapProtocol () {
-    console.log("跳轉ARK協議頁");
-    wx:wx.navigateTo({
-      url: '../protocol/protocol'
-    });
+  // 豎向步驟條的數據初始化
+  stepsSetup(){
+    let objTemp = {};
+    let stepsTemp = this.data.steps;
+    for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
+      if (this.data.recentCourseInfoArray[i].haveFollow) {
+        objTemp = {
+          text: this.data.recentCourseInfoArray[i].courseInfoInput[1].input,
+          desc: '2天後',
+          inactiveIcon: 'cross',
+          activeIcon: 'success',
+        }
+        stepsTemp.push(objTemp);
+      }
+    }
+    this.setData({  steps : stepsTemp  })
   },
-  // 跳轉“關於”頁
-  jumpToAbout () {
-    wx.navigateTo({
-      url: '../more/about/about',
-    });
+  // 時間計算 - 未完成 - 輸入時間戳，返回距離該時間戳的時間（就在今天，明天，後天，2天後，3天後，，，一個星期後，兩個星期後，半個月後，一個月後）
+  daysCount(begin,end){
+    // begin和end皆為時間戳，計算公式由end - begin
+    let diff = end - begin;
+    if (diff < 24*60*60*1000) {  // 時間戳的差值在24小時內
+      console.log("時間差在，今天");
+    }
   },
-  // 跳轉“公告”頁
-  jumpToNotice () {
-    wx.navigateTo({
-      url: '../notice/notice',
-    });
-  },
-  // 跳轉“測試”頁
-  jumpToTestPage () {
-    wx.navigateTo({
-      url: '../test/test'
-    });
-  },
+
   // wx本地請求一言API返回 - 該方法需要開發者網站配置可信域名 - 暫未使用
   getOneMoto: function() {
     var that = this;
@@ -267,6 +276,43 @@ Page({
       cardCur: e.detail.current
     })
   },
-  
+
+  // 跳轉“協議”頁
+  handleTapProtocol () {
+    console.log("跳轉ARK協議頁");
+    wx:wx.navigateTo({
+      url: '../protocol/protocol'
+    });
+  },
+  // 跳轉“關於”頁
+  jumpToAbout () {
+    wx.navigateTo({
+      url: '../more/about/about',
+    });
+  },
+  // 跳轉“公告”頁
+  jumpToNotice () {
+    wx.navigateTo({
+      url: '../notice/notice',
+    });
+  },
+  // 跳轉課程詳情頁
+  jumpToCourseDetail(e){
+    console.log(e.currentTarget.dataset.courseid);
+    let detailInfo = {
+      user:"speaker",
+      courseId:e.currentTarget.dataset.courseid,
+    }
+    detailInfo = JSON.stringify(detailInfo);
+    wx.navigateTo({   // 帶參跳轉到指定課程詳情頁
+      url: '../category/courseDetail/courseDetail?detailInfo=' + detailInfo,
+    })
+  },
+  // 跳轉“測試”頁
+  jumpToTestPage () {
+    wx.navigateTo({
+      url: '../test/test'
+    });
+  },
 }); 
   

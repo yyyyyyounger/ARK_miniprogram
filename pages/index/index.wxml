@@ -54,25 +54,19 @@ bind:close="closePopup"
 <!-- <van-notice-bar mode="closeable" text="“Follow的分享” 可以在這裡看到喔！" /> -->
 
 <!-- Follow課程展示區 -->
-<van-divider contentPosition="center">我Follow的分享</van-divider>
+<view class="cu-bar bg-white margin-top">
+	<view class="action">
+		<text class="cuIcon-title text-blue"></text>我Follow的分享
+	</view>
+</view>
 <van-row>
 	<van-col span="16">
-		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange">
-			<van-collapse-item title="ECEN1005" name="0">
-				<view>時間：</view>
-				<view>地點：</view>
-			</van-collapse-item>
-			<van-collapse-item title="ECEN1008" name="1">
-				<view>時間：</view>
-				<view>地點：</view>
-			</van-collapse-item>
-			<van-collapse-item title="ECEN1007" name="2">
-				<view>時間：</view>
-				<view>地點：</view>
-			</van-collapse-item>
-			<van-collapse-item title="CISC1000" name="3">
-				<view>時間：</view>
-				<view>地點：</view>
+		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange_collapse">
+			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:if="{{recentCourseInfoArray[index].haveFollow}}" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}">
+				<view bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}">
+					<view>時間：{{recentCourseInfoArray[index].courseInfoInput[5].input[1]}} - {{recentCourseInfoArray[index].courseInfoInput[5].input[2]}}</view>
+					<view>地點：{{recentCourseInfoArray[index].courseInfoInput[4].input}}</view>
+				</view>
 			</van-collapse-item>
 		</van-collapse>
 	</van-col>

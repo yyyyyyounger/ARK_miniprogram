@@ -19,37 +19,38 @@
 
       <!-- 課程卡片 - 未完成 -->
       <!-- 缺課程標籤，或者頭像上專業標籤，例如ECE -->
-      <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" >
-        <view class="cu-item shadow">
+      <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
+        <view class="cu-item">
           <view class="cu-list menu-avatar">
             <view class="cu-item">
               <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );">
                 <view class="tag" style="top:35px;">ECE</view>
-                <!-- 這裡應該給course的info加上speaker的tag -->
               </view>
               <view class="content flex-sub">
                 <view>{{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
               </view>
               <!-- add/cancel Follow按鈕 -->
               <van-button 
+                style="margin-right:5px;"
                 icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
                 size="small" 
                 color="{{ recentCourseInfoArray[index].haveFollow ? '#f8ad72' : '#3498DB'}}" 
                 type="primary" 
                 round 
                 data-courseid="{{recentCourseInfoArray[index]._id}}" 
-                bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</van-button><text decode="true" class="text-right">&nbsp;&nbsp;</text>
+                bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}"><text decode="{{true}}" style="padding-right:{{ recentCourseInfoArray[index].haveFollow ? '' : '18rpx'}};">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</text></van-button>
             </view>
           </view>
-          <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}">
+          <!-- 簡略信息 -->
+          <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" style="margin-top:5px">
             日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }} 
             <view>時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
             <view>地點：{{ recentCourseInfoArray[index].courseInfoInput[4].input }}</view>
           </view>
-          <view class="slot text-right">
-            <!-- 頭像組 -->
+          <!-- 頭像組 -->
+          <view class="slot text-right" wx:if="{{recentCourseInfoArray[index].followMember[1]}}">
             <view class="cu-avatar-group">
-              <view class="cu-avatar round lg" wx:for="{{5}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
+              <view class="cu-avatar round lg" wx:for="{{recentCourseInfoArray[index].followMember}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key style="background-image:url({{recentCourseInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
             </view> <text decode="true">...&nbsp;&nbsp;</text>
           </view>
         </view>
@@ -94,10 +95,10 @@
           <view>時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
           <view>地點：{{ recentCourseInfoArray[index].courseInfoInput[4].input }}</view>
         </view>
+        <!-- 頭像組 -->
         <view class="slot text-right">
-          <!-- 頭像組 -->
           <view class="cu-avatar-group">
-            <view class="cu-avatar round lg" wx:for="{{5}}" wx:key style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big1000{{index+1}}.jpg);"></view>
+            <view class="cu-avatar round lg" wx:for="{{3}}" wx:key style="background-image:url({{recentCourseInfoArray[index].followMember[index].avatarUrl}});"></view>
           </view> <text decode="true">...&nbsp;&nbsp;</text>
         </view>
       </view>

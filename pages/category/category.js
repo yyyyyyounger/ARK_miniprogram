@@ -32,7 +32,7 @@ Page({
     this.app = getApp();
     // 模擬向服務器請求的延時
     // this.app.toastLoadingDIY();
-    
+
     // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 未完成
     let date = new Date(Date.now());                    // 現在時刻的時間戳
     let today = date.toLocaleDateString();              // 今天的文本時間 yyyy/m/d
@@ -141,7 +141,6 @@ Page({
   // 添加follow的課程
   addFollow (e) {
     // 正常應該只能follow 20節課，獲取資料的時候默認20條記錄限制
-
     // 記錄Follow的課程id
     let selectCourse = e.currentTarget.dataset.courseid;
     console.log("請求add",selectCourse);
@@ -152,7 +151,6 @@ Page({
     }
 
     // 調用雲函數更新 - user集合 - recentFollowCourseArray數組
-    const _ = db.command        
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
     db.collection('user').doc(userCloudDataStorage.data._openid).update({
       data: {
