@@ -1,6 +1,6 @@
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 
-var app = getApp(); 
+var app = getApp();
 var cloudData = require('../../data/cloud.js')
 const db = wx.cloud.database();
 const _ = db.command
@@ -215,7 +215,7 @@ Page({
   // 豎向步驟條的數據初始化
   stepsSetup(){
     let objTemp = {};
-    let stepsTemp = this.data.steps;
+    let stepsTemp = [];
     for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
       if (this.data.recentCourseInfoArray[i].haveFollow) {
         objTemp = {
@@ -236,6 +236,7 @@ Page({
     if (diff < 24*60*60*1000) {  // 時間戳的差值在24小時內
       console.log("時間差在，今天");
     }
+
   },
 
   // wx本地請求一言API返回 - 該方法需要開發者網站配置可信域名 - 暫未使用
