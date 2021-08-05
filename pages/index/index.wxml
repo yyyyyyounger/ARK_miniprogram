@@ -70,7 +70,7 @@ bind:close="closePopup"
 			</van-collapse-item>
 		</van-collapse>
 	</van-col>
-
+	<!-- steps步驟條 -->
   <van-col span="8">
 		<van-steps
 			steps="{{ steps }}"
@@ -81,6 +81,8 @@ bind:close="closePopup"
 		/>
 	</van-col>
 </van-row>
+<van-divider wx:if="{{!followCourseArray[0]}}" contentPosition="center">快挑選些分享加入吧！</van-divider>
+
 
 <!-- 使用小貼士 -->
 <view class="cu-bar bg-white margin-top">
@@ -91,7 +93,7 @@ bind:close="closePopup"
 <van-skeleton row="4" />
 
 <text>\n</text>
-<van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
+<van-divider contentPosition="center">正在開發更多內容！敬請期待！</van-divider>
 
 <!-- 免除自定義tabbar阻擋 -->
 <view class="bottom-watch"></view>

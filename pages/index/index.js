@@ -44,6 +44,8 @@ Page({
     projStartTime: [],
     today:'',
     durationDay:0,
+    // 課程渲染相關
+    followCourseArray:[],
   },
   onLoad: function(scene) {
     this.app = getApp();
@@ -63,6 +65,8 @@ Page({
         message : '登錄後才能體驗完整功能哦！',
         zIndex  : 99999999999999
       });
+    } else {
+      this.setData({  userCloudData : userCloudData.data  })
     }
 
     wx.showShareMenu({    // 轉發按鈕所必須
@@ -104,8 +108,10 @@ Page({
           _id : userCloudDataStorage.data._openid,
         }) .field({ recentFollowCourseArray : true }) .get() .then(res=>{
           console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowCourseArray);
-          this.setData({  followCourseArray : res.data[0].recentFollowCourseArray  })
-          
+          if (!!res.data[0].recentFollowCourseArray) {
+            this.setData({  followCourseArray : res.data[0].recentFollowCourseArray  })
+          }
+
           // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
           for (let i = 0; i < recentCourseInfoArray.length; i++) {
             if ( !!this.data.followCourseArray ) {
@@ -124,7 +130,6 @@ Page({
               recentCourseInfoArray[i].haveFollow = false;
             }
           }
-          console.log("操作已follow的數據後",recentCourseInfoArray);
 
           // 生成已經Follow了的課程Info的數組形式
           this.setData({  recentCourseInfoArray  })

@@ -142,40 +142,56 @@ Page({
   addFollow (e) {
     const userCloudData = wx.getStorageSync('userCloudData')
     if (userCloudData) {    // 已登錄才可以操作
-      // 正常應該只能follow 20節課，獲取資料的時候默認20條記錄限制
-      // 記錄Follow的課程id
-      let selectCourse = e.currentTarget.dataset.courseid;
-      console.log("請求add",selectCourse);
-      for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
-        if (this.data.recentCourseInfoArray[i]._id == selectCourse) {
-          this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : true  })    // 同步wxml的顯示
-        }
-      }
-  
-      // 調用雲函數更新 - user集合 - recentFollowCourseArray數組
-      const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
-      db.collection('user').doc(userCloudDataStorage.data._openid).update({
-        data: {
-          recentFollowCourseArray: _.push([selectCourse]),
-        }
-      }) .then(res=>{
-        Toast('Follow成功！課程編號：'+selectCourse+'\n可前往 “我的Follow” 查看');
-  
-        // 將該user的基本信息導入到該courseId的followMember數組內
-        db.collection('course').doc(selectCourse).update({
-          data: {
-            followMember : _.push([{
-              arkid     : userCloudDataStorage.data.arkid,
-              avatarUrl : userCloudDataStorage.data.avatarUrl,
-              name      : userCloudDataStorage.data.userInfoInput[1].input,
-            }]),
-          }
-        }) .catch(err=>{  console.error(err);  })
-      }) .catch(err=>{
-        console.error(err);
+      Dialog.confirm({
+        title: '重要提示',
+        message: 'follow了不要反悔喔！😎',
+        zIndex:99999999,
       })
-      
-      // 詢問是否同意微信訂閱 開課消息
+      .then(res=>{            // on confirm
+        // 加載提示
+        Toast.loading({
+          message: '拼命加載中...',
+          forbidClick: true,
+        });
+        // 正常應該只能follow 20節課，獲取資料的時候默認20條記錄限制
+        // 記錄Follow的課程id
+        let selectCourse = e.currentTarget.dataset.courseid;
+        console.log("請求add",selectCourse);
+    
+        // 調用雲函數更新 - user集合 - recentFollowCourseArray數組
+        const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
+        db.collection('user').doc(userCloudDataStorage.data._openid).update({
+          data: {
+            recentFollowCourseArray: _.push([selectCourse]),
+          }
+        }) .then(res=>{   // 將該user的基本信息導入到該courseId的followMember數組內
+          // 權限問題需要調用雲函數
+          wx.cloud.callFunction({
+            name : 'courseFollowMember',
+            data : {
+              mode          : "add",
+              selectCourse  : selectCourse,
+              arkid         : userCloudDataStorage.data.arkid,
+              avatarUrl     : userCloudDataStorage.data.avatarUrl,
+              name          : userCloudDataStorage.data.userInfoInput[1].input,
+            }
+          }) .then(res=>{   // 成功提示 & 同步wxml的顯示
+            Toast('Follow成功！課程編號：'+selectCourse+'\n可前往 “我的Follow” 查看');
+            // 同步wxml的顯示
+            for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
+              if (this.data.recentCourseInfoArray[i]._id == selectCourse) {
+                this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : true  })    
+              }
+            }
+          }) .catch(err=>{  console.error(err);  })
+        }) .catch(err=>{
+          console.error(err);
+        })
+        
+        // 詢問是否同意微信訂閱 開課消息
+      })
+      .catch(res=>{           // on cancel
+      })
     }
     else {                  // 未登錄提示登錄
       Dialog.confirm({
@@ -196,35 +212,53 @@ Page({
   },
   // 刪除follow的課程
   deleteFollow(e){
-    // 記錄Follow的課程id
-    let selectCourse = e.currentTarget.dataset.courseid;
-    console.log("請求delete",selectCourse);
-    for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
-      if (this.data.recentCourseInfoArray[i]._id == selectCourse) {
-        this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : false  })
-      }
-    }
+    // 防誤觸式提問
+    Dialog.confirm({
+      title: '重要提示',
+      message: '就這麼忍心說ByeBye嗎？😭',
+      zIndex:99999999,
+    })
+    .then(() => {     // on confirm
+      // 加載提示
+      Toast.loading({
+        message: '拼命加載中...',
+        forbidClick: true,
+      });
+      
+      // 記錄Follow的課程id
+      let selectCourse = e.currentTarget.dataset.courseid;
+      console.log("請求delete",selectCourse);
 
-    // 調用雲函數更新 - user集合 - recentFollowCourseArray數組
-    const _ = db.command
-    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
-    db.collection('user').doc(userCloudDataStorage.data._openid).update({
-      data: {
-        recentFollowCourseArray: _.pull(_.in([selectCourse]))
-      }
-    }) .then(res=>{
-      Toast('刪除成功！');
-
-      // 刪除followMember數組內該user的arkid等數據
-      db.collection('course').doc(selectCourse).update({
+      // 調用雲函數更新 - user集合 - recentFollowCourseArray數組
+      const _ = db.command
+      const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
+      db.collection('user').doc(userCloudDataStorage.data._openid).update({
         data: {
-          followMember : _.pull( {
-            arkid     : _.eq(userCloudDataStorage.data.arkid),
-          } ),
+          recentFollowCourseArray: _.pull(_.in([selectCourse]))
         }
+      }) .then(res=>{   // 刪除followMember數組內該user的arkid等數據
+        // 權限問題需要調用雲函數
+        wx.cloud.callFunction({
+          name : 'courseFollowMember',
+          data : {
+            mode          : "delete",
+            selectCourse  : selectCourse,
+            arkid         : userCloudDataStorage.data.arkid,
+          }
+        })
+        .then(res=>{    // 成功提示 & 同步wxml的顯示
+          Toast('刪除成功！');
+          // 同步wxml的顯示
+          for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
+            if (this.data.recentCourseInfoArray[i]._id == selectCourse) {
+              this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : false  })
+            }
+          }
+        }) .catch(err=>{ console.error(err); })
       }) .catch(err=>{ console.error(err); })
-    }) .catch(err=>{ console.error(err); })
-
+    })
+    .catch(() => {    // on cancel
+    });
   },
 
 // 頁面跳轉
