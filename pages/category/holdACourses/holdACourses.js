@@ -4,7 +4,6 @@ import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 var cloudData = require('../../../data/cloud.js')
 const db = wx.cloud.database();   // 數據庫
-const userInfoStorage = wx.getStorage('userInfo');  // 用戶緩存
 const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
 
 const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用

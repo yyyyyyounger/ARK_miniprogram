@@ -157,6 +157,18 @@ Page({
         })
     },
 
+    // 跳轉選咩課
+    toOtherMiniProgram() {
+        wx.navigateToMiniProgram({
+            appId: 'wxd2449edafe0c532a',//要打开的小程序 appId
+            path: '',//打开的页面路径，如果为空则打开首页。
+            success(res) {
+              // 打开成功
+              console.log("跳轉成功");
+            }
+          })
+    },
+    
     jumpToCourseDetail () { // 带參跳轉頁面
         // 跳轉課程詳情頁
         let detailInfo = {

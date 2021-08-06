@@ -62,7 +62,7 @@ bind:close="closePopup"
 <van-row>
 	<van-col span="16">
 		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange_collapse">
-			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:if="{{recentCourseInfoArray[index].haveFollow}}" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}">
+			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:key="index" wx:if="{{recentCourseInfoArray[index].haveFollow}}" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}">
 				<view bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}">
 					<view>時間：{{recentCourseInfoArray[index].courseInfoInput[5].input[1]}} - {{recentCourseInfoArray[index].courseInfoInput[5].input[2]}}</view>
 					<view>地點：{{recentCourseInfoArray[index].courseInfoInput[4].input}}</view>

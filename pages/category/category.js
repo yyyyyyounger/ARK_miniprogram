@@ -1,5 +1,6 @@
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 
 var cloudData = require('../../data/cloud.js')
 var app = getApp();
@@ -30,8 +31,12 @@ Page({
   },
   onLoad: function(page) {
     this.app = getApp();
-    // 模擬向服務器請求的延時
-    // this.app.toastLoadingDIY();
+    // 向服務器請求的延時
+    Toast.loading({
+      message: '瘋狂加載中...',
+      forbidClick: true,
+      zIndex: 9999999999999,
+    });
 
     // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 未完成
     let date = new Date(Date.now());                    // 現在時刻的時間戳
@@ -54,33 +59,50 @@ Page({
 
         // 返回user集合中自己的follow列表
         const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
-        db.collection('user').where({
-          _id : userCloudDataStorage.data._openid,
-        }) .field({
+        db.collection('user').doc(userCloudDataStorage.data._openid) .field({
           recentFollowCourseArray : true
         }) .get() .then(res=>{
-          console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowCourseArray);
-          this.setData({  followCourseArray : res.data[0].recentFollowCourseArray  })
+          console.log("數據庫我的followCourseArray為：",res.data.recentFollowCourseArray);
+          this.setData({  followCourseArray : res.data.recentFollowCourseArray  })
           
+          let recentCourseIdRecordArr={};
+          this.data.recentCourseInfoArray.map(function (e, index, item) {
+            recentCourseIdRecordArr[index] = e._id;
+          });
+          console.log("recentCourseIdRecordArr為",recentCourseIdRecordArr);
           // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
           for (let i = 0; i < recentCourseInfoArray.length; i++) {
-            if ( !!this.data.followCourseArray ) {
+            if ( !!this.data.followCourseArray ) {    // 如果用戶自己有follow記錄才操作
               for (let j = 0; j < this.data.followCourseArray.length; j++) {
-                if ( this.data.followCourseArray[j] == recentCourseInfoArray[i]._id ) {   // 對比course的最近課程和user的已follow課程
+                if ( this.data.followCourseArray[j] == recentCourseInfoArray[i]._id ) {   // 如果user已follow某課程，則haveFollow寫入false
                   recentCourseInfoArray[i].haveFollow = true;
-                  break
-                } else {
-                  console.log("沒有follow");
+                  break     // 把 j 的for循環break掉
+                } else {    // haveFollow寫入false
                   recentCourseInfoArray[i].haveFollow = false;
                 }
               }
             }
-            else {
-              console.log("沒有follow");
+            else {          // 沒有follow記錄，則所有最近課程的haveFollow都寫入false
               recentCourseInfoArray[i].haveFollow = false;
             }
           }
-          console.log("操作已follow的數據後",recentCourseInfoArray);
+          console.log("對infoArray寫入haveFollow數據後",recentCourseInfoArray);
+
+          // 刪除自己的follow列表中已過期的課程id
+          let havePastCourse = [];
+          // db.collection('user').doc(userCloudDataStorage.data._openid).update({
+          //   data: {
+          //     recentFollowCourseArray: _.pull(_.in([selectCourse]))
+          //   }
+          // }) .then(res=>{         // 成功提示 & 同步wxml的顯示
+          //   Toast('刪除成功！');
+          //   // 同步wxml的顯示
+          //   for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
+          //     if (this.data.recentCourseInfoArray[i]._id == selectCourse) {
+          //       this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : false  })
+          //     }
+          //   }
+          // }) .catch(err=>{ console.error(err); })
 
           // 生成已經Follow了的課程Info的數組形式
           this.setData({  recentCourseInfoArray  })
@@ -140,7 +162,7 @@ Page({
 
   // 添加follow的課程
   addFollow (e) {
-    const userCloudData = wx.getStorageSync('userCloudData')
+    const userCloudData = wx.getStorageSync('userCloudData');
     if (userCloudData) {    // 已登錄才可以操作
       Dialog.confirm({
         title: '重要提示',
@@ -154,28 +176,31 @@ Page({
           forbidClick: true,
         });
         // 正常應該只能follow 20節課，獲取資料的時候默認20條記錄限制
-        // 記錄Follow的課程id
-        let selectCourse = e.currentTarget.dataset.courseid;
+        
+        let selectCourse = e.currentTarget.dataset.courseid;  // 記錄Follow的課程id
+        let arrindex = e.currentTarget.dataset.arrindex;
         console.log("請求add",selectCourse);
+        console.log("arrindex為",arrindex);
     
-        // 調用雲函數更新 - user集合 - recentFollowCourseArray數組
+        // 雲函數更新 - user集合 - recentFollowCourseArray數組
         const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
-        db.collection('user').doc(userCloudDataStorage.data._openid).update({
-          data: {
-            recentFollowCourseArray: _.push([selectCourse]),
+        // 權限問題需要調用雲函數
+        wx.cloud.callFunction({ // user基本信息導入到該courseId的followMember數組內
+          name : 'courseFollowMember',
+          data : {
+            mode          : "add",
+            selectCourse  : selectCourse,
+            endTimeStamp  : this.data.recentCourseInfoArray[arrindex].timeStampPick,
+            arkid         : userCloudDataStorage.data.arkid,
+            avatarUrl     : userCloudDataStorage.data.avatarUrl,
+            name          : userCloudDataStorage.data.userInfoInput[1].input,
           }
-        }) .then(res=>{   // 將該user的基本信息導入到該courseId的followMember數組內
-          // 權限問題需要調用雲函數
-          wx.cloud.callFunction({
-            name : 'courseFollowMember',
-            data : {
-              mode          : "add",
-              selectCourse  : selectCourse,
-              arkid         : userCloudDataStorage.data.arkid,
-              avatarUrl     : userCloudDataStorage.data.avatarUrl,
-              name          : userCloudDataStorage.data.userInfoInput[1].input,
+        }) .then(res=>{         // 寫入自己的follow列表
+          db.collection('user').doc(userCloudDataStorage.data._openid).update({
+            data: {
+              recentFollowCourseArray: _.push([selectCourse]),
             }
-          }) .then(res=>{   // 成功提示 & 同步wxml的顯示
+          }) .then(res=>{       // 成功提示 & 同步wxml的顯示
             Toast('Follow成功！課程編號：'+selectCourse+'\n可前往 “我的Follow” 查看');
             // 同步wxml的顯示
             for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
@@ -183,13 +208,14 @@ Page({
                 this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : true  })    
               }
             }
-          }) .catch(err=>{  console.error(err);  })
-        }) .catch(err=>{
+          })
+        }) .catch(err=>{        // 失敗提示
           console.error(err);
+          Notify({ type: 'warning', message: '操作失敗！請刷新頁面或聯繫管理員！' });
         })
         
         // 詢問是否同意微信訂閱 開課消息
-      })
+      })                      // on confirm - end
       .catch(res=>{           // on cancel
       })
     }
@@ -227,26 +253,25 @@ Page({
       
       // 記錄Follow的課程id
       let selectCourse = e.currentTarget.dataset.courseid;
+      let arrindex = e.currentTarget.dataset.arrindex;
       console.log("請求delete",selectCourse);
 
       // 調用雲函數更新 - user集合 - recentFollowCourseArray數組
-      const _ = db.command
       const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
-      db.collection('user').doc(userCloudDataStorage.data._openid).update({
-        data: {
-          recentFollowCourseArray: _.pull(_.in([selectCourse]))
+      wx.cloud.callFunction({   // 刪除followMember數組內該user的arkid等數據
+        name : 'courseFollowMember',
+        data : {
+          mode          : "delete",
+          endTimeStamp  : this.data.recentCourseInfoArray[arrindex].timeStampPick,
+          selectCourse  : selectCourse,
+          arkid         : userCloudDataStorage.data.arkid,
         }
-      }) .then(res=>{   // 刪除followMember數組內該user的arkid等數據
-        // 權限問題需要調用雲函數
-        wx.cloud.callFunction({
-          name : 'courseFollowMember',
-          data : {
-            mode          : "delete",
-            selectCourse  : selectCourse,
-            arkid         : userCloudDataStorage.data.arkid,
+      }) .then(res=>{           // 刪除自己的follow列表
+        db.collection('user').doc(userCloudDataStorage.data._openid).update({
+          data: {
+            recentFollowCourseArray: _.pull(_.in([selectCourse]))
           }
-        })
-        .then(res=>{    // 成功提示 & 同步wxml的顯示
+        }) .then(res=>{         // 成功提示 & 同步wxml的顯示
           Toast('刪除成功！');
           // 同步wxml的顯示
           for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
@@ -255,8 +280,11 @@ Page({
             }
           }
         }) .catch(err=>{ console.error(err); })
-      }) .catch(err=>{ console.error(err); })
-    })
+      }) .catch(err=>{             // 失敗提示
+        console.error(err);
+        Notify({ type: 'warning', message: '操作失敗！請刷新頁面或聯繫管理員！' });
+      })
+    })  // on confirm - end
     .catch(() => {    // on cancel
     });
   },

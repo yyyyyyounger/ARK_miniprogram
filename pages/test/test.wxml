@@ -9,3 +9,9 @@
 <button bindtap="subscribeTest">subscribeTest</button>
 
 <button bindtap="jumpToCourseDetail">帶參跳轉Test</button>
+
+<button open-type='contact'>聯繫管理員</button>
+
+<text>\n\n</text>
+
+<button bindtap="toOtherMiniProgram">跳轉選咩課</button>

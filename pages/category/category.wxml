@@ -1,6 +1,7 @@
 <!-- 彈出類 -->
 <van-toast id="van-toast" zIndex:9999999/>
 <van-dialog id="van-dialog" zIndex:9999999/>
+<van-notify id="van-notify" zIndex:9999999/>
 
 <!-- 橫向大開課按鈕 - 棄用狀態 -->
 <!-- <van-button type="primary" size="normal" color="#3498DB" block class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button> -->
@@ -19,7 +20,7 @@
 
       <!-- 課程卡片 - 未完成 -->
       <!-- 缺課程標籤，或者頭像上專業標籤，例如ECE -->
-      <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
+      <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
         <view class="cu-item">
           <view class="cu-list menu-avatar">
             <view class="cu-item">
@@ -37,7 +38,8 @@
                 color="{{ recentCourseInfoArray[index].haveFollow ? '#f8ad72' : '#3498DB'}}" 
                 type="primary" 
                 round 
-                data-courseid="{{recentCourseInfoArray[index]._id}}" 
+                data-courseid="{{recentCourseInfoArray[index]._id}}"
+                data-arrindex="{{index}}"
                 bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}"><text decode="{{true}}" style="padding-right:{{ recentCourseInfoArray[index].haveFollow ? '' : '18rpx'}};">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</text></van-button>
             </view>
           </view>
@@ -50,7 +52,7 @@
           <!-- 頭像組 -->
           <view class="slot text-right" wx:if="{{recentCourseInfoArray[index].followMember[1]}}">
             <view class="cu-avatar-group">
-              <view class="cu-avatar round lg" wx:for="{{recentCourseInfoArray[index].followMember}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key style="background-image:url({{recentCourseInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
+              <view class="cu-avatar round lg" wx:for="{{recentCourseInfoArray[index].followMember}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key="avatarIndex" style="background-image:url({{recentCourseInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
             </view> <text decode="true">...&nbsp;&nbsp;</text>
           </view>
         </view>
@@ -71,7 +73,7 @@
 
     <!-- 課程卡片 - 未完成 -->
     <!-- 缺課程標籤，或者頭像上專業標籤，例如ECE -->
-    <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" wx:if="{{recentCourseInfoArray[index].haveFollow}}">
+    <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" wx:key="index" wx:if="{{recentCourseInfoArray[index].haveFollow}}">
       <view class="cu-item shadow">
         <view class="cu-list menu-avatar">
           <view class="cu-item">
@@ -98,7 +100,7 @@
         <!-- 頭像組 -->
         <view class="slot text-right">
           <view class="cu-avatar-group">
-            <view class="cu-avatar round lg" wx:for="{{3}}" wx:key style="background-image:url({{recentCourseInfoArray[index].followMember[index].avatarUrl}});"></view>
+            <view class="cu-avatar round lg" wx:for="{{3}}" wx:key="index" style="background-image:url({{recentCourseInfoArray[index].followMember[index].avatarUrl}});"></view>
           </view> <text decode="true">...&nbsp;&nbsp;</text>
         </view>
       </view>

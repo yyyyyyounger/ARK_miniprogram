@@ -6,7 +6,6 @@ import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
 // var b = JSON.parse(JSON.stringify(數組a));  複製一份數組a的數據到數組b
 // var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
 // console.log(date.toLocaleDateString());
-const clearStorageOrder = wx.getStorageSync('clearStorage'); // bug在這裡，異步請求內執行同步請求太慢，需要轉為異步請求。
 
 //app.js
 App({
@@ -21,6 +20,7 @@ App({
       }) .get() 
       .then(res => {
         // console.log("雲端控制清除緩存信息：",res.data);
+        const clearStorageOrder = wx.getStorageSync('clearStorage');
         if (!clearStorageOrder) { // 如果不存在clearStorageOrder的緩存
           console.log("目前沒有clearStorageOrder的緩存，現在獲取！");
           wx.setStorageSync('clearStorage', { time:res.data.createAt, order:res.data.order } )
@@ -63,7 +63,31 @@ App({
 
   },
   onShow: function(options) {
-    
+    // 小程序更新邏輯 - 唯有上線版可以實現該功能
+    const updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate(function (res) {
+      // 请求完新版本信息的回调
+      console.log("下載更新包成功：",res.hasUpdate)
+    })
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已準備好，是否重啟應用？',
+        success(res) {
+          if (res.confirm) {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate()
+          }
+        }
+      })
+    })
+    updateManager.onUpdateFailed(function () {
+      // 新版本下载失败提示
+      Toast.fail({
+        message: '更新失敗，請關閉小程序重開',
+        zIndex: 9999999,
+      });
+    })
   },
   onHide: function() {
     
