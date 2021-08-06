@@ -93,6 +93,7 @@ bind:close="closePopup"
 <van-skeleton row="4" />
 
 <text>\n</text>
+
 <van-divider contentPosition="center">正在開發更多內容！敬請期待！</van-divider>
 
 <!-- 免除自定義tabbar阻擋 -->

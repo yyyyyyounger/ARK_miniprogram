@@ -35,24 +35,7 @@ Page({
   onTabItemTap:function(item){
 
   },
-  // 跳轉“關於”頁
-  jumpToAbout () {
-    wx.navigateTo({
-      url: './about/about',
-    });
-  },
-  // 跳轉“小功能”頁
-  jumpToSmallFun () {
-    wx.navigateTo({
-      url: './smallFun/smallFun',
-    });
-  },
-  // 跳轉“反饋”頁
-  jumpToFeedBack () {
-    wx.navigateTo({
-      url: './feedBack/feedBack',
-    });
-  },
+
   bindOpenSetting (){
     console.log("已點擊");
     wx.openSetting({
@@ -83,5 +66,36 @@ Page({
         // on cancel
       });
     
-  }
+  },
+
+  // 跳轉“關於”頁
+  jumpToAbout () {
+    wx.navigateTo({
+      url: './about/about',
+    });
+  },
+  // 跳轉“小功能”頁
+  jumpToSmallFun () {
+    wx.navigateTo({
+      url: './smallFun/smallFun',
+    });
+  },
+  // 跳轉“反饋”頁
+  jumpToFeedBack () {
+    wx.navigateTo({
+      url: './feedBack/feedBack',
+    });
+  },
+
+  // 跳轉選咩課
+  toOtherMiniProgram() {
+    wx.navigateToMiniProgram({
+        appId: 'wxd2449edafe0c532a',//要打开的小程序 appId
+        path: '',//打开的页面路径，如果为空则打开首页。
+        success(res) {
+          // 打开成功
+          console.log("跳轉成功");
+        }
+      })
+  },
 });
