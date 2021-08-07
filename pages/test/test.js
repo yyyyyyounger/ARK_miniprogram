@@ -37,8 +37,8 @@ Page({
     addTest(){
         db.collection('config').add({
             data: {
-                _id                         : 'recentCourseIdRecord',
-                recentCourseIdRecord        : [],
+                _id                         : 'userInfoArray',
+                userInfoInput_empty         : cloudData.userInfoInput_empty,
                 createAt                    : Date.now()
             },
         }).then(res => {
@@ -70,10 +70,10 @@ Page({
         // update 局部更新一個記錄
         // set 替換更新
         // 雲函數更新的寫法，數組需要用 . 引出索引
-        db.collection('user').doc("oDWgf48GBbH1PqgkMMVIEHZldF60").update({
+        db.collection('user').doc('') .update({
             data: {
                 // createAt              : Date.now(),
-                recentFollowCourseArray  : [],
+                "userInfoInput.6.display" : false
             },
             success: function(res) {
               console.log(res.data)

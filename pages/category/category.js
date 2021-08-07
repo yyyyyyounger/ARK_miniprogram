@@ -313,11 +313,6 @@ Page({
       url: './myFollowCourses/myFollowCourses',
     })
   },
-  jumpTomyJoinCourses (){
-    wx.navigateTo({
-      url: './myJoinCourses/myJoinCourses',
-    })
-  },
   jumpToholdACourses (){
     // 獲取只有註冊完畢才能有的緩存數據
     const userCloudDataStorage = wx.getStorageSync('userCloudData');

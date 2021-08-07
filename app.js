@@ -130,11 +130,15 @@ App({
     userInfoInput_empty: [],
     // 用戶微信登錄狀態
     isSignIn: false,
+    // 協議同意狀態
+    haveReadProtocol : false,
 
     // 完sem日
     semFinishDay:'2022/01/05',
     // 畢業日
     graduateDay:'',
+
+    
   },
   // 重設app.js的值，用於清除緩存，重啟小程式
   reload(that) {

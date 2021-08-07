@@ -56,7 +56,7 @@ bind:close="closePopup"
 <!-- Follow課程展示區 -->
 <view class="cu-bar bg-white margin-top">
 	<view class="action">
-		<text class="cuIcon-title text-blue"></text>我Follow的分享
+		<text class="cuIcon-title text-themeBlue"></text>我Follow的分享
 	</view>
 </view>
 <van-row>
@@ -87,7 +87,7 @@ bind:close="closePopup"
 <!-- 使用小貼士 -->
 <view class="cu-bar bg-white margin-top">
 	<view class="action">
-		<text class="cuIcon-title text-blue"></text>使用小貼士
+		<text class="cuIcon-title text-themeBlue"></text>使用小貼士
 	</view>
 </view>
 <van-skeleton row="4" />

@@ -1,1 +1,7 @@
 <view>這裡是反饋頁</view>
+
+<view>可以加一些反饋教程</view>
+
+<view class="padding flex flex-direction">
+  <button class="cu-btn bg-themeBlue lg" open-type='contact'>聯繫管理員</button>
+</view>

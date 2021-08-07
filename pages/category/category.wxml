@@ -10,16 +10,15 @@
 
   <van-tab title="最新發佈">
 
-    <van-sticky>
-<!-- 下拉菜單 -->
+<!-- 下拉菜單 - 排序未完成 -->
+    <!-- <van-sticky>
       <van-dropdown-menu>
         <van-dropdown-item value="{{ dropDownIndex }}" options="{{ option1 }}" bind:change="dropDownChange" />
         <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
       </van-dropdown-menu>
-    </van-sticky>
+    </van-sticky> -->
 
       <!-- 課程卡片 - 未完成 -->
-      <!-- 缺課程標籤，或者頭像上專業標籤，例如ECE -->
       <view class="cu-card dynamic " wx:for="{{recentCourseInfoArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
         <view class="cu-item">
           <view class="cu-list menu-avatar">
@@ -66,10 +65,10 @@
 
   <van-tab title="我的Follow">
     <!-- 下拉菜單 - 排序未完成 -->
-    <van-dropdown-menu>
+    <!-- <van-dropdown-menu>
       <van-dropdown-item value="{{ dropDownIndex }}" options="{{ option1 }}" bind:change="dropDownChange" />
       <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
-    </van-dropdown-menu>
+    </van-dropdown-menu> -->
 
     <!-- 課程卡片 - 未完成 -->
     <!-- 缺課程標籤，或者頭像上專業標籤，例如ECE -->
@@ -117,8 +116,8 @@
 
     <view style="margin-top:30rpx">
       <van-grid gutter="{{ 10 }}" column-num="1" clickable icon-size="60rpx">
-        <van-grid-item icon="apps-o" text="所有課程" />
-        <van-grid-item icon="more-o" text="參與記錄" />
+        <van-grid-item icon="apps-o" text="所有課程" bindtap="jumpToallCourses"/>
+        <van-grid-item icon="more-o" text="參與記錄" bindtap="jumpTomyFollowCourses"/>
       </van-grid>
     </view>
 

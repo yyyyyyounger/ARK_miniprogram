@@ -6,10 +6,13 @@
   title="註冊須知"
   show-cancel-button
   show="{{ show_dialog }}"
-  bind:confirm="getUserProfile"
+  bind:confirm="jumpToProtocol"
+  data-mode="signUp"
   z-index="9999999"
 >
-  <view>  我已閱讀並願意遵守ARK協議（缺個打√ - 未完成）</view>
+  <view  style="text-align:center; padding-top:10px;">
+    <text>您需要閱讀並同意遵守ARK協議\n才能成功註冊！\n（點擊確認後跳轉ARK協議界面）</text>
+  </view>
 </van-dialog>
 <van-toast id="van-toast" />
 <text>\n</text>
@@ -38,7 +41,7 @@
   <!-- 如果不能使用openData，且當下沒有用戶信息，則提示授權 -->
   <block wx:elif="{{!hasUserInfo}}">
     <!-- 如果onLoad時查詢程序可以調用用戶信息，則向用戶發出授權按鈕提示，獲取准確的用戶信息 -->
-    <van-button wx:if="{{canIUseGetUserProfile}}" color="#3498DB" bindtap="binSignInButton" type="info" size="normal" round>微信登錄</van-button>
+    <van-button wx:if="{{canIUseGetUserProfile}}" color="#3498DB" bindtap="getUserProfile" type="info" size="normal" round plain>微信登錄</van-button>
     <!-- 不可調用則使用匿名的用戶信息 -->
     <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 獲取頭像暱稱canIUse </button>
     <!-- <view wx:else> 请使用1.4.4及以上版本基础库 </view> -->
@@ -51,7 +54,7 @@
   </block>
 </view>
 
-<text class="userinfo" wx:if="{{!isSignIn}}" bindtap="jumpToProtocol">小程序使用條款\n</text>
+<text class="userinfo" wx:if="{{!isSignIn}}" bindtap="jumpToProtocol">ARK參與協議\n</text>
 <!-- 編輯個人資料互動 -->
 <view class="userinfo" wx:if="{{isSignIn}}" >
   <view wx:if="{{!bindEditMode}}">

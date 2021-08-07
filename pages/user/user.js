@@ -177,9 +177,9 @@ Page({
         // 初始化各種數組
         this.ArrayDataInit(this);
         this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
-      }, 700);
+      }, 600);
 
-// 未理解的神秘執行 - 未完成
+// 未理解的神秘執行(必須存在) - 未完成
       if (wx.getUserProfile) {
         console.log("wx.getUserProfile為true");
         this.setData({
@@ -190,9 +190,9 @@ Page({
         console.log("user頁 - onLoad() - GetuserProfile ***fail***");
       }
       
-// 計算持續時間
-      this.calcTime();
-      }) .catch(err => {    console.log(err);    });
+      // 計算持續時間
+      // this.calcTime();
+      }) .catch(err => {    console.error(err)    });
     } 
     else {
       // log出提示消息
@@ -298,22 +298,8 @@ Page({
     });
   },
 
-  // 點擊登錄按鈕 - 綁定事件
-  binSignInButton() {
-    // 提示閱讀使用條款
-    this.setData({  show_dialog:true  })
-
-    // Dialog.alert({
-    //   message: '繼續登錄將表示您已閱讀並同意該小程序的使用條款',
-    // }).then(() => {
-    //   // on close
-    //   // this.getUserProfile();
-    // });
-  },
-
   // 點擊登錄 - 獲取用戶信息
   getUserProfile(e) {
-    this.setData({  show_dialog:false  })
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，
     const getUserProfilePro = () => {    // 新增promise，抓取所調用api的返回值，準備鏈式調用
       return new Promise((resolve, reject) => {
@@ -540,7 +526,13 @@ Page({
       
 // if 本地註冊狀態為false（新用戶），能執行此條件的為正確輸入，因此寫入本地註冊時間和ARKid
       if (!that.data.userInfoInput[that.data.userInfoInput_isSignUpIndex].input) {
-        this.userSignUp();  // 向數據庫新增用戶
+        // 閱讀ARK協議 - 未完成
+        // 同意ARK協議後則允許新增用戶
+        if (app.globalData.haveReadProtocol) {    // 已閱讀ARK協議
+          this.userSignUp();  // 向數據庫新增用戶
+        } else{
+          this.setData({  show_dialog:true  })
+        }
       }
       // 上傳數據 本地 → 雲端
       // 轉化為字符串才能對比數組
@@ -694,11 +686,24 @@ Page({
     }
   },
 
-  // 跳轉 協議 頁
-  jumpToProtocol () {
-    wx.navigateTo({
-      url: '../protocol/protocol',
-    })
+  // 跳轉 協議 頁  -  增加帶參跳轉，若為正在註冊的用戶，參數為signUp
+  jumpToProtocol (e) {
+    this.setData({  show_dialog:false  })
+    let mode = e.currentTarget.dataset.mode;
+    if (mode) {
+      console.log("跳轉協議頁模式為",mode);
+      // 跳轉課程詳情頁
+      let detailInfo = {  mode:mode,  }
+      detailInfo = JSON.stringify(detailInfo);
+      wx.navigateTo({
+        url: '../protocol/protocol?detailInfo=' + detailInfo,
+      })
+    }
+    else {          // 無參數模式跳轉
+      wx.navigateTo({
+        url: '../protocol/protocol',
+      })
+    }
   },
 
 })

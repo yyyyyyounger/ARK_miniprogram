@@ -1,3 +1,14 @@
+<!-- 彈出類 -->
+<van-toast id="van-toast" />
+
+<!-- 文章主體 -->
 <view class="container">
   <towxml nodes="{{article}}"/>
 </view>
+
+<view class="padding flex flex-direction" wx:if="{{displayButton}}">
+  <button class="cu-btn bg-themeBlue lg"  data-click="confirm" bindtap="bindTapButton" >我已閱讀並願意遵守"ARK協議"</button>
+  <button class="cu-btn bg-grey lg"       style="margin-top:10px;" data-click="cancel" bindtap="bindTapButton" >我就是不同意！╭(╯^╰)╮</button>
+</view>
+
+<view class="bottom-watch"></view>

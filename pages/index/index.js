@@ -225,7 +225,7 @@ Page({
       if (this.data.recentCourseInfoArray[i].haveFollow) {
         objTemp = {
           text: this.data.recentCourseInfoArray[i].courseInfoInput[1].input,
-          desc: '2天後',
+          desc: this.checkDate(this.data.recentCourseInfoArray[i].timeStampPick),
           inactiveIcon: 'cross',
           activeIcon: 'success',
         }
@@ -234,14 +234,34 @@ Page({
     }
     this.setData({  steps : stepsTemp  })
   },
-  // 時間計算 - 未完成 - 輸入時間戳，返回距離該時間戳的時間（就在今天，明天，後天，2天後，3天後，，，一個星期後，兩個星期後，半個月後，一個月後）
-  daysCount(begin,end){
-    // begin和end皆為時間戳，計算公式由end - begin
-    let diff = end - begin;
-    if (diff < 24*60*60*1000) {  // 時間戳的差值在24小時內
-      console.log("時間差在，今天");
-    }
-
+  // 時間計算 - 輸入end_date時間戳，返回今天距離該時間戳的時間（就在今天，明天，後天，2天後，3天後，，，一個星期後，兩個星期後，半個月後，一個月後）
+  checkDate: function(end_date) {
+    let logMes="";
+    let nowTime = new Date().getTime();
+    let tempTime = 1628179200000;
+    //转成毫秒数，两个日期相减
+    let end_ms = end_date - tempTime;
+    let start_ms = nowTime - tempTime;
+    let day = parseInt(end_ms / (1000 * 60 * 60 * 24))-parseInt(start_ms / (1000 * 60 * 60 * 24));
+    switch(day){
+        case 0:
+            logMes="就在今天";
+        break;
+        case 1:
+            logMes="明天舉行";
+        break;
+        case 2:
+            logMes="後天舉行";
+        break;
+        case 3:
+            logMes="兩天後舉行";
+        break;
+    } 
+    if (day>3 && day<=7)            logMes="三天後";
+    else if (day > 7 && day <=15)   logMes="一週後";
+    else if (day > 15 )             logMes="半個月後";
+    else if (day > 30)              logMes="一個月後";
+    return logMes
   },
 
   // wx本地請求一言API返回 - 該方法需要開發者網站配置可信域名 - 暫未使用
@@ -256,7 +276,7 @@ Page({
         that.setData({
           moto: res.data
         })
-        console.log(that.data.moto);
+        // console.log(that.data.moto);
       },
       fail: function(err) {console.log("獲取一言失敗");}, //请求失败
       complete: function() {} //请求完成后执行的函数
@@ -269,7 +289,7 @@ Page({
       name:'http'
     }).then(res=>{
       let result = JSON.parse(res.result);
-      console.log(result);
+      // console.log(result);
       this.setData({    moto : result  })
     }).catch(res=>{
       console.log("雲函數cloudGetOneMoto請求失敗",res);

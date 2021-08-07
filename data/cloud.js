@@ -6,7 +6,7 @@ let userInfoInput_empty = [
   { id:3, name:"年級:",     shortName:"studentYear",  input:"未登入", display:true,   canEdit:true },
   { id:4, name:"組織次數:", shortName:"holdTimes",    input:0,        display:true,   canEdit:false },
   { id:5, name:"參與次數:", shortName:"joinTimes",    input:0,        display:true,   canEdit:false },
-  { id:6, name:"星級評分:", shortName:"stars",        input:0,        display:true,  canEdit:false },
+  { id:6, name:"星級評分:", shortName:"stars",        input:0,        display:false,  canEdit:false },
   { id:7, name:"註冊時間:", shortName:"signUpTime",   input:"未登入",  display:true,  canEdit:false },
   { id:8, name:"ARKid:",   shortName:"arkId",        input:"未登入",  display:true,  canEdit:false },
   { id:9, name:"管理員:",   shortName:"admin",        input:false,    display:false, canEdit:false },

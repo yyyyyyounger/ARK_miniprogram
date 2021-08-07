@@ -5,6 +5,7 @@
 <button bindtap="cloudGetUserInfo0">GetUserInfo</button>
 <button bindtap="updateTemp0">updateTemp_test</button>
 
+<text>\n\n</text>
 
 <button bindtap="subscribeTest">subscribeTest</button>
 
