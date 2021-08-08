@@ -544,7 +544,6 @@ Page({
         else {    // 本地 → 雲端，更新數組
           Notify({ type: 'primary', message: '有修改！Update！' });
           console.log("有修改！Update！");
-          app.globalData.userInfoInput = JSON.parse(JSON.stringify(that.data.userInfoInput));
           this.userInfoUpdate(that);  // 向數據庫更新用戶的信息
           this.findSetData(this.data.shortNameArray);
         }
@@ -622,6 +621,10 @@ Page({
   },
   // 用戶資料更新
   userInfoUpdate(that) {
+    Toast.loading({ // 加載提示
+      message: '瘋狂請求中...',
+      forbidClick: true,
+    });
     let callCloudTimes = that.callCloudCheck();
     if (callCloudTimes) {
       wx.cloud.callFunction({ //調用雲函數 userInfoUpdate 完成數據上傳
@@ -633,6 +636,7 @@ Page({
         }
       }) .then(res=>{
         Notify({ type: 'success', message: '修改成功！建議使用下拉刷新頁面喔！' });
+        app.globalData.userInfoInput = JSON.parse(JSON.stringify(that.data.userInfoInput));
       }).catch(err=>{  console.error(err);  })
     }
     else {
