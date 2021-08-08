@@ -13,8 +13,6 @@ const _ = db.command
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
-  // let date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
-  // let today = date.toLocaleDateString();
 
   let userInfoTemp = event.userInfoInput;
   let arkIdIndex = userInfoTemp.findIndex(o=> o.shortName === 'arkId' ); // 準備插入最新arkid
@@ -23,9 +21,9 @@ exports.main = async (event, context) => {
   // 查找最新的arkid
   await db.collection('user') .orderBy("arkid","desc") .field({ arkid:true }) .limit(1) .get()
     .then(res=>{
-      // console.log("最新arkid為",res.data[0].arkid);
       userInfoTemp[arkIdIndex].input = '00'+((parseInt(res.data[0].arkid)+1)+"");   // 插入最新的arkid
       let today = userInfoTemp[signUpTimeIndex].input;
+
       db.collection('user').add({   // 對 user 集合插入新用戶的數據
         data: {
           _id         : wxContext.OPENID,

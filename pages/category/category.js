@@ -166,7 +166,7 @@ Page({
     if (userCloudData) {    // 已登錄才可以操作
       Dialog.confirm({
         title: '重要提示',
-        message: 'follow了不要反悔喔！😎',
+        message: '自己follow的課要好好上完喔！😎',
         zIndex:99999999,
       })
       .then(res=>{            // on confirm

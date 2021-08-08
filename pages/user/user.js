@@ -123,7 +123,7 @@ Page({
     // 定義控制台log的部分字段
     var consoleMeg = '';
 
-// 拉取cloudData的模擬數據(複製) - userInfoInput - 雲端 → 本地
+// 拉取本地cloudData的模擬數據(複製) - userInfoInput - 雲端 → 本地
     let arrayEmpty = JSON.parse(JSON.stringify(cloudData.userInfoInput_empty));
     this.setData({  
       userInfoInput       : arrayEmpty,
@@ -131,16 +131,17 @@ Page({
     });
     if (!this.data.isSignIn) {              // if 未登錄，則 複製cloudData.js的空數據 → 本地
       consoleMeg = '未登錄 - ';
+      this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
     }
     else {                                  // if 已登錄，歡迎語
       // 返回majorTagArray的信息
       this.returnMajorTagArray(this);
-
+      // 如果存在userInfo的緩存，則先渲染著，再請求雲端返回
       if (userCloudDataStorage) {
         this.setData({  userInfoInput:userCloudDataStorage.data.userInfoInput  })
       }
 
-      getUserCloudData().then(res => {  // 鏈式調用，返回用戶登記的數據
+      getUserCloudData().then(res => {  // 鏈式調用，雲端返回用戶登記的數據
         console.log("鏈式調用getUserCloudData，返回數組長度為：",res.result.userCloudData.data.length)
         if (res.result.userCloudData.data.length!=0) {  // 已註冊，將 數據庫user數據複製 → 本地&全局
           let userCloudData = res.result.userCloudData.data[0];
@@ -165,11 +166,11 @@ Page({
       consoleMeg = '已登錄 - ';
     }
 
+    // 向服務器請求的延時動畫
+    app.toastLoadingDIY();
+    
     if (needWait) {   // 存在緩存，需要等待異步請求返回
-      // 向服務器請求的延時動畫
-      app.toastLoadingDIY();
-
-    getUserCloudData().then(res => {
+      getUserCloudData().then(res => {
       setTimeout(() => {
         // log出提示消息
         console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
@@ -447,7 +448,6 @@ Page({
       }
     }
   },
-
   bindCellInput(e){       // 輸入框 - 輸入事件，數據 → 本地 → UM_ID & studentName
     let cellInput = e.detail.toUpperCase();
     let inputLength = cellInput.length;
@@ -524,30 +524,30 @@ Page({
         ['userInfoInput['+w3+'].input'] : that.data.studentYear_input,
       });
       
-// if 本地註冊狀態為false（新用戶），能執行此條件的為正確輸入，因此寫入本地註冊時間和ARKid
+// if 本地註冊狀態為false（新用戶），註冊邏輯。能執行此條件的為正確輸入，因此寫入本地註冊時間和ARKid
       if (!that.data.userInfoInput[that.data.userInfoInput_isSignUpIndex].input) {
         // 閱讀ARK協議 - 未完成
         // 同意ARK協議後則允許新增用戶
-        if (app.globalData.haveReadProtocol) {    // 已閱讀ARK協議
-          this.userSignUp();  // 向數據庫新增用戶
-        } else{
-          this.setData({  show_dialog:true  })
+        // 展示ARK協議
+        this.setData({  show_dialog:true  })
+      }
+// if 已註冊用戶，為更新個人信息邏輯
+      else {
+        // 上傳數據 本地 → 雲端
+        // 轉化為字符串才能對比數組
+        console.log("app的數據為",app.globalData.userInfoInput);
+        console.log("本js的數據為",that.data.userInfoInput);
+        if ( JSON.stringify(app.globalData.userInfoInput) == JSON.stringify(that.data.userInfoInput) ) {
+          Notify({ type: 'primary', message: '完全沒有修改呢！' });
+          console.log("完全沒有修改呢！");
         }
-      }
-      // 上傳數據 本地 → 雲端
-      // 轉化為字符串才能對比數組
-      console.log("app的數據為",app.globalData.userInfoInput);
-      console.log("本js的數據為",that.data.userInfoInput);
-      if ( JSON.stringify(app.globalData.userInfoInput) == JSON.stringify(that.data.userInfoInput) ) {
-        Notify({ type: 'primary', message: '完全沒有修改呢！' });
-        console.log("完全沒有修改呢！");
-      }
-      else {    // 本地 → 雲端，更新數組
-        Notify({ type: 'primary', message: '有修改！Update！' });
-        console.log("有修改！Update！");
-        app.globalData.userInfoInput = JSON.parse(JSON.stringify(that.data.userInfoInput));
-        this.userInfoUpdate(that);  // 向數據庫更新用戶的信息
-        this.findSetData(this.data.shortNameArray);
+        else {    // 本地 → 雲端，更新數組
+          Notify({ type: 'primary', message: '有修改！Update！' });
+          console.log("有修改！Update！");
+          app.globalData.userInfoInput = JSON.parse(JSON.stringify(that.data.userInfoInput));
+          this.userInfoUpdate(that);  // 向數據庫更新用戶的信息
+          this.findSetData(this.data.shortNameArray);
+        }
       }
       // this.onLoad();
     }// 輸入符合條件的else - end
@@ -598,33 +598,33 @@ Page({
       return false;
     }
   },
-  // 調用雲函數, 新增用戶
-  userSignUp() {
-      let that = this;
-      let wTime = that.data.userInfoInput.findIndex(o=> o.shortName === 'signUpTime' );
-      let writeTime = 'userInfoInput['+wTime+'].input';
-      that.setData({  [writeTime] : that.data.today,  })
-      // ARKid - 未完成
-      // 修改本地註冊狀態為 true
-      that.data.userInfoInput[that.data.userInfoInput_isSignUpIndex].input = true;
-      app.globalData.userInfoInput = JSON.parse(JSON.stringify(that.data.userInfoInput));
 
-      //調用雲函數 userSignUp 完成數據上傳
-      wx.cloud.callFunction({ 
-        name: 'userSignUp',
-        data:{
-            avatarUrl     : that.data.userInfo.avatarUrl,
-            nickName      : that.data.userInfo.nickName,
-            gender        : that.data.userInfo.gender,        // 1：男        2：女
-            userInfoInput : that.data.userInfoInput,
-        }
-      }) .catch(err=>{  console.error(err);  })
+  // 調用雲函數, 新增用戶 - 2021.8.8改為在協議頁protocol signUp，該頁面該函數棄用
+  userSignUp() {
+    let that = this;
+    that.getNowTime();    // 獲取現時時間
+    let wTime = that.data.userInfoInput.findIndex(o=> o.shortName === 'signUpTime' );
+    that.setData({  ['userInfoInput['+wTime+'].input'] : that.data.today,  })
+    // 修改本地註冊狀態為 true
+    that.data.userInfoInput[that.data.userInfoInput_isSignUpIndex].input = true;
+    app.globalData.userInfoInput = JSON.parse(JSON.stringify(that.data.userInfoInput));
+
+    //調用雲函數 userSignUp 完成數據上傳
+    wx.cloud.callFunction({
+      name: 'userSignUp',
+      data:{
+          avatarUrl     : that.data.userInfo.avatarUrl,
+          nickName      : that.data.userInfo.nickName,
+          gender        : that.data.userInfo.gender,        // 1：男        2：女
+          userInfoInput : that.data.userInfoInput,
+      }
+    }) .catch(err=>{  console.error(err);  })
   },
   // 用戶資料更新
   userInfoUpdate(that) {
     let callCloudTimes = that.callCloudCheck();
     if (callCloudTimes) {
-      wx.cloud.callFunction({ //調用雲函數 userSignUp 完成數據上傳
+      wx.cloud.callFunction({ //調用雲函數 userInfoUpdate 完成數據上傳
         name: 'userInfoUpdate',
         data:{
             avatarUrl     : that.data.userInfo.avatarUrl,
@@ -640,11 +640,11 @@ Page({
     }
   },
 
-  calcTime (){
+  // 獲取現時時間
+  getNowTime(){
     // 獲取當前時間軸
-    var timestamp = Date.parse(new Date());
+    var timestamp = Date.now();
     timestamp = timestamp / 1000;
-    // console.log("当前时间戳为：" + timestamp);
     //获取当前时间
     var n = timestamp * 1000;
     var date = new Date(n);
@@ -652,25 +652,34 @@ Page({
     var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
     var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
     let today = Y+'/'+M+'/'+D;
-    // console.log("Today is",today);
+    this.setData({ today })
+  },
+
+  calcTime (){
+    // 獲取當前時間軸
+    var timestamp = Date.now();
+    timestamp = timestamp / 1000;
+    //获取当前时间
+    var n = timestamp * 1000;
+    var date = new Date(n);
+    var Y = date.getFullYear();
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    let today = Y+'/'+M+'/'+D;
     let durationDay_sem = (new Date(this.data.semFinishDay).getTime() - new Date(today).getTime()) / (1000 * 60 * 60*24);
     this.setData({
       durationDay_sem,
       today
     })
-    // console.log("今天離全局設置的完sem日還有：",durationDay_sem,"天");
     let durationDay_Grudate = (new Date(this.calcGraduateDay(Y)).getTime() - new Date(today).getTime()) / (1000 * 60 * 60*24);
     this.setData({  durationDay_Grudate  })
 
     // 計算距離畢業progress進度條比值
     if (this.data.durationDay_Grudate) {
-      // console.log("durationDay_Grudate為",this.data.durationDay_Grudate);
-      // console.log("總上學時長為",(365*4 -4-31-31-8));
       let durationDay_Grudate_progress = 100-Math.round(this.data.durationDay_Grudate / (365*4 -4-31-31-8) *100);
       this.setData({
         durationDay_Grudate_progress
       })
-      // console.log("durationDay_Grudate_progress為(目前過了)",this.data.durationDay_Grudate_progress,'%');
     }
   },
   calcGraduateDay (today_Year){
@@ -691,9 +700,14 @@ Page({
     this.setData({  show_dialog:false  })
     let mode = e.currentTarget.dataset.mode;
     if (mode) {
+      let userInfoStorage = wx.getStorageSync('userInfo').data;
       console.log("跳轉協議頁模式為",mode);
       // 跳轉課程詳情頁
-      let detailInfo = {  mode:mode,  }
+      let detailInfo = {
+        mode          : mode,
+        userInfoInput : this.data.userInfoInput,
+        userInfo      : userInfoStorage,
+      }
       detailInfo = JSON.stringify(detailInfo);
       wx.navigateTo({
         url: '../protocol/protocol?detailInfo=' + detailInfo,

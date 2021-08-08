@@ -59,7 +59,7 @@ bind:close="closePopup"
 		<text class="cuIcon-title text-themeBlue"></text>我Follow的分享
 	</view>
 </view>
-<van-row>
+<van-row wx:if="{{followCourseArray[0]}}">
 	<van-col span="16">
 		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange_collapse">
 			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:key="index" wx:if="{{recentCourseInfoArray[index].haveFollow}}" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}">

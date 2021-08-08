@@ -100,7 +100,6 @@ Page({
     },
     ],
   },
-
   onLoad: function(){
     // 日期選擇器最大最小日期選擇
     let nowTimeStamp = new Date(Date.now()).getTime();
@@ -161,15 +160,21 @@ Page({
     let canEdit     = this.data.courseInfoInput.map((item)=>{    return item.canEdit    });
     this.setData({  canDisplay , canEdit ,   })
   },
-
-  onShow: function(){
-    
+  onPullDownRefresh(){
+    wx.stopPullDownRefresh();
   },
-  onHide: function(){
 
+  // admin允許編輯開關
+  onChange_Switch_edit(e){
+    let change = !this.data.canEdit[e.currentTarget.dataset.index];
+    console.log(e.currentTarget.dataset.index);
+    this.setData({  ['canEdit['+e.currentTarget.dataset.index+']'] : change  })
   },
-  onPullDownRefresh: function(){
-
+  // admin允許顯示開關
+  onChange_Switch_display(e){
+    let change = !this.data.canDisplay[e.currentTarget.dataset.index];
+    console.log(e.currentTarget.dataset.index);
+    this.setData({  ['canDisplay['+e.currentTarget.dataset.index+']'] : change  })
   },
 
 // 允許投票switch的開關
@@ -192,18 +197,6 @@ Page({
     }
     this.setData({  timePickArray:timePickArr  })
     console.log("timePickArray為",timePickArr);
-  },
-// 允許編輯開關
-  onChange_Switch_edit(e){
-    let change = !this.data.canEdit[e.currentTarget.dataset.index];
-    console.log(e.currentTarget.dataset.index);
-    this.setData({  ['canEdit['+e.currentTarget.dataset.index+']'] : change  })
-  },
-// 允許顯示開關
-  onChange_Switch_display(e){
-    let change = !this.data.canDisplay[e.currentTarget.dataset.index];
-    console.log(e.currentTarget.dataset.index);
-    this.setData({  ['canDisplay['+e.currentTarget.dataset.index+']'] : change  })
   },
 // 日期選擇器
   onDisplay_date() {
@@ -335,6 +328,7 @@ Page({
     timePickArr.push({begin:'',end:''});
     this.setData({  timePickArray : timePickArr  })
   },
+// 時間選擇器 - end
 // 輸入框匯總監聽
   onChange_field(e) {
     let userInputValue = e.detail;
@@ -511,7 +505,6 @@ Page({
                   url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
                 })
             })
-
           }) .catch (err=>{
             console.error(err);
           })

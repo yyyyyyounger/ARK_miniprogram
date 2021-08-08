@@ -1,4 +1,3 @@
-@import "./styles/iconfont.wxss";
 @import './miniprogram_npm/@vant/weapp/common/index.wxss';
 
 @import "colorui/main.wxss";

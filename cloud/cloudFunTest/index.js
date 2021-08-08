@@ -1,3 +1,5 @@
+// 此雲函數用於無視權限的管理員更新數據庫多條記錄
+
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 cloud.init({

@@ -4,9 +4,9 @@
 <view style="margin-top:20rpx">
   <van-grid gutter="{{ 10 }}" column-num="1">
     <van-grid-item icon="apps-o" text="小功能"         bindtap="jumpToSmallFun" />
-    <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
     <van-grid-item icon="more-o"    text="關於"           bindtap="jumpToAbout" />
     <van-grid-item icon="chat-o"    text="反饋"           bindtap="jumpToFeedBack" />
+    <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
   </van-grid>
 </view>
 
@@ -22,7 +22,6 @@
 </view>
 <!-- 小程序logo -->
 <view class="padding" style="text-align:center; margin-top:-20px;">
-  <!-- 該樣式可以保持居中 -->
 	<view bindtap="toOtherMiniProgram">
     <van-image
       round
@@ -30,7 +29,7 @@
       height="120rpx"
       src="../../../../icons/UMLogo.png"
     />
-		<view class="text-gray" style="text-align:center;">選咩課</view>
+		<view class="text-gray" style="margin-top:-10px;">選咩課</view>
 	</view>
   <!-- <view class="cu-avatar lg round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg);"></view> -->
 </view>

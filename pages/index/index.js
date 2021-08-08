@@ -5,7 +5,6 @@ var cloudData = require('../../data/cloud.js')
 const db = wx.cloud.database();
 const _ = db.command
 
-
 Page({
   data: {
     // Vant - begin
@@ -50,12 +49,25 @@ Page({
   onLoad: function(scene) {
     this.app = getApp();
 
-    // 查看開啟場景
+    // 非下拉刷新的場景時
     if (scene!="refresh") {
       this.showPopup();     // 展示頂部彈出層
       this.cloudGetOneMoto();  // 雲函數請求返回api
+      // 4s後關閉彈出層
+      setTimeout(() => {
+        this.closePopup()  //關閉彈出層
+        Toast({
+          message : '下拉刷新可重新獲取彈出層內容！',
+          zIndex  : 99999999999999
+        })
+      }, 4000)
     }
-    console.log("開啟情景為：",scene);
+
+    // 轉發按鈕所必須
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
 
     // 沒有登錄則提醒
     const userCloudData = wx.getStorageSync('userCloudData')
@@ -69,16 +81,10 @@ Page({
       this.setData({  userCloudData : userCloudData.data  })
     }
 
-    wx.showShareMenu({    // 轉發按鈕所必須
-      withShareTicket: true,
-      menus: ['shareAppMessage', 'shareTimeline']
-    })
-    
     // 項目開始日期
     this.setData({
       projStartTime : app.globalData.projStartTime[0] ,
     });
-
     // 計算開發已過日期
     this.app.calcDurationDay(this,1,'2021/06/03');
     
@@ -190,11 +196,11 @@ Page({
     this.app.onPullDownRefresh(this);
   },
 
-  // Vant - 頂部彈出層
+  // Vant - 打開頂部彈出層
   showPopup() {
     this.setData({ show_popup: true });
   },
-  // Vant - 頂部彈出層
+  // Vant - 關閉頂部彈出層
   closePopup() {
     this.setData({ show_popup: false });
   },
@@ -238,6 +244,10 @@ Page({
   checkDate: function(end_date) {
     let logMes="";
     let nowTime = new Date().getTime();
+    if (end_date < nowTime) {   // 已經結束
+        logMes="已經結束";
+        return logMes;
+    }
     let tempTime = 1628179200000;
     //转成毫秒数，两个日期相减
     let end_ms = end_date - tempTime;

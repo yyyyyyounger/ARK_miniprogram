@@ -4,8 +4,8 @@ Page({
     durationDay:0,
   },
   onLoad: function() {
-    this.calcDurationDay();
-    console.log("onLoad() - about加載完成");
+    // this.calcDurationDay();
+
   },
   onReady: function() {
     

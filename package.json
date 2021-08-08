@@ -20,6 +20,6 @@
     "@vant/weapp": "^1.7.2"
   },
   "devDependencies": {
-    "miniprogram-api-typings": "^3.4.1"
+    "miniprogram-api-typings": "^3.4.2"
   }
 }

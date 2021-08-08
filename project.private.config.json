@@ -47,6 +47,18 @@
           "pathName": "pages/category/courseDetail/courseDetail",
           "query": "detailInfo={\"user\":\"normal\",\"courseId\":\"8\"}",
           "scene": null
+        },
+        {
+          "name": "關於頁",
+          "pathName": "pages/more/about/about",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "協議頁 signUp",
+          "pathName": "pages/protocol/protocol",
+          "query": "detailInfo={\"mode\":\"signUp\"}",
+          "scene": null
         }
       ]
     }

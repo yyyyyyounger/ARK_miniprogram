@@ -2,6 +2,7 @@
 
 import cloud from './data/cloud';
 import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
+import Notify from './miniprogram_npm/@vant/weapp/notify/notify';
 
 // var b = JSON.parse(JSON.stringify(數組a));  複製一份數組a的數據到數組b
 // var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
@@ -67,7 +68,7 @@ App({
     const updateManager = wx.getUpdateManager()
     updateManager.onCheckForUpdate(function (res) {
       // 请求完新版本信息的回调
-      console.log("下載更新包成功：",res.hasUpdate)
+      console.log("下載更新包狀態：",res.hasUpdate)
     })
     updateManager.onUpdateReady(function () {
       wx.showModal({
@@ -93,7 +94,7 @@ App({
     
   },
   onError: function(msg) {
-    
+    Notify({ type: 'warning', message: msg });
   },
 //options(path,query,isEntryPage)
   onPageNotFound: function(options) {
@@ -107,7 +108,7 @@ App({
     });
   },
 // 下拉刷新函數，調用該函數可保證刷新完回彈
-  onPullDownRefresh : function(that) {   
+  onPullDownRefresh : function(that) {
     that.app.toastLoadingDIY();
     // setTimeout(() => {
     that.onLoad("refresh");

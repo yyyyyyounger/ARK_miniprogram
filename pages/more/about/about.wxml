@@ -4,6 +4,17 @@
     <text class="text-xl text-bold">关于我们</text>
   </view>
 </view>
+
+<view style="text-align:center;">
+  <van-image
+    round
+    width="10rem"
+    height="10rem"
+    src="https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg"
+  />
+  <!-- <view class="cu-avatar round" style="background-image:url(../../../icons/ARKlogo.jpg); height: 150px; width: 150px;"></view> -->
+  <view text-gray style="margin-top:-10px;">2021.06版ARK logo</view>
+</view>
 <text>\n</text>
 
 <view class="iconfont">
@@ -14,6 +25,7 @@
   </view>
   <view>查看<text class="devColor" bindtap="jumpToProtocol">ARK協議</text></view>
 </view>
+<text>\n</text>
 
 <van-tag type="danger" size="large">Vant</van-tag>
 <text>\n\n</text>
