@@ -101,18 +101,10 @@ Page({
     ],
   },
   onLoad: function(){
-    // 日期選擇器最大最小日期選擇
-    let nowTimeStamp = new Date(Date.now()).getTime();
-    let maxTimeStamp = nowTimeStamp+30*24*60*60*1000;
-    console.log(  "可選的開課時間直到(未來30天)：", new Date(maxTimeStamp).toLocaleDateString() );
-    this.setData({
-      minDate_calendar : nowTimeStamp,
-      maxDate_calendar : maxTimeStamp,
-    })
+    // 可選日期初始化 - 只限距離今天30天內
+    this.chooseDateSetup();
 
     getCourseInfoArray().then(res => {
-      // console.log(res.data.courseInfo_empty);
-
       // 複製雲端數組
       let arrayEmpty = JSON.parse(JSON.stringify( res.data.courseInfo_empty ));
       this.setData({  courseInfoInput : arrayEmpty  });
@@ -149,7 +141,7 @@ Page({
 
     // userInfo的shortName
     let userInfoShortNameIndex={};
-    this.data.userInfoInput.map(function (e, item) {    // 究極優化！本質上一行代碼匹配出所有index
+    this.data.userInfoInput.map(function (e, item) {      // 究極優化！本質上一行代碼匹配出所有index
       userInfoShortNameIndex[e.shortName] = e.id;
     });
     this.setData({  userInfoShortNameIndex  })
@@ -160,6 +152,8 @@ Page({
     let canEdit     = this.data.courseInfoInput.map((item)=>{    return item.canEdit    });
     this.setData({  canDisplay , canEdit ,   })
   },
+
+  // 下拉刷新函數
   onPullDownRefresh(){
     wx.stopPullDownRefresh();
   },
@@ -199,6 +193,15 @@ Page({
     console.log("timePickArray為",timePickArr);
   },
 // 日期選擇器
+  chooseDateSetup() {   // 可選日期初始化
+    let nowTimeStamp = Date.now();                    // 今天的時間戳
+    let maxTimeStamp = nowTimeStamp+30*24*60*60*1000; // 30天後的時間戳
+    console.log(  "可選的開課時間(直到未來30天)：", new Date(maxTimeStamp).toLocaleDateString() );
+    this.setData({
+      minDate_calendar : nowTimeStamp,
+      maxDate_calendar : maxTimeStamp,
+    })
+  },
   onDisplay_date() {
     this.setData({ show_calendar: true });
   },
