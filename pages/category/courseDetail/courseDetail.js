@@ -18,13 +18,23 @@ Page({
     // 步驟條 - end
   },
   onLoad: function(options){
+    this.app = getApp();
     // 獲取上個頁面傳遞的參數，說明用戶組和需要渲染的courseId
     let detailInfo = JSON.parse(options.detailInfo);
     this.setData({  detailInfo  })
     console.log("上個頁面傳遞值為：",this.data.detailInfo)
 
-    // 請求雲端的courseInfo數據
-    db.collection('course') .doc(this.data.detailInfo.courseId+"") .get()
+    // 請求雲端的courseInfo數據，該courseId為num類型
+    this.returnCourseData();
+    
+  },
+  onReady() {
+    console.log("課程詳情頁 - 已经Ready");
+  },
+  // 請求數據庫返回該courseId的數據
+  returnCourseData (){
+    // 請求雲端的courseInfo數據，該courseId為num類型
+    db.collection('course') .doc(this.data.detailInfo.courseId) .get()
     .then(res=>{
       console.log("該courseId在數據庫儲存的數據為：",res.data);
       this.setData({  courseCloudData : res.data  })
@@ -33,11 +43,6 @@ Page({
 
       this.setData({  loading: false,  }) // 骨架屏消失
     }) .catch(err=>{  console.error(err);  })
-    
-    
-  },
-  onReady() {
-    console.log("課程詳情頁 - 已经Ready");
   },
   // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
   findSetData(shortNameArray) {
@@ -71,17 +76,11 @@ Page({
     that.findSetData(shortNameArray);
   },
 
-  onShow: function(){
-    
-  },
-  onHide: function(){
-
-  },
   onPullDownRefresh: function(){
-
-  },
-  onReachBottom: function(){
-
+    this.returnCourseData();
+    setTimeout(() => {
+      wx.stopPullDownRefresh();
+    }, 1000);
   },
   onShareAppMessage: function(){
 

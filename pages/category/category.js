@@ -87,6 +87,7 @@ Page({
             }
           }
           console.log("對infoArray寫入haveFollow數據後",recentCourseInfoArray);
+          Toast('加載完成！下拉可刷新！');
 
           // 刪除自己的follow列表中已過期的課程id
           let havePastCourse = [];
@@ -111,6 +112,11 @@ Page({
     }) .catch(err=>{
         console.error(err);
     })
+
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    if (userCloudDataStorage) {
+      this.setData({  admin : userCloudDataStorage.data.admin  })
+    }
 
   },
   onReady: function() {

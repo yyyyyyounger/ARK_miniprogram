@@ -83,6 +83,20 @@ bind:close="closePopup"
 </van-row>
 <van-divider wx:if="{{!followCourseArray[0]}}" contentPosition="center">快挑選些分享加入吧！</van-divider>
 
+<!-- 管理員權限 - 列出待審核課程 -->
+<view class="cu-bar bg-white margin-top" wx:if="{{admin}}">
+	<view class="action">
+		<text class="cuIcon-title text-themeBlue"></text>待審核課程
+	</view>
+</view>
+<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange_collapse" wx:if="{{admin}}">
+	<van-collapse-item wx:for="{{checkingCourseList}}" wx:key="index" title="{{checkingCourseList[index].courseInfoInput[1].input}}" name="{{index}}">
+		<view bindtap="jumpToCourseDetail" data-courseid="{{checkingCourseList[index]._id}}">
+			<view>時間：{{checkingCourseList[index].courseInfoInput[5].input[1]}} - {{checkingCourseList[index].courseInfoInput[5].input[2]}}</view>
+			<view>地點：{{checkingCourseList[index].courseInfoInput[4].input}}</view>
+		</view>
+	</van-collapse-item>
+</van-collapse>
 
 <!-- 使用小貼士 -->
 <view class="cu-bar bg-white margin-top">

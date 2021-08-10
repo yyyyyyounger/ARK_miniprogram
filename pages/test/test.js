@@ -35,14 +35,14 @@ Page({
 
     // 雲函數test
     addTest(){
-        db.collection('config').add({
+        db.collection('course').add({
             data: {
-                _id                         : 'userInfoArray',
-                userInfoInput_empty         : cloudData.userInfoInput_empty,
+                _id                         : 0,
+                comment                     : '用於佔位，以下的課程都可以使用排序後+1的方法，_id用num表示',
                 createAt                    : Date.now()
             },
-        }).then(res => {
-            console.log("插入",res)
+        }).catch(err=>{
+            console.error(err);
         })
     },
     searchTest() {
@@ -89,9 +89,9 @@ Page({
         wx.cloud.callFunction({     // 多記錄delete專用，最高權限
             name: 'cloudDeleteRecord',
             data:{
-                objectClass : 'user',
+                objectClass : 'course',
                 subjectName : '_id',
-                subjectInfo : "b00064a760f0625227a1c374081cb672",
+                subjectInfo : "",
             },
             complete: res => {
               console.log('result: ', res)
@@ -122,8 +122,8 @@ Page({
         }) .catch (res=>{   console.error(res);   })
     },
     updateTemp () {
-        wx.cloud.callFunction({         // 向數據庫插入user的empty數據
-            name: 'cloudUpdateTemp',
+        wx.cloud.callFunction({
+            name: 'cloudFunTest',
             data:{
                 writeMode : 'update',
                 updateClass : 'course',
@@ -142,18 +142,19 @@ Page({
 
     subscribeTest() {   // 推送
         wx.requestSubscribeMessage({
-            tmplIds: ['W_ZYI60mhdcv9zbbIZUtsadXBAKKgdz0EmJqjiEO-9I'],
+            tmplIds: ['cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4'],
             success (res) {
+                // 不管點擊允許還是取消，都會執行success的回調函數
                 console.log("用戶同意接受推送：",res);
                 wx.cloud.callFunction({
                     name:'subscribeMessageSend',
                 }) .then(res=>{
-                    console.log("雲函數調用成功：",res);
+                    console.log("雲函數調用成功：",res.result);
                 }) .catch(err=>{
                     console.error("雲函數調用失敗：",err);
                 })
             },
-            fail (res) { console.error(res);},
+            fail (err) { console.error(err);},
         })
     },
 

@@ -1,10 +1,11 @@
 var app = getApp();
 import Notify from '../../../miniprogram_npm/@vant/weapp/notify/notify';
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 var cloudData = require('../../../data/cloud.js')
 const db = wx.cloud.database();   // 數據庫
-const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+// const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
 
 const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用
   return new Promise((resolve, reject) => {
@@ -117,7 +118,7 @@ Page({
       this.findSetData();
 
       // 從緩存中獲取該用戶是否管理員
-      this.setData({  admin : this.data.userInfoInput[this.data.userInfoShortNameIndex.admin].input  })
+      this.setData({  admin : userCloudDataStorage.data.admin  })
 
     }) .catch(err => {
       let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
@@ -132,23 +133,23 @@ Page({
     }
   },
   findSetData() { // 初始化所有index，匹配對應input值用於顯示
-    // courseInfo的shortName
+    // courseInfo的shortNameIndex
     let shortNameIndex={};
     this.data.courseInfoInput.map(function (e, item) {    // 究極優化！本質上一行代碼匹配出所有index
       shortNameIndex[e.shortName] = e.id;
     });
     this.setData({  shortNameIndex  })
 
-    // userInfo的shortName
+    // userInfo的shortNameIndex
     let userInfoShortNameIndex={};
     this.data.userInfoInput.map(function (e, item) {      // 究極優化！本質上一行代碼匹配出所有index
       userInfoShortNameIndex[e.shortName] = e.id;
     });
     this.setData({  userInfoShortNameIndex  })
 
-    // 生成userInfoInput裡允許顯示的設置數組
+    // 生成courseInfoInput裡允許顯示的設置數組
     let canDisplay = this.data.courseInfoInput.map((item)=>{    return item.display   });
-    // 生成userInfoInput裡允許編輯的設置數組
+    // 生成courseInfoInput裡允許編輯的設置數組
     let canEdit     = this.data.courseInfoInput.map((item)=>{    return item.canEdit    });
     this.setData({  canDisplay , canEdit ,   })
   },
@@ -425,7 +426,7 @@ Page({
       // console.log("設定了helper",true);
       haveSetArr.push({name:'helper',state:true});
     }
-    console.log(haveSetArr);
+    console.log("校驗結果：",haveSetArr);
     this.setData({  haveSetArr  })
   },
 
@@ -437,28 +438,26 @@ Page({
     // 寫入當前js的courseInfoInput數據，缺helper、講師等數據寫入 - 未完成
     this.updateLocalData();
 
-    if (this.data.btn_quit) {   // 點擊了保存並退出按鈕
-      if (!this.data.courseName_input) { // 如果輸入為空
+    if (this.data.btn_quit) {   // 點擊了退出按鈕
+      if (!this.data.courseName_input) {  // 如果輸入為空
         wx.navigateBack({    delta: 0,   })   // 回退上一頁
       } 
-      else {
-        Dialog.confirm({
+      else {                              // 提示退出
+        Dialog.confirm({  
           title: '重要提示',
           message: '確定要退出嗎？\n當前輸入不會被保存！',
-        })
-        .then(() => {
+        }) .then(() => {
           // on confirm
           wx.navigateBack({    delta: 0,   })   // 回退上一頁
-        })
-        .catch(() => {
+        }) .catch(() => {
           // on cancel
         });
       }
     }
     if (this.data.btn_submit) { // 點擊了保存並上傳按鈕
-      console.log("用戶請求submit");
+      console.log("用戶請求submit該課程，開始校驗");
       let ok = false;
-// 如數據無誤，提交到雲端，管理員端提示 - 未完成
+// 如數據無誤，才提交到雲端，管理員端提示 - 未完成
       // 輸入校驗
       this.inputCheck();
       for (let i = 0; i < this.data.haveSetArr.length; i++) {
@@ -471,20 +470,30 @@ Page({
           ok = true;
         }
       }
-      if ( ok ) {
-        console.log("當前courseInfoInput：",this.data.courseInfoInput);
-        const userInfoStorage = wx.getStorageSync('userInfo');  // 用戶緩存
+      if ( ok && !this.data.needWaiting ) {
+        console.log("校驗ok！準備上傳courseInfoInput：",this.data.courseInfoInput);
         Dialog.confirm({
           title: '重要提示',
           message: '確認提交審核嗎？',
         })
         .then(res=>{    // 點擊確認！
+          this.setData({  needWaiting : true  })
+          Toast.loading({
+            message: '拼命上傳中...',
+            forbidClick: true,
+          })
+          const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+          Toast.loading({
+            message: '拼命上傳中...',
+            forbidClick: true,
+          })
           // 上傳數據 本地 → 雲端 - 未完成
           wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
             name : 'courseAdd',
             data : {
-              avatarUrl       : userInfoStorage.data.avatarUrl,
-              nickName        : userInfoStorage.data.nickName,
+              avatarUrl       : userCloudDataStorage.data.avatarUrl,
+              arkid           : userCloudDataStorage.data.arkid,
+              nickName        : userCloudDataStorage.data.nickName,
               courseInfoInput : this.data.courseInfoInput ,
               allowVote       : this.data.allowVote,
               datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
@@ -492,29 +501,35 @@ Page({
               timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
             }
           }) .then (res=>{
-            console.log(res);
-            // 獲取提交成功後返回的該課程的courseId
-            db.collection('course') 
-            .where({ nickName : userInfoStorage.data.nickName }) .orderBy("_id","desc") .field({  _id:true  }) .limit(1) .get()
-            .then(res=>{
-                console.log("創建的courseId為",res.data[0]._id);
-                // 跳轉課程詳情頁
-                let detailInfo = {
-                  user:"speaker",
-                  courseId:res.data[0]._id,
-                }
-                detailInfo = JSON.stringify(detailInfo);
-                wx.redirectTo({   // 銷毀當前頁的帶參跳轉
-                  url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
-                })
+            // 雲函數調用後返回法
+            console.log("該課程的courseId為",res.result);
+            // 獲取用戶新增課程的id，然後帶參跳轉課程詳情頁
+            let detailInfo = {
+              user      :   "speaker",
+              courseId  :   res.result,
+            }
+            detailInfo = JSON.stringify(detailInfo);
+            Toast.success('開課成功！');
+            wx.redirectTo({   // 銷毀當前頁的帶參跳轉
+              url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
             })
+            // 雲獲取方法
+            // 返回user集合中 該user的 myCourse數組
+            // db.collection('user') .doc(userCloudDataStorage.data._openid) .field({  myCourses:true  }) .get()
+            // .then(res=>{
+            // })
           }) .catch (err=>{
             console.error(err);
+            Notify({ type: 'danger', message: err });
           })
   
         }) .catch(err=>{  console.error(err);  })
       } // if輸入校驗 - end
     } // if點擊了submit button - end
+
+    if (this.data.needWaiting) {
+      Toast('請等待結果返回！')
+    }
   },
 
   // 選填區

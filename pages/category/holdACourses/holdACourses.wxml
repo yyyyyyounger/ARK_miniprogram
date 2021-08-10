@@ -1,6 +1,7 @@
 <!-- 全局彈出類 -->
 <van-notify id="van-notify" />
 <van-dialog id="van-dialog" />
+<van-toast id="van-toast" />
 <!-- 日期選擇器，增加以當天時間一個月內的選擇限制 - 未完成 -->
 <van-calendar show="{{ show_calendar }}" show-confirm="{{ true }}" bind:close="onClose" bind:confirm="onConfirm_calendar" 
   max-date="{{ maxDate_calendar }}" color="#3498DB" type="{{  allowVote ? 'multiple' : 'single'  }}"/>
@@ -22,12 +23,12 @@
 </van-popup>
 
 <!-- 設置步驟條 - 未完成 -->
-<view class="cu-steps">
+<!-- <view class="cu-steps">
   <view class="cu-item {{index > stepsActive ?'':'text-themeBlue'}}" wx:for="{{numList}}" wx:key="item">
-  <!-- 該處判斷 >0為第0位active，>1為第1位active，如此類推 -->
+  該處判斷 >0為第0位active，>1為第1位active，如此類推
     <text class="num" data-index="{{index + 1}}"></text> {{item.name}}
   </view>
-</view>
+</view> -->
 
 <!-- 必填 -->
 <view class="grid col-{{1}} padding-sm">    
@@ -245,8 +246,8 @@
 
 <!-- 提交審核按鈕 -->
 <view class="padding flex flex-direction">
-  <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
   <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">提交{{admin?'修改':'審核'}}</button>
+  <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
 </view>
 
 <!-- 管理員權限修改 edit 和 display -->

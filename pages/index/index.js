@@ -80,6 +80,23 @@ Page({
     } else {
       this.setData({  userCloudData : userCloudData.data  })
     }
+    // 查詢該用戶的管理員權限
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    if (userCloudDataStorage) {
+      this.setData({  admin : userCloudDataStorage.data.admin  })
+      if (this.data.admin) {  // 管理員權限者 - 返回課程列表中courseState為checking的課
+        db.collection('course').where({
+          timeStampPick : _.gte(Date.now()) ,
+          courseState : _.eq("checking") ,
+        }) .field({
+            _openid : false,
+            _createAt : false,
+        }) .orderBy("timeStampPick","asc") .get() .then(res=>{
+          console.log("課程狀態為checking的課為",res.data);
+          this.setData({  checkingCourseList : res.data  })
+        })
+      }
+    }
 
     // 項目開始日期
     this.setData({

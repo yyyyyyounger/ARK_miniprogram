@@ -43,7 +43,7 @@
         <view class="tag">講者</view>
       </view>
       <!-- Helper頭像 -->
-      <block wx:for="{{courseInfoInput[shortNameIndex.helper].input}}">
+      <block wx:for="{{courseInfoInput[shortNameIndex.helper].input}}" wx:key="index">
         <view wx:if="{{courseInfoInput[shortNameIndex.helper].input[index]}}"  class="cu-avatar round lg shadow-blur" style="background-image:url({{courseInfoInput[shortNameIndex.helper].input[index].Avatar}}); {{index==0 ? 'margin-left:15px;' : ''}}">
           <view class="tag">助手</view>
         </view>
@@ -60,6 +60,13 @@
       left-icon="star-o"
       wrapable
       text="在審核通過後，你仍然可以修改部分課程信息和上傳文件！"
+    />
+    <van-notice-bar
+      color="#ed6a0c"
+      background="#ecf9ff"
+      left-icon="star-o"
+      wrapable
+      text="請耐心等待管理員回復！如有疑問可以前往“更多頁”聯繫管理員"
     />
     <van-cell-group
     wx:for="{{courseInfoInput}}"

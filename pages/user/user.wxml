@@ -1,6 +1,7 @@
 <!-- 彈出類 -->
 <van-notify id="van-notify"/>
 <van-dialog id="van-dialog"/>
+<van-toast id="van-toast" />
 <van-dialog
   use-slot
   title="註冊須知"
@@ -14,7 +15,6 @@
     <text>您需要閱讀並同意遵守ARK協議\n才能成功註冊！\n（點擊確認後跳轉ARK協議界面）</text>
   </view>
 </van-dialog>
-<van-toast id="van-toast" />
 <text>\n</text>
 
 <view class="userinfo" wx:if="{{!isSignIn}}">     <!-- 用戶頭像 -->
