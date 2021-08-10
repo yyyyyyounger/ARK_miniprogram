@@ -21,6 +21,15 @@
     bind:cancel="onCancel_timerPicker"
   />
 </van-popup>
+<!-- 彈出選擇器 - 動作面板 -->
+<van-action-sheet
+  show="{{ show_sheet }}"
+  actions="{{ actions_sheet }}"
+  bind:close="onClose_sheet"
+  bind:cancel="onClose_sheet"
+  bind:select="onSelect_sheet"
+  cancel-text="取消"
+/>
 
 <!-- 設置步驟條 - 未完成 -->
 <!-- <view class="cu-steps">
@@ -217,9 +226,6 @@
           <text class="cuIcon-circlefill text-themeOrange-light"></text>
           <text class="text-grey">簽到密碼</text>
         </view>
-        <view class="action">
-          <!-- <text class="text-grey">文本內容</text> -->
-        </view>
       </view>
       <van-field
         value="{{ courseCloudData ? courseInfoInput[shortNameIndex.attendCode].input : '' }}"
@@ -244,10 +250,16 @@
   </view>
 </view> -->
 
+<view wx:if="{{admin}}" style="margin-top:10px;">
+  <van-cell title="審核狀態" value="{{ courseState }}" title-class="text-grey cu-item" is-link bind:click="onClick_changeCourseState"/>
+</view>
+
+
 <!-- 提交審核按鈕 -->
 <view class="padding flex flex-direction">
   <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">提交{{courseCloudData?'修改':'審核'}}</button>
   <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
+  <button class="shadow cu-btn bg-red margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_deleteCourse">刪除課程 *謹慎點擊！*</button>
 </view>
 
 <!-- 管理員權限修改 edit 和 display -->

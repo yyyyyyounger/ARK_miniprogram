@@ -53,53 +53,20 @@ Page({
     },
     timePickArray:[],
     // 時間選擇器 - end
-    ColorList: [
-    {
-      title: '桔橙',
-      name: 'orange',
-      color: '#f37b1d'
-    },
-    {
-      title: '橄榄',
-      name: 'olive',
-      color: '#8dc63f'
-    },
-    {
-      title: '森绿',
-      name: 'green',
-      color: '#39b54a'
-    },
-    {
-      title: '天青',
-      name: 'cyan',
-      color: '#1cbbb4'
-    },
-    {
-      title: '海蓝',
-      name: 'blue',
-      color: '#0081ff'
-    },
-    {
-      title: '姹紫',
-      name: 'purple',
-      color: '#6739b6'
-    },
-    {
-      title: '桃粉',
-      name: 'pink',
-      color: '#e03997'
-    },
-    {
-      title: '玄灰',
-      name: 'grey',
-      color: '#8799a3'
-    },
-    {
-      title: '墨黑',
-      name: 'black',
-      color: '#333333'
-    },
+    // 彈出選擇器 - 動作面板
+    show_sheet: false,
+    actions_sheet: [
+      {
+        name: '審核 checking',
+      },
+      {
+        name: '通過 opening',
+      },
+      {
+        name: '結束 finish',
+      },
     ],
+    actions_sheetStrArr:['checking','opening','finish'],
   },
   onLoad: function(options){
     // 可選日期初始化 - 只限距離今天30天內
@@ -125,6 +92,7 @@ Page({
           courseCloudData : detailInfo.courseCloudData,
           courseInfoInput : detailInfo.courseCloudData.courseInfoInput,   // 填入已經填寫過的courseInfo
           allowVote       : detailInfo.courseCloudData.allowVote,
+          courseState     : detailInfo.courseCloudData.courseState,
         })
         // 還原已輸入的日期時間等其他數據到data
         if (!this.data.allowVote) {   // 講者設定時間mode
@@ -571,6 +539,7 @@ Page({
                 nickName        : userCloudDataStorage.data.nickName,
                 courseInfoInput : this.data.courseInfoInput ,
                 allowVote       : this.data.allowVote,
+                courseState     : this.data.courseState,
                 datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
                 timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
                 timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
@@ -599,6 +568,23 @@ Page({
     if (this.data.needWaiting) {
       Toast('請等待結果返回！')
     }
+  },
+  // 刪除課程
+  onClick_deleteCourse() {
+    // 重點提示是否確認刪除
+    Dialog.confirm({
+      title: '*危險操作提示！*',
+      message: '是否確認刪除該課程？\n將會抹除**所有**有關記錄！',
+    })
+    .then(() => {   // on confirm - 未完成
+      // 1 刪除course集合中的該課
+      // 2 刪除myCourse的該課
+      // 3 if 課程狀態為finish，刪除記錄的followMember中的allJoinId - user的課程參與記錄
+      // 4 文件
+
+    })
+    .catch(() => {  // on cancel
+    });
   },
 
   // 選填區
@@ -672,6 +658,26 @@ Page({
     } else if (this.data.helperInfoArray.length==2){                                    // Helper數已滿（2人）
       Notify({ type: 'warning', message: 'Helper 數已滿！不能再添加' });
     }
+
+  },
+
+  // admin權限修改課程狀態courseState
+  onClick_changeCourseState() {
+    this.setData({  show_sheet :true  })
+  },
+  onClose_sheet () {
+    this.setData({  show_sheet :false  })
+  },
+  onSelect_sheet (e) {
+    let selectTerm = e.detail.name;
+    let index;
+    for (let i = 0; i < this.data.actions_sheet.length; i++) {
+      if (selectTerm==this.data.actions_sheet[i].name) {
+        index = i;
+      }
+    }
+    console.log("選擇了",selectTerm,"， 選中項index為",index);
+    this.setData({  courseState : this.data.actions_sheetStrArr[index]  })
 
   },
 });
