@@ -16,3 +16,11 @@ echo " "
 echo "The program has finished ~"
 echo " "
 read -p "Press \"Enter\" to End"
+
+# merge流程：
+# git checkout -b newBranchName
+# 修改完後
+# git add -A
+# git commit -m "備註"
+# git checkout master/dev 
+# git merge newBranchName
