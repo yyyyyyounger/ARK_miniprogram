@@ -101,7 +101,7 @@ Page({
     },
     ],
   },
-  onLoad: function(){
+  onLoad: function(options){
     // 可選日期初始化 - 只限距離今天30天內
     this.chooseDateSetup();
 
@@ -117,11 +117,50 @@ Page({
       // 初始化所有index
       this.findSetData();
 
+      // if從詳情頁的編輯按鈕跳轉，將會攜帶參數
+      if (options.detailInfo) { // 如果存在帶參跳轉才執行
+        let detailInfo = JSON.parse(options.detailInfo);
+        console.log("上個頁面傳遞值為：",detailInfo)
+        this.setData({  // 將courseCloudData存入data
+          courseCloudData : detailInfo.courseCloudData,
+          courseInfoInput : detailInfo.courseCloudData.courseInfoInput,   // 填入已經填寫過的courseInfo
+          allowVote       : detailInfo.courseCloudData.allowVote,
+        })
+        // 還原已輸入的日期時間等其他數據到data
+        if (!this.data.allowVote) {   // 講者設定時間mode
+          this.setData({
+            datePick                    : this.data.courseInfoInput[this.data.shortNameIndex.courseTime].input[0],
+            ['timePickArray[0].begin']  : this.data.courseInfoInput[this.data.shortNameIndex.courseTime].input[1], // input[1]為timeBegin
+            ['timePickArray[0].end']    : this.data.courseInfoInput[this.data.shortNameIndex.courseTime].input[2], // input[2]為timeEnd
+            timeStampPick               : this.data.courseCloudData.timeStampPick,    // 開始時間的時間戳
+          })
+        } else {                      // 投票mode
+          this.setData({
+            datePick       : this.data.courseCloudData.datePickArray+"",
+            datePickArray  : this.data.courseCloudData.datePickArray,
+            timePickArray  : this.data.courseCloudData.timePickArray,
+            timeStampPick  : this.data.courseCloudData.timeStampPick,    // 開始時間的時間戳
+          })
+        }
+        // 還原助手信息和簽到密碼
+        this.setData({
+          helperInfoArray : this.data.courseInfoInput[this.data.shortNameIndex.helper].input,
+          attendCode      : this.data.courseInfoInput[this.data.shortNameIndex.attendCode].input,
+        })
+        // 還原輸入情況
+        this.setData({
+          courseName_input    : this.data.courseInfoInput[this.data.shortNameIndex.courseName].input,
+          courseContent_input : this.data.courseInfoInput[this.data.shortNameIndex.courseContent].input,
+          courseAdres_input   : this.data.courseInfoInput[this.data.shortNameIndex.courseAdres].input,
+        })
+      }
+
       // 從緩存中獲取該用戶是否管理員
       this.setData({  admin : userCloudDataStorage.data.admin  })
 
-    }) .catch(err => {
+    }) .catch(err => {    // 無法請求雲端時以本地數據替代
       let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
+      this.setData({  courseInfo_empty : arrayEmpty  })
       console.error(err);
     })
     
@@ -175,7 +214,7 @@ Page({
 // 允許投票switch的開關
   onChange_Switch(){
     this.setData({    // 清空之前的選擇
-      allowVote     :!this.data.allowVote,
+      allowVote     : !this.data.allowVote,
       datePick      : '',
       datePickArray : '',
       datePickStr   : '',
@@ -229,10 +268,9 @@ Page({
       for (let i = 0; i < event.detail.length; i++) {
         console.log(  this.formatDate((event.detail[i]))  );
         datePickArray.push(  this.formatDate((event.detail[i]))  );
-        // datePickStr += this.formatDate((event.detail[i]))+", ";
       }
-      datePickArray.sort(function(a, b){
-        return a > b ? 1 : -1; // 这里改为大于号
+      datePickArray.sort(function(a, b){    // 日期排序
+        return a > b ? 1 : -1;
       });
       for (let i = 0; i < datePickArray.length; i++) {
         datePickStr += datePickArray[i]+", ";
@@ -369,16 +407,16 @@ Page({
         ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[1]'] : this.data.timePickArray[0].begin,   // input[1]為timeBegin
         ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[2]'] : this.data.timePickArray[0].end,     // input[2]為timeEnd        
       })
-      console.log("DatePick", this.data.datePick );
-      console.log("TimePick", this.data.timePickArray[0].begin );
-      console.log("時間str為：", this.data.datePick + " " + this.data.timePickArray[0].begin );
+      // console.log("DatePick", this.data.datePick );
+      // console.log("TimePick", this.data.timePickArray[0].begin );
+      // console.log("時間str為：", this.data.datePick + " " + this.data.timePickArray[0].begin );
       let timeStampPick = new Date(this.data.datePick + " " + this.data.timePickArray[0].begin).getTime();
       console.log("時間戳為：", timeStampPick );
       this.setData({  timeStampPick   })
     } else {    // 投票模式下寫入當前所選擇的最早的時間戳
-      console.log("DatePick", this.data.datePickArray[0] );
-      console.log("TimePick", this.data.timePickArray[0].begin );
-      console.log("時間str為：", this.data.datePickArray[0] + " " + this.data.timePickArray[0].begin );
+      // console.log("DatePick", this.data.datePickArray[0] );
+      // console.log("TimePick", this.data.timePickArray[0].begin );
+      // console.log("時間str為：", this.data.datePickArray[0] + " " + this.data.timePickArray[0].begin );
       let timeStampPick = new Date(this.data.datePickArray[0] + " " + this.data.timePickArray[0].begin).getTime();
       console.log("時間戳為：", timeStampPick );
       this.setData({  timeStampPick   })
@@ -391,20 +429,17 @@ Page({
           ['this.data.courseInfoInput['+i+'].canEdit'] : this.data.canEdit[i],
           ['this.data.courseInfoInput['+i+'].display'] : this.data.canDisplay[i],  
         })
-        // this.data.courseInfoInput[i].canEdit = this.data.canEdit[i];
-        // this.data.courseInfoInput[i].display = this.data.canDisplay[i];
       }
     }
   },
   // 輸入校驗
   inputCheck () {
     let haveSetArr = [];
-    // this.setData({  haveSetArr  })
-    haveSetArr.push({name:'courseName',   state:!!this.data.courseName_input});
-    haveSetArr.push({name:'courseContent',state:!!this.data.courseContent_input});
-    haveSetArr.push({name:'courseAdres',  state:!!this.data.courseAdres_input});
-    haveSetArr.push({name:'date',         state:!!this.data.datePick});
-    haveSetArr.push({name:'time',         state:!!this.data.timePickArray[0].end});
+    haveSetArr.push({name:'courseName',   state:!!this.data.courseName_input      });
+    haveSetArr.push({name:'courseContent',state:!!this.data.courseContent_input   });
+    haveSetArr.push({name:'courseAdres',  state:!!this.data.courseAdres_input     });
+    haveSetArr.push({name:'date',         state:!!this.data.datePick              });
+    haveSetArr.push({name:'time',         state:!!this.data.timePickArray[0].end  });
     
     for (let i = 0; i < this.data.timePickArray.length; i++) {
       if (this.data.timePickArray[i].begin && !this.data.timePickArray[i].end) {
@@ -474,7 +509,7 @@ Page({
         console.log("校驗ok！準備上傳courseInfoInput：",this.data.courseInfoInput);
         Dialog.confirm({
           title: '重要提示',
-          message: '確認提交審核嗎？',
+          message: '確認提交'+(this.data.courseCloudData?'修改':'審核')+'嗎？',
         })
         .then(res=>{    // 點擊確認！
           this.setData({  needWaiting : true  })
@@ -487,41 +522,75 @@ Page({
             message: '拼命上傳中...',
             forbidClick: true,
           })
-          // 上傳數據 本地 → 雲端 - 未完成
-          wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
-            name : 'courseAdd',
-            data : {
-              avatarUrl       : userCloudDataStorage.data.avatarUrl,
-              arkid           : userCloudDataStorage.data.arkid,
-              nickName        : userCloudDataStorage.data.nickName,
-              courseInfoInput : this.data.courseInfoInput ,
-              allowVote       : this.data.allowVote,
-              datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
-              timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
-              timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
-            }
-          }) .then (res=>{
-            // 雲函數調用後返回法
-            console.log("該課程的courseId為",res.result);
-            // 獲取用戶新增課程的id，然後帶參跳轉課程詳情頁
-            let detailInfo = {
-              user      :   "speaker",
-              courseId  :   res.result,
-            }
-            detailInfo = JSON.stringify(detailInfo);
-            Toast.success('開課成功！');
-            wx.redirectTo({   // 銷毀當前頁的帶參跳轉
-              url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
+          // 上傳數據 本地 → 雲端
+          if (!this.data.courseCloudData) {   // 開課mode
+            console.log("首次開課模式！");
+            wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
+              name : 'courseAdd',
+              data : {
+                avatarUrl       : userCloudDataStorage.data.avatarUrl,
+                arkid           : userCloudDataStorage.data.arkid,
+                nickName        : userCloudDataStorage.data.nickName,
+                courseInfoInput : this.data.courseInfoInput ,
+                allowVote       : this.data.allowVote,
+                datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
+                timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
+                timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
+              }
+            }) .then (res=>{
+              // 雲函數調用後返回法
+              console.log("該課程的courseId為",res.result);
+              // 獲取用戶新增課程的id，然後帶參跳轉課程詳情頁
+              let detailInfo = {
+                user      :   "speaker",
+                courseId  :   res.result,
+              }
+              detailInfo = JSON.stringify(detailInfo);
+              Toast.success('開課成功！');
+              wx.redirectTo({   // 銷毀當前頁的帶參跳轉
+                url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
+              })
+              // 雲獲取方法
+              // 返回user集合中 該user的 myCourse數組
+              // db.collection('user') .doc(userCloudDataStorage.data._openid) .field({  myCourses:true  }) .get()
+              // .then(res=>{
+              // })
+            }) .catch (err=>{
+              console.error(err);
+              Notify({ type: 'danger', message: err });
             })
-            // 雲獲取方法
-            // 返回user集合中 該user的 myCourse數組
-            // db.collection('user') .doc(userCloudDataStorage.data._openid) .field({  myCourses:true  }) .get()
-            // .then(res=>{
-            // })
-          }) .catch (err=>{
-            console.error(err);
-            Notify({ type: 'danger', message: err });
-          })
+          } else {                            // 更新課程信息mode
+            console.log("更新課程信息模式！");
+            // 調用加課的雲函數 courseAdd
+            wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
+              name : 'courseUpdate',
+              data : {
+                idNum           : this.data.courseCloudData._id,
+                avatarUrl       : userCloudDataStorage.data.avatarUrl,
+                arkid           : userCloudDataStorage.data.arkid,
+                nickName        : userCloudDataStorage.data.nickName,
+                courseInfoInput : this.data.courseInfoInput ,
+                allowVote       : this.data.allowVote,
+                datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
+                timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
+                timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
+              }
+            }) .then (res=>{
+              // 獲取用戶新增課程的id，然後帶參跳轉課程詳情頁
+              let detailInfo = {
+                user      :   "speaker",
+                courseId  :   this.data.courseCloudData._id,
+              }
+              detailInfo = JSON.stringify(detailInfo);
+              Toast.success('修改成功！');
+              wx.redirectTo({   // 銷毀當前頁的帶參跳轉
+                url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
+              })
+            }) .catch (err=>{
+              console.error(err);
+              Notify({ type: 'danger', message: err });
+            })
+          }
   
         }) .catch(err=>{  console.error(err);  })
       } // if輸入校驗 - end
@@ -557,6 +626,8 @@ Page({
       });
     };
 
+    const userCloudDataStorage = wx.getStorageSync('userCloudData')
+
     if (this.data.helperInfoArray.length<2 && !!this.data.helperid_input) {   // Helper數未滿
       if (this.data.helperid_input == userCloudDataStorage.data.arkid ) {                                         // 如果搜索的是自己，提示不可以
         Notify({ type: 'warning', message: 'Helper 不能是自己！' });
@@ -571,8 +642,7 @@ Page({
           // on confirm
           searchArkid().then(res => {
             if (res.data.length!=0) {  // 用戶存在
-              console.log("該用戶存在！");
-              console.log("數據為：",res.data[0]);
+              console.log("該用戶存在！用戶數據為：",res.data[0]);
               let helperName  = res.data[0].userInfoInput[1].input;
               console.log("HelperName為：",helperName);
               let helperInfoObj = {

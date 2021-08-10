@@ -39,7 +39,7 @@
   <view class="cu-list menu sm-border card-menu margin-top">
     
     <!-- 分享主題 -->
-    <block wx:if="{{courseInfoInput[shortNameIndex.courseName].display}}">
+    <block wx:if="{{canDisplay[shortNameIndex.courseName]}}">
       <view class="cu-item">
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
@@ -54,8 +54,8 @@
         hold-keyboard
         data-model="courseName_input" 
         clearable
-        disabled = "{{ !courseInfoInput[shortNameIndex.courseName].canEdit }}"
-        value="{{ value }}"
+        disabled = "{{!canEdit[shortNameIndex.courseName]}}"
+        value="{{ courseCloudData ? courseInfoInput[shortNameIndex.courseName].input : '' }}"
         placeholder="e.g. ECEN1008 的 Mid-Term 前總結"
         border="{{ false }}"
         bind:change="onChange_field"
@@ -63,7 +63,7 @@
     </block>
 
     <!-- 分享內容 -->
-    <block wx:if="{{courseInfoInput[shortNameIndex.courseContent].display}}">
+    <block wx:if="{{canDisplay[shortNameIndex.courseContent]}}">
       <view class="cu-item">    
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
@@ -71,6 +71,8 @@
         </view>
       </view>
       <van-field
+        disabled = "{{!canEdit[shortNameIndex.courseContent]}}"
+        value="{{ courseCloudData ? courseInfoInput[shortNameIndex.courseContent].input : '' }}"
         hold-keyboard
         data-model="courseContent_input" 
         type='textarea'
@@ -78,15 +80,13 @@
         show-word-limit
         maxlength="100"
         clearable
-        disabled = "{{ !courseInfoInput[shortNameIndex.courseContent].canEdit }}"
-        value="{{ value }}"
         placeholder="分享簡介。e.g. 今日的風兒甚是喧囂~"
         bind:change="onChange_field"
       />
     </block>
 
     <!-- 分享地址 -->
-    <block wx:if="{{courseInfoInput[shortNameIndex.courseContent].display}}">
+    <block wx:if="{{canDisplay[shortNameIndex.courseContent]}}">
       <view class="cu-item">    
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
@@ -97,11 +97,11 @@
         </view>
       </view>
       <van-field
+        disabled = "{{!canEdit[shortNameIndex.courseAdres]}}"
+        value="{{ courseCloudData ? courseInfoInput[shortNameIndex.courseAdres].input : '' }}"
         hold-keyboard
         data-model="courseAdres_input" 
         clearable
-        disabled = "{{ !courseInfoInput[shortNameIndex.courseAdres].canEdit }}"
-        value="{{ value }}"
         placeholder="e.g. 圖書館1111。請盡早預約！"
         border="{{ false }}"
         bind:change="onChange_field"
@@ -109,7 +109,7 @@
     </block>
 
     <!-- 分享時間 -->
-    <block wx:if="{{courseInfoInput[shortNameIndex.courseTime].display}}">
+    <block wx:if="{{canDisplay[shortNameIndex.courseTime]}}">
       <view class="cu-item">    
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
@@ -197,15 +197,15 @@
         <view class="action">
         </view>
       </view> -->
-      <van-cell title-class="text-grey cu-item" wx:if="{{displayHelper}}">    <!-- 允許投票switch -->
+      <van-cell title-class="text-grey cu-item" wx:if="{{helperInfoArray[0]}}">    <!-- 允許投票switch -->
         <!-- <view slot="title" > -->
           <van-row >
-            <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name">
+            <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name" wx:if="{{helperInfoArray[index]}}">
               <text class="cu-avatar round" style="background-image:url( {{helperInfoArray[index].Avatar}} );"></text>
             </van-col>
           </van-row>
           <van-row >
-            <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name">
+            <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name" wx:if="{{helperInfoArray[index]}}">
               <text  >{{helperInfoArray[index].name}}</text>
             </van-col>
           </van-row>
@@ -222,12 +222,12 @@
         </view>
       </view>
       <van-field
+        value="{{ courseCloudData ? courseInfoInput[shortNameIndex.attendCode].input : '' }}"
         hold-keyboard
         data-model="attendCode_input" 
         type="password"
         maxlength='4'
         clearable
-        value="{{ value }}"
         placeholder="4位，數字/字母皆可，不區分大小寫"
         bind:change="onChange_field"
       />
@@ -246,7 +246,7 @@
 
 <!-- 提交審核按鈕 -->
 <view class="padding flex flex-direction">
-  <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">提交{{admin?'修改':'審核'}}</button>
+  <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">提交{{courseCloudData?'修改':'審核'}}</button>
   <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
 </view>
 

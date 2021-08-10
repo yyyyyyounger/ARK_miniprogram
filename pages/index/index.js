@@ -86,7 +86,7 @@ Page({
       this.setData({  admin : userCloudDataStorage.data.admin  })
       if (this.data.admin) {  // 管理員權限者 - 返回課程列表中courseState為checking的課
         db.collection('course').where({
-          timeStampPick : _.gte(Date.now()) ,
+          timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,   // 半個月前到未來期間的仍是checking狀態的課程
           courseState : _.eq("checking") ,
         }) .field({
             _openid : false,

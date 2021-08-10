@@ -27,6 +27,9 @@ Page({
     // 請求雲端的courseInfo數據，該courseId為num類型
     this.returnCourseData();
     
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    // 從緩存中獲取該用戶是否管理員
+    this.setData({  admin : userCloudDataStorage.data.admin  })
   },
   onReady() {
     console.log("課程詳情頁 - 已经Ready");
@@ -96,6 +99,18 @@ Page({
   numSteps() {
     this.setData({
       num: this.data.num == this.data.numList.length - 1 ? 1 : this.data.num + 1
+    })
+  },
+
+  // 跳轉編輯頁
+  editInfo() {
+    let detailInfo = {
+      user             :   "speaker",
+      courseCloudData  :   this.data.courseCloudData,
+    }
+    detailInfo = JSON.stringify(detailInfo);
+    wx.navigateTo({
+      url: '../holdACourses/holdACourses?detailInfo=' + detailInfo,
     })
   },
 

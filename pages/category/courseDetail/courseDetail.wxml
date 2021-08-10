@@ -34,7 +34,7 @@
         data-courseid="{{recentCourseInfoArray[index].courseId}}" 
         bind:click="addFollow"
       >
-        Follow
+        追蹤課程
       </van-button>
     </van-col>
     <!-- 頭像 -->
@@ -50,9 +50,23 @@
       </block>
     </van-col>
   </van-row>
-  <!-- <view>講者：{{courseInfoInput[shortNameIndex.speakerName].input}}</view> -->
+  <!-- 編輯課程信息按鈕 -->
+  <van-row wx:if="{{admin}}">
+    <van-col offset="2">
+      <van-button 
+        icon="edit" 
+        size="small" 
+        color="#3498DB" 
+        type="primary" 
+        round 
+        bind:click="editInfo"
+      >
+        編輯課程
+      </van-button>
+    </van-col>
+  </van-row>
 
-  <!-- 講者剛提交雲端的視角 -->
+  <!-- checking狀態視角 -->
   <block wx:if="{{courseCloudData.courseState=='checking' || courseCloudData.courseState=='editing'}}">
     <van-notice-bar
       color="#ed6a0c"
@@ -70,9 +84,8 @@
     />
     <van-cell-group
     wx:for="{{courseInfoInput}}"
-    wx:key="id"
+    wx:key="index"
     >
-      <!-- wx:if="{{InfoDisplay[index]}}" -->
       <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
         <view>{{item.input}}</view>
       </van-cell>
