@@ -1,4 +1,4 @@
-// pages/category/myFollowCourses/myFollowCourses.js
+// pages/category/myCourses/myCourses.js
 Page({
 
   /**

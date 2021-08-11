@@ -23,6 +23,7 @@ exports.main = async (event, context) => {
       datePickArray   : event.datePickArray,
       timePickArray   : event.timePickArray,
       timeStampPick   : event.timeStampPick,
+      courseState     : event.courseState,
       memberLimit     : 50,
     }
   }) .then(res=>{

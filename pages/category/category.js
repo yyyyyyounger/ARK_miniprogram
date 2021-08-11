@@ -31,6 +31,7 @@ Page({
   },
   onLoad: function(page) {
     this.app = getApp();
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     // 向服務器請求的延時
     Toast.loading({
       message: '瘋狂加載中...',
@@ -44,10 +45,18 @@ Page({
     let todayTimeStamp = (new Date(today)).getTime();   // 今天的時間戳
     console.log( "今天的時間戳：", todayTimeStamp );
 
-    // 查詢course集合中，大於等於今天時間戳的課程，（距今一個月內未進行的課程） - 未完成
-    db.collection('course').where({
-        timeStampPick : _.gte(todayTimeStamp) ,
-    }) .field({
+    // 查詢course集合中，符合條件的課程，（距今一個月內未進行的課程） - 未完成
+    db.collection('course') .where( _.or([
+        { // 普通用戶可查看最近已opening的課程
+          timeStampPick : _.gte(todayTimeStamp) ,
+          courseState   : _.eq('opening') ,
+        },
+        // { // 已開課的用戶可查看近期仍在checking的課程
+        //   timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking狀態的課程
+        //   courseState   : _.eq('checking') ,
+        //   arkid         : _.eq(userCloudDataStorage.data.arkid) , // 自己的開課
+        // },
+    ]) ) .field({
         _openid : false,
         _createAt : false,
     }) .orderBy("timeStampPick","asc") .get()
@@ -113,8 +122,7 @@ Page({
         console.error(err);
     })
 
-    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
-    if (userCloudDataStorage) {
+    if (userCloudDataStorage) { // 如果已登錄，獲取admin權限
       this.setData({  admin : userCloudDataStorage.data.admin  })
     }
 
@@ -316,6 +324,11 @@ Page({
   jumpTomyFollowCourses (){
     wx.navigateTo({
       url: './myFollowCourses/myFollowCourses',
+    })
+  },
+  jumpToMyCourses (){
+    wx.navigateTo({
+      url: './myCourses/myCourses',
     })
   },
   jumpToholdACourses (){

@@ -360,11 +360,16 @@ Page({
       ['courseInfoInput['+this.data.shortNameIndex.courseContent+'].input'] : this.data.courseContent_input,
       ['courseInfoInput['+this.data.shortNameIndex.courseAdres+'].input']   : this.data.courseAdres_input,
       ['courseInfoInput['+this.data.shortNameIndex.attendCode+'].input']    : this.data.attendCode_input,
-      ['courseInfoInput['+this.data.shortNameIndex.speakerName+'].input']   : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.name].input, // 寫入講者姓名
-      ['courseInfoInput['+this.data.shortNameIndex.speakerid+'].input']     : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.arkId].input,   // 寫入講者arkid
       ['courseInfoInput['+this.data.shortNameIndex.helper+'].input[0]']     : this.data.helperInfoArray[0],  // 寫入helper 1的信息
       ['courseInfoInput['+this.data.shortNameIndex.helper+'].input[1]']     : this.data.helperInfoArray[1],  // 寫入helper 2的信息
     })
+    if ( !this.data.courseCloudData || this.data.courseCloudData.arkid==userCloudDataStorage.data.arkid) {   // 開學mode，或本人情況下，才覆蓋緩存的userInfo數據
+      console.log("該次修改信息為本人操作！");
+      this.setData({
+        ['courseInfoInput['+this.data.shortNameIndex.speakerName+'].input']   : this.data.userInfoInput[this.data.userInfoShortNameIndex.name].input, // 寫入講者姓名
+        ['courseInfoInput['+this.data.shortNameIndex.speakerid+'].input']     : this.data.userInfoInput[this.data.userInfoShortNameIndex.arkId].input,   // 寫入講者arkid
+      })
+    }
     if (!this.data.allowVote) {    // 講者設定時間mode，直接將具體時間寫入courseInfoInput數組內
       this.setData({
         ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[0]'] : this.data.datePick,
@@ -470,6 +475,7 @@ Page({
         }
       }
       if ( ok && !this.data.needWaiting ) {
+        const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
         console.log("校驗ok！準備上傳courseInfoInput：",this.data.courseInfoInput);
         Dialog.confirm({
           title: '重要提示',
@@ -481,7 +487,6 @@ Page({
             message: '拼命上傳中...',
             forbidClick: true,
           })
-          const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
           Toast.loading({
             message: '拼命上傳中...',
             forbidClick: true,
@@ -523,16 +528,28 @@ Page({
               console.error(err);
               Notify({ type: 'danger', message: err });
             })
-          } else {                            // 更新課程信息mode
+          } 
+          else {                              // 更新課程信息mode
             console.log("更新課程信息模式！");
-            // 調用加課的雲函數 courseUpdate
-            wx.cloud.callFunction({   // 調用加課的雲函數 courseUpdate
+            // 非本人操作情況下保留原數據
+            let avatarUrl = this.data.courseCloudData.avatarUrl;
+            let arkid     = this.data.courseCloudData.arkid;
+            let nickName  = this.data.courseCloudData.nickName;
+            // 本人情況下，才覆蓋緩存中的userInfo數據
+            if (this.data.courseCloudData.arkid==userCloudDataStorage.data.arkid) {
+              console.log("本次操作為本人操作 - 上傳前");
+              avatarUrl = userCloudDataStorage.data.avatarUrl;
+              arkid     = userCloudDataStorage.data.arkid;
+              nickName  = userCloudDataStorage.data.nickName;
+            }
+            // 調用更新的雲函數 courseUpdate
+            wx.cloud.callFunction({   // 調用更新的雲函數 courseUpdate
               name : 'courseUpdate',
               data : {
                 idNum           : this.data.courseCloudData._id,
-                avatarUrl       : userCloudDataStorage.data.avatarUrl,
-                arkid           : userCloudDataStorage.data.arkid,
-                nickName        : userCloudDataStorage.data.nickName,
+                avatarUrl       : avatarUrl,
+                arkid           : arkid,
+                nickName        : nickName,
                 courseInfoInput : this.data.courseInfoInput ,
                 allowVote       : this.data.allowVote,
                 courseState     : this.data.courseState,

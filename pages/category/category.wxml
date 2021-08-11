@@ -26,7 +26,7 @@
               <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );">
                 <view class="tag" style="top:35px;">ECE</view>
               </view>
-              <view class="content flex-sub">
+              <view class="content flex-sub text-gray text-lg">
                 <view>{{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
               </view>
               <!-- add/cancel Follow按鈕 -->
@@ -44,9 +44,11 @@
           </view>
           <!-- 簡略信息 -->
           <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" style="margin-top:5px">
-            日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }} 
-            <view>時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
-            <view>地點：{{ recentCourseInfoArray[index].courseInfoInput[4].input }}</view>
+            <view class="text-black text-shadow text-lg">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
+            <view class="text-gray">日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }}</view>
+            <view class="text-gray">時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
+            <!-- <view>地點：{{ recentCourseInfoArray[index].courseInfoInput[4].input }}</view> -->
+            <view class="text-orange text-shadow" style="font-weight:bold;" wx:if="{{recentCourseInfoArray[index].courseState=='checking'}}">{{recentCourseInfoArray[index].courseState}}</view>
           </view>
           <!-- 頭像組 -->
           <view class="slot text-right" wx:if="{{recentCourseInfoArray[index].followMember[1]}}">
@@ -118,7 +120,7 @@
       <van-grid gutter="{{ 10 }}" column-num="1" clickable icon-size="60rpx">
         <van-grid-item icon="apps-o" text="所有課程" bindtap="jumpToallCourses"/>
         <van-grid-item icon="more-o" text="參與記錄" bindtap="jumpTomyFollowCourses"/>
-        <van-grid-item icon="more-o" text="我的開課" bindtap=""/>
+        <van-grid-item icon="more-o" text="我的開課" bindtap="jumpToMyCourses"/>
         <van-grid-item wx:if="{{admin}}" icon="more-o" text="待審核課程" bindtap="jumpTomyFollowCourses"/>
       </van-grid>
     </view>

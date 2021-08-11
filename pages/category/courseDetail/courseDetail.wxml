@@ -16,7 +16,7 @@
     <van-col>
       <view class="text-xxl padding text-shadow text-grey">
         <text class="cuIcon-title text-themeBlue"></text>
-        <text style="font-weight: bold;">ECEN1008 mid-term前總結</text>
+        <text style="font-weight: bold;">{{courseInfoInput[1].input}}</text>
       </view>
     </van-col>
   </van-row>
