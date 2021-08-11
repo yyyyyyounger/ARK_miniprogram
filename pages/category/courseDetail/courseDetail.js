@@ -37,6 +37,9 @@ Page({
   onReady() {
     console.log("課程詳情頁 - 已经Ready");
   },
+  onShow() {
+    this.onPullDownRefresh();
+  },
   // 請求數據庫返回該courseId的數據
   returnCourseData (){
     // 請求雲端的courseInfo數據，該courseId為num類型

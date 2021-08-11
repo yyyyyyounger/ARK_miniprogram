@@ -47,7 +47,7 @@ Page({
 
     // 查詢course集合中，符合條件的課程，（距今一個月內未進行的課程） - 未完成
     db.collection('course') .where( _.or([
-        { // 普通用戶可查看最近已opening的課程
+        { // 路人/普通用戶可查看最近已opening的課程
           timeStampPick : _.gte(todayTimeStamp) ,
           courseState   : _.eq('opening') ,
         },

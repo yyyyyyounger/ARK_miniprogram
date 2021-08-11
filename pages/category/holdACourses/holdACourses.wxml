@@ -268,7 +268,7 @@
 
   <van-divider contentPosition="center">左switch為edit，右為display</van-divider>
   <van-cell-group wx:for="{{courseInfoInput}}" wx:key="index">
-    <van-cell center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
+    <van-cell center size="large" title="{{item.name}}" data-cellIndex="{{index}}" >
       <!-- 控制edit權限的switch -->
       <van-switch
         data-index="{{ index }}"

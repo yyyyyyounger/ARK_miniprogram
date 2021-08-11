@@ -122,6 +122,12 @@ Page({
       // 從緩存中獲取該用戶是否管理員
       this.setData({  admin : userCloudDataStorage.data.admin  })
 
+      // 生成courseInfoInput裡允許顯示的設置數組
+      let canDisplay = this.data.courseInfoInput.map((item)=>{    return item.display   });
+      // 生成courseInfoInput裡允許編輯的設置數組
+      let canEdit     = this.data.courseInfoInput.map((item)=>{    return item.canEdit    });
+      this.setData({  canDisplay , canEdit ,   })
+
     }) .catch(err => {    // 無法請求雲端時以本地數據替代
       let arrayEmpty = JSON.parse(JSON.stringify(cloudData.courseInfo_empty));
       this.setData({  courseInfo_empty : arrayEmpty  })
@@ -149,12 +155,6 @@ Page({
       userInfoShortNameIndex[e.shortName] = e.id;
     });
     this.setData({  userInfoShortNameIndex  })
-
-    // 生成courseInfoInput裡允許顯示的設置數組
-    let canDisplay = this.data.courseInfoInput.map((item)=>{    return item.display   });
-    // 生成courseInfoInput裡允許編輯的設置數組
-    let canEdit     = this.data.courseInfoInput.map((item)=>{    return item.canEdit    });
-    this.setData({  canDisplay , canEdit ,   })
   },
 
   // 下拉刷新函數
@@ -395,8 +395,8 @@ Page({
     if (this.data.admin) {
       for (let i = 0; i < this.data.courseInfoInput.length; i++) {
         this.setData({
-          ['this.data.courseInfoInput['+i+'].canEdit'] : this.data.canEdit[i],
-          ['this.data.courseInfoInput['+i+'].display'] : this.data.canDisplay[i],  
+          ['courseInfoInput['+i+'].canEdit'] : this.data.canEdit[i],
+          ['courseInfoInput['+i+'].display'] : this.data.canDisplay[i],
         })
       }
     }
@@ -565,9 +565,7 @@ Page({
               }
               detailInfo = JSON.stringify(detailInfo);
               Toast.success('修改成功！');
-              wx.redirectTo({   // 銷毀當前頁的帶參跳轉
-                url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
-              })
+              wx.navigateBack();
             }) .catch (err=>{
               console.error(err);
               Notify({ type: 'danger', message: err });
