@@ -60,10 +60,10 @@ Page({
         // 返回user集合中自己的follow列表
         const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
         db.collection('user').doc(userCloudDataStorage.data._openid) .field({
-          recentFollowCourseArray : true
+          recentFollowIdArray : true
         }) .get() .then(res=>{
-          console.log("數據庫我的followCourseArray為：",res.data.recentFollowCourseArray);
-          this.setData({  followCourseArray : res.data.recentFollowCourseArray  })
+          console.log("數據庫我的followCourseArray為：",res.data.recentFollowIdArray);
+          this.setData({  followCourseArray : res.data.recentFollowIdArray  })
           
           let recentCourseIdRecordArr={};
           this.data.recentCourseInfoArray.map(function (e, index, item) {
@@ -93,7 +93,7 @@ Page({
           let havePastCourse = [];
           // db.collection('user').doc(userCloudDataStorage.data._openid).update({
           //   data: {
-          //     recentFollowCourseArray: _.pull(_.in([selectCourse]))
+          //     recentFollowIdArray: _.pull(_.in([selectCourse]))
           //   }
           // }) .then(res=>{         // 成功提示 & 同步wxml的顯示
           //   Toast('刪除成功！');
@@ -154,7 +154,7 @@ Page({
     }
   },
 
-  // 下拉菜單
+  // 下拉菜單 - 棄用狀態 - 等待拯救
   dropDownChange(e) {
     console.log(e);
     this.setData({
@@ -181,17 +181,18 @@ Page({
           message: '拼命加載中...',
           forbidClick: true,
         });
-        // 正常應該只能follow 20節課，獲取資料的時候默認20條記錄限制
+        // 正常應該只能follow 20節課，獲取資料的時候默認20條記錄限制 - 好像沒有寫
         
         let selectCourse = e.currentTarget.dataset.courseid;  // 記錄Follow的課程id
         let arrindex = e.currentTarget.dataset.arrindex;
         console.log("請求add",selectCourse);
         console.log("arrindex為",arrindex);
     
-        // 雲函數更新 - user集合 - recentFollowCourseArray數組
+        // 雲函數更新 - user集合 - recentFollowIdArray數組
         const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
         // 權限問題需要調用雲函數
-        wx.cloud.callFunction({ // user基本信息導入到該courseId的followMember數組內
+        // user基本信息導入到該courseId的followMember數組內
+        wx.cloud.callFunction({ 
           name : 'courseFollowMember',
           data : {
             mode          : "add",
@@ -204,7 +205,7 @@ Page({
         }) .then(res=>{         // 寫入自己的follow列表
           db.collection('user').doc(userCloudDataStorage.data._openid).update({
             data: {
-              recentFollowCourseArray: _.push([selectCourse]),
+              recentFollowIdArray: _.push([selectCourse]),
             }
           }) .then(res=>{       // 成功提示 & 同步wxml的顯示
             Toast('Follow成功！課程編號：'+selectCourse+'\n可前往 “我的Follow” 查看');
@@ -231,14 +232,13 @@ Page({
         message: '該功能需要登錄後操作！\n現在去登錄嗎？',
         zIndex:99999999,
       })
-      .then(() => {
-        // on confirm
+      .then(() => {   // on confirm
         wx.switchTab({
           url: '../user/user',
         })
       })
-      .catch(() => {
-        // on cancel
+      .catch(() => {  // on cancel
+        
       });
     }
   },
@@ -251,18 +251,17 @@ Page({
       zIndex:99999999,
     })
     .then(() => {     // on confirm
-      // 加載提示
-      Toast.loading({
+      Toast.loading({   // 加載提示
         message: '拼命加載中...',
         forbidClick: true,
       });
-      
+
       // 記錄Follow的課程id
       let selectCourse = e.currentTarget.dataset.courseid;
       let arrindex = e.currentTarget.dataset.arrindex;
       console.log("請求delete",selectCourse);
 
-      // 調用雲函數更新 - user集合 - recentFollowCourseArray數組
+      // 調用雲函數更新 - user集合 - recentFollowIdArray數組
       const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
       wx.cloud.callFunction({   // 刪除followMember數組內該user的arkid等數據
         name : 'courseFollowMember',
@@ -275,7 +274,7 @@ Page({
       }) .then(res=>{           // 刪除自己的follow列表
         db.collection('user').doc(userCloudDataStorage.data._openid).update({
           data: {
-            recentFollowCourseArray: _.pull(_.in([selectCourse]))
+            recentFollowIdArray: _.pull(_.in([selectCourse]))
           }
         }) .then(res=>{         // 成功提示 & 同步wxml的顯示
           Toast('刪除成功！');

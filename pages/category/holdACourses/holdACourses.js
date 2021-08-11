@@ -48,7 +48,6 @@ Page({
       if (type === 'minute') {
         return options.filter((option) => option % 5 === 0);
       }
-
       return options;
     },
     timePickArray:[],
@@ -62,11 +61,8 @@ Page({
       {
         name: '通過 opening',
       },
-      {
-        name: '結束 finish',
-      },
     ],
-    actions_sheetStrArr:['checking','opening','finish'],
+    actions_sheetStrArr:['checking','opening'],
   },
   onLoad: function(options){
     // 可選日期初始化 - 只限距離今天30天內
@@ -529,8 +525,8 @@ Page({
             })
           } else {                            // 更新課程信息mode
             console.log("更新課程信息模式！");
-            // 調用加課的雲函數 courseAdd
-            wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
+            // 調用加課的雲函數 courseUpdate
+            wx.cloud.callFunction({   // 調用加課的雲函數 courseUpdate
               name : 'courseUpdate',
               data : {
                 idNum           : this.data.courseCloudData._id,
@@ -559,6 +555,10 @@ Page({
               console.error(err);
               Notify({ type: 'danger', message: err });
             })
+            if (this.data.courseState=="finish") {
+              // 結課後，將該課程的courseId寫入所有followMember的allJoinId內
+              // 調用雲函數 - 未完成
+            }
           }
   
         }) .catch(err=>{  console.error(err);  })
@@ -571,6 +571,7 @@ Page({
   },
   // 刪除課程
   onClick_deleteCourse() {
+
     // 重點提示是否確認刪除
     Dialog.confirm({
       title: '*危險操作提示！*',
@@ -579,9 +580,29 @@ Page({
     .then(() => {   // on confirm - 未完成
       // 1 刪除course集合中的該課
       // 2 刪除myCourse的該課
-      // 3 if 課程狀態為finish，刪除記錄的followMember中的allJoinId - user的課程參與記錄
+      // 3 if 課程狀態為finish，刪除各個followMember的user記錄的中的allJoinId - user的課程參與記錄
       // 4 文件
 
+      Toast.loading({ // 加載提示
+        message: '瘋狂請求中...',
+        forbidClick: true,
+      });
+      // 刪除該課 - 使用雲函數，保證admin都能有刪除權限 - 未完成
+      wx.cloud.callFunction({
+        name:'courseDelete',
+        data:{
+          idNum       : this.data.courseCloudData._id,
+          courseState : this.data.courseCloudData.courseState,
+        }
+      }) .then(res=>{
+        Toast.success('刪除成功！');
+        wx.switchTab({
+          url: '../category/category'
+        })
+      }) .catch(err=>{  
+        console.error(err);
+        Toast.fail('刪除失敗！請聯繫管理員回報bug');
+      })
     })
     .catch(() => {  // on cancel
     });
@@ -661,9 +682,25 @@ Page({
 
   },
 
-  // admin權限修改課程狀態courseState
-  onClick_changeCourseState() {
-    this.setData({  show_sheet :true  })
+  // admin權限修改課程狀態courseState - 動作面板
+  onClick_changeCourseState(e) {
+    let model = e.currentTarget.dataset.model;
+    if (model=='other') {
+      this.setData({  show_sheet :true  })
+    } 
+    else if(model=='finish') {  // 改為結課模式
+      // 提示
+      Dialog.confirm({
+        title: '*操作提示！*',
+        message: '是否確認課程已結束？',
+      }) 
+      .then(()=>{
+        // 上傳雲端後，退出到詳情頁 - 未完成
+        Toast.success('修改成功！');
+        this.setData({  courseState : "finish"  })
+      })
+      .catch(()=>{})
+    }
   },
   onClose_sheet () {
     this.setData({  show_sheet :false  })

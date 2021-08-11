@@ -29,7 +29,10 @@ Page({
     
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     // 從緩存中獲取該用戶是否管理員
-    this.setData({  admin : userCloudDataStorage.data.admin  })
+    this.setData({  
+      admin         : userCloudDataStorage.data.admin,
+      userCloudData : userCloudDataStorage.data,
+    })
   },
   onReady() {
     console.log("課程詳情頁 - 已经Ready");

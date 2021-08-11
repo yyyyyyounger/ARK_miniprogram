@@ -10,12 +10,16 @@ const _ = db.command
 exports.main = async (event, context) => {
   let objectClass = event.objectClass;
   let subjectName  = event.subjectName;
-  let subjectInfo  = event.subjectInfo;
-  try {
-    return await db.collection(objectClass).where({
-      [subjectName]: subjectInfo
-    }).remove()
-  } catch(e) {
-    console.error(e)
-  }
+  
+  await db.collection(objectClass) .where({
+    [subjectName] : _.exists(true)
+  }) .update({
+      data: {
+          [subjectName] : _.remove()
+      }
+  }) .then(res=>{
+      console.log(res);
+  }).catch(res=>{
+      console.error(res);
+  })
 }

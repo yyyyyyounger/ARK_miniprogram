@@ -1,5 +1,5 @@
 // ************
-// 調用該雲函數，將在user集合的本user處更新recentFollowCourseArray
+// 調用該雲函數，將在course集合更新followMember數組
 // ************
 
 // 云函数入口文件
@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
 
   // 如果超過開始時間，禁止再操作
   if (timeStamp <= event.endTimeStamp) {
-    // add則寫入followMember數組，delete則刪除
+    // add則將該用戶信息寫入course集合的followMember數組，delete則刪除
     if (event.mode=="add") {    // 將該user的基本信息導入到該courseId的followMember數組內
       await db.collection('course').doc(event.selectCourse).update({
         data: {

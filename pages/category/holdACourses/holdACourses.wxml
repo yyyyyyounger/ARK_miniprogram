@@ -251,15 +251,16 @@
 </view> -->
 
 <view wx:if="{{admin}}" style="margin-top:10px;">
-  <van-cell title="審核狀態" value="{{ courseState }}" title-class="text-grey cu-item" is-link bind:click="onClick_changeCourseState"/>
+  <van-cell title="審核狀態" value="{{ courseState }}" title-class="text-grey cu-item" is-link data-model="other"  bind:click="onClick_changeCourseState"/>
 </view>
 
 
-<!-- 提交審核按鈕 -->
+<!-- 提交審核/修改按鈕 -->
 <view class="padding flex flex-direction">
   <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_saveSubmit">提交{{courseCloudData?'修改':'審核'}}</button>
-  <button class="shadow cu-btn bg-grey lg"                    data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
-  <button class="shadow cu-btn bg-red margin-tb-sm lg"  data-model="btn_submit" bindtap="onClick_deleteCourse">刪除課程 *謹慎點擊！*</button>
+  <button wx:if="{{courseState=='opening'}}" class="shadow cu-btn bg-green margin-tb-sm lg"  data-model="finish" bindtap="onClick_changeCourseState">結課</button>
+  <button class="shadow cu-btn bg-grey lg margin-tb-sm lg"                                   data-model="btn_quit"   bindtap="onClick_saveSubmit">退出</button>
+  <button class="shadow cu-btn bg-red margin-tb-sm lg" bindtap="onClick_deleteCourse">刪除課程 *謹慎點擊！*</button>
 </view>
 
 <!-- 管理員權限修改 edit 和 display -->

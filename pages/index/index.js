@@ -129,10 +129,10 @@ Page({
         const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
         db.collection('user').where({
           _id : userCloudDataStorage.data._openid,
-        }) .field({ recentFollowCourseArray : true }) .get() .then(res=>{
-          console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowCourseArray);
-          if (!!res.data[0].recentFollowCourseArray) {
-            this.setData({  followCourseArray : res.data[0].recentFollowCourseArray  })
+        }) .field({ recentFollowIdArray : true }) .get() .then(res=>{
+          console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowIdArray);
+          if (!!res.data[0].recentFollowIdArray) {
+            this.setData({  followCourseArray : res.data[0].recentFollowIdArray  })
           }
 
           // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染

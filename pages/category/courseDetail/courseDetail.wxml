@@ -51,7 +51,7 @@
     </van-col>
   </van-row>
   <!-- 編輯課程信息按鈕 -->
-  <van-row wx:if="{{admin}}">
+  <van-row wx:if="{{admin || userCloudData.arkid==courseCloudData.arkid}}">
     <van-col offset="2">
       <van-button 
         icon="edit" 

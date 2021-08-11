@@ -1,5 +1,6 @@
 var app = getApp();
 const db = wx.cloud.database();
+const _ = db.command
 const { courseInfo_empty } = require('../../data/cloud.js');
 var cloudData = require('../../data/cloud.js')
 
@@ -84,24 +85,21 @@ Page({
         })
     },
     deleteTest() {
+        let objectClass = 'user';
+        let subjectName = 'recentFollowCourseArray';
         // 刪除多條記錄只能在雲函數端進行
         // 服務端只能刪除一條記錄
         wx.cloud.callFunction({     // 多記錄delete專用，最高權限
             name: 'cloudDeleteRecord',
             data:{
-                objectClass : 'course',
-                subjectName : '_id',
-                subjectInfo : "",
+                objectClass : 'user',
+                subjectName : 'recentFollowCourseArray',
             },
             complete: res => {
               console.log('result: ', res)
             }
         })
-        // db.collection('user').doc('b00064a760f0625227a1c374081cb672').remove().then(res=>{
-        //     console.log(res);
-        // }).catch(res=>{
-        //     console.error(res);
-        // })
+        
     },
     cloudGetUserInfo() {
         wx.getUserProfile({

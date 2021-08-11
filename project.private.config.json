@@ -43,9 +43,9 @@
           "scene": null
         },
         {
-          "name": "詳情頁 5 num",
+          "name": "詳情頁 2 num",
           "pathName": "pages/category/courseDetail/courseDetail",
-          "query": "detailInfo={\"user\":\"normal\",\"courseId\":5}",
+          "query": "detailInfo={\"user\":\"normal\",\"courseId\":2}",
           "scene": null
         },
         {
