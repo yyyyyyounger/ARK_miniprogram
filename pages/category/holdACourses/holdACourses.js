@@ -794,4 +794,5 @@ Page({
   uploadToCloudTest(event) {
     console.log("文件上傳test",event.detail);
   },
+  
 });

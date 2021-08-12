@@ -211,7 +211,7 @@
       <text>文件</text>
     </view>
 
-    <view class="cu-list menu sm-border card-menu margin-top">
+    <view class="cu-list menu sm-border card-menu margin-top" bindtap="fileTest">
       <van-cell title-class="text-grey cu-item">
         <view slot="title">
           <view class="van-cell-text" >這裡會展示講者上傳的文件</view>
