@@ -31,6 +31,7 @@
               </view>
               <!-- add/cancel Follow按鈕 -->
               <van-button 
+                disabled = "{{(recentCourseInfoArray[index].courseState)=='checking'}}" 
                 style="margin-right:5px;"
                 icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
                 size="small" 
@@ -47,8 +48,7 @@
             <view class="text-black text-shadow text-lg">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
             <view class="text-gray">日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }}</view>
             <view class="text-gray">時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
-            <!-- <view>地點：{{ recentCourseInfoArray[index].courseInfoInput[4].input }}</view> -->
-            <view class="text-orange text-shadow" style="font-weight:bold;" wx:if="{{recentCourseInfoArray[index].courseState=='checking'}}">{{recentCourseInfoArray[index].courseState}}</view>
+            <view class="text-{{recentCourseInfoArray[index].courseState=='opening'?'green':'orange'}} text-shadow" style="font-weight:bold;" wx:if="{{recentCourseInfoArray[index].arkid}}">{{recentCourseInfoArray[index].courseState}}</view>
           </view>
           <!-- 頭像組 -->
           <view class="slot text-right" wx:if="{{recentCourseInfoArray[index].followMember[1]}}">

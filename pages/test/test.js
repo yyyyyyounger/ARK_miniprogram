@@ -14,6 +14,23 @@ Page({
             courseInfo_empty : cloudData.courseInfo_empty
         })
 
+        let followMember = [
+            {
+                arkid   : 1,
+                name    : 'test1',
+            },
+            {
+                arkid   : 2,
+                name    : 'test2',
+            },
+        ]
+
+        followMember = followMember.map((e,item)=>{
+            return e.arkid
+        })
+
+        console.log(followMember);
+
     },
     onReady: function(){
         

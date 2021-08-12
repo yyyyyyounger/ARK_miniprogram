@@ -27,7 +27,6 @@ Page({
 
     // 課程渲染相關
     followCourseArray:[],
-
   },
   onLoad: function(page) {
     this.app = getApp();
@@ -51,11 +50,11 @@ Page({
           timeStampPick : _.gte(todayTimeStamp) ,
           courseState   : _.eq('opening') ,
         },
-        // { // 已開課的用戶可查看近期仍在checking的課程
-        //   timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking狀態的課程
-        //   courseState   : _.eq('checking') ,
-        //   arkid         : _.eq(userCloudDataStorage.data.arkid) , // 自己的開課
-        // },
+        { // 已開課的用戶可查看近期仍在checking的課程
+          timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking狀態的課程
+          courseState   : _.eq('checking') ,
+          arkid         : _.eq(userCloudDataStorage ? userCloudDataStorage.data.arkid : 0) , // 自己的開課
+        },
     ]) ) .field({
         _openid : false,
         _createAt : false,
@@ -66,57 +65,59 @@ Page({
         // 生成已經Follow了的課程Info的數組形式
         this.setData({  recentCourseInfoArray  })
 
-        // 返回user集合中自己的follow列表
         const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
-        db.collection('user').doc(userCloudDataStorage.data._openid) .field({
-          recentFollowIdArray : true
-        }) .get() .then(res=>{
-          console.log("數據庫我的followCourseArray為：",res.data.recentFollowIdArray);
-          this.setData({  followCourseArray : res.data.recentFollowIdArray  })
-          
-          let recentCourseIdRecordArr={};
-          this.data.recentCourseInfoArray.map(function (e, index, item) {
-            recentCourseIdRecordArr[index] = e._id;
-          });
-          console.log("recentCourseIdRecordArr為",recentCourseIdRecordArr);
-          // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
-          for (let i = 0; i < recentCourseInfoArray.length; i++) {
-            if ( !!this.data.followCourseArray ) {    // 如果用戶自己有follow記錄才操作
-              for (let j = 0; j < this.data.followCourseArray.length; j++) {
-                if ( this.data.followCourseArray[j] == recentCourseInfoArray[i]._id ) {   // 如果user已follow某課程，則haveFollow寫入false
-                  recentCourseInfoArray[i].haveFollow = true;
-                  break     // 把 j 的for循環break掉
-                } else {    // haveFollow寫入false
-                  recentCourseInfoArray[i].haveFollow = false;
+        // 返回user集合中自己的follow列表
+        if (userCloudDataStorage) {
+          db.collection('user').doc(userCloudDataStorage.data._openid) .field({
+            recentFollowIdArray : true
+          }) .get() .then(res=>{
+            console.log("數據庫我的followCourseArray為：",res.data.recentFollowIdArray);
+            this.setData({  followCourseArray : res.data.recentFollowIdArray  })
+            
+            let recentCourseIdRecordArr={};
+            this.data.recentCourseInfoArray.map(function (e, index, item) {
+              recentCourseIdRecordArr[index] = e._id;
+            });
+            console.log("recentCourseIdRecordArr為",recentCourseIdRecordArr);
+            // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
+            for (let i = 0; i < recentCourseInfoArray.length; i++) {
+              if ( !!this.data.followCourseArray ) {    // 如果用戶自己有follow記錄才操作
+                for (let j = 0; j < this.data.followCourseArray.length; j++) {
+                  if ( this.data.followCourseArray[j] == recentCourseInfoArray[i]._id ) {   // 如果user已follow某課程，則haveFollow寫入false
+                    recentCourseInfoArray[i].haveFollow = true;
+                    break     // 把 j 的for循環break掉
+                  } else {    // haveFollow寫入false
+                    recentCourseInfoArray[i].haveFollow = false;
+                  }
                 }
               }
+              else {          // 沒有follow記錄，則所有最近課程的haveFollow都寫入false
+                recentCourseInfoArray[i].haveFollow = false;
+              }
             }
-            else {          // 沒有follow記錄，則所有最近課程的haveFollow都寫入false
-              recentCourseInfoArray[i].haveFollow = false;
-            }
-          }
-          console.log("對infoArray寫入haveFollow數據後",recentCourseInfoArray);
-          Toast('加載完成！下拉可刷新！');
-
-          // 刪除自己的follow列表中已過期的課程id
-          let havePastCourse = [];
-          // db.collection('user').doc(userCloudDataStorage.data._openid).update({
-          //   data: {
-          //     recentFollowIdArray: _.pull(_.in([selectCourse]))
-          //   }
-          // }) .then(res=>{         // 成功提示 & 同步wxml的顯示
-          //   Toast('刪除成功！');
-          //   // 同步wxml的顯示
-          //   for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
-          //     if (this.data.recentCourseInfoArray[i]._id == selectCourse) {
-          //       this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : false  })
-          //     }
-          //   }
-          // }) .catch(err=>{ console.error(err); })
-
-          // 生成已經Follow了的課程Info的數組形式
-          this.setData({  recentCourseInfoArray  })
-        }) .catch(err=>{ console.error(err); })
+            console.log("對infoArray寫入haveFollow數據後",recentCourseInfoArray);
+            Toast('加載完成！下拉可刷新！');
+  
+            // 刪除自己的follow列表中已過期的課程id
+            let havePastCourse = [];
+            // db.collection('user').doc(userCloudDataStorage.data._openid).update({
+            //   data: {
+            //     recentFollowIdArray: _.pull(_.in([selectCourse]))
+            //   }
+            // }) .then(res=>{         // 成功提示 & 同步wxml的顯示
+            //   Toast('刪除成功！');
+            //   // 同步wxml的顯示
+            //   for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
+            //     if (this.data.recentCourseInfoArray[i]._id == selectCourse) {
+            //       this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : false  })
+            //     }
+            //   }
+            // }) .catch(err=>{ console.error(err); })
+  
+            // 生成已經Follow了的課程Info的數組形式
+            this.setData({  recentCourseInfoArray  })
+          }) .catch(err=>{ console.error(err); })
+        }
 
     }) .catch(err=>{
         console.error(err);

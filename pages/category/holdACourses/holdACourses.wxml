@@ -54,9 +54,6 @@
           <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享主題</text>
         </view>
-        <view class="action">
-          <!-- <text class="text-grey">文本內容</text> -->
-        </view>
       </view>              
       <!-- 使用data-xxx分隔兩個數據共用同一個綁定事件，數據必須在data{}中定義 -->
       <van-field 
@@ -101,9 +98,6 @@
           <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享地址</text>
         </view>
-        <view class="action">
-          <!-- <text class="text-grey">文本內容</text> -->
-        </view>
       </view>
       <van-field
         disabled = "{{!canEdit[shortNameIndex.courseAdres]}}"
@@ -123,9 +117,6 @@
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享時間</text>
-        </view>
-        <view class="action">
-          <!-- <text class="text-grey">文本內容</text> -->
         </view>
       </view>
       <van-cell title-class="text-grey cu-item">    <!-- 允許投票switch -->
@@ -180,9 +171,6 @@
           <text class="cuIcon-circlefill text-themeOrange-light"></text>
           <text class="text-grey">助手id</text>
         </view>
-        <view class="action">
-          <!-- <text class="text-grey">文本內容</text> -->
-        </view>
       </view>
       <van-field
         hold-keyboard
@@ -197,17 +185,8 @@
           確認選擇
         </van-button>
       </van-field>
-      <!-- 助手頭像，以寫入的id顯示對應頭像 - 代商討 - 未完成 -->
-      <!-- <view class="cu-item">    
-        <view class="content">
-          <text class="cuIcon-circlefill text-themeOrange-light"></text>
-          <text class="text-grey">助手頭像(確認後會顯示，最多兩位)</text>
-        </view>
-        <view class="action">
-        </view>
-      </view> -->
-      <van-cell title-class="text-grey cu-item" wx:if="{{helperInfoArray[0]}}">    <!-- 允許投票switch -->
-        <!-- <view slot="title" > -->
+      <!-- 助手頭像，以寫入的id顯示對應頭像 - 未完成 -->
+      <van-cell title-class="text-grey cu-item" wx:if="{{helperInfoArray[0]}}">
           <van-row >
             <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name" wx:if="{{helperInfoArray[index]}}">
               <text class="cu-avatar round" style="background-image:url( {{helperInfoArray[index].Avatar}} );"></text>
@@ -218,7 +197,6 @@
               <text  >{{helperInfoArray[index].name}}</text>
             </van-col>
           </van-row>
-        <!-- </view> -->
       </van-cell>
 
       <view class="cu-item">    <!-- 簽到密碼 -->
@@ -244,16 +222,37 @@
 </view>
 
 <!-- 附加 - 上傳文件 --> 
-<!-- <view class="grid col-{{1}} padding-sm">    
-  <view class="bg-themeBlue-light padding radius text-center shadow-blur " data-index="{{index}}" >
+<view class="grid col-{{1}} padding-sm">    
+  <view wx:if="{{courseState=='opening'}}" class="bg-themeBlue-light padding radius text-center shadow-blur ">
       <text class="text-lg">附加</text>
   </view>
-</view> -->
+  <view class="card-menu">
 
-<view wx:if="{{admin}}" style="margin-top:10px;">
-  <van-cell title="審核狀態" value="{{ courseState }}" title-class="text-grey cu-item" is-link data-model="other"  bind:click="onClick_changeCourseState"/>
+    <view class="cu-list menu sm-border card-menu margin-top">
+      
+      <view class="cu-item">    <!-- 文件上傳 -->
+        <view class="content">
+          <text class="cuIcon-circlefill text-themeOrange-light"></text>
+          <text class="text-grey">文件上傳</text>
+        </view>
+      </view>
+      <van-cell title-class="text-grey cu-item">    <!-- 允許投票switch -->
+        <view slot="title">
+          <van-uploader file-list="{{ fileList }}" bind:before-read="uploadToCloudTest" bind:after-read="uploadToCloudTest" max-size="30K"	/>
+          <!-- afterRead -->
+        </view>
+        <!-- <view>test</view> -->
+      </van-cell>
+
+    </view>
+
+  </view>
 </view>
 
+
+<view wx:if="{{admin}}" style="margin-top:10px;">
+  <van-cell title="審核狀態" value="{{ courseState }}" title-class="text-grey cu-item text-shadow" is-link data-model="other"  bind:click="onClick_changeCourseState"/>
+</view>
 
 <!-- 提交審核/修改按鈕 -->
 <view class="padding flex flex-direction">

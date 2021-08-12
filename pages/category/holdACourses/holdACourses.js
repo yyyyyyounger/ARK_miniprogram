@@ -5,7 +5,6 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 var cloudData = require('../../../data/cloud.js')
 const db = wx.cloud.database();   // 數據庫
-// const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
 
 const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用
   return new Promise((resolve, reject) => {
@@ -63,6 +62,20 @@ Page({
       },
     ],
     actions_sheetStrArr:['checking','opening'],
+
+    // 文件上傳
+    fileList: [
+      // {
+      //   url: 'https://img.yzcdn.cn/vant/leaf.jpg',
+      //   status: 'uploading',
+      //   message: '上传中',
+      // },
+      // {
+      //   url: 'https://img.yzcdn.cn/vant/tree.jpg',
+      //   status: 'failed',
+      //   message: '上传失败',
+      // },
+    ],
   },
   onLoad: function(options){
     // 可選日期初始化 - 只限距離今天30天內
@@ -595,7 +608,7 @@ Page({
     .then(() => {   // on confirm - 未完成
       // 1 刪除course集合中的該課
       // 2 刪除myCourse的該課
-      // 3 if 課程狀態為finish，刪除各個followMember的user記錄的中的allJoinId - user的課程參與記錄
+      // 3 if 課程狀態為finish，刪除各個followMember的user記錄的中的allJoinId - user的課程參與記錄 - 未完成
       // 4 文件
 
       Toast.loading({ // 加載提示
@@ -606,13 +619,15 @@ Page({
       wx.cloud.callFunction({
         name:'courseDelete',
         data:{
-          idNum       : this.data.courseCloudData._id,
-          courseState : this.data.courseCloudData.courseState,
+          idNum         : this.data.courseCloudData._id,
+          speakerid     : this.data.courseInfoInput[this.data.shortNameIndex.speakerid],
+          courseState   : this.data.courseCloudData.courseState,
+          followMember  : ((this.data.courseCloudData).hasOwnProperty('followMember')?this.data.courseCloudData.followMember:[0]),
         }
       }) .then(res=>{
         Toast.success('刪除成功！');
         wx.switchTab({
-          url: '../category/category'
+          url: '../category'
         })
       }) .catch(err=>{  
         console.error(err);
@@ -731,5 +746,52 @@ Page({
     console.log("選擇了",selectTerm,"， 選中項index為",index);
     this.setData({  courseState : this.data.actions_sheetStrArr[index]  })
 
+  },
+
+  // 文件上傳
+  afterRead(event) {
+    const { file } = event.detail;
+    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+    wx.uploadFile({
+      url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
+      filePath: file.url,
+      name: 'file',
+      formData: { user: 'test' },
+      success(res) {
+        // 上传完成需要更新 fileList
+        const { fileList = [] } = this.data;
+        fileList.push({ ...file, url: res.data });
+        this.setData({ fileList });
+      },
+    });
+  },
+
+  // 上传图片
+  uploadToCloud() {
+    const { fileList } = this.data;
+    if (!fileList.length) {
+      wx.showToast({ title: '请选择图片', icon: 'none' });
+    } else {
+      const uploadTasks = fileList.map((file, index) => this.uploadFilePromise(`my-photo${index}.png`, file));
+      Promise.all(uploadTasks)
+        .then(data => {
+          wx.showToast({ title: '上傳成功', icon: 'none' });
+          const newFileList = data.map(item => ({ url: item.fileID }));
+          this.setData({ cloudPath: data, fileList: newFileList });
+        })
+        .catch(e => {
+          wx.showToast({ title: '上傳失敗', icon: 'none' });
+          console.log(e);
+        });
+    }
+  },
+  uploadFilePromise(fileName, chooseResult) {
+    return wx.cloud.uploadFile({
+      cloudPath: fileName,
+      filePath: chooseResult.url
+    });
+  },
+  uploadToCloudTest(event) {
+    console.log("文件上傳test",event.detail);
   },
 });

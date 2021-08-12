@@ -335,7 +335,7 @@ Page({
       this.returnMajorTagArray(this);
 
       // 登錄成功後，判斷是否已註冊 - 數據庫是否存在該用戶openid（查找_id）
-      getUserCloudData().then(res => {    // 鏈式調用，能在該鏈上使用該promise的返回值
+      getUserCloudData().then(res => {    // 鏈式調用，能在該鏈上使用該userCloudData的返回值
         console.log("鏈式調用getUserCloudData，返回數組長度為：",res.result.userCloudData.data.length)
         if (res.result.userCloudData.data.length!=0) {  // 已註冊，將 數據庫user數據複製 → 本地&全局
           let userCloudData = res.result.userCloudData.data[0];
@@ -377,10 +377,10 @@ Page({
         })
       })
       .then(res=>{
+        console.log("進行重啟頁面");
         wx.reLaunch({
           url: './user',
         })
-        console.log("已經重啟頁面");
       })
       .catch(err => {    console.log(err);    });
 

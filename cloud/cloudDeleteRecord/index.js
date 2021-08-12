@@ -22,4 +22,13 @@ exports.main = async (event, context) => {
   }).catch(res=>{
       console.error(res);
   })
+
+
+  // await db.collection('user') .where({
+  //   arkid : _.in([1,11]),
+  // }) .update({
+  //   data: {
+  //     myCourses: _.pull(_.in(['x'])),
+  //   }
+  // })
 }

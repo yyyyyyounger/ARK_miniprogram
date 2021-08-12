@@ -12,32 +12,36 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-
-  db.collection('course').add({
-    data: {
-        _id                         : 0,
-        comment                     : '用於佔位，以下的課程都可以使用排序後+1的方法，_id用num表示',
-        createAt                    : Date.now()
-    },
-  }).catch(err=>{
-      console.error(err);
-  })
-
-
-  // db.collection('user').where({
-  //   "userInfoInput.6.display" : true
-  // }) .update({
-  //     data: {
-  //       // createAt              : Date.now(),
-  //       "userInfoInput.6.display" : false
-  //     },
-  //     success: function(res) {
-  //       console.log(res.data)
-  //     },
-  //     fail: function(err) {
-  //       console.error(err)
-  //     }
+  // db.collection('course').add({
+  //   data: {
+  //       _id                         : 0,
+  //       comment                     : '用於佔位，以下的課程都可以使用排序後+1的方法，_id用num表示',
+  //       createAt                    : Date.now()
+  //   },
+  // }).catch(err=>{
+  //     console.error(err);
   // })
+
+  // db.collection('course').add({   // 對 course 集合插入新用戶的數據
+  //   data: {
+  //     _id         : 5,
+  //     _createAt   : Date.now(),       // 當前時間戳
+  //     // 通過前端傳入開課用戶的頭像、暱稱信息
+  //     arkid       : 1,
+  //     courseState     : "opening",
+  //   }
+  // })
+
+  let followMember = [1,11];
+  let idNum = 5;
+
+  db.collection('user') .where({
+    arkid : _.in(followMember),
+  }) .update({
+    data: {
+      recentFollowIdArray : _.pull(_.in([idNum])),
+    }
+  })
 
   // return {
   //   event,
