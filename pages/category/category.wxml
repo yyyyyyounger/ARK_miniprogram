@@ -131,14 +131,14 @@
 
     <view class="cu-bar bg-white margin-top">
       <view class="action">
-        <text class="cuIcon-title text-blue"></text>開課須知
+        <text class="cuIcon-title text-themeBlue"></text>開課須知
       </view>
     </view>
     <van-skeleton row="4" />
 
     <view class="cu-bar bg-white margin-top">
       <view class="action">
-        <text class="cuIcon-title text-blue"></text>流程說明
+        <text class="cuIcon-title text-themeBlue"></text>流程說明
       </view>
     </view>
     <van-skeleton row="4" />

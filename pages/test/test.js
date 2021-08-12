@@ -14,22 +14,19 @@ Page({
             courseInfo_empty : cloudData.courseInfo_empty
         })
 
-        let followMember = [
-            {
-                arkid   : 1,
-                name    : 'test1',
-            },
-            {
-                arkid   : 2,
-                name    : 'test2',
-            },
-        ]
-
-        followMember = followMember.map((e,item)=>{
-            return e.arkid
-        })
-
-        console.log(followMember);
+        if (false) {
+            wx.cloud.uploadFile({
+                cloudPath: 'test1.png',
+                filePath: 'pages/index/image/test.png', // 文件路径
+                success: res => {
+                  // get resource ID
+                  console.log(res.fileID)
+                },
+                fail: err => {
+                  // handle error
+                }
+            })
+        }
 
     },
     onReady: function(){
