@@ -28,6 +28,13 @@ Page({
             })
         }
 
+        let data = {
+            "idNum":7,
+            "speakerid":1,
+        }
+
+        console.log(JSON.stringify(data));
+
     },
     onReady: function(){
         

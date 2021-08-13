@@ -16,9 +16,9 @@ exports.main = async (event, context) => {
   let courseState   = event.courseState;
   let speakerid     = event.speakerid;
   let followMember  = event.followMember;   // 此時的followMember應該是對象數組
-  followMember = followMember.map((e,item)=>{ // 生成僅有arkid的數組
-    return e.arkid
-  })
+  // followMember = followMember.map((e,item)=>{ // 生成僅有arkid的數組
+  //   return e.arkid
+  // })
   // 獲取課程id
   let idNum         = event.idNum;
 
@@ -26,11 +26,15 @@ exports.main = async (event, context) => {
   db.collection('course') .doc(idNum) .remove() 
   .then(res=>{
     // 刪除user集合中myCourses的該課
-    db.collection('user') .doc(speakerid) .update({
+    db.collection('user') .where({
+      arkid : speakerid
+    }) .update({
       data: {
         myCourses: _.pull(_.in([idNum]))
       }
-    })
+    }) .then(res=>{
+      console.log(res);
+    }) .catch(err=>{  console.error(err);  })
 
     if (courseState=="finish") {      // if 課程狀態為finish，刪除記錄的followMember中的allJoinId - user的課程參與記錄
       db.collection('user') .where({

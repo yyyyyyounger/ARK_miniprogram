@@ -127,39 +127,41 @@ Page({
 
         // 返回user集合中自己的follow列表
         const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
-        db.collection('user').where({
-          _id : userCloudDataStorage.data._openid,
-        }) .field({ recentFollowIdArray : true }) .get() .then(res=>{
-          console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowIdArray);
-          if (!!res.data[0].recentFollowIdArray) {
-            this.setData({  followCourseArray : res.data[0].recentFollowIdArray  })
-          }
-
-          // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
-          for (let i = 0; i < recentCourseInfoArray.length; i++) {
-            if ( !!this.data.followCourseArray ) {
-              for (let j = 0; j < this.data.followCourseArray.length; j++) {
-                if ( this.data.followCourseArray[j] == recentCourseInfoArray[i]._id ) {   // 對比course的最近課程和user的已follow課程
-                  recentCourseInfoArray[i].haveFollow = true;
-                  break
-                } else {
-                  console.log("沒有follow");
-                  recentCourseInfoArray[i].haveFollow = false;
+        if (userCloudDataStorage) {   // 緩存存在才操作
+          db.collection('user').where({
+            _id : userCloudDataStorage.data._openid,
+          }) .field({ recentFollowIdArray : true }) .get() .then(res=>{
+            console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowIdArray);
+            if (!!res.data[0].recentFollowIdArray) {
+              this.setData({  followCourseArray : res.data[0].recentFollowIdArray  })
+            }
+  
+            // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
+            for (let i = 0; i < recentCourseInfoArray.length; i++) {
+              if ( !!this.data.followCourseArray ) {
+                for (let j = 0; j < this.data.followCourseArray.length; j++) {
+                  if ( this.data.followCourseArray[j] == recentCourseInfoArray[i]._id ) {   // 對比course的最近課程和user的已follow課程
+                    recentCourseInfoArray[i].haveFollow = true;
+                    break
+                  } else {
+                    console.log("沒有follow");
+                    recentCourseInfoArray[i].haveFollow = false;
+                  }
                 }
               }
+              else {
+                console.log("沒有follow");
+                recentCourseInfoArray[i].haveFollow = false;
+              }
             }
-            else {
-              console.log("沒有follow");
-              recentCourseInfoArray[i].haveFollow = false;
-            }
-          }
-
-          // 生成已經Follow了的課程Info的數組形式
-          this.setData({  recentCourseInfoArray  })
-
-          // 豎向步驟條設定
-          this.stepsSetup();
-        }) .catch(err=>{ console.error(err); })
+  
+            // 生成已經Follow了的課程Info的數組形式
+            this.setData({  recentCourseInfoArray  })
+  
+            // 豎向步驟條設定
+            this.stepsSetup();
+          }) .catch(err=>{ console.error(err); })
+        }
 
     }) .catch(err=>{
         console.error(err);

@@ -166,55 +166,81 @@
 
     <view class="cu-list menu sm-border card-menu margin-top">
       
-      <view class="cu-item">    <!-- 助手id -->
-        <view class="content">
-          <text class="cuIcon-circlefill text-themeOrange-light"></text>
-          <text class="text-grey">助手id</text>
+      <!-- 助手 -->
+      <block>
+        <view class="cu-item">    
+          <view class="content">
+            <text class="cuIcon-circlefill text-themeOrange-light"></text>
+            <text class="text-grey">助手id</text>
+          </view>
         </view>
-      </view>
-      <van-field
-        hold-keyboard
-        data-model="helperid_input" 
-        clearable
-        value="{{ value }}"
-        placeholder="在此輸入助手ARKid"
-        border="{{ false }}"
-        bind:change="onChange_field"
-      >
-        <van-button slot="button" size="small" plain type="primary" color="#64b1e3" bind:click="confirmHelper">
-          確認選擇
-        </van-button>
-      </van-field>
-      <!-- 助手頭像，以寫入的id顯示對應頭像 - 未完成 -->
-      <van-cell title-class="text-grey cu-item" wx:if="{{helperInfoArray[0]}}">
-          <van-row >
-            <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name" wx:if="{{helperInfoArray[index]}}">
-              <text class="cu-avatar round" style="background-image:url( {{helperInfoArray[index].Avatar}} );"></text>
-            </van-col>
-          </van-row>
-          <van-row >
-            <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name" wx:if="{{helperInfoArray[index]}}">
-              <text  >{{helperInfoArray[index].name}}</text>
-            </van-col>
-          </van-row>
-      </van-cell>
+        <van-field
+          hold-keyboard
+          data-model="helperid_input" 
+          clearable
+          value="{{ value }}"
+          placeholder="在此輸入助手ARKid"
+          border="{{ false }}"
+          bind:change="onChange_field"
+        >
+          <van-button slot="button" size="small" plain type="primary" color="#64b1e3" bind:click="confirmHelper">
+            確認選擇
+          </van-button>
+        </van-field>
+        <!-- 助手頭像，以寫入的id顯示對應頭像 - 未完成 -->
+        <van-cell title-class="text-grey cu-item" wx:if="{{helperInfoArray[0]}}">
+            <van-row >
+              <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name" wx:if="{{helperInfoArray[index]}}">
+                <text class="cu-avatar round" style="background-image:url( {{helperInfoArray[index].Avatar}} );"></text>
+              </van-col>
+            </van-row>
+            <van-row >
+              <van-col span="9" wx:for="{{helperInfoArray}}" wx:key="name" wx:if="{{helperInfoArray[index]}}">
+                <text  >{{helperInfoArray[index].name}}</text>
+              </van-col>
+            </van-row>
+        </van-cell>
+      </block>
 
-      <view class="cu-item">    <!-- 簽到密碼 -->
-        <view class="content">
-          <text class="cuIcon-circlefill text-themeOrange-light"></text>
-          <text class="text-grey">簽到密碼</text>
+      <!-- 簽到密碼 -->
+      <block>
+        <view class="cu-item">
+          <view class="content">
+            <text class="cuIcon-circlefill text-themeOrange-light"></text>
+            <text class="text-grey">簽到密碼</text>
+          </view>
         </view>
-      </view>
-      <van-field
-        value="{{ courseCloudData ? courseInfoInput[shortNameIndex.attendCode].input : '' }}"
-        hold-keyboard
-        data-model="attendCode_input" 
-        type="password"
-        maxlength='4'
-        clearable
-        placeholder="4位，數字/字母皆可，不區分大小寫"
-        bind:change="onChange_field"
-      />
+        <van-field
+          value="{{ courseCloudData ? courseInfoInput[shortNameIndex.attendCode].input : '' }}"
+          hold-keyboard
+          data-model="attendCode_input" 
+          type="password"
+          maxlength='4'
+          clearable
+          placeholder="4位，數字/字母皆可，不區分大小寫"
+          bind:change="onChange_field"
+        />
+      </block>
+
+      <!-- 課程標籤 -->
+      <block wx:if="{{courseCloudData}}">
+        <view class="cu-item">
+          <view class="content">
+            <text class="cuIcon-circlefill text-themeOrange-light"></text>
+            <text class="text-grey">課程標籤</text>
+          </view>
+        </view>
+        <!-- <van-field
+          value="{{ courseCloudData ? courseInfoInput[shortNameIndex.attendCode].input : '' }}"
+          hold-keyboard
+          data-model="attendCode_input" 
+          type="password"
+          maxlength='4'
+          clearable
+          placeholder="4位，數字/字母皆可，不區分大小寫"
+          bind:change="onChange_field"
+        /> -->
+      </block>
 
     </view>
 
@@ -230,13 +256,14 @@
 
     <view class="cu-list menu sm-border card-menu margin-top">
       
-      <view class="cu-item">    <!-- 文件上傳 -->
+      <!-- 文件上傳 -->
+      <view class="cu-item">
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange-light"></text>
           <text class="text-grey">文件上傳</text>
         </view>
       </view>
-      <van-cell title-class="text-grey cu-item">    <!-- 允許投票switch -->
+      <van-cell title-class="text-grey cu-item">
         <view slot="title">
           <van-uploader file-list="{{ fileList }}" bind:before-read="uploadToCloudTest" bind:after-read="uploadToCloudTest" max-size="30K"	/>
           <!-- afterRead -->

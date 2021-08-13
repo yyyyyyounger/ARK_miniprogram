@@ -517,11 +517,11 @@ Page({
       let w3 = this.data.userInfoInput.findIndex(o=> o.shortName === 'studentYear' );
       that.setData({        // 寫入當前js的userInfoInput數據，setData寫法可以保證展示頁刷新
         bindEditMode : false,
-        ['userInfoInput['+w0+'].input'] : that.data.UM_ID_input,
-        ['userInfoInput['+w1+'].input'] : that.data.studentName_input,
-        ['userInfoInput['+w2+'].input'] : that.data.studentMajor_input,
-        ['userInfoInput['+w2+'].majorTag'] : that.data.studentMajorTag_input,
-        ['userInfoInput['+w3+'].input'] : that.data.studentYear_input,
+        ['userInfoInput['+w0+'].input']     : that.data.UM_ID_input,
+        ['userInfoInput['+w1+'].input']     : that.data.studentName_input,
+        ['userInfoInput['+w2+'].input']     : that.data.studentMajor_input,
+        ['userInfoInput['+w2+'].majorTag']  : that.data.studentMajorTag_input,
+        ['userInfoInput['+w3+'].input']     : that.data.studentYear_input,
       });
       
 // if 本地註冊狀態為false（新用戶），註冊邏輯。能執行此條件的為正確輸入，因此寫入本地註冊時間和ARKid

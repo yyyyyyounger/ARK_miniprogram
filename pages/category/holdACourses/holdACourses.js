@@ -129,6 +129,8 @@ Page({
           courseName_input    : this.data.courseInfoInput[this.data.shortNameIndex.courseName].input,
           courseContent_input : this.data.courseInfoInput[this.data.shortNameIndex.courseContent].input,
           courseAdres_input   : this.data.courseInfoInput[this.data.shortNameIndex.courseAdres].input,
+          // courseTag
+          courseTag_input     : this.data.courseInfoInput[this.data.shortNameIndex.courseTag].input, // 數組形式
         })
       }
 
@@ -382,6 +384,11 @@ Page({
         ['courseInfoInput['+this.data.shortNameIndex.speakerName+'].input']   : this.data.userInfoInput[this.data.userInfoShortNameIndex.name].input, // 寫入講者姓名
         ['courseInfoInput['+this.data.shortNameIndex.speakerid+'].input']     : this.data.userInfoInput[this.data.userInfoShortNameIndex.arkId].input,   // 寫入講者arkid
       })
+      if ( !this.data.courseCloudData ) {   // 開課 mode，以用戶majorTag寫入courseTag的首位
+        this.setData({
+          ['courseInfoInput['+this.data.shortNameIndex.courseTag+'].input[0]']  : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.studentMajor].majorTag,   // 寫入講者majorTag
+        })
+      }
     }
     if (!this.data.allowVote) {    // 講者設定時間mode，直接將具體時間寫入courseInfoInput數組內
       this.setData({
@@ -599,11 +606,9 @@ Page({
   },
   // 刪除課程
   onClick_deleteCourse() {
-
-    // 重點提示是否確認刪除
-    Dialog.confirm({
+    Dialog.confirm({    // 重點提示是否確認刪除
       title: '*危險操作提示！*',
-      message: '是否確認刪除該課程？\n將會抹除**所有**有關記錄！',
+      message: '是否確認刪除該課程？\n將會抹除*所有*有關記錄！',
     })
     .then(() => {   // on confirm - 未完成
       // 1 刪除course集合中的該課
@@ -612,17 +617,23 @@ Page({
       // 4 文件
 
       Toast.loading({ // 加載提示
-        message: '瘋狂請求中...',
-        forbidClick: true,
-      });
+        message     : '瘋狂請求中...',
+        forbidClick : true,
+      })
       // 刪除該課 - 使用雲函數，保證admin都能有刪除權限 - 未完成
+      if (this.data.courseCloudData.followMember) {
+        var followMember = this.data.followMember.map((e,item)=>{ // 生成僅有arkid的數組
+          return e.arkid
+        })
+      }
+      console.log(followMember);
       wx.cloud.callFunction({
         name:'courseDelete',
         data:{
           idNum         : this.data.courseCloudData._id,
-          speakerid     : this.data.courseInfoInput[this.data.shortNameIndex.speakerid],
+          speakerid     : this.data.courseCloudData.arkid,
           courseState   : this.data.courseCloudData.courseState,
-          followMember  : ((this.data.courseCloudData).hasOwnProperty('followMember')?this.data.courseCloudData.followMember:[0]),
+          followMember  : ((this.data.courseCloudData).hasOwnProperty('followMember')?followMember:[0]),
         }
       }) .then(res=>{
         Toast.success('刪除成功！');
@@ -748,51 +759,6 @@ Page({
 
   },
 
-  // 文件上傳
-  afterRead(event) {
-    const { file } = event.detail;
-    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-    wx.uploadFile({
-      url: 'https://example.weixin.qq.com/upload', // 仅为示例，非真实的接口地址
-      filePath: file.url,
-      name: 'file',
-      formData: { user: 'test' },
-      success(res) {
-        // 上传完成需要更新 fileList
-        const { fileList = [] } = this.data;
-        fileList.push({ ...file, url: res.data });
-        this.setData({ fileList });
-      },
-    });
-  },
-
-  // 上传图片
-  uploadToCloud() {
-    const { fileList } = this.data;
-    if (!fileList.length) {
-      wx.showToast({ title: '请选择图片', icon: 'none' });
-    } else {
-      const uploadTasks = fileList.map((file, index) => this.uploadFilePromise(`my-photo${index}.png`, file));
-      Promise.all(uploadTasks)
-        .then(data => {
-          wx.showToast({ title: '上傳成功', icon: 'none' });
-          const newFileList = data.map(item => ({ url: item.fileID }));
-          this.setData({ cloudPath: data, fileList: newFileList });
-        })
-        .catch(e => {
-          wx.showToast({ title: '上傳失敗', icon: 'none' });
-          console.log(e);
-        });
-    }
-  },
-  uploadFilePromise(fileName, chooseResult) {
-    return wx.cloud.uploadFile({
-      cloudPath: fileName,
-      filePath: chooseResult.url
-    });
-  },
-  uploadToCloudTest(event) {
-    console.log("文件上傳test",event.detail);
-  },
+  // 文件上傳 - 未完成
   
 });
