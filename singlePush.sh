@@ -5,12 +5,12 @@ git config --global user.name "yyyyyyounger"
 git config --global user.email "1049825685@qq.com"
 
 
-git add -f -A
+git add -A
 
 git commit -m "update"
 
-git push -f origin dev
-git push -f local dev
+git push origin dev
+git push local dev
 
 echo " "
 echo "The program has finished ~"
