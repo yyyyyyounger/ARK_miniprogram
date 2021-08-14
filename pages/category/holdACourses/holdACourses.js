@@ -792,14 +792,18 @@ Page({
         var count = 0;                  //第几张
         // 判斷總大小是否超過50M限制
         let allSize = 0;
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < filePaths.length; i++) {
           allSize += filePaths[i].size;
+        } 
+        allSize = (allSize/1000000).toFixed(2);   // 精確到2位小數
+        console.log("總大小為 ",allSize," MB");
+        if (allSize < 50) {   // 小於50MB即可上傳
+          that.setData({  filePaths  }) // 儲存入data，等點擊保存修改時調用this.uploadOneByOne()
+          // that.uploadOneByOne(filePaths,successUp,failUp,count,length);
+        } else {              // 提示超過50MB
+          Notify({ type: 'warning', message: "超過50M，當前大小為"+allSize+"MB" });
         }
-        console.log("總大小為 ",allSize/1000000," MB");
-        if (allSize/1000000 < 50) { // 小於50MB即可上傳
-          that.uploadOneByOne(filePaths,successUp,failUp,count,length);
-        }
-      },
+      }
     })
   },
   /**
@@ -823,7 +827,7 @@ Page({
       db.collection('fileList').add({
         data: {
           createAt    : Date.now(),
-          courseInfo  : { // 課程id與課程名
+          courseInfo  : {           // 課程id與課程名
             courseId    : this.data.courseCloudData._id,
             courseName  : this.data.courseCloudData.courseInfoInput[1].input,
           },
@@ -834,10 +838,10 @@ Page({
         }
       }) .then(e=>{  console.log(e);  }) .catch(err=>{  console.error(err);  })
     })
-    .catch(err=>{       // 執行失敗回調
+    .catch(err=>{ // 執行失敗回調
       failUp++;//失败+1
     })
-    .then(e=>{   // 執行完成回調
+    .then(e=>{    // 執行完成回調
       count++;//下一张
       if(count == length){
         //上传完毕，作一下提示

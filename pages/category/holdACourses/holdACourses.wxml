@@ -251,12 +251,15 @@
         <view class="cu-item">
           <view class="content">
             <text class="cuIcon-circlefill text-themeOrange-light"></text>
-            <text class="text-grey">文件上傳</text>
+            <text class="text-grey">文件上傳 (  / 5 ) 總大小小於50MB</text>
           </view>
         </view>
         <van-cell title-class="text-grey cu-item">
           <view slot="title">
-            <view>test</view>
+            <view class="text-sl">
+              <text class="cuIcon-file text-gray"></text>
+              <test class="text-lg">\ntest</test>
+            </view>
           </view>
           <!-- <van-uploader file-list="{{ fileList }}" bindtap="uploadFileTest" max-size="30K"	/> -->
           <van-button icon="plus" size="small" plain type="primary" color="#64b1e3" bind:click="uploadFileTest" >添加文件</van-button>
