@@ -151,6 +151,7 @@ Page({
           // 拉取user數據 - 雲端 → 本地&全局
           let signUpUserInfoInput = JSON.parse(JSON.stringify(userCloudData.userInfoInput));  // 複製數據
           this.setData({  
+            userCloudData : userCloudData,  // 待刪除
             userInfoInput : signUpUserInfoInput,
             isSignUp      : signUpUserInfoInput.find(o => o.shortName === 'isSignUp').input , 
           });
@@ -337,6 +338,16 @@ Page({
         console.log("鏈式調用getUserCloudData，返回數組長度為：",res.result.userCloudData.data.length)
         if (res.result.userCloudData.data.length!=0) {  // 已註冊，將 數據庫user數據複製 → 本地&全局
           let userCloudData = res.result.userCloudData.data[0];
+          const userInfoStorage = wx.getStorageSync('userInfo');  // 用戶頭像緩存
+          if (userCloudData.avatarUrl!=userInfoStorage.data.avatarUrl || userCloudData.nickName!=userInfoStorage.data.nickName) {   // 如果用戶已更新自己的頭像
+            // 更新頭像和暱稱
+            db.collection('user').where({  arkid : userCloudData.arkid  }).update({
+              data: {
+                avatarUrl : userInfoStorage.data.avatarUrl,
+                nickName  : userInfoStorage.data.nickName,
+              }
+            }) .then(res=>{  console.log(res);  }) .catch(err=>{  console.error(err);  })
+          }
 // 拉取user數據 - 雲端 → 本地&全局，緩存
           let signUpUserInfoInput = JSON.parse(JSON.stringify(userCloudData.userInfoInput));  // 複製數據
           app.globalData.userInfoInput = signUpUserInfoInput;
