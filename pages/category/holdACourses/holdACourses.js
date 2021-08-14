@@ -617,21 +617,20 @@ Page({
     .then(() => {   // on confirm - 未完成
       // 1 刪除course集合中的該課
       // 2 刪除myCourse的該課
-      // 3 if 課程狀態為finish，刪除各個followMember的user記錄的中的allJoinId - user的課程參與記錄 - 未完成
-      // 4 文件
-
+      // 3 if 課程狀態為finish，刪除各個followMember的user記錄的中的allJoinId - user的課程參與記錄
+      // 4 刪除關聯文件 - 未完成
       Toast.loading({ // 加載提示
         message     : '瘋狂請求中...',
         forbidClick : true,
       })
       // 刪除該課 - 使用雲函數，保證admin都能有刪除權限 - 未完成
-      if (this.data.courseCloudData.followMember) {
+      if (this.data.courseCloudData.followMember) { // 如果有用戶follow，生成只有arkid的followMember數組，便於後面調用
         var followMember = this.data.followMember.map((e,item)=>{ // 生成僅有arkid的數組
           return e.arkid
         })
       }
       console.log(followMember);
-      wx.cloud.callFunction({
+      wx.cloud.callFunction({   // 調用courseDelete雲函數
         name:'courseDelete',
         data:{
           idNum         : this.data.courseCloudData._id,

@@ -44,6 +44,8 @@ exports.main = async (event, context) => {
           allJoinId: _.pull(_.in([idNum])),
         }
       })
+      // 4 刪除關聯文件 - 未完成
+      
     } 
     else if (courseState=="opening"){  // 刪除user集合各個followMember中recentFollowIdIndex的該課
       db.collection('user') .where({

@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了git腳本文件的命名"
+git commit -m "實現結課功能"
 
 git push origin dev
 git push local dev
@@ -25,4 +25,6 @@ read -p "Press \"Enter\" to End"
 # git checkout master/dev 
 # git merge newBranchName
 
+# Token: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
 # https://TOKEN:x-oauth-basic@github.com/yyyyyyounger/xxxxxx/xxxx.git
+# curl https://api.github.com/?access_token=YourToken
