@@ -258,7 +258,8 @@
           <view slot="title">
             <view>test</view>
           </view>
-          <van-uploader file-list="{{ fileList }}" bind:before-read="uploadToCloudTest" bind:after-read="uploadToCloudTest" max-size="30K"	/>
+          <!-- <van-uploader file-list="{{ fileList }}" bindtap="uploadFileTest" max-size="30K"	/> -->
+          <van-button icon="plus" size="small" plain type="primary" color="#64b1e3" bind:click="uploadFileTest" >添加文件</van-button>
         </van-cell>
       </block>
 

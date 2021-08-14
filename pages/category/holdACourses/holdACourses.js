@@ -759,6 +759,99 @@ Page({
 
   },
 
-  // 文件上傳 - 未完成
-  
+  /**
+  * 獲取當前日期，能命名文件夾的格式 e.g. 2021-08-14
+  */
+  getDateName() {
+    var timestamp = Date.parse(new Date());
+    var date = new Date(timestamp);
+    //获取年份
+    var Y =date.getFullYear();
+    //获取月份  
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    //获取当日日期 
+    var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
+    let dateName = Y + '-'  + M+ '-' + D;
+    console.log("当前时间：", dateName ); 
+    return dateName
+  },
+  /**
+  * 上傳多個文件，限制5個
+  */
+  uploadFileTest:function(){
+    var that = this;
+    wx.chooseMessageFile({    // 選擇文件
+      count: 5,
+      type  : 'all',          // 文件类型，all是全部文件类型
+      success: function(res){
+        let filePaths = res.tempFiles;  // 已選擇文件的信息，對象數組，有name、path臨時路徑等屬性
+        console.log(filePaths);
+        var successUp = 0;              //成功
+        var failUp = 0;                 //失败
+        var length = res.tempFiles.length; //总数
+        var count = 0;                  //第几张
+        // 判斷總大小是否超過50M限制
+        let allSize = 0;
+        for (let i = 0; i < length; i++) {
+          allSize += filePaths[i].size;
+        }
+        console.log("總大小為 ",allSize/1000000," MB");
+        if (allSize/1000000 < 50) { // 小於50MB即可上傳
+          that.uploadOneByOne(filePaths,successUp,failUp,count,length);
+        }
+      },
+    })
+  },
+  /**
+  * 採用遞歸法上傳多個文件
+  */
+  uploadOneByOne(filePaths, successUp, failUp, count, length){
+    var that = this;
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    wx.showLoading({  // 上傳提示
+      title: '正在上傳第 '+count+' 個文件',
+    })
+    let cloudPath = this.getDateName()+'/' + filePaths[count].name;
+    wx.cloud.uploadFile({
+      cloudPath : cloudPath,    // 雲儲存路徑 '雲端目標文件夾/' + 定義的fileName。不存在的路徑將會自動建立文件夾。
+      filePath  : filePaths[count].path,    // 本地臨時路徑
+    }) 
+    .then(e=>{    // 執行成功回調
+      successUp++;//成功+1
+      console.log("雲儲存id",e.fileID);  // 該id為雲端儲存id，用於下載
+      // 雲端儲存id寫入fileList集合，附帶該課程的courseId、createAt、文件夾路徑。 - 未完成
+      db.collection('fileList').add({
+        data: {
+          createAt    : Date.now(),
+          courseInfo  : { // 課程id與課程名
+            courseId    : this.data.courseCloudData._id,
+            courseName  : this.data.courseCloudData.courseInfoInput[1].input,
+          },
+          arkid       : userCloudDataStorage.data.arkid,  // 當前操作人的arkid
+          cloudPath   : cloudPath,  // 雲儲存文件夾路徑
+          cloudFileId : e.fileID,   // 雲儲存id
+          fileInfo    : filePaths[count],  // 文件信息，包含name、size、time、type。path為本地臨時路徑不用理會。
+        }
+      }) .then(e=>{  console.log(e);  }) .catch(err=>{  console.error(err);  })
+    })
+    .catch(err=>{       // 執行失敗回調
+      failUp++;//失败+1
+    })
+    .then(e=>{   // 執行完成回調
+      count++;//下一张
+      if(count == length){
+        //上传完毕，作一下提示
+        console.log('上傳成功 ' + successUp + '個，' + '失敗 ' + failUp + ' 個');
+        wx.showToast({
+          title: '上傳成功 ' + successUp + ' 個',
+          icon: 'success',
+          duration: 2000
+        })
+      }else{
+        //递归调用，上传下一张
+        that.uploadOneByOne(filePaths, successUp, failUp, count, length);
+        console.log('正在上傳第 ' + count + ' 個文件');
+      }
+    })
+  },
 });
