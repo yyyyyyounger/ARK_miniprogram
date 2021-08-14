@@ -39,20 +39,20 @@ Page({
     });
 
     // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 未完成
-    let date = new Date(Date.now());                    // 現在時刻的時間戳
-    let today = date.toLocaleDateString();              // 今天的文本時間 yyyy/m/d
-    let todayTimeStamp = (new Date(today)).getTime();   // 今天的時間戳
-    console.log( "今天的時間戳：", todayTimeStamp );
+    // let date = new Date(Date.now());                    // 現在時刻的時間戳
+    // let today = date.toLocaleDateString();              // 今天的文本時間 yyyy/m/d
+    // let todayTimeStamp = (new Date(today)).getTime();   // 今天的時間戳
+    // console.log( "今天的時間戳：", todayTimeStamp );
 
     // 查詢course集合中，符合條件的課程，（距今一個月內未進行的課程） - 未完成
     db.collection('course') .where( _.or([
-        { // 路人/普通用戶可查看最近已opening的課程
-          timeStampPick : _.gte(todayTimeStamp) ,
+        { // 路人/普通用戶可查看已opening的課程
+          timeStampPick : _.gte(Date.now()) ,
           courseState   : _.eq('opening') ,
         },
-        { // 已開課的用戶可查看近期仍在checking的課程
-          timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking狀態的課程
-          courseState   : _.eq('checking') ,
+        { // 已開課的用戶可查看近期自己仍在checking，opening，finish的課程
+          timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
+          courseState   : _.eq('checking').or(_.eq('opening')).or(_.eq('finish')) ,
           arkid         : _.eq(userCloudDataStorage ? userCloudDataStorage.data.arkid : 0) , // 自己的開課
         },
     ]) ) .field({
