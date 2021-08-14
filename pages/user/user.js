@@ -109,6 +109,9 @@ Page({
     // 設置app.js的訪問接口
     this.app = getApp();
 
+    // 向服務器請求的延時動畫
+    app.toastLoadingDIY();
+
     // 獲取緩存，打開小程序時就會判斷是否有頭像緩存，然後寫入globalData.isSignIn
     const userInfoStorage = wx.getStorageSync('userInfo');
     if (app.globalData.isSignIn) {      // 全局已登錄
@@ -138,7 +141,7 @@ Page({
       this.returnMajorTagArray(this);
       // 如果存在userInfo的緩存，則先渲染著，再請求雲端返回
       if (userCloudDataStorage) {
-        this.setData({  userInfoInput:userCloudDataStorage.data.userInfoInput  })
+        this.setData({  userInfoInput : userCloudDataStorage.data.userInfoInput  })
       }
 
       getUserCloudData().then(res => {  // 鏈式調用，雲端返回用戶登記的數據
@@ -165,34 +168,29 @@ Page({
 
       consoleMeg = '已登錄 - ';
     }
-
-    // 向服務器請求的延時動畫
-    app.toastLoadingDIY();
     
     if (needWait) {   // 存在緩存，需要等待異步請求返回
       getUserCloudData().then(res => {
-      setTimeout(() => {
-        // log出提示消息
-        console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
-  
-        // 初始化各種數組
-        this.ArrayDataInit(this);
-        this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
-      }, 600);
+        setTimeout(() => {
+          // log出提示消息
+          console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
+    
+          // 初始化各種數組
+          this.ArrayDataInit(this);
+          this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
+        }, 600);
 
-// 未理解的神秘執行(必須存在) - 未完成
-      if (wx.getUserProfile) {
-        console.log("wx.getUserProfile為true");
-        this.setData({
-          // 用戶授權狀態設為true
-          canIUseGetUserProfile: true
-        })
-      }   else{
-        console.log("user頁 - onLoad() - GetuserProfile ***fail***");
-      }
-      
-      // 計算持續時間
-      // this.calcTime();
+  // 未理解的神秘執行(必須存在) - 未完成
+        if (wx.getUserProfile) {
+          console.log("wx.getUserProfile為true");
+          this.setData({
+            // 用戶授權狀態設為true
+            canIUseGetUserProfile: true
+          })
+        } else{  console.log("user頁 - onLoad() - GetuserProfile ***fail***"); }
+        
+        // 計算持續時間
+        // this.calcTime();
       }) .catch(err => {    console.error(err)    });
     } 
     else {
@@ -206,12 +204,12 @@ Page({
       if (wx.getUserProfile) {
         console.log("wx.getUserProfile為true");
         this.setData({
-          // 用戶授權狀態設為true
-          canIUseGetUserProfile: true
+          canIUseGetUserProfile: true   // 用戶授權狀態設為true
         })
-      }   else{
-        console.log("user頁 - onLoad() - GetuserProfile ***fail***");
-      }
+      } else{  console.log("user頁 - onLoad() - GetuserProfile ***fail***"); }
+
+      // 頁面加載完成時，取消骨架屏
+      this.setData({  loading: false  });   
     }
   },
   findSetData(shortNameArray) { // 初始化所有index，匹配對應input值用於顯示

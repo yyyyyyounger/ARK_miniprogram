@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -f -A
 
-git commit -m "修復刪除課程頁bug、遞歸法多文件上傳已實現，明天完善數據庫互動和展示邏輯。"
+git commit -m "update"
 
 git push -f origin dev
 git push -f local dev

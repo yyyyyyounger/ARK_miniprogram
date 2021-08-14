@@ -388,6 +388,8 @@ Page({
         this.setData({
           ['courseInfoInput['+this.data.shortNameIndex.courseTag+'].input[0]']  : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.studentMajor].majorTag,   // 寫入講者majorTag
         })
+      } else {                              // 更新課程mode，允許自定義courseTag
+        console.log("未完成 - 更新課程模式下允許自定義courseTag，等待後續開發。");
       }
     }
     if (!this.data.allowVote) {    // 講者設定時間mode，直接將具體時間寫入courseInfoInput數組內
