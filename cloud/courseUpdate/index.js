@@ -27,7 +27,15 @@ exports.main = async (event, context) => {
       memberLimit     : 50,
     }
   }) .then(res=>{
-    
+    if (courseState=="finish") {      // if 課程狀態為finish，結課後，將該課程的courseId寫入所有followMember的allJoinId內
+      db.collection('user') .where({
+        arkid : _.in(followMember),
+      }) .update({
+        data: {
+          allJoinId: _.push([idNum]),
+        }
+      })
+    } 
   }) .catch(err=>{  console.error(err);  })
     
 }

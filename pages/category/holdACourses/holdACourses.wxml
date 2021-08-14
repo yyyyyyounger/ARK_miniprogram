@@ -113,7 +113,7 @@
 
     <!-- 分享時間 -->
     <block wx:if="{{canDisplay[shortNameIndex.courseTime]}}">
-      <view class="cu-item">    
+      <view class="cu-item">
         <view class="content">
           <text class="cuIcon-circlefill text-themeOrange"></text>
           <text class="text-grey">分享時間</text>
@@ -223,24 +223,14 @@
       </block>
 
       <!-- 課程標籤 -->
-      <block wx:if="{{courseCloudData}}">
+      <!-- <block wx:if="{{courseCloudData}}">
         <view class="cu-item">
           <view class="content">
             <text class="cuIcon-circlefill text-themeOrange-light"></text>
             <text class="text-grey">課程標籤</text>
           </view>
         </view>
-        <!-- <van-field
-          value="{{ courseCloudData ? courseInfoInput[shortNameIndex.attendCode].input : '' }}"
-          hold-keyboard
-          data-model="attendCode_input" 
-          type="password"
-          maxlength='4'
-          clearable
-          placeholder="4位，數字/字母皆可，不區分大小寫"
-          bind:change="onChange_field"
-        /> -->
-      </block>
+      </block> -->
 
     </view>
 
@@ -248,7 +238,7 @@
 </view>
 
 <!-- 附加 - 上傳文件 --> 
-<view class="grid col-{{1}} padding-sm">    
+<view class="grid col-{{1}} padding-sm" wx:if="{{courseState=='opening'}}">
   <view wx:if="{{courseState=='opening'}}" class="bg-themeBlue-light padding radius text-center shadow-blur ">
       <text class="text-lg">附加</text>
   </view>
@@ -257,19 +247,20 @@
     <view class="cu-list menu sm-border card-menu margin-top">
       
       <!-- 文件上傳 -->
-      <view class="cu-item">
-        <view class="content">
-          <text class="cuIcon-circlefill text-themeOrange-light"></text>
-          <text class="text-grey">文件上傳</text>
+      <block>
+        <view class="cu-item">
+          <view class="content">
+            <text class="cuIcon-circlefill text-themeOrange-light"></text>
+            <text class="text-grey">文件上傳</text>
+          </view>
         </view>
-      </view>
-      <van-cell title-class="text-grey cu-item">
-        <view slot="title">
+        <van-cell title-class="text-grey cu-item">
+          <view slot="title">
+            <view>test</view>
+          </view>
           <van-uploader file-list="{{ fileList }}" bind:before-read="uploadToCloudTest" bind:after-read="uploadToCloudTest" max-size="30K"	/>
-          <!-- afterRead -->
-        </view>
-        <!-- <view>test</view> -->
-      </van-cell>
+        </van-cell>
+      </block>
 
     </view>
 

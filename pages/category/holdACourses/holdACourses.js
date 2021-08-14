@@ -475,8 +475,8 @@ Page({
         }) .then(() => {
           // on confirm
           wx.navigateBack({    delta: 0,   })   // 回退上一頁
-        }) .catch(() => {
-          // on cancel
+        }) .catch(() => {   // on cancel
+          this.setData({    btn_quit : false    });
         });
       }
     }
@@ -592,13 +592,15 @@ Page({
               console.error(err);
               Notify({ type: 'danger', message: err });
             })
-            if (this.data.courseState=="finish") {
-              // 結課後，將該課程的courseId寫入所有followMember的allJoinId內
-              // 調用雲函數 - 未完成
-            }
           }
   
-        }) .catch(err=>{  console.error(err);  })
+        }) .catch(err=>{
+          console.error(err);
+          this.setData({    
+            btn_submit : false,
+            btn_finish : false,
+          });
+        })
       } // if輸入校驗 - end
     } // if點擊了submit button - end
 
@@ -728,21 +730,18 @@ Page({
   // admin權限修改課程狀態courseState - 動作面板
   onClick_changeCourseState(e) {
     let model = e.currentTarget.dataset.model;
-    if (model=='other') {
+    if (model=='other') {       // 展示課程選擇器
       this.setData({  show_sheet :true  })
     } 
-    else if(model=='finish') {  // 改為結課模式
-      // 提示
-      Dialog.confirm({
-        title: '*操作提示！*',
-        message: '是否確認課程已結束？',
+    else if(model=='finish') {  // 結課模式
+      Dialog.confirm({  // 操作提示
+        title: '操作提示',
+        message: '是否確認課程已結束？\n確認後點擊\'提交修改\'才會上傳此次操作',
       }) 
       .then(()=>{
-        // 上傳雲端後，退出到詳情頁 - 未完成
-        Toast.success('修改成功！');
         this.setData({  courseState : "finish"  })
-      })
-      .catch(()=>{})
+        Toast.success('課程狀態已修改為 finish ！');
+      }) .catch(()=>{})
     }
   },
   onClose_sheet () {

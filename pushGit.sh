@@ -24,3 +24,5 @@ read -p "Press \"Enter\" to End"
 # git commit -m "備註"
 # git checkout master/dev 
 # git merge newBranchName
+
+# https://TOKEN:x-oauth-basic@github.com/yyyyyyounger/xxxxxx/xxxx.git
