@@ -64,18 +64,8 @@ Page({
     actions_sheetStrArr:['checking','opening'],
 
     // 文件上傳
-    fileList: [
-      // {
-      //   url: 'https://img.yzcdn.cn/vant/leaf.jpg',
-      //   status: 'uploading',
-      //   message: '上传中',
-      // },
-      // {
-      //   url: 'https://img.yzcdn.cn/vant/tree.jpg',
-      //   status: 'failed',
-      //   message: '上传失败',
-      // },
-    ],
+    fileList  : [],
+    canUpdate : false,
   },
   onLoad: function(options){
     // 可選日期初始化 - 只限距離今天30天內
@@ -509,10 +499,6 @@ Page({
             message: '拼命上傳中...',
             forbidClick: true,
           })
-          Toast.loading({
-            message: '拼命上傳中...',
-            forbidClick: true,
-          })
           // 上傳數據 本地 → 雲端
           if (!this.data.courseCloudData) {   // 開課mode
             console.log("首次開課模式！");
@@ -564,34 +550,48 @@ Page({
               arkid     = userCloudDataStorage.data.arkid;
               nickName  = userCloudDataStorage.data.nickName;
             }
-            // 調用更新的雲函數 courseUpdate
-            wx.cloud.callFunction({   // 調用更新的雲函數 courseUpdate
-              name : 'courseUpdate',
-              data : {
-                idNum           : this.data.courseCloudData._id,
-                avatarUrl       : avatarUrl,
-                arkid           : arkid,
-                nickName        : nickName,
-                courseInfoInput : this.data.courseInfoInput ,
-                allowVote       : this.data.allowVote,
-                courseState     : this.data.courseState,
-                datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
-                timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
-                timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
-              }
-            }) .then (res=>{
-              // 獲取用戶新增課程的id，然後帶參跳轉課程詳情頁
-              let detailInfo = {
-                user      :   "speaker",
-                courseId  :   this.data.courseCloudData._id,
-              }
-              detailInfo = JSON.stringify(detailInfo);
-              Toast.success('修改成功！');
-              wx.navigateBack();
-            }) .catch (err=>{
-              console.error(err);
-              Notify({ type: 'danger', message: err });
-            })
+            // 如果filePaths有數據，則準備上傳 - filePaths選擇文件的臨時路徑
+            if (this.data.filePaths) {
+              console.log("需要上傳文件",this.data.filePaths);
+              var successUp = 0;              //成功
+              var failUp = 0;                 //失败
+              var length = this.data.filePaths.length; //总数
+              var count = 0;                  //第几张
+              // BUG風險 - 如果用戶在上傳中退出，將發生奇妙問題 - 未完成
+              this.uploadOneByOne(this.data.filePaths,successUp,failUp,count,length);
+              console.log("fileList為",this.data.fileList);
+            } else {
+              // 可直接上傳
+              this.setData({  canUpdate : true  })
+            }
+            if (this.data.canUpdate) {
+              // 調用課程更新的雲函數 courseUpdate
+              wx.cloud.callFunction({   // 調用更新的雲函數 courseUpdate
+                name : 'courseUpdate',
+                data : {
+                  idNum           : this.data.courseCloudData._id,
+                  avatarUrl       : avatarUrl,
+                  arkid           : arkid,
+                  nickName        : nickName,
+                  courseInfoInput : this.data.courseInfoInput ,
+                  allowVote       : this.data.allowVote,
+                  courseState     : this.data.courseState,
+                  datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
+                  timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
+                  timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
+                  fileList        : (this.data.filePaths?this.data.fileList:undefined),   // 上傳的文件
+                }
+              }) .then (res=>{
+                Toast.success('修改成功！');
+                Dialog.alert({
+                  title: '操作提示',
+                  message: '修改成功！\n即將回退上一頁',
+                }) .then(res=>{  wx.navigateBack();  })
+              }) .catch (err=>{
+                console.error(err);
+                Notify({ type: 'danger', message: err });
+              })
+            }
           }
   
         }) .catch(err=>{
@@ -780,30 +780,36 @@ Page({
   */
   uploadFileTest:function(){
     var that = this;
-    wx.chooseMessageFile({    // 選擇文件
-      count: 5,
-      type  : 'all',          // 文件类型，all是全部文件类型
-      success: function(res){
-        let filePaths = res.tempFiles;  // 已選擇文件的信息，對象數組，有name、path臨時路徑等屬性
-        console.log(filePaths);
-        var successUp = 0;              //成功
-        var failUp = 0;                 //失败
-        var length = res.tempFiles.length; //总数
-        var count = 0;                  //第几张
-        // 判斷總大小是否超過50M限制
-        let allSize = 0;
-        for (let i = 0; i < filePaths.length; i++) {
-          allSize += filePaths[i].size;
-        } 
-        allSize = (allSize/1000000).toFixed(2);   // 精確到2位小數
-        console.log("總大小為 ",allSize," MB");
-        if (allSize < 50) {   // 小於50MB即可上傳
-          that.setData({  filePaths  }) // 儲存入data，等點擊保存修改時調用this.uploadOneByOne()
-          // that.uploadOneByOne(filePaths,successUp,failUp,count,length);
-        } else {              // 提示超過50MB
-          Notify({ type: 'warning', message: "超過50M，當前大小為"+allSize+"MB" });
+    Dialog.confirm({
+      title: '操作提示',
+      message: '文件將從微信聊天中選取，\n可以先傳到檔案助手會更方便選取。\n請等待成功提示，再進行下一步操作！',
+    }).then(() => {   // on close
+      wx.chooseMessageFile({    // 選擇文件
+        count: 5,
+        type  : 'all',          // 文件类型，all是全部文件类型
+        success: function(res){
+          let filePaths = res.tempFiles;  // 已選擇文件的信息，對象數組，有name、path臨時路徑等屬性
+          console.log("所有選取文件的臨時路徑為：",filePaths);
+          // var successUp = 0;              //成功
+          // var failUp = 0;                 //失败
+          // var length = res.tempFiles.length; //总数
+          // var count = 0;                  //第几张
+          // 判斷總大小是否超過50M限制
+          let allSize = 0;
+          for (let i = 0; i < filePaths.length; i++) {
+            allSize += filePaths[i].size;
+          } 
+          allSize = (allSize/1000000).toFixed(2);   // 精確到2位小數
+          console.log("總大小為 ",allSize," MB");
+          if (allSize < 50) {   // 小於50MB即可上傳
+            that.setData({  filePaths  }) // 儲存入data，等點擊保存修改時調用this.uploadOneByOne()
+            // that.uploadOneByOne(filePaths,successUp,failUp,count,length);
+            Toast.success('已準備好上傳')
+          } else {              // 提示超過50MB
+            Notify({ type: 'warning', message: "超過50M，當前大小為"+allSize+"MB" });
+          }
         }
-      }
+      })
     })
   },
   /**
@@ -812,17 +818,22 @@ Page({
   uploadOneByOne(filePaths, successUp, failUp, count, length){
     var that = this;
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
-    wx.showLoading({  // 上傳提示
-      title: '正在上傳第 '+count+' 個文件',
+    Toast.loading({
+      message: '正在上傳第 '+count+' 個文件',
+      forbidClick : true,
+      zIndex      : 99999999,
     })
-    let cloudPath = this.getDateName()+'/' + filePaths[count].name;
+    // 雲端路徑設置為 課程首Tag/今天日期(2021-08-14)/文件名 或 課程首Tag/courseid/文件名
+    // let cloudPath = this.data.courseInfoInput[this.data.shortNameIndex.courseTag].input[0]+'/'+this.getDateName()+'/' + filePaths[count].name;
+    let cloudPath = this.data.courseInfoInput[this.data.shortNameIndex.courseTag].input[0]+'/'+this.data.courseInfoInput[0].input+'/' + filePaths[count].name;
     wx.cloud.uploadFile({
       cloudPath : cloudPath,    // 雲儲存路徑 '雲端目標文件夾/' + 定義的fileName。不存在的路徑將會自動建立文件夾。
       filePath  : filePaths[count].path,    // 本地臨時路徑
-    }) 
+    })
     .then(e=>{    // 執行成功回調
       successUp++;//成功+1
       console.log("雲儲存id",e.fileID);  // 該id為雲端儲存id，用於下載
+      this.setData({  filePathsIndex : JSON.parse(JSON.stringify(count))  })    // count會因為異步操作遞加時不是期望的索引值，借用data新增變量同步操作次數
       // 雲端儲存id寫入fileList集合，附帶該課程的courseId、createAt、文件夾路徑。 - 未完成
       db.collection('fileList').add({
         data: {
@@ -834,9 +845,21 @@ Page({
           arkid       : userCloudDataStorage.data.arkid,  // 當前操作人的arkid
           cloudPath   : cloudPath,  // 雲儲存文件夾路徑
           cloudFileId : e.fileID,   // 雲儲存id
-          fileInfo    : filePaths[count],  // 文件信息，包含name、size、time、type。path為本地臨時路徑不用理會。
+          fileInfo    : filePaths[this.data.filePathsIndex],  // 文件信息，包含name、size、time、type。path為本地臨時路徑不用理會。
         }
-      }) .then(e=>{  console.log(e);  }) .catch(err=>{  console.error(err);  })
+      }) 
+      .then(res=>{
+        let fileInfoObj = {
+          cloudFileId : e.fileID,           // 雲儲存id1
+          fileInfo    : filePaths[this.data.filePathsIndex],   // 文件信息，包含name、size、time、type。path為本地臨時路徑不用理會。
+        }
+        let fileListTemp = this.data.fileList;
+        fileListTemp.push(fileInfoObj);
+        // 將上傳的文件信息放入該course的記錄內，先放入data，update課程時再上傳數據庫
+        this.setData({  fileList : fileListTemp  })
+        console.log("待上傳到course內的fileList",this.data.fileList);
+        this.setData({ filePathsIndex : this.data.filePathsIndex++  })
+      }) .catch(err=>{  console.error(err);  })
     })
     .catch(err=>{ // 執行失敗回調
       failUp++;//失败+1
@@ -846,11 +869,14 @@ Page({
       if(count == length){
         //上传完毕，作一下提示
         console.log('上傳成功 ' + successUp + '個，' + '失敗 ' + failUp + ' 個');
-        wx.showToast({
-          title: '上傳成功 ' + successUp + ' 個',
-          icon: 'success',
-          duration: 2000
+        Toast({
+          message: '上傳成功 ' + successUp + ' 個',
+          forbidClick : true,
+          zIndex      : 99999999,
         })
+        if (successUp+failUp == length) { // 當所有上傳完畢時，修改允許上傳參數，該參數主要用來等待異步執行
+          this.setData({  canUpdate : true  })
+        }
       }else{
         //递归调用，上传下一张
         that.uploadOneByOne(filePaths, successUp, failUp, count, length);

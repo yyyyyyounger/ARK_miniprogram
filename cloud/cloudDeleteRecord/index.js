@@ -13,11 +13,14 @@ exports.main = async (event, context) => {
   
   await db.collection(objectClass) .where({
     [subjectName] : _.exists(true)
-  }) .update({
-      data: {
-          [subjectName] : _.remove()
-      }
-  }) .then(res=>{
+  }) 
+  .remove()
+  // .update({
+  //     data: {
+  //         [subjectName] : _.remove()
+  //     }
+  // }) 
+  .then(res=>{
       console.log(res);
   }).catch(res=>{
       console.error(res);

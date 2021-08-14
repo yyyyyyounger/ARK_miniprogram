@@ -113,8 +113,8 @@ Page({
         wx.cloud.callFunction({     // 多記錄delete專用，最高權限
             name: 'cloudDeleteRecord',
             data:{
-                objectClass : 'user',
-                subjectName : 'recentFollowCourseArray',
+                objectClass : 'fileList',
+                subjectName : 'arkid',
             },
             complete: res => {
               console.log('result: ', res)

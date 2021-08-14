@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "實現上傳文件功能"
+git commit -m "完成編輯頁上傳文件功能"
 
 git push origin dev
 git push local dev

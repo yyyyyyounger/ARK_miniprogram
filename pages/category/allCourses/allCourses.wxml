@@ -1,1 +1,51 @@
-<view>所有課程頁</view>
+<wxs module="m1">
+  function format(ts) {
+    var d = getDate(ts)
+    return [d.getFullYear(), d.getMonth()+1, d.getDate()].join('-')
+      + ' '
+      + [d.getHours(), d.getMinutes()].join(':')
+  }
+  module.exports.format = format
+</wxs>
+
+
+<van-dropdown-menu active-color="#3498DB">
+  <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" bind:change="mySort"/>
+  <van-button type="primary" bind:click="onClickShow" custom-style="height:100%;background:#3498DB">筛选</van-button>
+  <van-overlay show="{{ show }}" bind:click="onClickHide">
+  <view class="wrapper">
+    <view class="block" catch:tap="noop">
+    <van-tree-select
+        items="{{ items }}"
+        main-active-index="{{ mainActiveIndex }}"
+        active-id="{{ activeId }}"
+        max="{{ max }}"
+        bind:click-nav="onClickNav"
+        bind:click-item="onClickItem"
+      />
+    </view>
+  </view>
+</van-overlay>
+</van-dropdown-menu>
+
+<view class="table">
+
+ <view class="tr">
+  <view class="th_id">ID</view>
+  <view class="th">专业标签</view>
+  <view class="th_cour">课程名</view>
+  <view class="th">讲师</view>
+  <view class="th">时间</view>
+ </view>
+
+ <view wx:for="{{allCourse}}" class="tr" >
+  <view class="td_id" >{{allCourse[index]._id}}</view>
+  <view class="td">{{allCourse[index].courseInfoInput[3].input[0]}}</view>
+  <view class="td_cour">{{allCourse[index].courseInfoInput[1].input}}</view>
+  <view class="td">{{allCourse[index].courseInfoInput[6].input}}</view>
+  <view class="td">{{allCourse[index].courseInfoInput[5].input[0]}}</view>
+
+ </view>
+
+
+</view>
