@@ -151,7 +151,6 @@ Page({
           // 拉取user數據 - 雲端 → 本地&全局
           let signUpUserInfoInput = JSON.parse(JSON.stringify(userCloudData.userInfoInput));  // 複製數據
           this.setData({  
-            userCloudData : userCloudData,  // 待刪除
             userInfoInput : signUpUserInfoInput,
             isSignUp      : signUpUserInfoInput.find(o => o.shortName === 'isSignUp').input , 
           });
