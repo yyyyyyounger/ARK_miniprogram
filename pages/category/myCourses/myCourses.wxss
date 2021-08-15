@@ -1,1 +1,49 @@
 /* pages/category/myCourses/myCourses.wxss */
+page{background-color:#FFFFFF;}
+
+/* .page{background-color:var(--weui-BG-2)} */
+
+.flexCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.course{
+  position: relative;
+}
+.helper{
+  position: absolute;
+  right: 0 ;
+  bottom: 70rpx;
+}
+.title{
+  font-weight: bold;
+}
+.isOpen{
+  text-transform:Uppercase;
+  text-align: center;
+  color: #fff;
+  font-size: small;
+  line-height: 100%;
+  /* background-color: RGB(57,181,74); */
+}
+.openBg{
+  background-color: RGB(57,181,74);
+  display:inline-block;
+  padding-left: 20rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  padding-right: 20rpx;
+  border-radius: 50rpx;
+  width: auto;
+}
+.noOpenBg{
+  background-color: RGB(223,126,34);
+  display:inline-block;
+  padding-left: 20rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  padding-right: 20rpx;
+  border-radius: 50rpx;
+  width: auto;
+}
