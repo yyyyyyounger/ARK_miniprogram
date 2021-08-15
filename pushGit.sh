@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "完善編輯頁上傳文件功能"
+git commit -m "kalo寫的我的開課頁"
 
 git push origin dev
 git push local dev

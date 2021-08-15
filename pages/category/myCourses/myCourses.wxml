@@ -4,7 +4,7 @@
 <van-dialog id="van-dialog" zIndex:9999999/>
 <van-notify id="van-notify" zIndex:9999999/>
 
-<!-- 課程卡片 - 未完成 -->
+<!-- 課程卡片 -->
 <view class="cu-card dynamic course" wx:for="{{myCoursesInfoArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
   <view class="cu-item">
     <view class="cu-list menu-avatar">
@@ -40,3 +40,5 @@
   <!-- 分割線 -->
   <van-divider />
 </view>
+
+<view class="bottom-watch"></view>
