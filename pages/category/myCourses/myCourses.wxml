@@ -1,2 +1,42 @@
 <!--pages/category/myCourses/myCourses.wxml-->
-<text>pages/category/myCourses/myCourses.wxml</text>
+<!-- 彈出類 -->
+<van-toast id="van-toast" zIndex:9999999/>
+<van-dialog id="van-dialog" zIndex:9999999/>
+<van-notify id="van-notify" zIndex:9999999/>
+
+<!-- 課程卡片 - 未完成 -->
+<view class="cu-card dynamic course" wx:for="{{myCoursesInfoArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
+  <view class="cu-item">
+    <view class="cu-list menu-avatar">
+      <view class="cu-item">
+        <view class="cu-avatar round lg" style="background-image:url( {{ myCoursesInfoArray[index].avatarUrl }} );">
+          <view class="tag" style="top:35px;">{{ myCoursesInfoArray[index].courseInfoInput[3].input[0] }}</view>
+        </view>
+        <view class="content flex-sub text-gray text-lg">
+          <view class="text-black text-lg title">{{ myCoursesInfoArray[index].courseInfoInput[1].input }}</view>
+          <view >by {{ myCoursesInfoArray[index].courseInfoInput[6].input }}</view>
+        </view>
+      </view>
+    </view>
+    <!-- 簡略信息 -->
+    <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{myCoursesInfoArray[index]._id}}" style="margin-top:5px">
+      <!-- <view class="text-{{myCoursesInfoArray[index].courseState=='opening'?'green':'orange'}}" style="font-weight:bold;" wx:if="{{myCoursesInfoArray[index].arkid}}">{{myCoursesInfoArray[index].courseState}}
+      </view> -->
+      <view wx:if="{{myCoursesInfoArray[index].courseState=='opening'&&myCoursesInfoArray[index].arkid}}" class="openBg"><view class="isOpen" style="font-weight:bold;" >{{myCoursesInfoArray[index].courseState}}</view></view>
+      <view  wx:if="{{myCoursesInfoArray[index].courseState!='opening'&&myCoursesInfoArray[index].arkid}}" class="noOpenBg text-orange"> <view class="isOpen" style="font-weight:bold;" >{{myCoursesInfoArray[index].courseState}}</view>
+
+      </view>
+      <view class="text-gray">日期：{{ myCoursesInfoArray[index].courseInfoInput[5].input[0] }}</view>
+      <view class="text-gray">時間：{{ myCoursesInfoArray[index].courseInfoInput[5].input[1] }} - {{ myCoursesInfoArray[index].courseInfoInput[5].input[2] }}</view>
+
+    </view>
+    <!-- 頭像組 -->
+    <view class="slot text-right helper" wx:if="{{myCoursesInfoArray[index].followMember[1]}}">
+      <view class="cu-avatar-group">
+        <view class="cu-avatar round lg" wx:for="{{myCoursesInfoArray[index].followMember}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key="avatarIndex" style="background-image:url({{myCoursesInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
+      </view> <text decode="true">...&nbsp;&nbsp;</text>
+    </view>
+  </view>
+  <!-- 分割線 -->
+  <van-divider />
+</view>
