@@ -35,6 +35,15 @@ Page({
 
         console.log(JSON.stringify(data));
 
+        let cloudPath = "ECE/3/通過GitHub託管代碼 by Rookie.docx";
+        db.collection('fileList').where({
+            cloudPath : cloudPath   // 路徑重合，保證是同一位置存在重名文件
+        }) .field({
+            cloudPath : true
+        }) .get() .then(res=>{
+            console.log(res.data);
+            console.log(res.data.length);
+        })
     },
     onReady: function(){
         

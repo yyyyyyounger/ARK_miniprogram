@@ -251,19 +251,24 @@
         <view class="cu-item">
           <view class="content">
             <text class="cuIcon-circlefill text-themeOrange-light"></text>
-            <text class="text-grey">文件上傳 (  / 5 ) 總大小小於50MB</text>
+            <text class="text-grey">文件上傳  {{ filePaths?  filePaths.length+' / 5'  :'' }} ，總大小小於50MB</text>
           </view>
         </view>
-        <van-cell title-class="text-grey cu-item">
-          <view slot="title">
-            <view class="text-sl">
+        <!-- 文件圖標與文件名 -->
+        <view class="cu-item" wx:if="{{filePaths}}" >
+          <view class="content">
+            <view class="text-sl" wx:for="{{filePaths}}" wx:key="index" data-index="{{index}}" style="margin-bottom:20rpx;" bindtap="deleteFile">
               <text class="cuIcon-file text-gray"></text>
-              <test class="text-lg">\ntest</test>
+              <test class="text-lg text-gray" >{{filePaths[index].name}}</test>
             </view>
           </view>
-          <!-- <van-uploader file-list="{{ fileList }}" bindtap="uploadFileTest" max-size="30K"	/> -->
-          <van-button icon="plus" size="small" plain type="primary" color="#64b1e3" bind:click="uploadFileTest" >添加文件</van-button>
-        </van-cell>
+        </view>
+        <!-- 塊級button -->
+        <view class="cu-item">
+          <view class="content">
+            <van-button icon="plus" size="small" plain type="primary" color="#64b1e3" bind:click="{{courseCloudData.filePaths[0]? 'addFile' : 'uploadFile'}}" block>{{courseCloudData.filePaths[0]?'額外添加文件':'選擇上傳文件'}}</van-button>
+          </view>
+        </view>
       </block>
 
     </view>

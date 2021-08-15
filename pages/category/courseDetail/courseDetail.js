@@ -1,5 +1,6 @@
 var app = getApp();
 const db = wx.cloud.database();   // 數據庫
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
   data: {
@@ -93,6 +94,16 @@ Page({
   },
   onShareAppMessage: function(){
 
+  },
+
+  // 下載文件
+  downLoadFile(e) {
+    let selectIndex = e.currentTarget.dataset.index;
+    console.log(selectIndex);
+    Dialog.confirm({
+      title: '操作提示',
+      message: '確定下載文件：\n '+this.data.courseCloudData.filePaths[selectIndex].name+' 嗎？',
+    }) .then(res=>{  wx.navigateBack();  })
   },
 
   // 步驟條

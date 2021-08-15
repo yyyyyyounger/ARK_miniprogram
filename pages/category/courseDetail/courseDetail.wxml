@@ -1,6 +1,9 @@
 <!-- 課程詳情頁 courseDetail -->
 <!-- 不同權限有不同視角 -->
 
+<!-- 彈出類 -->
+<van-dialog id="van-dialog" />
+
 <!-- 設置步驟條 - 未完成 -->
 <!-- <view class="cu-steps">
   <view class="cu-item {{index > stepsActive ?'':'text-themeBlue'}}" wx:for="{{numList}}" wx:key="item">
@@ -211,12 +214,18 @@
       <text>文件</text>
     </view>
 
-    <view class="cu-list menu sm-border card-menu margin-top">
-      <van-cell title-class="text-grey cu-item">
-        <view slot="title">
-          <view class="van-cell-text" >這裡會展示講者上傳的文件</view>
+    <view class="cu-list menu sm-border card-menu margin-top" >
+      <view class="cu-item" wx:if="{{courseCloudData.filePaths}}" >
+        <view class="content" style="margin-top:20rpx;">
+          <view class="text-sl" wx:for="{{courseCloudData.filePaths}}" wx:key="index" data-index="{{index}}" style="margin-bottom:20rpx;" bindtap="downLoadFile">
+            <view>
+              <text class="cuIcon-file text-gray" ></text>
+              <test class="text-lg text-gray" >{{courseCloudData.filePaths[index].name}}</test>
+              <van-divider />
+            </view>
+          </view>
         </view>
-      </van-cell>
+      </view>
     </view>
   </view>
 

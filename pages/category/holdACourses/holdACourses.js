@@ -65,7 +65,7 @@ Page({
 
     // 文件上傳
     fileList  : [],
-    canUpdate : false,
+    deleteFilePaths : [],
   },
   onLoad: function(options){
     // 可選日期初始化 - 只限距離今天30天內
@@ -121,6 +121,8 @@ Page({
           courseAdres_input   : this.data.courseInfoInput[this.data.shortNameIndex.courseAdres].input,
           // courseTag
           courseTag_input     : this.data.courseInfoInput[this.data.shortNameIndex.courseTag].input, // 數組形式
+          // 已上傳的文件
+          filePaths           : this.data.courseCloudData.filePaths, // 對象數組形式
         })
       }
 
@@ -507,7 +509,6 @@ Page({
               data : {
                 avatarUrl       : userCloudDataStorage.data.avatarUrl,
                 arkid           : userCloudDataStorage.data.arkid,
-                nickName        : userCloudDataStorage.data.nickName,
                 courseInfoInput : this.data.courseInfoInput ,
                 allowVote       : this.data.allowVote,
                 datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
@@ -542,59 +543,62 @@ Page({
             // 非本人操作情況下保留原數據
             let avatarUrl = this.data.courseCloudData.avatarUrl;
             let arkid     = this.data.courseCloudData.arkid;
-            let nickName  = this.data.courseCloudData.nickName;
             // 本人情況下，才覆蓋緩存中的userInfo數據
             if (this.data.courseCloudData.arkid==userCloudDataStorage.data.arkid) {
               console.log("本次操作為本人操作 - 上傳前");
               avatarUrl = userCloudDataStorage.data.avatarUrl;
               arkid     = userCloudDataStorage.data.arkid;
-              nickName  = userCloudDataStorage.data.nickName;
             }
-            // 如果filePaths有數據，則準備上傳 - filePaths選擇文件的臨時路徑
+            // 如果filePaths或allFilePaths有數據，則準備上傳 - filePaths選擇文件的臨時路徑
             if (this.data.filePaths) {
               console.log("需要上傳文件",this.data.filePaths);
               var successUp = 0;              //成功
               var failUp = 0;                 //失败
               var length = this.data.filePaths.length; //总数
               var count = 0;                  //第几张
-              // BUG風險 - 如果用戶在上傳中退出，將發生奇妙問題 - 未完成
-              this.uploadOneByOne(this.data.filePaths,successUp,failUp,count,length);
-              console.log("fileList為",this.data.fileList);
-            } else {
-              // 可直接上傳
-              this.setData({  canUpdate : true  })
+              if (!this.data.courseCloudData.filePaths) {          // 首次加文件mode
+                console.log("首次加文件mode");
+                this.uploadOneByOne(this.data.filePaths,successUp,failUp,count,length);     // 首次上傳，上傳全部filePaths內的文件
+              }
+              if(this.data.addFilePaths) {  // 額外添加mode
+                console.log("額外添加mode");
+                length = this.data.addFilePaths.length;
+                this.uploadOneByOne(this.data.addFilePaths,successUp,failUp,count,length);  // 額外上傳，僅上傳addFilePaths內的文件
+              }
             }
-            if (this.data.canUpdate) {
-              // 調用課程更新的雲函數 courseUpdate
-              wx.cloud.callFunction({   // 調用更新的雲函數 courseUpdate
-                name : 'courseUpdate',
-                data : {
-                  idNum           : this.data.courseCloudData._id,
-                  avatarUrl       : avatarUrl,
-                  arkid           : arkid,
-                  nickName        : nickName,
-                  courseInfoInput : this.data.courseInfoInput ,
-                  allowVote       : this.data.allowVote,
-                  courseState     : this.data.courseState,
-                  datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
-                  timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
-                  timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
-                  fileList        : (this.data.filePaths?this.data.fileList:undefined),   // 上傳的文件
-                }
-              }) .then (res=>{
+            // 調用課程更新的雲函數 courseUpdate
+            wx.cloud.callFunction({   // 調用更新的雲函數 courseUpdate
+              name : 'courseUpdate',
+              data : {
+                idNum           : this.data.courseCloudData._id,
+                avatarUrl       : avatarUrl,
+                arkid           : arkid,
+                courseInfoInput : this.data.courseInfoInput ,
+                allowVote       : this.data.allowVote,
+                courseState     : this.data.courseState,
+                datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
+                timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
+                timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
+                filePaths       : (this.data.filePaths?this.data.filePaths:undefined),   // 上傳的文件
+              }
+            }) .then (res=>{
+              if (this.data.filePaths || this.data.addFilePaths) {
+                Toast.success('請等待文件上傳！');
+              } else {
                 Toast.success('修改成功！');
-                Dialog.alert({
-                  title: '操作提示',
-                  message: '修改成功！\n即將回退上一頁',
-                }) .then(res=>{  wx.navigateBack();  })
-              }) .catch (err=>{
-                console.error(err);
-                Notify({ type: 'danger', message: err });
-              })
-            }
+              }
+              Dialog.alert({
+                title: '操作提示',
+                message: '修改成功！\n即將回退上一頁',
+              }) .then(res=>{  wx.navigateBack();  })
+            }) .catch (err=>{
+              console.error(err);
+              Notify({ type: 'danger', message: err });
+            })
+
           }
-  
-        }) .catch(err=>{
+        })
+        .catch(err=>{
           console.error(err);
           this.setData({    
             btn_submit : false,
@@ -776,9 +780,9 @@ Page({
     return dateName
   },
   /**
-  * 上傳多個文件，限制5個
+  * 上傳多個文件，限制5個，對應該課首次上傳文件
   */
-  uploadFileTest:function(){
+  uploadFile:function(){
     var that = this;
     Dialog.confirm({
       title: '操作提示',
@@ -790,10 +794,7 @@ Page({
         success: function(res){
           let filePaths = res.tempFiles;  // 已選擇文件的信息，對象數組，有name、path臨時路徑等屬性
           console.log("所有選取文件的臨時路徑為：",filePaths);
-          // var successUp = 0;              //成功
-          // var failUp = 0;                 //失败
-          // var length = res.tempFiles.length; //总数
-          // var count = 0;                  //第几张
+
           // 判斷總大小是否超過50M限制
           let allSize = 0;
           for (let i = 0; i < filePaths.length; i++) {
@@ -801,9 +802,9 @@ Page({
           } 
           allSize = (allSize/1000000).toFixed(2);   // 精確到2位小數
           console.log("總大小為 ",allSize," MB");
+
           if (allSize < 50) {   // 小於50MB即可上傳
             that.setData({  filePaths  }) // 儲存入data，等點擊保存修改時調用this.uploadOneByOne()
-            // that.uploadOneByOne(filePaths,successUp,failUp,count,length);
             Toast.success('已準備好上傳')
           } else {              // 提示超過50MB
             Notify({ type: 'warning', message: "超過50M，當前大小為"+allSize+"MB" });
@@ -830,41 +831,52 @@ Page({
       cloudPath : cloudPath,    // 雲儲存路徑 '雲端目標文件夾/' + 定義的fileName。不存在的路徑將會自動建立文件夾。
       filePath  : filePaths[count].path,    // 本地臨時路徑
     })
-    .then(e=>{    // 執行成功回調
+    .then(e=>{      // 執行成功回調
       successUp++;//成功+1
-      console.log("雲儲存id",e.fileID);  // 該id為雲端儲存id，用於下載
       this.setData({  filePathsIndex : JSON.parse(JSON.stringify(count))  })    // count會因為異步操作遞加時不是期望的索引值，借用data新增變量同步操作次數
-      // 雲端儲存id寫入fileList集合，附帶該課程的courseId、createAt、文件夾路徑。 - 未完成
-      db.collection('fileList').add({
-        data: {
-          createAt    : Date.now(),
-          courseInfo  : {           // 課程id與課程名
-            courseId    : this.data.courseCloudData._id,
-            courseName  : this.data.courseCloudData.courseInfoInput[1].input,
-          },
-          arkid       : userCloudDataStorage.data.arkid,  // 當前操作人的arkid
-          cloudPath   : cloudPath,  // 雲儲存文件夾路徑
-          cloudFileId : e.fileID,   // 雲儲存id
-          fileInfo    : filePaths[this.data.filePathsIndex],  // 文件信息，包含name、size、time、type。path為本地臨時路徑不用理會。
-        }
-      }) 
+      // 因為雲儲存重名會覆蓋，所以fileList數據庫操作，重名則update，不重名則add
+      db.collection('fileList').where({
+        cloudPath : cloudPath   // 路徑重合，保證是同一位置存在重名文件
+      }) .field({  cloudPath : true  }) .get() 
       .then(res=>{
-        let fileInfoObj = {
-          cloudFileId : e.fileID,           // 雲儲存id1
-          fileInfo    : filePaths[this.data.filePathsIndex],   // 文件信息，包含name、size、time、type。path為本地臨時路徑不用理會。
+        let sameFileNum = res.data.length;    // 返回有相同路徑數據的長度，!=0為不存在該文件
+        if (sameFileNum!=0) {
+          // 更新已有的文件在fileList集合中的記錄
+          db.collection('fileList').doc(res.data[0]._id).update({
+            data: {
+              createAt    : Date.now(),
+              courseInfo  : {           // 課程id與課程名
+                courseId    : this.data.courseCloudData._id,
+                courseName  : this.data.courseCloudData.courseInfoInput[1].input,
+              },
+              arkid       : userCloudDataStorage.data.arkid,  // 當前操作人的arkid
+              cloudPath   : cloudPath,  // 雲儲存文件夾路徑
+              cloudFileId : e.fileID,   // 雲儲存id
+              fileInfo    : filePaths[this.data.filePathsIndex],  // 文件信息，包含name、size、time、type。path為本地臨時路徑不用理會。
+            }
+          }) .catch(err=>{  console.error(err);  })
+        } else {
+          // 雲端儲存id寫入fileList集合，附帶該課程的courseId、createAt、文件夾路徑。
+          db.collection('fileList').add({
+            data: {
+              createAt    : Date.now(),
+              courseInfo  : {           // 課程id與課程名
+                courseId    : this.data.courseCloudData._id,
+                courseName  : this.data.courseCloudData.courseInfoInput[1].input,
+              },
+              arkid       : userCloudDataStorage.data.arkid,  // 當前操作人的arkid
+              cloudPath   : cloudPath,  // 雲儲存文件夾路徑
+              cloudFileId : e.fileID,   // 雲儲存id
+              fileInfo    : filePaths[this.data.filePathsIndex],  // 文件信息，包含name、size、time、type。path為本地臨時路徑不用理會。
+            }
+          }) .catch(err=>{  console.error(err);  })
         }
-        let fileListTemp = this.data.fileList;
-        fileListTemp.push(fileInfoObj);
-        // 將上傳的文件信息放入該course的記錄內，先放入data，update課程時再上傳數據庫
-        this.setData({  fileList : fileListTemp  })
-        console.log("待上傳到course內的fileList",this.data.fileList);
-        this.setData({ filePathsIndex : this.data.filePathsIndex++  })
-      }) .catch(err=>{  console.error(err);  })
+      })
     })
-    .catch(err=>{ // 執行失敗回調
+    .catch(err=>{   // 執行失敗回調
       failUp++;//失败+1
     })
-    .then(e=>{    // 執行完成回調
+    .finally(e=>{   // 執行完成回調
       count++;//下一张
       if(count == length){
         //上传完毕，作一下提示
@@ -874,14 +886,83 @@ Page({
           forbidClick : true,
           zIndex      : 99999999,
         })
-        if (successUp+failUp == length) { // 當所有上傳完畢時，修改允許上傳參數，該參數主要用來等待異步執行
-          this.setData({  canUpdate : true  })
-        }
       }else{
         //递归调用，上传下一张
         that.uploadOneByOne(filePaths, successUp, failUp, count, length);
         console.log('正在上傳第 ' + count + ' 個文件');
       }
+    })
+  },
+
+  // 有文件的情況下再addFile - 額外添加mode
+  addFile(){
+    var that = this;
+    wx.chooseMessageFile({    // 選擇文件
+      count: 5 - that.data.filePaths.length,
+      type  : 'all',          // 文件类型，all是全部文件类型
+      success: function(res){
+        let filePaths = res.tempFiles;  // 已選擇文件的信息，對象數組，有name、path臨時路徑等屬性
+        console.log("所有選取文件的臨時路徑為：",filePaths);
+        that.setData({  addFilePaths : filePaths  })    // 寫入addFilePaths數組
+
+        let allSize = 0;
+        for (let i = 0; i < filePaths.length; i++) {
+          allSize += filePaths[i].size; // 本次添加文件的size
+        } 
+        for (let i = 0; i < that.data.filePaths.length; i++) {
+          allSize += that.data.filePaths[i].size; // 已添加文件的size
+        }
+        allSize = (allSize/1000000).toFixed(2);   // 總大小，精確到2位小數
+        console.log("總大小為 ",allSize," MB");
+
+        if (allSize < 50) {   // 小於50MB即可上傳
+          let filePathsTemp = JSON.parse(JSON.stringify(that.data.filePaths));
+          // 返回原已上傳文件的文件名
+          let filePathsOriginName = filePathsTemp.map(function (e, index, item) {
+            return e.name;
+          })
+          let filePathAddName = filePaths.map(function (e, index, item) {
+            return e.name;
+          })
+          console.log("原已上傳文件文件名",filePathsOriginName);
+          console.log("當前新上傳文件文件名",filePathAddName);
+          console.log("filePathsTemp為",filePathsTemp);
+          
+          for (let i = 0; i < filePathAddName.length; i++) {
+            let targetIndex = filePathsOriginName.indexOf(filePathAddName[i]);
+
+            if (targetIndex != -1) {  // 已重複，覆蓋
+              console.log("移除舊的 ",filePathsOriginName[targetIndex]);
+              filePathsOriginName.splice(targetIndex,1,filePathAddName[i]);
+              filePathsTemp.splice(targetIndex,1,filePaths[i]);
+            }
+            else {                    // 未重複命名的文件
+              filePathsOriginName.push(filePathAddName[i]);    // 插入到數組後
+              filePathsTemp.push(filePaths[i]);    // 插入到數組後
+            }
+
+          }
+
+          that.setData({  filePaths : filePathsTemp  })
+          Toast.success('已準備好上傳')
+        } else {              // 提示超過50MB
+          Notify({ type: 'warning', message: "超過50M，當前大小為"+allSize+"MB" });
+        }
+      }
+    })
+  },
+
+  // 刪除文件
+  deleteFile(e){
+    let selectIndex = e.currentTarget.dataset.index;
+    Dialog.confirm({
+      title: '操作提示',
+      message: '確定刪除 '+this.data.filePaths[selectIndex].name+' 嗎？',
+    }) .then(res=>{
+      let filePathsTemp = this.data.filePaths;
+      this.data.deleteFilePaths.push(filePathsTemp[selectIndex]);   // 記錄此次操作刪除的文件數據
+      filePathsTemp.splice(selectIndex,1);            // splice方法，刪除起始坐標為selectIndex，長度為1的元素
+      this.setData({  filePaths : filePathsTemp  })   // 刪除data的filePaths中的對應文件，用於顯示
     })
   },
 });
