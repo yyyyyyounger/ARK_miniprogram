@@ -29,6 +29,7 @@
               </view>
               <!-- add/cancel Follow按鈕 -->
               <van-button 
+                wx:if="{{recentCourseInfoArray[index].arkid!=userCloudDataStorage.arkid}}"
                 disabled = "{{(recentCourseInfoArray[index].courseState)=='checking'}}" 
                 style="margin-right:5px;"
                 icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
