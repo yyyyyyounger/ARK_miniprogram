@@ -5,6 +5,7 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 var cloudData = require('../../../data/cloud.js')
 const db = wx.cloud.database();   // 數據庫
+const _ = db.command
 
 const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用
   return new Promise((resolve, reject) => {
@@ -566,6 +567,33 @@ Page({
                 this.uploadOneByOne(this.data.addFilePaths,successUp,failUp,count,length);  // 額外上傳，僅上傳addFilePaths內的文件
               }
             }
+
+            // 如果點擊過刪除文件，執行刪除文件邏輯
+            if (this.data.deleteFilePaths[0]) {
+              let filePathDeletePath = this.data.deleteFilePaths.map(function (e, index, item) {
+                return e.path;
+              })
+              // 查詢刪除的文件info是否存在fileList中
+              db.collection('fileList').where({
+                "fileInfo.path" : _.in(filePathDeletePath)
+              }).field({  cloudFileId:true  }) .get().then(res=>{
+                console.log(res.data);
+                if (res.data.length!=0) {   // 準備刪除已經上傳了的文件
+                  // 準備刪除的雲id數組
+                  let deleteCloudPathArr = res.data.map(function (e, index, item) {
+                    return e.cloudFileId;
+                  })
+                  // 使用雲函數權限刪除
+                  wx.cloud.callFunction({   // 刪除followMember數組內該user的arkid等數據
+                    name : 'fileDelete',
+                    data : {
+                      cloudFileIdArr : deleteCloudPathArr,
+                    }
+                  }) .catch(err=>{  console.error(err);  })
+                }
+              }) .catch(err=>{  console.error(err);  })
+            }
+
             // 調用課程更新的雲函數 courseUpdate
             wx.cloud.callFunction({   // 調用更新的雲函數 courseUpdate
               name : 'courseUpdate',

@@ -14,25 +14,17 @@ exports.main = async (event, context) => {
 
   // 獲取課程狀態
   // 獲取課程id
-  let idNum         = event.idNum;
+  // let idNum           = event.idNum;
   let cloudFileIdArr  = event.cloudFileIdArr; // 待刪除的雲文件id數組
 
   // 刪除雲儲存文件
   const fileIDs = cloudFileIdArr    // 雲文件id，可刪除多個雲文件，最多50個
   await cloud.deleteFile({
     fileList: fileIDs,
-  }) .catch(err=>{  console.error(err);  })
-
-  // 刪除課程信息中的文件
-  await db.collection('course') .doc(idNum) .update({
-    data : {
-
-    }
-  }) 
-  .then(res=>{
+  }) .then(res=>{
     // 刪除fileList集合的文件記錄
     db.collection('fileList') .where({
-      'fileInfo.cloudFileId' : _.in(cloudFileIdArr)
+      'cloudFileId' : _.in(cloudFileIdArr)
     }) .remove() .catch(err=>{  console.error(err);  })
 
   }) .catch(err=>{
