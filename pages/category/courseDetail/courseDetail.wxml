@@ -1,5 +1,4 @@
 <!-- 課程詳情頁 courseDetail -->
-<!-- 不同權限有不同視角 -->
 
 <!-- 彈出類 -->
 <van-dialog id="van-dialog" />
@@ -54,7 +53,7 @@
     </van-col>
   </van-row>
   <!-- 編輯課程信息按鈕 -->
-  <van-row wx:if="{{admin || userCloudData.arkid==courseCloudData.arkid}}">
+  <van-row wx:if="{{admin || (userCloudData.arkid==courseCloudData.arkid && userCloudData.courseState!='finish')}}">
     <van-col offset="2">
       <van-button 
         icon="edit" 
@@ -95,8 +94,8 @@
     </van-cell-group>
   </block>
 
-  <!-- 路人視角 -->
-  <block wx:if="{{courseCloudData.courseState=='opening'}}">
+  <!-- 過檢視角 -->
+  <block wx:if="{{courseCloudData.courseState!='checking'}}">
 
 <!-- 講者頭像 - 添加點擊彈出層顯示講者信息 - 未完成 -->
 <!-- <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
@@ -192,7 +191,7 @@
   </view>
 
   <!-- 簽到 -->
-  <view class="grid col-1 padding-sm">
+  <view class="grid col-1 padding-sm" wx:if="{{courseCloudData.courseState!='finish'}}" >
 
     <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
       <text>簽到</text>

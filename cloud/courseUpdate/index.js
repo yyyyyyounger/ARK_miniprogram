@@ -12,7 +12,9 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
 
-  db.collection('course') .doc(event.idNum) .update({   // 對 user 集合更新用戶新輸入的數據
+  let idNum = event.idNum;
+
+  await db.collection('course') .doc(idNum) .update({   // 對 user 集合更新用戶新輸入的數據
     data: {
       // 通過前端傳入開課用戶的頭像、暱稱信息
       avatarUrl   : event.avatarUrl,
@@ -27,16 +29,20 @@ exports.main = async (event, context) => {
       filePaths       : event.filePaths,
       memberLimit     : 50,
     }
-  }) .then(res=>{
-    if (courseState=="finish") {      // if 課程狀態為finish，結課後，將該課程的courseId寫入所有followMember的allJoinId內
+  })
+  .then(res=>{
+    if (event.courseState=="finish" && event.followMember) {      // if 課程狀態為finish，結課後，將該課程的courseId寫入所有followMember的allJoinId內
       db.collection('user') .where({
-        arkid : _.in(followMember),
+        arkid     : _.in(event.followMember),
+        allJoinId : _.nin([idNum]),         // 給不存在這節課的結課記錄的用戶增加記錄
       }) .update({
         data: {
-          allJoinId: _.push([idNum]),
+          allJoinId : _.push([idNum]),
+          recentFollowIdArray : _.pull(_.in([idNum])),
         }
       })
     } 
-  }) .catch(err=>{  console.error(err);  })
-    
+  }) 
+  .catch(err=>{  console.error(err);  })
+
 }

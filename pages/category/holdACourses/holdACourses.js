@@ -391,16 +391,10 @@ Page({
         ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[1]'] : this.data.timePickArray[0].begin,   // input[1]為timeBegin
         ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[2]'] : this.data.timePickArray[0].end,     // input[2]為timeEnd        
       })
-      // console.log("DatePick", this.data.datePick );
-      // console.log("TimePick", this.data.timePickArray[0].begin );
-      // console.log("時間str為：", this.data.datePick + " " + this.data.timePickArray[0].begin );
       let timeStampPick = new Date(this.data.datePick + " " + this.data.timePickArray[0].begin).getTime();
       console.log("時間戳為：", timeStampPick );
       this.setData({  timeStampPick   })
     } else {    // 投票模式下寫入當前所選擇的最早的時間戳
-      // console.log("DatePick", this.data.datePickArray[0] );
-      // console.log("TimePick", this.data.timePickArray[0].begin );
-      // console.log("時間str為：", this.data.datePickArray[0] + " " + this.data.timePickArray[0].begin );
       let timeStampPick = new Date(this.data.datePickArray[0] + " " + this.data.timePickArray[0].begin).getTime();
       console.log("時間戳為：", timeStampPick );
       this.setData({  timeStampPick   })
@@ -415,6 +409,12 @@ Page({
         })
       }
     }
+
+    // 生成followMember數組
+    let followMemberArr = this.data.courseCloudData.followMember.map(function (e, index, item) {
+      return e.arkid;
+    })
+    this.setData({  followMemberArr  })
   },
   // 輸入校驗
   inputCheck () {
@@ -603,6 +603,7 @@ Page({
                 timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
                 timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
                 filePaths       : (this.data.filePaths?this.data.filePaths:undefined),   // 上傳的文件
+                followMember    : (this.data.courseState=="finish"?this.data.followMemberArr:undefined),   // 上傳的文件
               }
             }) .then (res=>{
               if (this.data.filePaths || this.data.addFilePaths) {

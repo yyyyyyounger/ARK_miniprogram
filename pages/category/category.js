@@ -10,6 +10,8 @@ const _ = db.command
 
 Page({
   data: {
+    // 默認點擊第0個tabs
+    clickTabs : 0,
     // 下拉菜單
     option1: [
       { text: '按日期排序', value: 0 },
@@ -28,9 +30,14 @@ Page({
     // 課程渲染相關
     followCourseArray:[],
   },
-  onLoad: function(page) {
+  onLoad (page) {
     this.app = getApp();
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    let nowTimeStamp = Date.now();
+    this.setData({
+      nowTimeStamp,   // 獲取現在時刻的時間戳
+      userCloudDataStorage : userCloudDataStorage.data,
+    })
     // 向服務器請求的延時
     Toast.loading({
       message: '瘋狂加載中...',
@@ -38,16 +45,10 @@ Page({
       zIndex: 9999999999999,
     });
 
-    // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 未完成
-    // let date = new Date(Date.now());                    // 現在時刻的時間戳
-    // let today = date.toLocaleDateString();              // 今天的文本時間 yyyy/m/d
-    // let todayTimeStamp = (new Date(today)).getTime();   // 今天的時間戳
-    // console.log( "今天的時間戳：", todayTimeStamp );
-
     // 查詢course集合中，符合條件的課程，（距今一個月內未進行的課程） - 未完成
     db.collection('course') .where( _.or([
-        { // 路人/普通用戶可查看已opening的課程
-          timeStampPick : _.gte(Date.now()) ,
+        { // 路人/普通用戶可查看最近已opening的課程
+          timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,
           courseState   : _.eq('opening') ,
         },
         { // 已開課的用戶可查看近期自己仍在checking，opening，finish的課程
@@ -119,9 +120,7 @@ Page({
           }) .catch(err=>{ console.error(err); })
         }
 
-    }) .catch(err=>{
-        console.error(err);
-    })
+    }) .catch(err=>{  console.error(err);  })
 
     if (userCloudDataStorage) { // 如果已登錄，獲取admin權限
       this.setData({  admin : userCloudDataStorage.data.admin  })
@@ -133,6 +132,7 @@ Page({
   },
   onShow: function() {
     this.getTabBar().init();
+    console.log("目前處在的tabs為",this.data.clickTabs);
   },
   onHide: function() {
 
@@ -143,7 +143,8 @@ Page({
 
   // 頂部tabs的點擊切換事件 - 不同tabs時執行不同，節省資源，未完成
   onClick_tabs(e) {
-    console.log("點擊了tabs：",e.detail.name);
+    // tabs由0開始
+    this.setData({  clickTabs : e.detail.name  })
     switch (e.detail.name) {
       case 0:
         
@@ -177,10 +178,10 @@ Page({
 
   // 添加follow的課程
   addFollow (e) {
-    const userCloudData = wx.getStorageSync('userCloudData');
-    if (userCloudData) {    // 已登錄才可以操作
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');
+    if (userCloudDataStorage) {    // 已登錄才可以操作
       Dialog.confirm({
-        title: '重要提示',
+        title: '操作提示',
         message: '自己follow的課要好好上完喔！😎',
         zIndex:99999999,
       })
@@ -237,7 +238,7 @@ Page({
     }
     else {                  // 未登錄提示登錄
       Dialog.confirm({
-        title: '重要提示',
+        title: '操作提示',
         message: '該功能需要登錄後操作！\n現在去登錄嗎？',
         zIndex:99999999,
       })

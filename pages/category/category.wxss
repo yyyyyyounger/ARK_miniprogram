@@ -18,7 +18,7 @@ page{background-color:#FFFFFF;}
 .title{
   font-weight: bold;
 }
-.isOpen{
+.tagText{
   text-transform:Uppercase;
   text-align: center;
   color: #fff;

@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "完成課程編輯頁結課功能 - 只改動了提示語，發現重點在雲函數上。"
+git commit -m "完成課程編輯頁結課功能"
 
 git push origin dev
 git push local dev

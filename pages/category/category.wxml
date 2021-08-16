@@ -3,12 +3,9 @@
 <van-dialog id="van-dialog" zIndex:9999999/>
 <van-notify id="van-notify" zIndex:9999999/>
 
-<!-- 橫向大開課按鈕 - 棄用狀態 -->
-<!-- <van-button type="primary" size="normal" color="#3498DB" block class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button> -->
-
 <van-tabs sticky swipeable animated color="#3498DB" bind:click="onClick_tabs">
 
-  <van-tab title="最新發佈">
+  <van-tab title="最近發佈">
 
 <!-- 下拉菜單 - 排序未完成 -->
     <!-- <van-sticky>
@@ -46,12 +43,11 @@
           </view>
           <!-- 簡略信息 -->
           <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" style="margin-top:5px">
-            <!-- <view class="text-{{recentCourseInfoArray[index].courseState=='opening'?'green':'orange'}}" style="font-weight:bold;" wx:if="{{recentCourseInfoArray[index].arkid}}">{{recentCourseInfoArray[index].courseState}}
-            </view> -->
-            <view wx:if="{{recentCourseInfoArray[index].courseState=='opening'&&recentCourseInfoArray[index].arkid}}" class="openBg"><view class="isOpen" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
-            <view  wx:if="{{recentCourseInfoArray[index].courseState!='opening'&&recentCourseInfoArray[index].arkid}}" class="noOpenBg text-orange"> <view class="isOpen" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view>
+            <view wx:if="{{recentCourseInfoArray[index].courseState=='opening'}}" class="openBg"><view class="tagText" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
+            <view wx:if="{{recentCourseInfoArray[index].courseState!='opening'}}" class="noOpenBg text-orange"> <view class="tagText" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
+            <!-- 提醒結課 -->
+            <view wx:if="{{recentCourseInfoArray[index].courseState=='opening'&&recentCourseInfoArray[index].arkid==userCloudDataStorage.arkid&&recentCourseInfoArray[index].timeStampPick<nowTimeStamp}}" class="noOpenBg text-orange"> <view class="tagText" style="font-weight:bold;" >記得結課!</view></view>
 
-            </view>
             <view class="text-gray">日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }}</view>
             <view class="text-gray">時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
 
