@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "實現課程編輯頁文件刪除功能 - 刪除了一些備註和空格"
+git commit -m "完成課程編輯頁結課功能 - 只改動了提示語，發現重點在雲函數上。"
 
 git push origin dev
 git push local dev

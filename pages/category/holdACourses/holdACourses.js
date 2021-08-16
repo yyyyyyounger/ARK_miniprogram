@@ -762,8 +762,8 @@ Page({
     else if(model=='finish') {  // 結課模式
       Dialog.confirm({  // 操作提示
         title: '操作提示',
-        message: '是否確認課程已結束？\n確認後點擊\'提交修改\'才會上傳此次操作',
-      }) 
+        message: '是否確認課程已結束？\n結課後將不能再編輯課程！\n確認後點擊\'提交修改\'才會上傳此次操作',
+      })
       .then(()=>{
         this.setData({  courseState : "finish"  })
         Toast.success('課程狀態已修改為 finish ！');
