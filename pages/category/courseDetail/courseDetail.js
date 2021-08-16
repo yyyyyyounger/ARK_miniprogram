@@ -21,18 +21,6 @@ Page({
     // 步驟條 - end
   },
   onLoad: function(options){
-    // let followMember = [1]
-    // let idNum = 1
-    // db.collection('user') .where({
-    //   arkid     : _.in(followMember),
-    //   allJoinId : _.nin([idNum]),         // 給不存在這節課的結課記錄的用戶增加記錄
-    // }) .update({
-    //   data: {
-    //     allJoinId : _.push([idNum]),
-    //     recentFollowIdArray : _.pull(_.in([idNum])),
-    //   }
-    // }) .catch(err=>{  console.error(err);  })
-
     this.app = getApp();
     // 獲取上個頁面傳遞的參數，說明用戶組和需要渲染的courseId
     let detailInfo = JSON.parse(options.detailInfo);
