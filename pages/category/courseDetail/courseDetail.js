@@ -233,7 +233,16 @@ Page({
     Dialog.confirm({
       title: '操作提示',
       message: '確定下載文件：\n '+this.data.courseCloudData.filePaths[selectIndex].name+' 嗎？',
-    }) .then(res=>{  wx.navigateBack();  })
+    }) .then(res=>{
+      // wx.cloud.downloadFile({
+      //   fileID: 'a7xzcb'
+      // }).then(res => {
+      //   // get temp file path
+      //   console.log(res.tempFilePath)
+      // }).catch(error => {
+      //   // handle error
+      // })
+    })
   },
 
   // 步驟條
