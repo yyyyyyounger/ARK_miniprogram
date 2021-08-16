@@ -1,11 +1,15 @@
 var app = getApp();
 const db = wx.cloud.database();   // 數據庫
-import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 const _ = db.command
 
+import Notify from '../../../miniprogram_npm/@vant/weapp/notify/notify';
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 Page({
   data: {
+    // follow狀態
+    haveFollow : false,
     // 骨架屏
     loading:true,
     // 步驟條 - begin
@@ -27,15 +31,15 @@ Page({
     this.setData({  detailInfo  })
     console.log("上個頁面傳遞值為：",this.data.detailInfo)
 
-    // 請求雲端的courseInfo數據，該courseId為num類型
-    this.returnCourseData();
-    
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     // 從緩存中獲取該用戶是否管理員
     this.setData({
       admin         : userCloudDataStorage.data.admin,
       userCloudData : userCloudDataStorage.data,
     })
+
+    // 請求雲端的courseInfo數據，該courseId為num類型
+    this.returnCourseData();
   },
   onReady() {
     console.log("課程詳情頁 - 已经Ready");
@@ -45,6 +49,8 @@ Page({
   },
   // 請求數據庫返回該courseId的數據
   returnCourseData (){
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+
     // 請求雲端的courseInfo數據，該courseId為num類型
     db.collection('course') .doc(this.data.detailInfo.courseId) .get()
     .then(res=>{
@@ -52,6 +58,15 @@ Page({
       this.setData({  courseCloudData : res.data  })
       this.setData({  courseInfoInput : this.data.courseCloudData.courseInfoInput  })
       this.ArrayDataInit(this);   // 數據操作數組、對象等的初始化
+
+      let followMember = this.data.courseCloudData.followMember;
+      // 判斷是否follow了該課程，follow狀態更改wxml的按鈕形態
+      followMember.forEach(item=>{
+        if(item.arkid==userCloudDataStorage.data.arkid){
+            console.log("這個用戶已follow了這個課程！");
+            this.setData({  haveFollow : true  })
+        }
+    })
 
       this.setData({  loading: false,  }) // 骨架屏消失
     }) .catch(err=>{  console.error(err);  })
@@ -138,6 +153,7 @@ Page({
             }
           }) .then(res=>{       // 成功提示 & 同步wxml的顯示
             Toast('Follow成功！課程編號：'+selectCourse+'\n可前往 “我的Follow” 查看');
+            this.setData({  haveFollow : true  })
           })
         }) .catch(err=>{        // 失敗提示
           console.error(err);
@@ -164,6 +180,50 @@ Page({
         
       });
     }
+  },
+  deleteFollow(e){
+    // 防誤觸式提問
+    Dialog.confirm({
+      title: '重要提示',
+      message: '就這麼忍心說ByeBye嗎？😭',
+      zIndex:99999999,
+    })
+    .then(() => {     // on confirm
+      Toast.loading({   // 加載提示
+        message: '拼命加載中...',
+        forbidClick: true,
+      });
+
+      // 記錄Follow的課程id
+      let selectCourse = this.data.courseCloudData._id;
+      console.log("請求delete",selectCourse);
+
+      // 調用雲函數更新 - user集合 - recentFollowIdArray數組
+      const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
+      wx.cloud.callFunction({   // 刪除followMember數組內該user的arkid等數據
+        name : 'courseFollowMember',
+        data : {
+          mode          : "delete",
+          endTimeStamp  : this.data.courseCloudData.timeStampPick,
+          selectCourse  : selectCourse,
+          arkid         : userCloudDataStorage.data.arkid,
+        }
+      }) .then(res=>{           // 刪除自己的follow列表
+        db.collection('user').doc(userCloudDataStorage.data._openid).update({
+          data: {
+            recentFollowIdArray: _.pull(_.in([selectCourse]))
+          }
+        }) .then(res=>{         // 成功提示 & 同步wxml的顯示
+          Toast('刪除成功！');
+          this.setData({  haveFollow : false  })
+        }) .catch(err=>{ console.error(err); })
+      }) .catch(err=>{             // 失敗提示
+        console.error(err);
+        Notify({ type: 'warning', message: '操作失敗！請刷新頁面或聯繫管理員！' });
+      })
+    })  // on confirm - end
+    .catch(() => {    // on cancel
+    });
   },
 
   // 下載文件

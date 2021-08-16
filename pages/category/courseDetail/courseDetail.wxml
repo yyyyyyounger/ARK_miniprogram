@@ -2,6 +2,8 @@
 
 <!-- 彈出類 -->
 <van-dialog id="van-dialog" />
+<van-toast id="van-toast" zIndex:9999999/>
+<van-notify id="van-notify" zIndex:9999999/>
 
 <!-- 設置步驟條 - 未完成 -->
 <!-- <view class="cu-steps">
@@ -28,27 +30,26 @@
     <!-- add/cancel Follow按鈕 -->
     <van-col offset="2">
       <van-button 
-        icon="star-o" 
+        wx:if="{{courseCloudData.arkid!=userCloudData.arkid}}"
+        icon="{{ haveFollow ? 'delete-o' : 'star-o'}}"
         size="small" 
-        color="#3498DB" 
+        color="{{ haveFollow ? '#f8ad72' : '#3498DB'}}" 
         type="primary" 
         round 
-        data-courseid="{{recentCourseInfoArray[index].courseId}}" 
-        bind:click="addFollow"
-      >
-        追蹤課程
-      </van-button>
+        bind:click="{{ haveFollow ? 'deleteFollow' : 'addFollow'}}"><text decode="{{true}}" >{{ haveFollow ? '取消關注' : '關注課程'}}</text></van-button>
     </van-col>
     <!-- 頭像 -->
-    <van-col offset="{{courseInfoInput[shortNameIndex.helper].input[1] ? '6' : (courseInfoInput[shortNameIndex.helper].input[0]?'8':'12')}}">
-      <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
-        <view class="tag">講者</view>
-      </view>
-      <!-- Helper頭像 -->
-      <block wx:for="{{courseInfoInput[shortNameIndex.helper].input}}" wx:key="index">
-        <view wx:if="{{courseInfoInput[shortNameIndex.helper].input[index]}}"  class="cu-avatar round lg shadow-blur" style="background-image:url({{courseInfoInput[shortNameIndex.helper].input[index].Avatar}}); {{index==0 ? 'margin-left:15px;' : ''}}">
-          <view class="tag">助手</view>
+    <van-col offset="{{courseCloudData.arkid!=userCloudData.arkid?(courseInfoInput[shortNameIndex.helper].input[1] ? '6' : (courseInfoInput[shortNameIndex.helper].input[0]?'8':'12')) : '18'}}">
+      <block>
+        <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
+          <view class="tag">講者</view>
         </view>
+        <!-- Helper頭像 -->
+        <block wx:for="{{courseInfoInput[shortNameIndex.helper].input}}" wx:key="index">
+          <view wx:if="{{courseInfoInput[shortNameIndex.helper].input[index]}}"  class="cu-avatar round lg shadow-blur" style="background-image:url({{courseInfoInput[shortNameIndex.helper].input[index].Avatar}}); {{index==0 ? 'margin-left:15px;' : ''}}">
+            <view class="tag">助手</view>
+          </view>
+        </block>
       </block>
     </van-col>
   </van-row>
@@ -191,7 +192,7 @@
   </view>
 
   <!-- 簽到 -->
-  <view class="grid col-1 padding-sm" wx:if="{{courseCloudData.courseState!='finish'}}" >
+  <view class="grid col-1 padding-sm" wx:if="{{haveFollow}}" >
 
     <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
       <text>簽到</text>
@@ -208,7 +209,7 @@
   </view>
 
   <!-- 文件 -->
-  <view class="grid col-1 padding-sm">
+  <view class="grid col-1 padding-sm" wx:if="{{haveFollow}}" >
     <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
       <text>文件</text>
     </view>
@@ -224,6 +225,13 @@
             </view>
           </view>
         </view>
+      </view>
+      <view wx:else >
+        <van-cell title-class="text-grey cu-item">
+          <view slot="title">
+            <view class="van-cell-text" >這裡會顯示這節課上傳的文件！</view>
+          </view>
+        </van-cell>
       </view>
     </view>
   </view>

@@ -306,10 +306,13 @@ Page({
 
 // 頁面跳轉
   jumpToCourseDetail (e){
+    let selectId = e.currentTarget.dataset.courseid;
+    let user = "normal"
+
     // 跳轉課程詳情頁
     let detailInfo = {
-      user      : "normal",
-      courseId  : e.currentTarget.dataset.courseid,
+      user      : user,
+      courseId  : selectId,
     }
     // 缺少用戶組的判斷 - 未完成
     detailInfo = JSON.stringify(detailInfo);

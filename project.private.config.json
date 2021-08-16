@@ -19,12 +19,6 @@
           "scene": null
         },
         {
-          "name": "我要開課",
-          "pathName": "pages/category/holdACourses/holdACourses",
-          "query": "",
-          "scene": null
-        },
-        {
           "name": "user頁",
           "pathName": "pages/user/user",
           "query": "",
@@ -43,9 +37,9 @@
           "scene": null
         },
         {
-          "name": "詳情頁3 num",
+          "name": "詳情頁6 num",
           "pathName": "pages/category/courseDetail/courseDetail",
-          "query": "detailInfo={\"user\":\"normal\",\"courseId\":3}",
+          "query": "detailInfo={\"user\":\"follower\",\"courseId\":6}",
           "scene": null
         },
         {
