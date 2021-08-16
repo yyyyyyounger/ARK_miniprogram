@@ -529,11 +529,6 @@ Page({
               wx.redirectTo({   // 銷毀當前頁的帶參跳轉
                 url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
               })
-              // 雲獲取方法
-              // 返回user集合中 該user的 myCourse數組
-              // db.collection('user') .doc(userCloudDataStorage.data._openid) .field({  myCourses:true  }) .get()
-              // .then(res=>{
-              // })
             }) .catch (err=>{
               console.error(err);
               Notify({ type: 'danger', message: err });
