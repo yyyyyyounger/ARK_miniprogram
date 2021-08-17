@@ -99,17 +99,6 @@ bind:close="closePopup"
 	</van-collapse>
 </view>
 
-<!-- 使用小貼士 -->
-<block>
-	<view class="cu-bar bg-white margin-top">
-		<view class="action">
-			<text class="cuIcon-title text-themeBlue"></text>使用小貼士
-		</view>
-	</view>
-	<van-skeleton row="4" />
-</block>
-
-
 <!-- ARK -->
 <block>
 	<view class="cu-bar bg-white margin-top">
@@ -126,7 +115,6 @@ bind:close="closePopup"
 	</view>
 </block>
 
-
 <!-- 一言 -->
 <block>
 	<view class="cu-bar bg-white margin-top">
@@ -138,6 +126,16 @@ bind:close="closePopup"
 		<view class="word" >{{moto.hitokoto}}</view>
 		<view class="author" >—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
 	</view>
+</block>
+
+<!-- 使用小貼士 -->
+<block>
+	<view class="cu-bar bg-white margin-top">
+		<view class="action">
+			<text class="cuIcon-title text-themeBlue"></text>使用小貼士
+		</view>
+	</view>
+	<van-skeleton row="4" />
 </block>
 
 <text>\n</text>
