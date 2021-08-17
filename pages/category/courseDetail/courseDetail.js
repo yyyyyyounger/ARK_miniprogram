@@ -32,17 +32,16 @@ Page({
     console.log("上個頁面傳遞值為：",this.data.detailInfo)
 
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
-    // 從緩存中獲取該用戶是否管理員
-    this.setData({
-      admin         : userCloudDataStorage.data.admin,
-      userCloudData : userCloudDataStorage.data,
-    })
+    if (userCloudDataStorage) {
+      // 從緩存中獲取該用戶是否管理員
+      this.setData({
+        admin         : userCloudDataStorage.data.admin,
+        userCloudData : userCloudDataStorage.data,
+      })
+    }
 
     // 請求雲端的courseInfo數據，該courseId為num類型
     this.returnCourseData();
-  },
-  onReady() {
-    console.log("課程詳情頁 - 已经Ready");
   },
   onShow() {
     this.onPullDownRefresh();
