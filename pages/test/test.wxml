@@ -13,6 +13,8 @@
 
 <button open-type='contact'>聯繫管理員</button>
 
+<button bindtap='emailCheck'>emailCheck</button>
+
 <text>\n\n</text>
 
 <button bindtap="toOtherMiniProgram">跳轉選咩課</button>

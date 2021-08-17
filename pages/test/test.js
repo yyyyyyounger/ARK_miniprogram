@@ -28,22 +28,6 @@ Page({
             })
         }
 
-        let data = {
-            "idNum":7,
-            "speakerid":1,
-        }
-
-        console.log(JSON.stringify(data));
-
-        let cloudPath = "ECE/3/通過GitHub託管代碼 by Rookie.docx";
-        db.collection('fileList').where({
-            cloudPath : cloudPath   // 路徑重合，保證是同一位置存在重名文件
-        }) .field({
-            cloudPath : true
-        }) .get() .then(res=>{
-            console.log(res.data);
-            console.log(res.data.length);
-        })
     },
     onReady: function(){
         
@@ -208,5 +192,16 @@ Page({
         wx.redirectTo({
         url: '../category/courseDetail/courseDetail?detailInfo=' + detailInfo,
         })
+    },
+
+    // 郵箱查驗
+    emailCheck() {
+        wx.cloud.callFunction({     // 多記錄delete專用，最高權限
+            name: 'emailCheck',
+            complete: res => {
+              console.log('result: ', res)
+            }
+        })
+        
     },
 });
