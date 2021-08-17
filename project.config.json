@@ -44,7 +44,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.0",
+  "libVersion": "2.19.1",
   "appid": "wx18d6d4846203797e",
   "projectname": "ARK_Vant",
   "debugOptions": {

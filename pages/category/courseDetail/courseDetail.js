@@ -229,19 +229,39 @@ Page({
   // 下載文件
   downLoadFile(e) {
     let selectIndex = e.currentTarget.dataset.index;
-    console.log(selectIndex);
+    let size = this.data.courseCloudData.filePaths[selectIndex].size;
+    let mes;
+    if (size>1000) {
+      size = size/1000000;
+      mes = size.toFixed(2)+" MB";
+      console.log(mes);
+    } else {
+      size = size/100;
+      mes = size.toFixed(2)+" KB";
+      console.log(mes);
+    }
     Dialog.confirm({
       title: '操作提示',
-      message: '確定下載文件：\n '+this.data.courseCloudData.filePaths[selectIndex].name+' 嗎？',
+      message: '確定獲取文件：\n "'+this.data.courseCloudData.filePaths[selectIndex].name+'"\n('+mes+')'+' 的下載鏈接嗎？',
     }) .then(res=>{
-      // wx.cloud.downloadFile({
-      //   fileID: 'a7xzcb'
-      // }).then(res => {
-      //   // get temp file path
-      //   console.log(res.tempFilePath)
-      // }).catch(error => {
-      //   // handle error
-      // })
+      let path = this.data.courseCloudData.filePaths[selectIndex].path;
+      db.collection('fileList') .where({
+        'fileInfo.path' : path,
+      }) .field({  cloudFileId : true  }) .get() .then(res=>{
+        // 獲取可下載的真實鏈接
+        wx.cloud.getTempFileURL({
+          fileList : [res.data[0].cloudFileId]      // 傳參為數組形式
+        }) .then(res => {
+          Toast.success('獲取成功！');
+          // 寫入用戶粘貼板
+          wx.setClipboardData({
+            data: res.fileList[0].tempFileURL,    // 可下載的真實鏈接
+            success (res) {
+              Toast('已複製鏈接到粘貼板，\n可前往瀏覽器打開！');
+            }
+          })
+        }).catch(error => {  console.error(error);  })
+      })
     })
   },
 

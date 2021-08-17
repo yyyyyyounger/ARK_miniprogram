@@ -28,6 +28,31 @@ Page({
             })
         }
 
+
+      const fileList = [
+        'cloud://cloud1-5gtulf1g864cd4ea.636c-cloud1-5gtulf1g864cd4ea-1306144658/ECE/3/通過GitHub託管代碼 by Rookie.docx', 
+        'cloud://cloud1-5gtulf1g864cd4ea.636c-cloud1-5gtulf1g864cd4ea-1306144658/ECE/3/weui-miniprogram-1.0.8.zip'
+      ]
+        wx.cloud.getTempFileURL({
+          fileList : [fileList[0]]      // 傳參為數組形式
+        }).then(res => {
+          // get temp file URL
+          console.log("可下載的真實鏈接為：",res.fileList)
+          wx.setClipboardData({
+            data: res.fileList[0].tempFileURL,
+            success (res) {
+              wx.getClipboardData({
+                success (res) {
+                  console.log("複製的內容",res.data) // data
+                }
+              })
+            }
+          })
+        }).catch(error => {
+          // handle error
+          console.error(error);
+        })
+
     },
     onReady: function(){
         
