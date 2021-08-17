@@ -60,13 +60,17 @@ Page({
       this.ArrayDataInit(this);   // 數據操作數組、對象等的初始化
 
       let followMember = this.data.courseCloudData.followMember;
-      // 判斷是否follow了該課程，follow狀態更改wxml的按鈕形態
-      followMember.forEach(item=>{
-        if(item.arkid==userCloudDataStorage.data.arkid){
-            console.log("這個用戶已follow了這個課程！");
-            this.setData({  haveFollow : true  })
-        }
-    })
+      if (followMember) {
+        // 判斷是否follow了該課程，follow狀態更改wxml的按鈕形態
+        followMember.forEach(item=>{
+          if(item.arkid==userCloudDataStorage.data.arkid){
+              console.log("這個用戶已follow了這個課程！");
+              this.setData({  haveFollow : true  })
+          }
+        })
+      } else {
+        this.setData({  haveFollow : false  })
+      }
 
       this.setData({  loading: false,  }) // 骨架屏消失
     }) .catch(err=>{  console.error(err);  })

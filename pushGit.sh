@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "文件下載邏輯已實現，因為微信諸多限制，目前的邏輯需要用戶自己前往瀏覽器複製鏈接下載！"
+git commit -m "修復了一些bug和顯示邏輯"
 
 git push origin dev
 git push local dev

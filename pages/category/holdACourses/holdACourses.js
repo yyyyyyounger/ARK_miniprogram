@@ -410,11 +410,13 @@ Page({
       }
     }
 
-    // 生成followMember數組
-    let followMemberArr = this.data.courseCloudData.followMember.map(function (e, index, item) {
-      return e.arkid;
-    })
-    this.setData({  followMemberArr  })
+    if (this.data.courseCloudData.followMember) {
+      // 生成followMember數組
+      let followMemberArr = this.data.courseCloudData.followMember.map(function (e, index, item) {
+        return e.arkid;
+      })
+      this.setData({  followMemberArr  })
+    }
   },
   // 輸入校驗
   inputCheck () {

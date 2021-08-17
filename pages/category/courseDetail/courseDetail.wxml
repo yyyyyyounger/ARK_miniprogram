@@ -191,50 +191,52 @@
     </view>
   </view>
 
-  <!-- 簽到 -->
-  <view class="grid col-1 padding-sm" wx:if="{{haveFollow}}" >
+  <block wx:if="{{haveFollow || admin || courseCloudData.arkid==userCloudData.arkid}}">
+    <!-- 簽到 -->
+    <view class="grid col-1 padding-sm" >
 
-    <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
-      <text>簽到</text>
-    </view>
-    
-    <view class="cu-list menu sm-border card-menu margin-top">
-      <van-cell title-class="text-grey cu-item">
-        <view slot="title">
-          <view class="van-cell-text" >未到開始時間！</view>
-        </view>
-      </van-cell>
-    </view>
-
-  </view>
-
-  <!-- 文件 -->
-  <view class="grid col-1 padding-sm" wx:if="{{haveFollow}}" >
-    <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
-      <text>文件</text>
-    </view>
-
-    <view class="cu-list menu sm-border card-menu margin-top" >
-      <view class="cu-item" wx:if="{{courseCloudData.filePaths}}" >
-        <view class="content" style="margin-top:20rpx;">
-          <view class="text-sl" wx:for="{{courseCloudData.filePaths}}" wx:key="index" data-index="{{index}}" style="margin-bottom:20rpx;" bindtap="downLoadFile">
-            <view>
-              <text class="cuIcon-file text-gray" ></text>
-              <test class="text-lg text-gray" >{{courseCloudData.filePaths[index].name}}</test>
-              <van-divider />
-            </view>
-          </view>
-        </view>
+      <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
+        <text>簽到</text>
       </view>
-      <view wx:else >
+      
+      <view class="cu-list menu sm-border card-menu margin-top">
         <van-cell title-class="text-grey cu-item">
           <view slot="title">
-            <view class="van-cell-text" >這裡會顯示這節課上傳的文件！</view>
+            <view class="van-cell-text" >未到開始時間！</view>
           </view>
         </van-cell>
       </view>
+
     </view>
-  </view>
+
+    <!-- 文件 -->
+    <view class="grid col-1 padding-sm" >
+      <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
+        <text>文件</text>
+      </view>
+
+      <view class="cu-list menu sm-border card-menu margin-top" >
+        <view class="cu-item" wx:if="{{courseCloudData.filePaths}}" >
+          <view class="content" style="margin-top:20rpx;">
+            <view class="text-sl" wx:for="{{courseCloudData.filePaths}}" wx:key="index" data-index="{{index}}" style="margin-bottom:20rpx;" bindtap="downLoadFile">
+              <view>
+                <text class="cuIcon-file text-gray" ></text>
+                <test class="text-lg text-gray" >{{courseCloudData.filePaths[index].name}}</test>
+                <van-divider />
+              </view>
+            </view>
+          </view>
+        </view>
+        <view wx:else >
+          <van-cell title-class="text-grey cu-item">
+            <view slot="title">
+              <view class="van-cell-text" >這裡會顯示這節課上傳的文件！</view>
+            </view>
+          </van-cell>
+        </view>
+      </view>
+    </view>
+  </block>
 
   </block>
 

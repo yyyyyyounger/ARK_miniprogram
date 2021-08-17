@@ -49,7 +49,7 @@ Page({
     db.collection('course') .where( _.or([
         { // 路人/普通用戶可查看最近已opening的課程
           timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,
-          courseState   : _.eq('opening') ,
+          courseState   : _.eq('opening').or(_.eq('finish')) ,
         },
         { // 已開課的用戶可查看近期自己仍在checking，opening，finish的課程
           timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
@@ -127,10 +127,8 @@ Page({
     }
 
   },
-  onReady: function() {
-    
-  },
   onShow: function() {
+    this.setData({  nowTimeStamp : Date.now()  })
     this.getTabBar().init();
     console.log("目前處在的tabs為",this.data.clickTabs);
   },
