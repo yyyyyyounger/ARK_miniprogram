@@ -8,6 +8,10 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 Page({
   data: {
+    // 未登錄狀態的空arkid
+    userCloudData :{
+      arkid : 0
+    },
     // follow狀態
     haveFollow : false,
     // 骨架屏
@@ -38,7 +42,7 @@ Page({
         admin         : userCloudDataStorage.data.admin,
         userCloudData : userCloudDataStorage.data,
       })
-    }
+    } 
 
     // 請求雲端的courseInfo數據，該courseId為num類型
     this.returnCourseData();
@@ -59,7 +63,7 @@ Page({
       this.ArrayDataInit(this);   // 數據操作數組、對象等的初始化
 
       let followMember = this.data.courseCloudData.followMember;
-      if (followMember) {
+      if (followMember && userCloudDataStorage) {
         // 判斷是否follow了該課程，follow狀態更改wxml的按鈕形態
         followMember.forEach(item=>{
           if(item.arkid==userCloudDataStorage.data.arkid){
@@ -171,12 +175,12 @@ Page({
     else {                  // 未登錄提示登錄
       Dialog.confirm({
         title: '操作提示',
-        message: '該功能需要登錄後操作！\n現在去登錄嗎？',
+        message: '該功能需要註冊後操作！\n現在去登錄嗎？',
         zIndex:99999999,
       })
       .then(() => {   // on confirm
         wx.switchTab({
-          url: '../user/user',
+          url: '../../user/user',
         })
       })
       .catch(() => {  // on cancel

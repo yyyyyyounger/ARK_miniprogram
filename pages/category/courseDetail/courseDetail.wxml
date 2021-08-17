@@ -237,6 +237,9 @@
       </view>
     </view>
   </block>
+  <block wx:else >
+    <van-divider contentPosition="center">關注後將能看到講者上傳的文件等信息</van-divider>
+  </block>
 
   </block>
 
