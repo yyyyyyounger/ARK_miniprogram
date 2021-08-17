@@ -38,7 +38,7 @@ exports.main = async (event, context) => {
       }) .update({
         data: {
           allJoinId : _.push([idNum]),
-          recentFollowIdArray : _.pull(_.in([idNum])),
+          // recentFollowIdArray : _.pull(_.in([idNum])),
         }
       })
     } 

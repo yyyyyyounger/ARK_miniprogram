@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復了大量未登錄者前往課程詳情頁的bug"
+git commit -m "修改了部分雲函數邏輯"
 
 git push origin dev
 git push local dev

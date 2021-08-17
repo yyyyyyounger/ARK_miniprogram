@@ -16,9 +16,6 @@ exports.main = async (event, context) => {
   let courseState   = event.courseState;
   let speakerid     = event.speakerid;
   let followMember  = event.followMember;   // 此時的followMember應該是對象數組
-  // followMember = followMember.map((e,item)=>{ // 生成僅有arkid的數組
-  //   return e.arkid
-  // })
   // 獲取課程id
   let idNum         = event.idNum;
 
@@ -44,7 +41,22 @@ exports.main = async (event, context) => {
           allJoinId: _.pull(_.in([idNum])),
         }
       })
-      // 4 刪除關聯文件 - 未完成
+      // 4 刪除關聯文件 - 未測試
+      db.collection('fileList') .where({
+        'courseInfo.courseId' : idNum
+      }) .field({  cloudFileId:true  }) .get() .then(res=>{
+        let fileList = res.data.map(function(e,index,item){
+          return cloudFileId
+        })
+        wx.cloud.deleteFile({
+          fileList: fileList
+        }).then(res => {
+          console.log(res.fileList)
+        }).catch(error => {
+          console.error(error);
+          return error
+        })
+      })
       
     } 
     else if (courseState=="opening"){  // 刪除user集合各個followMember中recentFollowIdIndex的該課

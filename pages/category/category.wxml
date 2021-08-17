@@ -21,7 +21,7 @@
           <view class="cu-list menu-avatar">
             <view class="cu-item">
               <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );">
-                <view class="tag" style="top:35px;">{{recentCourseInfoArray[index].courseInfoInput[3].input[0]}}4</view>
+                <view class="tag" style="top:35px;">{{recentCourseInfoArray[index].courseInfoInput[3].input[0]}}</view>
               </view>
               <view class="content flex-sub text-gray text-lg">
                 <view class="text-black text-lg title">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
