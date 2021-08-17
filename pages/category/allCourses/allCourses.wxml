@@ -1,3 +1,6 @@
+<!-- 彈出類 -->
+<van-toast id="van-toast" zIndex:9999999/>
+
 <wxs module="m1">
   function format(ts) {
     var d = getDate(ts)
@@ -38,7 +41,7 @@
   <view class="th">时间</view>
  </view>
 
- <view wx:for="{{allCourse}}" class="tr" >
+ <view wx:for="{{allCourse}}" class="tr" wx:key="index" >
   <view class="td_id" >{{allCourse[index]._id}}</view>
   <view class="td">{{allCourse[index].courseInfoInput[3].input[0]}}</view>
   <view class="td_cour">{{allCourse[index].courseInfoInput[1].input}}</view>

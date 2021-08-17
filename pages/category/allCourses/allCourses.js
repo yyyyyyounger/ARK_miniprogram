@@ -1,10 +1,9 @@
-// pages/category/allCourses/allCourses.js
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+
 const db = wx.cloud.database();
 const _ = db.command
 
 Page({
-
-  
   data: {
     items:[
       {
@@ -53,6 +52,99 @@ Page({
     value1: 0,
     allCourse:[]
   },
+  onLoad: function (options) {
+    this.app = getApp();
+    var checkmap = [];
+    db.collection('course').where({
+      _id : _.gt (0),
+      courseState : _.eq('opening').or(_.eq('finish'))
+    }) .orderBy('_id', 'asc') .get()  // 默認以課程id升序排序
+    .then(res=>{                      // 查詢成功，寫入allCourse準備wxml渲染
+      this.setData({  allCourse: res.data  })
+      Toast.success('加載成功！')
+    })
+  },
+
+  onShow: function () {
+
+  },
+
+  onHide: function () {
+
+  },
+
+  onPullDownRefresh: function () {
+    this.app.onPullDownRefresh(this)
+  },
+
+  onReachBottom: function () {
+
+  },
+
+  onShareAppMessage: function () {
+
+  },
+
+  mySort: function (e) {
+    //property 根据什么排序
+    var property = ["_id","majorTag","courseName","speakerName","time"];
+    var self = this;
+    var arr = self.data.allCourse;
+    if (e.detail == 0) {
+      db.collection('course').where({
+        _id : _.gt (0)
+      }).get({
+        //如果查询成功的话    
+        success: res => {
+          this.setData({
+            allCourse: res.data
+          })
+        }
+      })
+    }
+    else{
+      self.setData({
+        allCourse: arr.sort(self.compare(property[e.detail]))
+      })
+    }
+  },
+  compare: function (property) {
+    return function (a, b) {
+      if (property != "time"){
+      if (property == "courseName"){
+        var x = a.courseInfoInput[1].input.charAt(0);
+        var y = b.courseInfoInput[1].input.charAt(0);
+      }
+      else if (property == "name"){
+        var x = a.courseInfoInput[6].input.charAt(0);
+        var y = b.courseInfoInput[6].input.charAt(0);
+      }
+      else if (property == "majorTag"){
+        var x = a.courseInfoInput[3].input[0];
+        var y = b.courseInfoInput[3].input[0];
+      }
+        let reg = /[a-zA-Z0-9]/
+        if(reg.test(x)|| reg.test(y)){
+          if(x>y){
+              return 1
+          }else if(x<y){
+              return -1
+          }else{
+              return 0
+          }
+        }else{
+          return x.localeCompare(y)
+        }}
+      else{
+        let val1 = a.timeStampPick;
+        let val2 = b.timeStampPick;
+        if (val1 > val2) return 1;
+        else if (val1 == val2) return 0;
+        else return -1;
+      }
+    }
+  },
+
   onClickShow() {
     this.setData({ show: true });
   },
@@ -99,133 +191,5 @@ Page({
        
     
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    var checkmap = [];
-    db.collection('course').where({
-      _id : _.gt (0)
-    })
-      .get({
-      //如果查询成功的话    
-      success: res => {
-        this.setData({
-          allCourse: res.data
-        })
-      }
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
-
-mySort: function (e) {
-  //property 根据什么排序
-  var property = ["_id","majorTag","courseName","speakerName","time"];
-  var self = this;
-  var arr = self.data.allCourse;
-  if (e.detail == 0) {
-    db.collection('course').where({
-      _id : _.gt (0)
-    }).get({
-      //如果查询成功的话    
-      success: res => {
-        this.setData({
-          allCourse: res.data
-        })
-      }
-    })
-  }
-  else{
-    self.setData({
-      allCourse: arr.sort(self.compare(property[e.detail]))
-    })
-  }
-},
-compare: function (property) {
-  return function (a, b) {
-    if (property != "time"){
-    if (property == "courseName"){
-      var x = a.courseInfoInput[1].input.charAt(0);
-      var y = b.courseInfoInput[1].input.charAt(0);
-    }
-    else if (property == "name"){
-      var x = a.courseInfoInput[6].input.charAt(0);
-      var y = b.courseInfoInput[6].input.charAt(0);
-    }
-    else if (property == "majorTag"){
-      var x = a.courseInfoInput[3].input[0];
-      var y = b.courseInfoInput[3].input[0];
-    }
-      let reg = /[a-zA-Z0-9]/
-      if(reg.test(x)|| reg.test(y)){
-         if(x>y){
-             return 1
-         }else if(x<y){
-             return -1
-         }else{
-             return 0
-         }
-      }else{
-         return x.localeCompare(y)
-      }}
-    else{
-      let val1 = a.timeStampPick;
-      let val2 = b.timeStampPick;
-      if (val1 > val2) return 1;
-      else if (val1 == val2) return 0;
-      else return -1;
-    }
-  }
-},
 
 })

@@ -49,9 +49,9 @@
           "scene": null
         },
         {
-          "name": "協議頁 signUp",
-          "pathName": "pages/protocol/protocol",
-          "query": "detailInfo={\"mode\":\"signUp\"}",
+          "name": "所有課程歸檔",
+          "pathName": "pages/category/allCourses/allCourses",
+          "query": "",
           "scene": null
         }
       ]
