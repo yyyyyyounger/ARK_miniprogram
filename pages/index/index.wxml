@@ -21,11 +21,8 @@ bind:close="closePopup"
 		</view>
 	</view>
 	
-	<!-- <view class="author">一言：</view> -->
 	<view>
-		<!-- <view class="bracket left">『</view> -->
 		<view class="word" id="hitokoto_text">{{moto.hitokoto}}</view>
-		<!-- <view class="bracket right">』</view> -->
 		<view class="author" id="hitokoto_author">—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
 	</view>
 	
@@ -103,12 +100,45 @@ bind:close="closePopup"
 </view>
 
 <!-- 使用小貼士 -->
-<view class="cu-bar bg-white margin-top">
-	<view class="action">
-		<text class="cuIcon-title text-themeBlue"></text>使用小貼士
+<block>
+	<view class="cu-bar bg-white margin-top">
+		<view class="action">
+			<text class="cuIcon-title text-themeBlue"></text>使用小貼士
+		</view>
 	</view>
-</view>
-<van-skeleton row="4" />
+	<van-skeleton row="4" />
+</block>
+
+
+<!-- ARK -->
+<block>
+	<view class="cu-bar bg-white margin-top">
+		<view class="action">
+			<text class="cuIcon-title text-themeBlue"></text>關於ARK
+		</view>
+	</view>
+	<view class="flexCenter">
+		<text>項目開始時間：2021/06/03</text>
+		<text> 今天是：{{today}} </text>
+		<view>ARK平台已經開發了
+			<text class="devColor">{{durationDay}}</text> 天
+		</view>
+	</view>
+</block>
+
+
+<!-- 一言 -->
+<block>
+	<view class="cu-bar bg-white margin-top">
+		<view class="action">
+			<text class="cuIcon-title text-themeBlue"></text>一言
+		</view>
+	</view>
+	<view>
+		<view class="word" >{{moto.hitokoto}}</view>
+		<view class="author" >—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
+	</view>
+</block>
 
 <text>\n</text>
 

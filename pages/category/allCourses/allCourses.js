@@ -62,7 +62,7 @@ Page({
     .then(res=>{                      // 查詢成功，寫入allCourse準備wxml渲染
       this.setData({  allCourse: res.data  })
       Toast.success('加載成功！')
-    })
+    }) 
   },
 
   onShow: function () {
