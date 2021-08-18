@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復課程頁最近follow的顯示問題"
+git commit -m "主頁獲取課程信息邏輯修改"
 
 git push origin dev
 git push local dev

@@ -13,7 +13,7 @@ Page({
     steps: [],
     show_popup:false,
     // Vant - end
-    // Color - begin
+    // 輪播圖
     cardCur: 0,
     swiperList: [{
       id: 0,
@@ -53,7 +53,7 @@ Page({
     if (scene!="refresh") {
       this.showPopup();     // 展示頂部彈出層
       this.cloudGetOneMoto();  // 雲函數請求返回api
-      // 5s後關閉彈出層
+      // 5s後關閉彈出層 - 彈出層棄用狀態，可以用來賣廣告笑
       // setTimeout(() => {
       //   this.closePopup()  //關閉彈出層
       //   Toast({
@@ -70,18 +70,16 @@ Page({
     })
 
     // 沒有登錄則提醒
-    const userCloudData = wx.getStorageSync('userCloudData')
-    if (!userCloudData) {
-      console.log("沒有登錄");
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    if (!userCloudDataStorage) {
       Toast({
         message : '登錄後才能體驗完整功能哦！',
         zIndex  : 99999999999999
-      });
-    } else {
-      this.setData({  userCloudData : userCloudData.data  })
+      })
+    } else {  // 存放userCloudData
+      this.setData({  userCloudData : userCloudDataStorage.data  })
     }
-    // 查詢該用戶的管理員權限
-    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    // 查詢該用戶的管理員權限，是管理員則返回checkingCourseList
     if (userCloudDataStorage) {
       this.setData({  admin : userCloudDataStorage.data.admin  })
       if (this.data.admin) {  // 管理員權限者 - 返回課程列表中courseState為checking的課
@@ -98,74 +96,18 @@ Page({
       }
     }
 
-    // 項目開始日期
+    // 設定項目開始日期 & 當前時刻的時間戳
     this.setData({
       projStartTime : app.globalData.projStartTime[0] ,
-    });
+      nowTimeStamp  : Date.now() ,
+    })
     // 計算開發已過日期
     this.app.calcDurationDay(this,1,'2021/06/03');
     
     // 獲取已follow的課程列表
-    // 如果雲端存在近一個月的courseId，返回其簡單版的資訊（主題、時間、地點） - 未完成
-    let date = new Date(Date.now());                    // 現在時刻的文字時間戳
-    let today = date.toLocaleDateString();              // 今天的文本時間 yyyy/m/d
-    let todayTimeStamp = (new Date(today)).getTime();   // 今天的時間戳
-    console.log( "今天的時間戳：", todayTimeStamp );
+    this.returnMyFollowCourses();
 
-    // 查詢course集合中，大於等於今天時間戳的課程，（距今一個月內未進行的課程） - 未完成
-    db.collection('course').where({
-        timeStampPick : _.gte(todayTimeStamp) ,
-    }) .field({
-        _openid : false,
-        _createAt : false,
-    }) .orderBy("timeStampPick","asc") .get()
-    .then(res=>{
-        console.log("符合條件的數據為",res.data)
-        let recentCourseInfoArray = res.data;
-        // 生成已經Follow了的課程Info的數組形式
-        this.setData({  recentCourseInfoArray  })
-
-        // 返回user集合中自己的follow列表
-        const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
-        if (userCloudDataStorage) {   // 緩存存在才操作
-          db.collection('user').where({
-            _id : userCloudDataStorage.data._openid,
-          }) .field({ recentFollowIdArray : true }) .get() .then(res=>{
-            console.log("數據庫我的followCourseArray為：",res.data[0].recentFollowIdArray);
-            if (!!res.data[0].recentFollowIdArray) {
-              this.setData({  followCourseArray : res.data[0].recentFollowIdArray  })
-            }
-  
-            // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
-            for (let i = 0; i < recentCourseInfoArray.length; i++) {
-              if ( !!this.data.followCourseArray ) {
-                for (let j = 0; j < this.data.followCourseArray.length; j++) {
-                  if ( this.data.followCourseArray[j] == recentCourseInfoArray[i]._id ) {   // 對比course的最近課程和user的已follow課程
-                    recentCourseInfoArray[i].haveFollow = true;
-                    break
-                  } else {
-                    console.log("沒有follow");
-                    recentCourseInfoArray[i].haveFollow = false;
-                  }
-                }
-              }
-              else {
-                console.log("沒有follow");
-                recentCourseInfoArray[i].haveFollow = false;
-              }
-            }
-  
-            // 生成已經Follow了的課程Info的數組形式
-            this.setData({  recentCourseInfoArray  })
-  
-            // 豎向步驟條設定
-            this.stepsSetup();
-          }) .catch(err=>{ console.error(err); })
-        }
-
-    }) .catch(err=>{
-        console.error(err);
-    })
+    // 查詢course集合中，大於等於半個月前的時間戳的課程，（距今一個月內未進行的課程） - 未完成
 
   },
   // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
@@ -199,12 +141,49 @@ Page({
     // 初始化所有index值
     that.findSetData(shortNameArray);
   },
+  // 返回user集合中自己的follow課程信息
+  returnMyFollowCourses() {
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
+    if (userCloudDataStorage) {   // 登錄才操作 - 緩存存在才操作
+      db.collection('user').where({
+        _id : userCloudDataStorage.data._openid,
+      }) .field({ recentFollowIdArray : true }) .get() 
+      .then(res=>{
+        let recentFollowIdArray = res.data[0].recentFollowIdArray;
+        console.log("數據庫我的followCourseArray為：",recentFollowIdArray);
+        if (!!recentFollowIdArray) {
+          this.setData({  recentFollowIdArray  })
+
+          // 有follow則獲取courseId對應的課程
+          db.collection('course').where({
+            timeStampPick : _.gte(this.data.nowTimeStamp-15*24*60*60*1000) ,
+            _id           : _.in(recentFollowIdArray) ,
+          }) .field({
+              _openid   : false,
+              _createAt : false,
+              allowVote : false,
+              arkid     : false,
+              avatarUrl : false,
+              followMember : false,
+              memberLimit  : false,
+              nickName  : false,
+          }) .orderBy("timeStampPick","asc") .get()
+          .then(res=>{
+            console.log("我follow的課程的信息為：",res.data);
+            this.setData({  recentCourseInfoArray : res.data  })
+
+            // 豎向步驟條設定
+            this.stepsSetup();
+          })
+        }
+
+      }) .catch(err=>{ console.error(err); })
+    }
+
+  },
 
   onShow (){  //頁面展示時，觸發動畫
     this.getTabBar().init();
-  },
-  onHide (){  //頁面隱藏時，觸發漸出動畫
-    
   },
 
   // 下拉刷新
@@ -232,6 +211,13 @@ Page({
       active_col      : detail
     })
   },
+  // 管理員的checking課列表
+  onChange_collapse_check(event) {
+    let detail = event.detail;
+    this.setData({
+      active_collapse_check : detail,
+    })
+  },
   // Vant - 豎向步驟條
   bindTapSteps(event){
     console.log("豎向步驟條",event.detail);
@@ -246,15 +232,13 @@ Page({
     let objTemp = {};
     let stepsTemp = [];
     for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
-      if (this.data.recentCourseInfoArray[i].haveFollow) {
-        objTemp = {
-          text: this.data.recentCourseInfoArray[i].courseInfoInput[1].input,
-          desc: this.checkDate(this.data.recentCourseInfoArray[i].timeStampPick),
-          inactiveIcon: 'cross',
-          activeIcon: 'success',
-        }
-        stepsTemp.push(objTemp);
+      objTemp = {
+        text: this.data.recentCourseInfoArray[i].courseInfoInput[1].input,
+        desc: this.checkDate(this.data.recentCourseInfoArray[i].timeStampPick),
+        inactiveIcon: 'cross',
+        activeIcon: 'success',
       }
+      stepsTemp.push(objTemp);
     }
     this.setData({  steps : stepsTemp  })
   },

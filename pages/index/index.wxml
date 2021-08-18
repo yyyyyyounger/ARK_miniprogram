@@ -55,10 +55,10 @@ bind:close="closePopup"
 		<text class="cuIcon-title text-themeBlue"></text>我Follow的分享
 	</view>
 </view>
-<van-row wx:if="{{followCourseArray[0]}}">
+<van-row wx:if="{{recentCourseInfoArray[0]}}">
 	<van-col span="16">
 		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange_collapse">
-			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:key="index" wx:if="{{recentCourseInfoArray[index].haveFollow}}" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}">
+			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:key="index" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}">
 				<view bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}">
 					<view>時間：{{recentCourseInfoArray[index].courseInfoInput[5].input[1]}} - {{recentCourseInfoArray[index].courseInfoInput[5].input[2]}}</view>
 					<view>地點：{{recentCourseInfoArray[index].courseInfoInput[4].input}}</view>
@@ -77,7 +77,7 @@ bind:close="closePopup"
 		/>
 	</van-col>
 </van-row>
-<van-divider wx:if="{{!followCourseArray[0]}}" contentPosition="center">快挑選些分享加入吧！</van-divider>
+<van-divider wx:if="{{!recentFollowIdArray[0]}}" contentPosition="center">快挑選些分享加入吧！</van-divider>
 
 <!-- 管理員權限 - 列出待審核課程 -->
 <view>
@@ -86,7 +86,7 @@ bind:close="closePopup"
 			<text class="cuIcon-title text-themeBlue"></text>待審核課程
 		</view>
 	</view>
-	<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange_collapse" wx:if="{{admin}}">
+	<van-collapse value="{{ active_collapse_check }}" accordion bind:change="onChange_collapse_check" wx:if="{{admin}}">
 		<van-collapse-item wx:for="{{checkingCourseList}}" wx:key="index" title="{{checkingCourseList[index].courseInfoInput[1].input}}" name="{{index}}">
 			<view bindtap="jumpToCourseDetail" data-courseid="{{checkingCourseList[index]._id}}">
 				<view>{{checkingCourseList[index].courseInfoInput[6].input}}</view>
