@@ -410,7 +410,7 @@ Page({
       }
     }
 
-    if (this.data.courseCloudData.followMember) {
+    if (this.data.courseCloudData && this.data.courseCloudData.followMember) {
       // 生成followMember數組
       let followMemberArr = this.data.courseCloudData.followMember.map(function (e, index, item) {
         return e.arkid;

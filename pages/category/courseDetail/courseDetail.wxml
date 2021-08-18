@@ -201,7 +201,7 @@
       <!-- 頭像展示，簽到後修改外框顏色為主題藍 -->
       <view class="cu-list menu sm-border card-menu margin-top">
         <!-- 如果無人follow -->
-        <view wx:if="{{!courseCloudData.followMember}}" >
+        <view wx:if="{{!courseCloudData.followMember[0]}}" >
           <van-cell title-class="text-grey cu-item">
             <view slot="title" class="text-grey" style="text-align: center;">
               快來follow吧！

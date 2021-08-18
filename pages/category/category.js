@@ -81,7 +81,6 @@ Page({
             });
             this.setData({  recentCourseIdRecordArr  })
             console.log("最近的課的課程id數組為",recentCourseIdRecordArr);    // 數組的索引為最近課程的id，該位元素為最近課程info的索引
-            console.log(recentCourseIdRecordArr[6]);
 
             // // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
             for (let i = 0; i < recentCourseInfoArray.length; i++) {
