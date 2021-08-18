@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "update"
+git commit -m "解決了首次follow的用戶致命bug"
 
 git push origin dev
 git push local dev

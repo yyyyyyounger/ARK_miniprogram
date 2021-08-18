@@ -113,15 +113,17 @@ Page({
             console.log("我的數據庫followCourseArray為：",res.data.recentFollowIdArray);
             this.setData({  followCourseArray : res.data.recentFollowIdArray  })
             
-            // 生成只有最近的課的課程id數組
-            let recentCourseIdRecordArr = {};
-            this.data.recentCourseInfoArray.map(function (e, index, item) {
-              recentCourseIdRecordArr[e._id] = index;
-            });
-            this.setData({  recentCourseIdRecordArr  })
-            console.log("最近的課的課程id數組為",recentCourseIdRecordArr);    // 數組的索引為最近課程的id，該位元素為最近課程info的索引
-            for (let i = 0; i < this.data.followCourseArray.length; i++) {
-              console.log("最近follow的course",this.data.followCourseArray[i]," ，對應的recentIndex為",recentCourseIdRecordArr[this.data.followCourseArray[i]]);
+            if (this.data.followCourseArray) {
+              // 生成只有最近的課的課程id數組
+              let recentCourseIdRecordArr = {};
+              this.data.recentCourseInfoArray.map(function (e, index, item) {
+                recentCourseIdRecordArr[e._id] = index;
+              });
+              this.setData({  recentCourseIdRecordArr  })
+              console.log("最近的課的課程id數組為",recentCourseIdRecordArr);    // 數組的索引為最近課程的id，該位元素為最近課程info的索引
+              for (let i = 0; i < this.data.followCourseArray.length; i++) {
+                console.log("最近follow的course",this.data.followCourseArray[i]," ，對應的recentIndex為",recentCourseIdRecordArr[this.data.followCourseArray[i]]);
+              }
             }
 
             // // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
