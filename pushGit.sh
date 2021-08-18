@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "新增跳轉更多頁"
+git commit -m "update"
 
 git push origin dev
 git push local dev
