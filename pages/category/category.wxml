@@ -84,57 +84,66 @@
       <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
     </van-dropdown-menu> -->
 
-    <!-- 課程卡片 - 未完成 -->
-    <view class="cu-card dynamic course" wx:for="{{followCourseArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
-      <view class="cu-item">
-        <view class="cu-list menu-avatar">
-          <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );">
-              <view class="tag" style="top:35px;">{{recentCourseInfoArray[index].courseInfoInput[3].input[0]}}</view>
+    <!-- 加載狀態 -->
+    <block wx:if="{{loading}}" >
+      <view wx:for="{{4}}" wx:key="index" >
+        <van-skeleton title avatar row="3" />
+        <van-divider />
+      </view>
+    </block>
+    <block>
+      <!-- 課程卡片 - 未完成 -->
+      <view class="cu-card dynamic course" wx:for="{{followCourseArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
+        <view class="cu-item">
+          <view class="cu-list menu-avatar">
+            <view class="cu-item">
+              <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );">
+                <view class="tag" style="top:35px;">{{recentCourseInfoArray[index].courseInfoInput[3].input[0]}}</view>
+              </view>
+              <view class="content flex-sub text-gray text-lg">
+                <view class="text-black text-lg title">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
+                <view >by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
+              </view>
+              <!-- add/cancel Follow按鈕 -->
+              <van-button 
+                wx:if="{{recentCourseInfoArray[index].arkid!=userCloudDataStorage.arkid}}"
+                disabled = "{{(recentCourseInfoArray[index].courseState)=='checking'}}" 
+                style="margin-right:5px;"
+                icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
+                size="small" 
+                color="{{ recentCourseInfoArray[index].haveFollow ? '#f8ad72' : '#3498DB'}}" 
+                type="primary" 
+                round 
+                data-courseid="{{recentCourseInfoArray[index]._id}}"
+                data-arrindex="{{index}}"
+                bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}"><text decode="{{true}}" style="padding-right:{{ recentCourseInfoArray[index].haveFollow ? '' : '18rpx'}};">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</text></van-button>
             </view>
-            <view class="content flex-sub text-gray text-lg">
-              <view class="text-black text-lg title">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
-              <view >by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
-            </view>
-            <!-- add/cancel Follow按鈕 -->
-            <van-button 
-              wx:if="{{recentCourseInfoArray[index].arkid!=userCloudDataStorage.arkid}}"
-              disabled = "{{(recentCourseInfoArray[index].courseState)=='checking'}}" 
-              style="margin-right:5px;"
-              icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
-              size="small" 
-              color="{{ recentCourseInfoArray[index].haveFollow ? '#f8ad72' : '#3498DB'}}" 
-              type="primary" 
-              round 
-              data-courseid="{{recentCourseInfoArray[index]._id}}"
-              data-arrindex="{{index}}"
-              bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}"><text decode="{{true}}" style="padding-right:{{ recentCourseInfoArray[index].haveFollow ? '' : '18rpx'}};">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</text></van-button>
+          </view>
+          <!-- 簡略信息 -->
+          <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" style="margin-top:5px">
+            <view wx:if="{{recentCourseInfoArray[index].courseState=='opening'}}" class="openBg"><view class="tagText" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
+            <view wx:if="{{recentCourseInfoArray[index].courseState!='opening'}}" class="noOpenBg text-orange"> <view class="tagText" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
+            <!-- 提醒結課 -->
+            <view wx:if="{{recentCourseInfoArray[index].courseState=='opening'&&recentCourseInfoArray[index].arkid==userCloudDataStorage.arkid&&recentCourseInfoArray[index].timeStampPick<nowTimeStamp}}" class="noOpenBg text-orange"> <view class="tagText" style="font-weight:bold;" >記得結課!</view></view>
+
+            <view class="text-gray">日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }}</view>
+            <view class="text-gray">時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
+
+          </view>
+          <!-- 頭像組 -->
+          <view class="slot text-right helper" wx:if="{{recentCourseInfoArray[index].followMember[1]}}">
+            <view class="cu-avatar-group">
+              <view class="cu-avatar round lg" wx:for="{{recentCourseInfoArray[index].followMember}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key="avatarIndex" style="background-image:url({{recentCourseInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
+            </view> <text decode="true">...&nbsp;&nbsp;</text>
           </view>
         </view>
-        <!-- 簡略信息 -->
-        <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" style="margin-top:5px">
-          <view wx:if="{{recentCourseInfoArray[index].courseState=='opening'}}" class="openBg"><view class="tagText" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
-          <view wx:if="{{recentCourseInfoArray[index].courseState!='opening'}}" class="noOpenBg text-orange"> <view class="tagText" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
-          <!-- 提醒結課 -->
-          <view wx:if="{{recentCourseInfoArray[index].courseState=='opening'&&recentCourseInfoArray[index].arkid==userCloudDataStorage.arkid&&recentCourseInfoArray[index].timeStampPick<nowTimeStamp}}" class="noOpenBg text-orange"> <view class="tagText" style="font-weight:bold;" >記得結課!</view></view>
-
-          <view class="text-gray">日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }}</view>
-          <view class="text-gray">時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
-
-        </view>
-        <!-- 頭像組 -->
-        <view class="slot text-right helper" wx:if="{{recentCourseInfoArray[index].followMember[1]}}">
-          <view class="cu-avatar-group">
-            <view class="cu-avatar round lg" wx:for="{{recentCourseInfoArray[index].followMember}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key="avatarIndex" style="background-image:url({{recentCourseInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
-          </view> <text decode="true">...&nbsp;&nbsp;</text>
-        </view>
+        <!-- 分割線 -->
+        <van-divider />
       </view>
-      <!-- 分割線 -->
-      <van-divider />
-    </view>
 
-    <van-divider contentPosition="center">“我的Follow” 只顯示最近30日的Follow</van-divider>
-    <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
+      <van-divider contentPosition="center">“我的Follow” 只顯示最近30日的Follow</van-divider>
+      <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
+    </block>
 
   </van-tab>
 

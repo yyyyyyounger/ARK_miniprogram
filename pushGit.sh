@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "課程頁新增一系列展示，詳情頁增加簽到塊的頭像展示"
+git commit -m "新增課程頁的加載狀態"
 
 git push origin dev
 git push local dev
