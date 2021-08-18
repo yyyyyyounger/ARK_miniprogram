@@ -1,2 +1,10 @@
-/* page{background-color:#FFFFFF;} */
-
+.live-up-img {
+  background-color: #fff;
+  margin: 1px;
+  margin-right: 11px;
+  flex-shrink: 0;
+  background-size: cover;
+  background-color: #ddd;
+  box-shadow: 0 0 0 2.5px #3498DB;
+  border: 1px solid #fff;
+}

@@ -48,7 +48,8 @@ Page({
     this.returnCourseData();
   },
   onShow() {
-    this.onPullDownRefresh();
+    this.setData({  nowTimeStamp : Date.now()  })
+    // this.onPullDownRefresh();
   },
   // 請求數據庫返回該courseId的數據
   returnCourseData (){

@@ -7,6 +7,8 @@ var app = getApp();
 const db = wx.cloud.database();
 const _ = db.command
 
+let clickTabs = 0;
+
 
 Page({
   data: {
@@ -69,16 +71,19 @@ Page({
           db.collection('user').doc(userCloudDataStorage.data._openid) .field({
             recentFollowIdArray : true
           }) .get() .then(res=>{
-            console.log("數據庫我的followCourseArray為：",res.data.recentFollowIdArray);
+            console.log("我的數據庫followCourseArray為：",res.data.recentFollowIdArray);
             this.setData({  followCourseArray : res.data.recentFollowIdArray  })
             
             // 生成只有最近的課的課程id數組
-            let recentCourseIdRecordArr = this.data.recentCourseInfoArray.map(function (e, index, item) {
-              return e._id;
+            let recentCourseIdRecordArr = {};
+            this.data.recentCourseInfoArray.map(function (e, index, item) {
+              recentCourseIdRecordArr[e._id] = index;
             });
-            console.log("最近的課的課程id數組為",recentCourseIdRecordArr);
+            this.setData({  recentCourseIdRecordArr  })
+            console.log("最近的課的課程id數組為",recentCourseIdRecordArr);    // 數組的索引為最近課程的id，該位元素為最近課程info的索引
+            console.log(recentCourseIdRecordArr[6]);
 
-            // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
+            // // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
             for (let i = 0; i < recentCourseInfoArray.length; i++) {
               if ( !!this.data.followCourseArray ) {    // 如果用戶自己有follow記錄才操作
                 for (let j = 0; j < this.data.followCourseArray.length; j++) {
@@ -98,13 +103,17 @@ Page({
             // 交由wxml渲染
             this.setData({  recentCourseInfoArray  })
 
-            Toast('加載完成！下拉可刷新！');
-    
+            Toast('  加載完成！\n下拉可刷新！');
+
+            // 結束loading狀態
+            this.setData({  loading : false  })
+
           }) .catch(err=>{ console.error(err); })
         }
-
-        // 結束loading狀態
-        this.setData({  loading : false  })
+        else {
+          // 結束loading狀態
+          this.setData({  loading : false  })
+        }
 
     }) .catch(err=>{  console.error(err);  })
 
@@ -115,11 +124,10 @@ Page({
   },
   onShow: function() {
     this.setData({  nowTimeStamp : Date.now()  })
+    // 初始化tabs？不知道有沒有用
     this.getTabBar().init();
-    console.log("目前處在的tabs為",this.data.clickTabs);
-  },
-  onHide: function() {
-
+    console.log("目前處在的tabs為",clickTabs);
+    // console.log("目前處在的tabs為",this.data.clickTabs);
   },
   onPullDownRefresh: function() {
     // 設定至加載狀態 - 骨架屏
@@ -130,7 +138,7 @@ Page({
   // 頂部tabs的點擊切換事件 - 不同tabs時執行不同，節省資源，未完成
   onClick_tabs(e) {
     // tabs由0開始
-    this.setData({  clickTabs : e.detail.name  })
+    clickTabs = e.detail.name;
     switch (e.detail.name) {
       case 0:
         
