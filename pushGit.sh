@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "課程頁返回課程信息改為onShow執行，會增加數據庫訪問量"
+git commit -m "課程頁最近follow 的delbug"
 
 git push origin dev
 git push local dev

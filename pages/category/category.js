@@ -103,8 +103,8 @@ Page({
         // 生成已經Follow了的課程Info的數組形式
         this.setData({  recentCourseInfoArray  })
 
-        // 返回user集合中自己的follow列表
         if (userCloudDataStorage) {
+          // 返回user集合中自己的follow列表
           db.collection('user').doc(userCloudDataStorage.data._openid) .field({
             recentFollowIdArray : true
           }) .get() .then(res=>{
@@ -118,6 +118,9 @@ Page({
             });
             this.setData({  recentCourseIdRecordArr  })
             console.log("最近的課的課程id數組為",recentCourseIdRecordArr);    // 數組的索引為最近課程的id，該位元素為最近課程info的索引
+            for (let i = 0; i < this.data.followCourseArray.length; i++) {
+              console.log("最近follow的course",this.data.followCourseArray[i]," ，對應的recentIndex為",recentCourseIdRecordArr[this.data.followCourseArray[i]]);
+            }
 
             // // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
             for (let i = 0; i < recentCourseInfoArray.length; i++) {

@@ -7,7 +7,7 @@
 
   <van-tab title="最近發佈">
 
-<!-- 下拉菜單 - 排序未完成 -->
+    <!-- 下拉菜單 - 排序未完成 -->
     <!-- <van-sticky>
       <van-dropdown-menu>
         <van-dropdown-item value="{{ dropDownIndex }}" options="{{ option1 }}" bind:change="dropDownChange" />
@@ -23,7 +23,7 @@
         </view>
       </block>
       <block wx:else>
-        <!-- 課程卡片 - 未完成 -->
+        <!-- 課程卡片 -->
         <view class="cu-card dynamic course" wx:for="{{recentCourseInfoArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
           <view class="cu-item">
             <view class="cu-list menu-avatar">
@@ -92,8 +92,8 @@
       </view>
     </block>
     <block>
-      <!-- 課程卡片 - 未完成 -->
-      <view class="cu-card dynamic course" wx:for="{{followCourseArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
+      <!-- 課程卡片 -->
+      <view class="cu-card dynamic course" wx:for="{{recentCourseInfoArray}}" wx:key="index" wx:if="{{recentCourseInfoArray[index].haveFollow}}" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
         <view class="cu-item">
           <view class="cu-list menu-avatar">
             <view class="cu-item">
@@ -107,7 +107,7 @@
               <!-- add/cancel Follow按鈕 -->
               <van-button 
                 wx:if="{{recentCourseInfoArray[index].arkid!=userCloudDataStorage.arkid}}"
-                disabled = "{{(recentCourseInfoArray[index].courseState)=='checking'}}" 
+                disabled = "{{(recentCourseInfoArray[index].courseState)=='finish' || recentCourseInfoArray[index].timeStampPick<nowTimeStamp}}" 
                 style="margin-right:5px;"
                 icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
                 size="small" 
