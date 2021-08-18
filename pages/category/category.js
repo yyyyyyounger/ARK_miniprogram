@@ -38,12 +38,6 @@ Page({
     this.app = getApp();
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     this.setData({  userCloudDataStorage : userCloudDataStorage.data,  })
-    // 向服務器請求的延時
-    Toast.loading({
-      message: '瘋狂加載中...',
-      forbidClick: true,
-      zIndex: 9999999999999,
-    });
 
     // 返回最近課程信息 - 在onShow()操作
 
@@ -53,16 +47,24 @@ Page({
 
   },
   onShow: function() {
+    if (clickTabs==0 || clickTabs==1) {   // 課程頁面
+      // 向服務器請求的延時
+      Toast.loading({
+        message: '瘋狂加載中...',
+        forbidClick: true,
+        zIndex: 9999999999999,
+      })
+
+      // 返回最近課程信息
+      this.courseInfoInit();
+    }
+    
     // 設置當前時間
     this.setData({  nowTimeStamp : Date.now()  })
 
-    // 返回最近課程信息
-    this.courseInfoInit();
-
     // 初始化tabs？不知道有沒有用
     this.getTabBar().init();
-    console.log("目前處在的tabs為",clickTabs);
-    // console.log("目前處在的tabs為",this.data.clickTabs);
+
   },
   onPullDownRefresh: function() {
     // 設定至加載狀態 - 骨架屏
