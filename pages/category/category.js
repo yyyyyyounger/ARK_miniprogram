@@ -53,6 +53,7 @@ Page({
 
   },
   onShow: function() {
+    // 設置當前時間
     this.setData({  nowTimeStamp : Date.now()  })
 
     // 返回最近課程信息
@@ -66,7 +67,16 @@ Page({
   onPullDownRefresh: function() {
     // 設定至加載狀態 - 骨架屏
     this.setData({  loading : true  })
-    this.app.onPullDownRefresh(this);
+
+    Toast.loading({
+      message: '拼命加載中...',
+      forbidClick: true,
+    })
+    setTimeout(() => {
+      wx.stopPullDownRefresh();
+    }, 1000);
+
+    this.onShow();
   },
 
   // 返回最近課程信息
