@@ -45,17 +45,44 @@ Page({
       zIndex: 9999999999999,
     });
 
-    // 查詢course集合中，符合條件的課程，（距今一個月內未進行的課程） - 未完成
+    // 返回最近課程信息 - 在onShow()操作
+
+    if (userCloudDataStorage) { // 如果已登錄，獲取admin權限
+      this.setData({  admin : userCloudDataStorage.data.admin  })
+    }
+
+  },
+  onShow: function() {
+    this.setData({  nowTimeStamp : Date.now()  })
+
+    // 返回最近課程信息
+    this.courseInfoInit();
+
+    // 初始化tabs？不知道有沒有用
+    this.getTabBar().init();
+    console.log("目前處在的tabs為",clickTabs);
+    // console.log("目前處在的tabs為",this.data.clickTabs);
+  },
+  onPullDownRefresh: function() {
+    // 設定至加載狀態 - 骨架屏
+    this.setData({  loading : true  })
+    this.app.onPullDownRefresh(this);
+  },
+
+  // 返回最近課程信息
+  courseInfoInit() {
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    // 查詢course集合中，符合條件的課程 - 未完成
     db.collection('course') .where( _.or([
-        { // 路人/普通用戶可查看最近已opening的課程
-          timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,
-          courseState   : _.eq('opening').or(_.eq('finish')) ,
-        },
-        { // 已開課的用戶可查看近期自己仍在checking，opening，finish的課程
-          timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
-          courseState   : _.eq('checking').or(_.eq('opening')).or(_.eq('finish')) ,
-          arkid         : _.eq(userCloudDataStorage ? userCloudDataStorage.data.arkid : 0) , // 自己的開課
-        },
+      { // 路人/普通用戶可查看最近已opening的課程
+        timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,
+        courseState   : _.eq('opening').or(_.eq('finish')) ,
+      },
+      { // 已開課的用戶可查看近期自己仍在checking，opening，finish的課程
+        timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
+        courseState   : _.eq('checking').or(_.eq('opening')).or(_.eq('finish')) ,
+        arkid         : _.eq(userCloudDataStorage ? userCloudDataStorage.data.arkid : 0) , // 自己的開課
+      },
     ]) ) .field({
         _openid : false,
         _createAt : false,
@@ -115,23 +142,6 @@ Page({
         }
 
     }) .catch(err=>{  console.error(err);  })
-
-    if (userCloudDataStorage) { // 如果已登錄，獲取admin權限
-      this.setData({  admin : userCloudDataStorage.data.admin  })
-    }
-
-  },
-  onShow: function() {
-    this.setData({  nowTimeStamp : Date.now()  })
-    // 初始化tabs？不知道有沒有用
-    this.getTabBar().init();
-    console.log("目前處在的tabs為",clickTabs);
-    // console.log("目前處在的tabs為",this.data.clickTabs);
-  },
-  onPullDownRefresh: function() {
-    // 設定至加載狀態 - 骨架屏
-    this.setData({  loading : true  })
-    this.app.onPullDownRefresh(this);
   },
 
   // 頂部tabs的點擊切換事件 - 不同tabs時執行不同，節省資源，未完成
