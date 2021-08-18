@@ -209,7 +209,6 @@ Page({
 
   // 下拉刷新
   onPullDownRefresh() {
-    // this.getOneMoto();
     this.cloudGetOneMoto();
     this.showPopup();     // 展示頂部彈出層
     this.app.onPullDownRefresh(this);
@@ -293,25 +292,6 @@ Page({
     return logMes
   },
 
-  // wx本地請求一言API返回 - 該方法需要開發者網站配置可信域名 - 暫未使用
-  getOneMoto: function() {
-    var that = this;
-    wx.request({
-      // url: 'https://api.xygeng.cn/one',
-      url: 'https://v1.hitokoto.cn/',
-      method: 'GET',
-      dataType: 'json',
-      success: function(res) {
-        that.setData({
-          moto: res.data
-        })
-        // console.log(that.data.moto);
-      },
-      fail: function(err) {console.log("獲取一言失敗");}, //请求失败
-      complete: function() {} //请求完成后执行的函数
-    })
-    // 動態設定樣式的間距 - 未完成
-  },
 // http雲函數請求一言api後的返回，http雲函數應該設計為可對其寫入url - 未完成
   cloudGetOneMoto(e) {
     wx.cloud.callFunction({

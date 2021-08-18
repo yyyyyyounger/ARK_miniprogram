@@ -1,8 +1,9 @@
 <!-- 彈出類 -->
 <van-toast id="van-toast" />
+<!-- show_popup -->
 <van-popup 
 z-index="9999999"
-show="{{ show_popup }}" 
+show="{{ false }}" 
 position="top"
 duration="500"
 safe-area-inset-top	
@@ -47,8 +48,6 @@ bind:close="closePopup"
     </view>
   </swiper-item>
 </swiper>
-
-<!-- <van-notice-bar mode="closeable" text="“Follow的分享” 可以在這裡看到喔！" /> -->
 
 <!-- Follow課程展示區 -->
 <view class="cu-bar bg-white margin-top">
@@ -117,14 +116,16 @@ bind:close="closePopup"
 
 <!-- 一言 -->
 <block>
-	<view class="cu-bar bg-white margin-top">
-		<view class="action">
-			<text class="cuIcon-title text-themeBlue"></text>一言
+	<view bindtap="cloudGetOneMoto">
+		<view class="cu-bar bg-white margin-top">
+			<view class="action">
+				<text class="cuIcon-title text-themeBlue"></text>一言(點擊刷新)
+			</view>
 		</view>
-	</view>
-	<view>
-		<view class="word" >{{moto.hitokoto}}</view>
-		<view class="author" >—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
+		<view >
+			<view class="word" >{{moto.hitokoto}}</view>
+			<view class="author" >—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
+		</view>
 	</view>
 </block>
 
@@ -141,6 +142,8 @@ bind:close="closePopup"
 <text>\n</text>
 
 <van-divider contentPosition="center">正在開發更多內容！敬請期待！</van-divider>
+
+<button bindtap="jumpToTestPage">跳轉測試頁（請不要擅自進入）</button>
 
 <!-- 免除自定義tabbar阻擋 -->
 <view class="bottom-watch"></view>
