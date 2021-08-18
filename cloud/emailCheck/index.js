@@ -11,10 +11,10 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-  let userName  =  JSON.stringify(event.userName) ; // 'testName';
-  let subject   =  JSON.stringify(event.subject);   // 'testSubject';
-  let umId      =  JSON.stringify(event.umId);      // 'dc02581';
-  let code      =  JSON.stringify(event.code);      // '4321';
+  let userName  =  event.userName ; // 'testName';
+  let subject   =  event.subject;   // 'testSubject';
+  let umId      =  event.umId;      // 'dc02581';
+  let code      =  event.code;      // '4321';
 
  
   let result = await got(
