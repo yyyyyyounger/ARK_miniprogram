@@ -28,7 +28,7 @@
   <!-- 頭像與Follow按鈕 -->
   <van-row>
     <!-- add/cancel Follow按鈕 -->
-    <van-col offset="2">
+    <van-col offset="2" >
       <van-button 
         wx:if="{{courseCloudData.arkid!=userCloudData.arkid}}"
         icon="{{ haveFollow ? 'delete-o' : 'star-o'}}"
@@ -39,7 +39,7 @@
         bind:click="{{ haveFollow ? 'deleteFollow' : 'addFollow'}}"><text decode="{{true}}" >{{ haveFollow ? '取消關注' : '關注課程'}}</text></van-button>
     </van-col>
     <!-- 頭像 -->
-    <van-col offset="{{courseCloudData.arkid!=userCloudData.arkid?(courseInfoInput[shortNameIndex.helper].input[1] ? '6' : (courseInfoInput[shortNameIndex.helper].input[0]?'8':'12')) : '18'}}">
+    <van-col offset="{{courseCloudData.arkid!=userCloudData.arkid?(courseInfoInput[shortNameIndex.helper].input[1] ? '6' : (courseInfoInput[shortNameIndex.helper].input[0]?'8':'12')) : '12'}}">
       <block>
         <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
           <view class="tag">講者</view>
