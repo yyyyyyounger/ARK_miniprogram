@@ -92,6 +92,7 @@
       </view>
     </block>
     <block>
+      <text wx:if="{{!recentCourseInfoArray[0].haveFollow}}" >\n</text>
       <!-- 課程卡片 -->
       <view class="cu-card dynamic course" wx:for="{{recentCourseInfoArray}}" wx:key="index" wx:if="{{recentCourseInfoArray[index].haveFollow}}" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
         <view class="cu-item">
