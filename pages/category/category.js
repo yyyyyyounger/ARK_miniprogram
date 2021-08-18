@@ -95,6 +95,7 @@ Page({
         courseState   : _.eq('checking').or(_.eq('opening')).or(_.eq('finish')) ,
         arkid         : _.eq(userCloudDataStorage ? userCloudDataStorage.data.arkid : 0) , // 自己的開課
       },
+      // 添加管理員查看checking權限 - 未完成
     ]) ) .field({
         _openid : false,
         _createAt : false,
