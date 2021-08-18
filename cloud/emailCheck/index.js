@@ -11,32 +11,23 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
-    // 發郵件test
-    // wx.request({
-    //   url: 'https://mpserver.umeh.top/sendemailark',
-    //   data: {
-    //     user: 'testName',
-    //     id: 'dc02581' ,
-    //     code: '1234' ,
-    //   },
-    //   method : 'GET',
-    //   success (res) {
-    //     console.log("郵件請求返回：",res)
-    //   },
-    //   fail (err) {
-    //     console.error(err);
-    //   }
-    // })
+  let userName  =  JSON.stringify(event.userName) ; // 'testName';
+  let subject   =  JSON.stringify(event.subject);   // 'testSubject';
+  let umId      =  JSON.stringify(event.umId);      // 'dc02581';
+  let code      =  JSON.stringify(event.code);      // '4321';
+
  
-    let result = await got('https://mpserver.umeh.top/sendemailark', { 
-         method: 'GET',
-         data: {
-            user: 'testName',
-            id: 'dc02581' ,
-            code: '1234' ,
-         }
-       })
-    console.log(result);
-    return result //返回数据
+  let result = await got(
+    'http://mpserver.umeh.top/sendemailark/?username='+userName+'&umid='+umId+'&subject='+subject+'&code='+code
+    ) 
+    // .then(res=>{
+    //   console.log(res);
+    //   return res
+    // }) .catch(err=>{
+    //   console.error(err);
+    //   return err
+    // })
+
+    return result.body
 
 }

@@ -224,8 +224,17 @@ Page({
     emailCheck() {
         wx.cloud.callFunction({     // 多記錄delete專用，最高權限
             name: 'emailCheck',
+            data:{
+                userName:'林展揚',
+                subject:'某一課',
+                umId:'dc02581',
+                code:'5678',
+            },
             complete: res => {
               console.log('result: ', res)
+              if (res.result=='success') {
+                //   發送成功
+              }
             }
         })
         

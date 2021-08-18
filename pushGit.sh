@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "新增課程頁的加載狀態"
+git commit -m "雲函數emailCheck測試成功，發送7位umId即可獲取驗證碼"
 
 git push origin dev
 git push local dev
