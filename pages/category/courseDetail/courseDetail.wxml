@@ -200,8 +200,17 @@
       </view>
       <!-- 頭像展示，簽到後修改外框顏色為主題藍 -->
       <view class="cu-list menu sm-border card-menu margin-top">
+        <!-- 如果無人follow -->
+        <view wx:if="{{!courseCloudData.followMember}}" >
+          <van-cell title-class="text-grey cu-item">
+            <view slot="title" class="text-grey" style="text-align: center;">
+              快來follow吧！
+            </view>
+          </van-cell>
+        </view>
+        <!-- 有人follow，渲染頭像 -->
         <view style="margin-left: 5px; margin-top: 5px;">
-          <view wx:for="{{courseCloudData.followMember}}" wx:key="index" class="cu-avatar round lg live-up-img" style="margin-bottom: 5px; background-image:url( {{ courseCloudData.followMember[index].avatarUrl }} );"></view>
+          <view wx:for="{{courseCloudData.followMember}}" wx:key="index" class="cu-avatar round lg noAttend" style="margin-bottom: 5px; background-image:url( {{ courseCloudData.followMember[index].avatarUrl }} );"></view>
         </view>
       </view>
     </view>
@@ -226,8 +235,8 @@
         </view>
         <view wx:else >
           <van-cell title-class="text-grey cu-item">
-            <view slot="title">
-              <view class="van-cell-text" >這裡會顯示這節課上傳的文件！</view>
+            <view slot="title" style="text-align: center;">
+              <view class="van-cell-text" >此處會顯示這節課上傳的文件！可供下載！</view>
             </view>
           </van-cell>
         </view>
