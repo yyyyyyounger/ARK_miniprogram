@@ -49,18 +49,18 @@ Page({
   onLoad: function(scene) {
     this.app = getApp();
 
-    // 非下拉刷新的場景時
+    // 非下拉刷新的場景時 - 首次加載
     if (scene!="refresh") {
       this.showPopup();     // 展示頂部彈出層
       this.cloudGetOneMoto();  // 雲函數請求返回api
       // 5s後關閉彈出層
-      setTimeout(() => {
-        this.closePopup()  //關閉彈出層
-        Toast({
-          message : '下拉刷新可重新獲取彈出層內容！',
-          zIndex  : 99999999999999
-        })
-      }, 5000)
+      // setTimeout(() => {
+      //   this.closePopup()  //關閉彈出層
+      //   Toast({
+      //     message : '下拉刷新可重新獲取彈出層內容！',
+      //     zIndex  : 99999999999999
+      //   })
+      // }, 5000)
     }
 
     // 轉發按鈕所必須
