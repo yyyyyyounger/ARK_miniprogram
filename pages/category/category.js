@@ -10,6 +10,8 @@ const _ = db.command
 
 Page({
   data: {
+    // 頁面加載狀態
+    loading : true,
     // 默認點擊第0個tabs
     clickTabs : 0,
     // 下拉菜單
@@ -33,11 +35,7 @@ Page({
   onLoad (page) {
     this.app = getApp();
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
-    let nowTimeStamp = Date.now();
-    this.setData({
-      nowTimeStamp,   // 獲取現在時刻的時間戳
-      userCloudDataStorage : userCloudDataStorage.data,
-    })
+    this.setData({  userCloudDataStorage : userCloudDataStorage.data,  })
     // 向服務器請求的延時
     Toast.loading({
       message: '瘋狂加載中...',
@@ -61,12 +59,11 @@ Page({
         _createAt : false,
     }) .orderBy("timeStampPick","asc") .get()
     .then(res=>{
-        console.log("符合條件的數據為",res.data)
+        console.log("符合條件的最近的課為",res.data)
         let recentCourseInfoArray = res.data;
         // 生成已經Follow了的課程Info的數組形式
         this.setData({  recentCourseInfoArray  })
 
-        const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶數據緩存
         // 返回user集合中自己的follow列表
         if (userCloudDataStorage) {
           db.collection('user').doc(userCloudDataStorage.data._openid) .field({
@@ -75,11 +72,12 @@ Page({
             console.log("數據庫我的followCourseArray為：",res.data.recentFollowIdArray);
             this.setData({  followCourseArray : res.data.recentFollowIdArray  })
             
-            let recentCourseIdRecordArr={};
-            this.data.recentCourseInfoArray.map(function (e, index, item) {
-              recentCourseIdRecordArr[index] = e._id;
+            // 生成只有最近的課的課程id數組
+            let recentCourseIdRecordArr = this.data.recentCourseInfoArray.map(function (e, index, item) {
+              return e._id;
             });
-            console.log("recentCourseIdRecordArr為",recentCourseIdRecordArr);
+            console.log("最近的課的課程id數組為",recentCourseIdRecordArr);
+
             // 向已經follow的courseId的課程信息數組上寫入haveFollow，用於wxml渲染
             for (let i = 0; i < recentCourseInfoArray.length; i++) {
               if ( !!this.data.followCourseArray ) {    // 如果用戶自己有follow記錄才操作
@@ -97,28 +95,16 @@ Page({
               }
             }
             console.log("對infoArray寫入haveFollow數據後",recentCourseInfoArray);
-            Toast('加載完成！下拉可刷新！');
-  
-            // 刪除自己的follow列表中已過期的課程id
-            let havePastCourse = [];
-            // db.collection('user').doc(userCloudDataStorage.data._openid).update({
-            //   data: {
-            //     recentFollowIdArray: _.pull(_.in([selectCourse]))
-            //   }
-            // }) .then(res=>{         // 成功提示 & 同步wxml的顯示
-            //   Toast('刪除成功！');
-            //   // 同步wxml的顯示
-            //   for (let i = 0; i < this.data.recentCourseInfoArray.length; i++) {
-            //     if (this.data.recentCourseInfoArray[i]._id == selectCourse) {
-            //       this.setData({  ['recentCourseInfoArray['+i+'].haveFollow'] : false  })
-            //     }
-            //   }
-            // }) .catch(err=>{ console.error(err); })
-  
-            // 生成已經Follow了的課程Info的數組形式
+            // 交由wxml渲染
             this.setData({  recentCourseInfoArray  })
+
+            Toast('加載完成！下拉可刷新！');
+    
           }) .catch(err=>{ console.error(err); })
         }
+
+        // 結束loading狀態
+        this.setData({  loading : false  })
 
     }) .catch(err=>{  console.error(err);  })
 
@@ -136,6 +122,8 @@ Page({
 
   },
   onPullDownRefresh: function() {
+    // 設定至加載狀態 - 骨架屏
+    this.setData({  loading : true  })
     this.app.onPullDownRefresh(this);
   },
 
