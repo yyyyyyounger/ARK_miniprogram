@@ -6,6 +6,9 @@ import Notify from '../../../miniprogram_npm/@vant/weapp/notify/notify';
 import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
+let userAttendCodeInput;
+let attendCode;
+
 Page({
   data: {
     // 未登錄狀態的空arkid
@@ -44,25 +47,50 @@ Page({
       })
     } 
 
-    // 請求雲端的courseInfo數據，該courseId為num類型
-    this.returnCourseData();
+    // 轉發按鈕所必須
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   },
   onShow() {
     this.setData({  nowTimeStamp : Date.now()  })
-    // this.onPullDownRefresh();
+
+    // 請求雲端的courseInfo數據，該courseId為num類型
+    this.returnCourseData();
   },
+
   // 請求數據庫返回該courseId的數據
   returnCourseData (){
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
 
     // 請求雲端的courseInfo數據，該courseId為num類型
-    db.collection('course') .doc(this.data.detailInfo.courseId) .get()
+    db.collection('course') .doc(this.data.detailInfo.courseId) .field({
+      _openid   : false,
+      _createAt : false,
+      nickName  : false,
+    }) .get()
     .then(res=>{
       console.log("該courseId在數據庫儲存的數據為：",res.data);
       this.setData({  courseCloudData : res.data  })
       this.setData({  courseInfoInput : this.data.courseCloudData.courseInfoInput  })
-      this.ArrayDataInit(this);   // 數據操作數組、對象等的初始化
+      // 數據操作數組、對象等便利操作法的初始化
+      this.ArrayDataInit(this);
 
+      // 查詢該課程是否設置密碼簽到
+      let attendCodeSetting = parseInt( this.data.courseInfoInput[this.data.shortNameIndex.attendCode].input );
+      if (!!attendCodeSetting) {
+        console.log("該課程設定了密碼簽到！");
+        this.setData({    haveSetCode : true,  })
+        attendCode = this.data.courseInfoInput[this.data.shortNameIndex.attendCode].input;
+      } else{
+        this.setData({    haveSetCode : false,  })
+        // this.setData({  attendCode : undefined  })
+        attendCode = undefined;
+        console.log("該課程沒有設定密碼簽到！");
+      }
+
+      // 獲取follow狀態，更換前台顯示
       let followMember = this.data.courseCloudData.followMember;
       if (followMember && userCloudDataStorage) {
         // 判斷是否follow了該課程，follow狀態更改wxml的按鈕形態
@@ -77,6 +105,7 @@ Page({
       }
 
       this.setData({  loading: false,  }) // 骨架屏消失
+      Toast.success('加載成功');
     }) .catch(err=>{  console.error(err);  })
   },
   // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
@@ -87,7 +116,6 @@ Page({
       shortNameIndex[e.shortName] = e.id;
     });
     this.setData({  shortNameIndex  })
-    // console.log("shortNameIndex為",shortNameIndex);
 
     // 匹配出shortName的display權限，生成為一個對象形式
     let shortNameDisplay={};
@@ -112,7 +140,13 @@ Page({
   },
 
   onPullDownRefresh: function(){
+    Toast.loading({
+      message: '拼命加載中...',
+      forbidClick: true,
+    })
+
     this.returnCourseData();
+
     setTimeout(() => {
       wx.stopPullDownRefresh();
     }, 1000);
@@ -232,6 +266,63 @@ Page({
     })  // on confirm - end
     .catch(() => {    // on cancel
     });
+  },
+
+  // 簽到邏輯
+  takeAttend() {  // 喚起dialog彈窗
+    if (!this.data.haveSetCode) {    // 已follow，且不需簽到密碼，且到了開始時間的前15分鐘
+      // && this.data.haveFollow
+      // 執行雲函數，對該課程的followMember的自己寫入，haveAttend:true
+      // 雲函數傳入自己的arkid和courseId
+
+
+      this.data.courseCloudData.followMember.forEach((item)=>{
+        if(item.arkid==this.data.userCloudData.arkid){
+            let myInfo = item;
+
+            wx.cloud.callFunction({
+              name : 'takeAttendance',
+              data : {
+                arkid     : this.data.userCloudData.arkid,
+                courseId  : this.data.courseCloudData._id,
+                myInfo    : myInfo,
+              }
+            }) .then(res=>{
+              // 寫入本地資料，保證wxml更新
+              Toast.success('簽到成功')
+              console.log(res);
+            }) .catch(err=>{
+              console.error(err);
+            })
+        }
+      })
+    }
+    else{
+      if (this.data.courseCloudData.arkid == this.data.userCloudData.arkid) {
+        Toast.fail('好好講課')
+      } else {
+        console.log('需要輸入簽到密碼');
+        this.setData({ show_attend: true });
+      }
+    }
+  },
+  onClose_dialog() {  // 關閉dialog彈窗
+    this.setData({ show_attend: false });
+  },
+  // 獲取用戶輸入的簽到密碼
+  attendCodeInput(e) {
+    // 雲端的簽到密碼為string形式
+    userAttendCodeInput = e.detail;
+  },
+  // 提交簽到密碼
+  submitAttendCode() {
+    // 判斷與courseInfoInput密碼是否相同
+    if (userAttendCodeInput == attendCode) {
+      Toast.fail('密碼正確')
+    }
+    else{
+      Toast.fail('密碼錯誤')
+    }
   },
 
   // 下載文件
