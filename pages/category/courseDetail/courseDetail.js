@@ -275,6 +275,10 @@ Page({
       // 執行雲函數，對該課程的followMember的自己寫入，haveAttend:true
       // 雲函數傳入自己的arkid和courseId
 
+      Toast.loading({
+        message: '瘋狂加載中...',
+        forbidClick: true,
+      })
 
       this.data.courseCloudData.followMember.forEach((item)=>{
         if(item.arkid==this.data.userCloudData.arkid){
