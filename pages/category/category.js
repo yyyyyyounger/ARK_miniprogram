@@ -95,7 +95,10 @@ Page({
         courseState   : _.eq('checking').or(_.eq('opening')).or(_.eq('finish')) ,
         arkid         : _.eq(userCloudDataStorage ? userCloudDataStorage.data.arkid : 0) , // 自己的開課
       },
-      // 添加管理員查看checking權限 - 未完成
+      { // 添加管理員查看checking權限 - 未完成
+        timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
+        courseState   : _.eq(userCloudDataStorage.data.admin ? 'checking' : 0) ,
+      },
     ]) ) .field({
         _openid : false,
         _createAt : false,
