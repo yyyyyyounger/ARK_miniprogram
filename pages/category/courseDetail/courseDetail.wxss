@@ -1,4 +1,4 @@
-.noAttend {
+.attend {
   background-color: #fff;
   margin: 1px;
   margin-right: 11px;
@@ -9,7 +9,7 @@
   border: 1px solid #fff;
 }
 
-.attend {
+/* .attend {
   background-color: #fff;
   margin: 1px;
   margin-right: 11px;
@@ -18,4 +18,4 @@
   background-color: #ddd;
   box-shadow: 0 0 0 2.5px #b8e986;
   border: 1px solid #fff;
-}
+} */

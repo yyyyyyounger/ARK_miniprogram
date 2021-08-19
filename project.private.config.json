@@ -37,9 +37,9 @@
           "scene": null
         },
         {
-          "name": "詳情頁11 num",
+          "name": "詳情頁3 num",
           "pathName": "pages/category/courseDetail/courseDetail",
-          "query": "detailInfo={\"user\":\"follower\",\"courseId\":11}",
+          "query": "detailInfo={\"user\":\"follower\",\"courseId\":3}",
           "scene": null
         },
         {
