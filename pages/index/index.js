@@ -51,7 +51,7 @@ Page({
 
     // 非下拉刷新的場景時 - 首次加載
     if (scene!="refresh") {
-      this.showPopup();     // 展示頂部彈出層
+      // this.showPopup();     // 展示頂部彈出層
       this.cloudGetOneMoto();  // 雲函數請求返回api
       // 5s後關閉彈出層 - 彈出層棄用狀態，可以用來賣廣告笑
       // setTimeout(() => {
@@ -106,8 +106,6 @@ Page({
     
     // 獲取已follow的課程列表
     this.returnMyFollowCourses();
-
-    // 查詢course集合中，大於等於半個月前的時間戳的課程，（距今一個月內未進行的課程） - 未完成
 
   },
   // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
@@ -174,10 +172,15 @@ Page({
 
             // 豎向步驟條設定
             this.stepsSetup();
+            Toast('  加載完成！\n下拉可刷新！');
           })
+        } else{
+          Toast('  加載完成！\n下拉可刷新！');
         }
 
       }) .catch(err=>{ console.error(err); })
+    } else {
+      Toast('  加載完成！\n下拉可刷新！');
     }
 
   },
@@ -189,7 +192,7 @@ Page({
   // 下拉刷新
   onPullDownRefresh() {
     this.cloudGetOneMoto();
-    this.showPopup();     // 展示頂部彈出層
+    // this.showPopup();     // 展示頂部彈出層
     this.app.onPullDownRefresh(this);
   },
 
