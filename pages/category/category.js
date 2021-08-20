@@ -52,7 +52,7 @@ Page({
       Toast.loading({
         message: '瘋狂加載中...',
         forbidClick: true,
-        zIndex: 9999999999999,
+        // zIndex: 9999999999999,
       })
 
       // 返回最近課程信息
@@ -97,7 +97,7 @@ Page({
       },
       { // 添加管理員查看checking權限 - 未完成
         timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
-        courseState   : _.eq(userCloudDataStorage.data.admin ? 'checking' : 0) ,
+        courseState   : _.eq(userCloudDataStorage ? (userCloudDataStorage.data.admin ? 'checking' : 0) : 0) ,
       },
     ]) ) .field({
         _openid : false,
@@ -160,6 +160,7 @@ Page({
         else {
           // 結束loading狀態
           this.setData({  loading : false  })
+          Toast('  加載完成！\n下拉可刷新！');
         }
 
     }) .catch(err=>{  console.error(err);  })

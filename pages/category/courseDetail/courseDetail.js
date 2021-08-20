@@ -78,11 +78,12 @@ Page({
       this.ArrayDataInit(this);
 
       // 查詢該課程是否設置密碼簽到
-      let attendCodeSetting = parseInt( this.data.courseInfoInput[this.data.shortNameIndex.attendCode].input );
-      if (!!attendCodeSetting) {
+      let attendCodeSetting = this.data.courseInfoInput[this.data.shortNameIndex.attendCode].input ;
+      if ( attendCodeSetting != undefined && attendCodeSetting != 'None' ) {
         console.log("該課程設定了密碼簽到！");
         this.setData({    haveSetCode : true,  })
-        attendCode = this.data.courseInfoInput[this.data.shortNameIndex.attendCode].input;
+        attendCode = attendCodeSetting;
+        console.log("簽到密碼為：",attendCode);
       } else{
         this.setData({    haveSetCode : false,  })
         // this.setData({  attendCode : undefined  })
