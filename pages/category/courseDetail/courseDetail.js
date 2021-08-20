@@ -79,7 +79,7 @@ Page({
 
       // 查詢該課程是否設置密碼簽到
       let attendCodeSetting = this.data.courseInfoInput[this.data.shortNameIndex.attendCode].input ;
-      if ( attendCodeSetting != undefined && attendCodeSetting != 'None' ) {
+      if ( attendCodeSetting != undefined && attendCodeSetting != 'None' && attendCodeSetting != 'NaN' ) {
         console.log("該課程設定了密碼簽到！");
         this.setData({    haveSetCode : true,  })
         attendCode = attendCodeSetting;
@@ -91,14 +91,19 @@ Page({
         console.log("該課程沒有設定密碼簽到！");
       }
 
+
       // 獲取follow狀態，更換前台顯示
       let followMember = this.data.courseCloudData.followMember;
       if (followMember && userCloudDataStorage) {
         // 判斷是否follow了該課程，follow狀態更改wxml的按鈕形態
-        followMember.forEach(item=>{
+        followMember.forEach((item)=>{
           if(item.arkid==userCloudDataStorage.data.arkid){
               console.log("這個用戶已follow了這個課程！");
               this.setData({  haveFollow : true  })
+              // 獲取attend狀態
+              if (item.haveAttend) {
+                this.setData({  haveAttend : true  })
+              }
           }
         })
       } else {
@@ -271,36 +276,15 @@ Page({
 
   // 簽到邏輯
   takeAttend() {  // 喚起dialog彈窗
-    if (!this.data.haveSetCode) {    // 已follow，且不需簽到密碼，且到了開始時間的前15分鐘
-      // && this.data.haveFollow
-      // 執行雲函數，對該課程的followMember的自己寫入，haveAttend:true
-      // 雲函數傳入自己的arkid和courseId
-
-      Toast.loading({
-        message: '瘋狂加載中...',
-        forbidClick: true,
-      })
-
-      this.data.courseCloudData.followMember.forEach((item)=>{
-        if(item.arkid==this.data.userCloudData.arkid){
-            let myInfo = item;
-
-            wx.cloud.callFunction({
-              name : 'takeAttendance',
-              data : {
-                arkid     : this.data.userCloudData.arkid,
-                courseId  : this.data.courseCloudData._id,
-                myInfo    : myInfo,
-              }
-            }) .then(res=>{
-              // 寫入本地資料，保證wxml更新
-              Toast.success('簽到成功')
-              console.log(res);
-            }) .catch(err=>{
-              console.error(err);
-            })
-        }
-      })
+    if (!this.data.haveSetCode && this.data.haveFollow && this.data.userCloudData) {    // 已follow，且不需簽到密碼，且到了開始時間的前15分鐘
+      // 執行雲函數，對該課程的followMember的自己寫入 haveAttend:true
+      this.submitAttendCode('noAttendCode');
+    }
+    else if ( this.data.haveSetCode && this.data.haveFollow && this.data.userCloudData ) {
+      this.setData({ show_attend: true });
+    }
+    else if ( !this.data.userCloudData ){
+      Toast.fail('請先登錄')
     }
     else{
       if (this.data.courseCloudData.arkid == this.data.userCloudData.arkid) {
@@ -320,10 +304,39 @@ Page({
     userAttendCodeInput = e.detail;
   },
   // 提交簽到密碼
-  submitAttendCode() {
+  submitAttendCode(condition) {
     // 判斷與courseInfoInput密碼是否相同
-    if (userAttendCodeInput == attendCode) {
-      Toast.fail('密碼正確')
+    if (userAttendCodeInput == attendCode || condition=='noAttendCode') {
+      Toast.loading({
+        message: '瘋狂加載中...',
+        forbidClick: true,
+        zIndex  : 99999999999999
+      })
+      this.data.courseCloudData.followMember.forEach((item,index)=>{
+        if(item.arkid==this.data.userCloudData.arkid){
+          let myInfo = item;
+          wx.cloud.callFunction({
+            name : 'takeAttendance',
+            data : {
+              arkid     : this.data.userCloudData.arkid,
+              courseId  : this.data.courseCloudData._id,
+              myInfo    : myInfo,
+            }
+          }) .then(res=>{
+            // 寫入本地資料，保證wxml更新 - 未完成
+            myInfo.haveAttend = true;
+            this.setData({
+              ['courseCloudData.followMember'] : this.data.courseCloudData.followMember,
+              haveAttend : true
+            })
+            Toast.success('簽到成功')
+            console.log(res);
+          }) .catch(err=>{
+            Toast.fail('遇到錯誤')
+            console.error(err);
+          })
+        }
+      })
     }
     else{
       Toast.fail('密碼錯誤')

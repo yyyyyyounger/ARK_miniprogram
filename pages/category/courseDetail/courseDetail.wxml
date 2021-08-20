@@ -37,7 +37,7 @@
   <!-- 課程大標題 -->
   <van-row class="grid col-1 padding-sm">
     <van-col>
-      <view class="text-xxl padding text-shadow text-grey">
+      <view class="text-xxl padding text-shadow text-gray">
         <text class="cuIcon-title text-themeBlue"></text>
         <text style="font-weight: bold;">{{courseInfoInput[1].input}}</text>
       </view>
@@ -214,8 +214,8 @@
   <block wx:if="{{haveFollow || admin || courseCloudData.arkid==userCloudData.arkid}}">
     <!-- 簽到 -->
     <view class="grid col-1 padding-sm" >
-      <view class="bg-themeBlue-light padding radius text-center shadow-blur actions" bindtap="takeAttend" >
-        <text>{{'簽到'}}</text>
+      <view class="bg-themeBlue-light padding radius text-center shadow-blur " bindtap="takeAttend" >
+        <text>{{nowTimeStamp > (courseCloudData.timeStampPick-15*60*1000) ? '點我簽到' : '參與人'}}</text>
       </view>
       <!-- 頭像展示，簽到後修改外框顏色為主題藍 -->
       <view class="cu-list menu sm-border card-menu margin-top">
@@ -228,15 +228,14 @@
           </van-cell>
         </view>
         <!-- 有人follow，渲染頭像 -->
-        <view style="margin-left: 5px; margin-top: 5px;">
-          <text wx:for="{{courseCloudData.followMember}}" wx:key="index" class="cu-avatar round lg {{courseCloudData.followMember[index].attend?'attend':''}} shadow-blur" style="margin-bottom: 5px; margin-right: 5px; background-image:url( {{ courseCloudData.followMember[index].avatarUrl }} );"></text>
-          <!-- 增加自動換行 - 未完成 -->
+        <view style="margin-left: 5px; margin-top: 5px; margin-bottom: 8px;">
+          <text wx:for="{{courseCloudData.followMember}}" wx:key="index" class="cu-avatar round lg {{courseCloudData.followMember[index].attend?'attend':''}} shadow-blur {{courseCloudData.followMember[index].haveAttend?'attend':''}} " style="margin-bottom: 10px; margin-left: 50rpx; background-image:url( {{ courseCloudData.followMember[index].avatarUrl }} );"></text>
         </view>
       </view>
     </view>
 
     <!-- 文件 -->
-    <view class="grid col-1 padding-sm" >
+    <view class="grid col-1 padding-sm">
       <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
         <text>文件</text>
       </view>
