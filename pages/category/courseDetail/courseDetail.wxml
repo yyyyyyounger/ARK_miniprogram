@@ -119,7 +119,7 @@
 
   <!-- 課程信息 -->
   <view class="grid col-1 padding-sm">
-    <view class="bg-themeBlue padding radius text-center shadow-blur " >
+    <view class="bg-themeBlue{{haveFollow||courseCloudData.arkid==userCloudData.arkid?'':'-light'}} padding radius text-center shadow-blur " >
       <text>課程信息</text>
     </view>
 
@@ -213,12 +213,16 @@
   <block wx:if="{{haveFollow || admin || courseCloudData.arkid==userCloudData.arkid}}">
     <!-- 簽到 -->
     <view class="grid col-1 padding-sm" >
-      <view class="bg-themeBlue{{haveAttend?'':'-light'}} padding radius text-center shadow-blur " >
+      <view class="bg-themeBlue{{haveAttend||courseCloudData.arkid==userCloudData.arkid?'':'-light'}} padding radius text-center shadow-blur " >
         <text>參與人</text>
+      </view>
+      <!-- 簽到提示 -->
+      <view class="cu-list menu sm-border card-menu" wx:if="{{haveFollow && nowTimeStamp < (courseCloudData.timeStampPick-15*60*1000)}}">
+        <van-divider contentPosition="center">到開始時間後將可以簽到</van-divider>
       </view>
       <!-- 頭像展示，簽到後修改外框顏色為主題藍 -->
       <view class="cu-list menu sm-border card-menu margin-top" style="margin-top: 10rpx;">
-        <van-button color="#64b1e3" block wx:if="{{nowTimeStamp > (courseCloudData.timeStampPick-15*60*1000) && !haveAttend}}" bind:click="takeAttend">點我簽到</van-button>
+        <van-button color="#64b1e3" block wx:if="{{nowTimeStamp > (courseCloudData.timeStampPick-15*60*1000) && !haveAttend && haveFollow}}" bind:click="takeAttend">點我簽到</van-button>
         <!-- 如果無人follow -->
         <view wx:if="{{!courseCloudData.followMember[0]}}" >
           <van-cell title-class="text-grey cu-item">
@@ -235,13 +239,13 @@
     </view>
 
     <!-- 文件 -->
-    <view class="grid col-1 padding-sm" wx:if="{{haveAttend}}">
-      <view class="bg-themeBlue padding radius text-center shadow-blur " >
+    <view class="grid col-1 padding-sm">
+      <view class="bg-themeBlue{{haveAttend?'':'-light'}} padding radius text-center shadow-blur " >
         <text>文件</text>
       </view>
 
       <view class="cu-list menu sm-border card-menu margin-top" >
-        <view class="cu-item" wx:if="{{courseCloudData.filePaths}}" >
+        <view class="cu-item" wx:if="{{courseCloudData.filePaths && haveAttend}}" >
           <view class="content" style="margin-top:20rpx;">
             <view class="text-sl" wx:for="{{courseCloudData.filePaths}}" wx:key="index" data-index="{{index}}" style="margin-bottom:20rpx;" bindtap="downLoadFile">
               <view>
@@ -255,7 +259,12 @@
         <view wx:else >
           <van-cell title-class="text-grey cu-item">
             <view slot="title" style="text-align: center;">
-              <view class="van-cell-text" >此處會顯示這節課上傳的文件！可供下載！</view>
+              <view class="van-cell-text" >此處會顯示這節課上傳的文件！</view>
+            </view>
+          </van-cell>
+          <van-cell title-class="text-grey cu-item">
+            <view slot="title" style="text-align: center;">
+              <view class="van-cell-text" >簽到完成後，可以下載！</view>
             </view>
           </van-cell>
         </view>

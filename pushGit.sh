@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了課程頁表現形式 - wxml"
+git commit -m "修改了課程詳情頁wxml的表現"
 
 git push origin dev
 git push local dev
