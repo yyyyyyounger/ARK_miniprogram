@@ -149,6 +149,9 @@ Page({
       this.data.timePickArray.splice(0,3);
     }
   },
+  onShow(){
+    this.setData({  nowTimeStamp : Date.now()  })
+  },
   findSetData() { // 初始化所有index，匹配對應input值用於顯示
     // courseInfo的shortNameIndex
     let shortNameIndex={};
@@ -466,7 +469,7 @@ Page({
       else {                              // 提示退出
         Dialog.confirm({  
           title: '重要提示',
-          message: '確定要退出嗎？\n當前輸入不會被保存！',
+          message: '確定要退出嗎？\n未提交修改的輸入不會被保存！',
         }) .then(() => {
           // on confirm
           wx.navigateBack({    delta: 0,   })   // 回退上一頁

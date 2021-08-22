@@ -117,12 +117,6 @@
   <!-- 過檢視角 -->
   <block wx:if="{{courseCloudData.courseState!='checking'}}">
 
-<!-- 講者頭像 - 添加點擊彈出層顯示講者信息 - 未完成 -->
-<!-- <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
-        <view class="tag">講者</view>
-      </view>
-      <view style="text-align: center;">{{courseInfoInput[shortNameIndex.speakerName].input}}</view> -->
-
   <!-- 課程信息 -->
   <view class="grid col-1 padding-sm">
     <view class="bg-themeBlue padding radius text-center shadow-blur " >
@@ -194,7 +188,7 @@
 
       <!-- 分享時間 -->
       <block wx:if="{{courseInfoInput[shortNameIndex.courseTime].display}}">
-        <view class="cu-item">    
+        <view class="cu-item">
           <view class="content">
             <text class="cuIcon-circlefill text-themeOrange"></text>
             <text class="text-grey" style="font-weight: bold;">分享時間</text>
@@ -207,6 +201,11 @@
         </van-cell>
       </block>
 
+      <!-- 講者頭像 -->
+      <!-- <view style=" margin-top: 10px; margin-bottom: 8px; text-align: center;">
+        <text wx:for="{{courseCloudData.followMember}}" wx:key="index" class="cu-avatar round lg {{courseCloudData.followMember[index].attend?'attend':''}} shadow-blur {{courseCloudData.followMember[index].haveAttend?'attend':''}} " style="text-align: center; background-image:url( {{ courseCloudData.followMember[index].avatarUrl }} );"></text>
+      </view> -->
+
     </view>
   </view>
 
@@ -214,11 +213,12 @@
   <block wx:if="{{haveFollow || admin || courseCloudData.arkid==userCloudData.arkid}}">
     <!-- 簽到 -->
     <view class="grid col-1 padding-sm" >
-      <view class="bg-themeBlue-light padding radius text-center shadow-blur " bindtap="takeAttend" >
-        <text>{{nowTimeStamp > (courseCloudData.timeStampPick-15*60*1000) ? '點我簽到' : '參與人'}}</text>
+      <view class="bg-themeBlue{{haveAttend?'':'-light'}} padding radius text-center shadow-blur " >
+        <text>參與人</text>
       </view>
       <!-- 頭像展示，簽到後修改外框顏色為主題藍 -->
-      <view class="cu-list menu sm-border card-menu margin-top">
+      <view class="cu-list menu sm-border card-menu margin-top" style="margin-top: 10rpx;">
+        <van-button color="#64b1e3" block wx:if="{{nowTimeStamp > (courseCloudData.timeStampPick-15*60*1000) && !haveAttend}}" bind:click="takeAttend">點我簽到</van-button>
         <!-- 如果無人follow -->
         <view wx:if="{{!courseCloudData.followMember[0]}}" >
           <van-cell title-class="text-grey cu-item">
@@ -235,8 +235,8 @@
     </view>
 
     <!-- 文件 -->
-    <view class="grid col-1 padding-sm">
-      <view class="bg-themeBlue-light padding radius text-center shadow-blur " >
+    <view class="grid col-1 padding-sm" wx:if="{{haveAttend}}">
+      <view class="bg-themeBlue padding radius text-center shadow-blur " >
         <text>文件</text>
       </view>
 
