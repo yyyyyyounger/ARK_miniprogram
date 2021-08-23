@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "增加了課程詳情頁的提示和備註"
+git commit -m "修改update和delete courseInfo的雲函數功能中。**delete雲文件出現故障**，待修改！"
 
 git push origin dev
 git push local dev

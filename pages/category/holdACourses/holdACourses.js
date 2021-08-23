@@ -494,15 +494,14 @@ Page({
           ok = true;
         }
       }
-      if ( ok && !this.data.needWaiting ) {
-        const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+      if ( ok ) {
         console.log("校驗ok！準備上傳courseInfoInput：",this.data.courseInfoInput);
+        const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
         Dialog.confirm({
           title: '重要提示',
           message: '確認提交'+(this.data.courseCloudData?'修改':'審核')+'嗎？',
         })
         .then(res=>{    // 點擊確認！
-          this.setData({  needWaiting : true  })
           Toast.loading({
             message: '拼命上傳中...',
             forbidClick: true,
@@ -609,8 +608,9 @@ Page({
                 timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
                 filePaths       : (this.data.filePaths?this.data.filePaths:undefined),   // 上傳的文件
                 followMember    : (this.data.courseState=="finish"?this.data.followMemberArr:undefined),   // 上傳的文件
-                // joinTimes       : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.userInfoShortNameIndex.joinTimes :undefined),   // 參與次數的Index
-                // holdTimes       : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.userInfoShortNameIndex.holdTimes :undefined),   // 主持次數的Index
+                joinTimesIndex  : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.userInfoShortNameIndex.joinTimes :undefined),   // 參與次數的Index
+                holdTimesIndex  : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.userInfoShortNameIndex.holdTimes :undefined),   // 主持次數的Index
+                speakerId       : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.courseCloudData.arkid :undefined),              // 主持人的arkid
               }
             }) .then (res=>{
               if (this.data.filePaths || this.data.addFilePaths) {
@@ -639,9 +639,6 @@ Page({
       } // if輸入校驗 - end
     } // if點擊了submit button - end
 
-    if (this.data.needWaiting) {
-      Toast('請等待結果返回！')
-    }
   },
   // 刪除課程
   onClick_deleteCourse() {
@@ -654,17 +651,19 @@ Page({
       // 2 刪除myCourse的該課
       // 3 if 課程狀態為finish，刪除各個followMember的user記錄的中的allJoinId - user的課程參與記錄
       // 4 刪除關聯文件 - 未完成
-      Toast.loading({ // 加載提示
-        message     : '瘋狂請求中...',
+      Toast.loading({
+        message: '請稍後',
         forbidClick : true,
+        zIndex      : 99999999,
       })
       // 刪除該課 - 使用雲函數，保證admin都能有刪除權限 - 未完成
       if (this.data.courseCloudData.followMember) { // 如果有用戶follow，生成只有arkid的followMember數組，便於後面調用
-        var followMember = this.data.followMember.map((e,item)=>{ // 生成僅有arkid的數組
+        var followMember = this.data.courseCloudData.followMember.map((e,item)=>{ // 生成僅有arkid的數組
           return e.arkid
         })
-      }
-      console.log(followMember);
+      }  else{  console.log("沒有人follow該課！")  }
+      console.log("followMember的純數組形式為",followMember);
+
       wx.cloud.callFunction({   // 調用courseDelete雲函數
         name:'courseDelete',
         data:{
@@ -672,6 +671,7 @@ Page({
           speakerid     : this.data.courseCloudData.arkid,
           courseState   : this.data.courseCloudData.courseState,
           followMember  : ((this.data.courseCloudData).hasOwnProperty('followMember')?followMember:[0]),
+          holdTimesIndex  : (this.data.courseState=="finish" ? this.data.userInfoShortNameIndex.holdTimes :undefined),   // 主持次數的Index
         }
       }) .then(res=>{
         Toast.success('刪除成功！');
@@ -682,6 +682,7 @@ Page({
         console.error(err);
         Toast.fail('刪除失敗！請聯繫管理員回報bug');
       })
+
     })
     .catch(() => {  // on cancel
     });
@@ -761,7 +762,7 @@ Page({
 
   },
 
-  // admin權限修改課程狀態courseState - 動作面板
+  // 修改課程狀態courseState - 動作面板
   onClick_changeCourseState(e) {
     let model = e.currentTarget.dataset.model;
     if (model=='other') {       // 展示課程選擇器
@@ -773,6 +774,10 @@ Page({
         message: '是否確認課程已結束？\n結課後將不能再編輯課程！\n確認後點擊\'提交修改\'才會上傳此次操作',
       })
       .then(()=>{
+        // 如果已有人簽到，可以結課，否則提示不能結課 - 未完成
+        // if (condition) {
+          
+        // }
         this.setData({  courseState : "finish"  })
         Toast.success('課程狀態已修改為 finish ！');
       }) .catch(()=>{})

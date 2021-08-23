@@ -238,7 +238,7 @@
 </view>
 
 <!-- 附加 - 上傳文件 --> 
-<view class="grid col-{{1}} padding-sm" wx:if="{{courseState=='opening'}}">
+<view class="grid col-{{1}} padding-sm" wx:if="{{courseState=='opening'||admin}}">
   <view wx:if="{{courseState=='opening'}}" class="bg-themeBlue-light padding radius text-center shadow-blur ">
       <text class="text-lg">附加</text>
   </view>

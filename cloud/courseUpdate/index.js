@@ -40,19 +40,16 @@ exports.main = async (event, context) => {
           // 課程id寫入allJoinId
           allJoinId : _.push([idNum]),
           // 修改參與次數
-
-          // recentFollowIdArray : _.pull(_.in([idNum])),
+          ['userInfoInput.'+event.joinTimesIndex+'.input'] : _.inc(1),
         }
       }) .then(res=>{
         // 修改主持次數
-        // db.collection('user') .where({
-        //   arkid     : speakerId,
-        // }) .update({
-        //   data: {
-        //     // 修改參與次數
-        //     allJoinId : _.push([idNum]),
-        //   }
-        // })
+        db.collection('user') .where({  arkid : event.speakerId, }) .update({
+          data: {
+            // 修改參與次數
+            ['userInfoInput.'+event.holdTimesIndex+'.input'] : _.inc(1),
+          }
+        })
       })
     } 
   }) 
