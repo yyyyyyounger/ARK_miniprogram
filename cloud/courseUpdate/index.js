@@ -37,9 +37,22 @@ exports.main = async (event, context) => {
         allJoinId : _.nin([idNum]),         // 給不存在這節課的結課記錄的用戶增加記錄
       }) .update({
         data: {
+          // 課程id寫入allJoinId
           allJoinId : _.push([idNum]),
+          // 修改參與次數
+
           // recentFollowIdArray : _.pull(_.in([idNum])),
         }
+      }) .then(res=>{
+        // 修改主持次數
+        // db.collection('user') .where({
+        //   arkid     : speakerId,
+        // }) .update({
+        //   data: {
+        //     // 修改參與次數
+        //     allJoinId : _.push([idNum]),
+        //   }
+        // })
       })
     } 
   }) 

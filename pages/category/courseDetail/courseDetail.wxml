@@ -213,16 +213,22 @@
   <block wx:if="{{haveFollow || admin || courseCloudData.arkid==userCloudData.arkid}}">
     <!-- 簽到 -->
     <view class="grid col-1 padding-sm" >
-      <view class="bg-themeBlue{{haveAttend||courseCloudData.arkid==userCloudData.arkid?'':'-light'}} padding radius text-center shadow-blur " >
-        <text>參與人</text>
+      <!-- 標題 -->
+      <view class="bg-themeBlue{{haveAttend||courseCloudData.arkid==userCloudData.arkid||courseCloudData.courseState=='finish'?'':'-light'}} padding radius text-center shadow-blur " >
+        <text>參與人 / 簽到</text>
       </view>
       <!-- 簽到提示 -->
       <view class="cu-list menu sm-border card-menu" wx:if="{{haveFollow && nowTimeStamp < (courseCloudData.timeStampPick-15*60*1000)}}">
         <van-divider contentPosition="center">到開始時間後將可以簽到</van-divider>
       </view>
+      <!-- 過期提示 -->
+      <view class="cu-list menu sm-border card-menu" wx:if="{{courseCloudData.courseState=='finish'}}">
+        <van-divider contentPosition="center">結課後將不能再操作</van-divider>
+      </view>
       <!-- 頭像展示，簽到後修改外框顏色為主題藍 -->
       <view class="cu-list menu sm-border card-menu margin-top" style="margin-top: 10rpx;">
-        <van-button color="#64b1e3" block wx:if="{{nowTimeStamp > (courseCloudData.timeStampPick-15*60*1000) && !haveAttend && haveFollow}}" bind:click="takeAttend">點我簽到</van-button>
+        <!-- 簽到按鈕 -->
+        <van-button color="#64b1e3" block wx:if="{{nowTimeStamp > (courseCloudData.timeStampPick-15*60*1000) && !haveAttend && haveFollow && courseCloudData.courseState!='finish'}}" bind:click="takeAttend">點我簽到</van-button>
         <!-- 如果無人follow -->
         <view wx:if="{{!courseCloudData.followMember[0]}}" >
           <van-cell title-class="text-grey cu-item">
@@ -240,8 +246,9 @@
 
     <!-- 文件 -->
     <view class="grid col-1 padding-sm">
-      <view class="bg-themeBlue{{haveAttend?'':'-light'}} padding radius text-center shadow-blur " >
-        <text>文件</text>
+      <!-- 標題 -->
+      <view class="bg-themeBlue{{haveAttend||courseCloudData.courseState=='finish'?'':'-light'}} padding radius text-center shadow-blur " >
+        <text>上傳的文件</text>
       </view>
 
       <view class="cu-list menu sm-border card-menu margin-top" >

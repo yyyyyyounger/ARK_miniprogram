@@ -609,6 +609,8 @@ Page({
                 timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
                 filePaths       : (this.data.filePaths?this.data.filePaths:undefined),   // 上傳的文件
                 followMember    : (this.data.courseState=="finish"?this.data.followMemberArr:undefined),   // 上傳的文件
+                // joinTimes       : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.userInfoShortNameIndex.joinTimes :undefined),   // 參與次數的Index
+                // holdTimes       : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.userInfoShortNameIndex.holdTimes :undefined),   // 主持次數的Index
               }
             }) .then (res=>{
               if (this.data.filePaths || this.data.addFilePaths) {
