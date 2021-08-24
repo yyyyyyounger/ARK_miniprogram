@@ -1,5 +1,3 @@
-let util = require('../../../utils/util');
-
 Page({
   data: {
     datetime: "yyyy-mm-ddThh:mm:ss+08:00",
@@ -39,8 +37,8 @@ Page({
   
   btnClick:function(){
     var that = this;
-    var start_time = util.formatTime_start_bus_api(new Date());
-    var end_time = util.formatTime_end_bus_api(new Date());
+    var start_time = formatTime_start_bus_api(new Date());
+    var end_time = formatTime_end_bus_api(new Date());
     console.log('start time', start_time);
     console.log('end time', end_time);
     wx.request({
@@ -55,9 +53,9 @@ Page({
         if(res.data._returned == 0){
           console.log("returned 0");
           that.setData({
-            datetime: "yyyy-mm-ddThh:mm:ss+08:00",
-            station: "error",
-            vehiclePlateNumber: "error"
+            datetime: "",
+            station: "還沒發車",
+            vehiclePlateNumber: ""
           })
         }else{
           that.setData({
@@ -73,4 +71,34 @@ Page({
     })
   } 
 });
-  
+
+const formatTime_start_bus_api = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hour = date.getHours()
+  const minute = date.getMinutes() - 2
+  const second = date.getSeconds()
+
+  return `${[year, month, day].map(formatNumber).join('-')}T${[hour, minute, second].map(formatNumber).join('%3A')}%2B08%3A00`
+}
+
+const formatTime_end_bus_api = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate() 
+  const hour = date.getHours()
+  const minute = date.getMinutes()
+  const second = date.getSeconds()
+  if (minute < 0) {
+    hour -= 1;
+    minute += 60;
+  }
+
+  return `${[year, month, day].map(formatNumber).join('-')}T${[hour, minute, second].map(formatNumber).join('%3A')}%2B08%3A00`
+}
+
+const formatNumber = n => {
+  n = n.toString()
+  return n[1] ? n : `0${n}`
+}
