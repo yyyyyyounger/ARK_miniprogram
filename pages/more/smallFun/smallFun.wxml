@@ -1,14 +1,15 @@
 <van-toast id="van-toast" />
 
 
-<!-- <view>這裡是“小功能”頁
-  <button bindtap="btnClick">Refresh</button>
-  <view>現在位置: {{station}}</view>
-  <view>到此站時間: {{datetime}}</view>
-  <view>車牌: {{vehiclePlateNumber}}</view>
-</view> -->
+<!-- <view>這裡是“小功能”頁</view> -->
 
-<view style="margin-left: 50px;">
+<!-- api巴士報站法 - 棄用狀態 -->
+<!-- <button bindtap="btnClick">Refresh</button>
+<view>現在位置: {{station}}</view>
+<view>到此站時間: {{datetime}}</view>
+<view>車牌: {{vehiclePlateNumber}}</view> -->
+
+<view>
   <rich-text nodes="{{result}}"></rich-text>
 </view>
 

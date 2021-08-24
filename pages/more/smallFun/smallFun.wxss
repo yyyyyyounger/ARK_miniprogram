@@ -1,7 +1,7 @@
 .bus-stop-info {
   font-size: 1em;
   color: #000000;
-  padding-bottom: 15px;
+  padding-bottom: -20px;
 }
 
 .tree {
@@ -22,9 +22,10 @@
 
 .left {
   width: 30%;
-  border-right: 3px solid #d287e2;
+  border-right: 3px solid #3498DB;
   text-align: right;
-  padding-right: 20px;
+  padding-right: 50rpx;
+  padding-top: 50rpx;
   min-height: 23px;
   position: relative;
   bottom: 3px;
@@ -35,24 +36,29 @@
   padding-right: 25px;
 }
 
+/* 圓 */
 .center {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #d287e2;
+  background-color: #3498DB;
   text-align: center;
   position: relative;
-  right: 8px;
+  left: 267rpx;
+  top: 42rpx;
+  /* right: 8px; */
   color: #ffffff;
 }
+/* 三角 */
 .out-center {
   text-align: center;
   position: relative;
-  right: 8px;
-  top: 11px;
+  left: 267rpx;
+  /* right: 8px; */
+  top: 3rpx;
   border-style: solid;
   border-width: 9px 6px;
-  border-color: #f25ddf transparent transparent;
+  border-color: #3498DB transparent transparent;
   width: 0px;
   height: 0px;
 }
@@ -60,8 +66,11 @@
 .right {
   width: 61%;
   position: relative;
-  right: 15px;
-  border-left: 3px solid #d287e2;
+  left: 276rpx;
+  top:0px;
+  /* right: 15px; */
+  border-top: 50px;
+  border-left: 3px solid #3498DB;
   padding-left: 23px;
   z-index: -1;
   bottom: 3px;

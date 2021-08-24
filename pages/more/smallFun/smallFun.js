@@ -91,6 +91,7 @@ Page({
   } 
 });
 
+// api請求法 - 棄用狀態
 const formatTime_start_bus_api = date => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
