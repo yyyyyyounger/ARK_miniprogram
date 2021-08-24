@@ -7,12 +7,10 @@
     "pages/category/courseDetail/courseDetail",
     "pages/category/holdACourses/holdACourses",
     "pages/more/more",
-    "pages/launch/launch",
     "pages/notice/notice",
     "pages/more/smallFun/smallFun",
     "pages/more/about/about",
     "pages/more/feedBack/feedBack",
-    "pages/footer/footer",
     "pages/protocol/protocol",
     "pages/category/allCourses/allCourses",
     "pages/category/myCourses/myCourses"
