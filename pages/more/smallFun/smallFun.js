@@ -5,34 +5,48 @@ Page({
     station: ""
   },
   onLoad: function() {
-    
-  },
-  onReady: function() {
-    
+    this.checkBus();
   },
   onShow: function() {
-    
-  },
-  onHide: function() {
-
-  },
-  onUnload: function() {
-
   },
   onPullDownRefresh: function() {
-
-  },
-  onReachBottom: function() {
 
   },
   onShareAppMessage: function() {
 
   },
-  onPageScroll: function() {
+  // 查詢巴士站點信息
+  checkBus () {
+    let that = this;
+    wx.request({
+      url: 'https://campusloop.cmdo.um.edu.mo/zh_TW/busstopinfo.zone:refreshzone',
+      method : 'POST',
+      header : {
+        'Host': "campusloop.cmdo.um.edu.mo",
+        'X-Requested-With': "XMLHttpRequest",
+        'Origin': "https://campusloop.cmdo.um.edu.mo",
+        'Referer': "https://campusloop.cmdo.um.edu.mo/zh_TW/busstopinfo",
+        // 'Cookie': "_ga=GA1.3.1723930737.1590572330",
+      },
+      success (res) {
+        let result = res.data._tapestry.content[0][1];
+        // result = result.replace(/div/g, 'view');
+        // result = result.replace(/<a/g, '<view');
+        // result = result.replace(/a>/g, 'view>');
+        // result = result.replace(/span/g, 'text');
+        // result = result.replace(/img/g, 'image');
 
-  },
-  onTabItemTap:function(item) {
-
+        console.log(result);
+        that.setData({  result  })
+        // 5s返回一次
+        // setTimeout(() => {
+        //   that.checkBus();
+        // }, 5000);
+      }, 
+      fail (err) {
+          console.error(err);
+      }
+    })
   },
   
   btnClick:function(){

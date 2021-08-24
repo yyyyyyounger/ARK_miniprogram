@@ -53,6 +53,12 @@
           "pathName": "pages/category/allCourses/allCourses",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "小功能頁",
+          "pathName": "pages/more/smallFun/smallFun",
+          "query": "",
+          "scene": null
         }
       ]
     }
