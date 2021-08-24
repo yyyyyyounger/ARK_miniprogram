@@ -667,7 +667,7 @@ Page({
           speakerid     : this.data.courseCloudData.arkid,
           courseState   : this.data.courseCloudData.courseState,
           followMember  : ((this.data.courseCloudData).hasOwnProperty('followMember')?followMember:[0]),
-          holdTimesIndex  : (this.data.courseState=="finish" ? this.data.userInfoShortNameIndex.holdTimes :undefined),   // 主持次數的Index
+          holdTimesIndex  : this.data.userInfoShortNameIndex.holdTimes,   // 主持次數的Index
         }
       }) .then(res=>{
         Toast.success('刪除成功！');
