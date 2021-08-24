@@ -1,3 +1,6 @@
+<van-toast id="van-toast" />
+
+
 <!-- <view>這裡是“小功能”頁
   <button bindtap="btnClick">Refresh</button>
   <view>現在位置: {{station}}</view>

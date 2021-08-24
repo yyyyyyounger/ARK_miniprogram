@@ -1,3 +1,6 @@
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+
+
 Page({
   data: {
     datetime: "yyyy-mm-ddThh:mm:ss+08:00",
@@ -10,7 +13,8 @@ Page({
   onShow: function() {
   },
   onPullDownRefresh: function() {
-
+    this.checkBus();
+    wx.stopPullDownRefresh();
   },
   onShareAppMessage: function() {
 
@@ -42,6 +46,7 @@ Page({
         // setTimeout(() => {
         //   that.checkBus();
         // }, 5000);
+        Toast.success('加載成功！')
       }, 
       fail (err) {
           console.error(err);
