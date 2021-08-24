@@ -239,4 +239,17 @@ Page({
         })
         
     },
+
+    // 圖片預覽test
+    clickImg: function(e){
+        // var imgUrl = this.data.imgUrl;
+        var imgUrl = 'https://public-cdn.mokahr.com/f9c78d80-2e7f-4680-8086-9301233bfa4e.jpeg';
+        wx.previewImage({
+          urls: [imgUrl], //需要预览的图片http链接列表，注意是数组
+          current: '', // 当前显示图片的http链接，默认是第一个
+          success: function (res) { },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+      },
 });

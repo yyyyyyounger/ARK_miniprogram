@@ -20,3 +20,6 @@
 <text>\n\n</text>
 
 <button bindtap="toOtherMiniProgram">跳轉選咩課</button>
+
+<view>圖片預覽測試</view>
+<image class='img' src='https://public-cdn.mokahr.com/f9c78d80-2e7f-4680-8086-9301233bfa4e.jpeg' bindtap='clickImg'></image>
