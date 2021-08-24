@@ -4,20 +4,12 @@ Page({
     durationDay:0,
   },
   onLoad: function() {
-    // this.calcDurationDay();
+    // 計算開發天數
+    this.calcDurationDay();
 
-  },
-  onReady: function() {
-    
   },
   onShow: function() {
     
-  },
-  onHide: function() {
-
-  },
-  onUnload: function() {
-
   },
   onPullDownRefresh: function() {
 
@@ -35,7 +27,7 @@ Page({
 
   },
   jumpToProtocol() {
-    wx:wx.navigateTo({
+    wx.navigateTo({
       url: '../../protocol/protocol',
     });
   },

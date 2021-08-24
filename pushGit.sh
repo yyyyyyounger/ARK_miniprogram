@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "merge後對目錄的整理"
+git commit -m "修復關於頁的時間顯示bug"
 
 git push origin dev
 git push local dev
