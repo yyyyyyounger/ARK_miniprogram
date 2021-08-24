@@ -34,6 +34,36 @@
   <!-- <view class="cu-avatar lg round margin-left" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg);"></view> -->
 </view>
 
+<!-- 合作學會 -->
+<view class="cu-bar bg-white margin-top">
+	<view class="action">
+		<text class="cuIcon-title text-themeBlue"></text>合作學會
+	</view>
+</view>
+<!-- 學會logo -->
+<view class="padding" style="text-align:center; margin-top:-20px;">
+  <!-- 電腦學會 -->
+	<view bindtap="toOtherMiniProgram">
+    <van-image
+      round
+      width="120rpx"
+      height="120rpx"
+      src="https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg"
+    />
+		<view class="text-gray" style="margin-top:-10px;">電腦學會</view>
+	</view>
+  <!-- IET學會 - 未完成 -->
+	<view bindtap="toOtherMiniProgram">
+    <van-image
+      round
+      width="120rpx"
+      height="120rpx"
+      src="https://i.loli.net/2021/08/24/NzHdXk1Lse4JfcF.jpg"
+    />
+		<view class="text-gray" style="margin-top:-10px;">IET澳大分部</view>
+	</view>
+</view>
+
 <van-divider contentPosition="center">正在開發更多內容！敬請期待！</van-divider>
 
 <view class="padding flex flex-direction" style="padding-top:20vh">

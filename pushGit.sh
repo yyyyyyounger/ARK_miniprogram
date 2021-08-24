@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "課程刪除雲函數調試中"
+git commit -m "合作學會頭像"
 
 git push origin dev
 git push local dev
