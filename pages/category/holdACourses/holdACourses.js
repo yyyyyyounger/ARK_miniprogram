@@ -646,17 +646,13 @@ Page({
       title: '*危險操作提示！*',
       message: '是否確認刪除該課程？\n將會抹除*所有*有關記錄！',
     })
-    .then(() => {   // on confirm - 未完成
-      // 1 刪除course集合中的該課
-      // 2 刪除myCourse的該課
-      // 3 if 課程狀態為finish，刪除各個followMember的user記錄的中的allJoinId - user的課程參與記錄
-      // 4 刪除關聯文件 - 未完成
+    .then(() => {   // on confirm
       Toast.loading({
         message: '請稍後',
         forbidClick : true,
         zIndex      : 99999999,
       })
-      // 刪除該課 - 使用雲函數，保證admin都能有刪除權限 - 未完成
+      // 刪除該課 - 使用雲函數，保證admin都能有刪除權限
       if (this.data.courseCloudData.followMember) { // 如果有用戶follow，生成只有arkid的followMember數組，便於後面調用
         var followMember = this.data.courseCloudData.followMember.map((e,item)=>{ // 生成僅有arkid的數組
           return e.arkid

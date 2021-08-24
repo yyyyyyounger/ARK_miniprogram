@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
   let idNum         = event.idNum;
 
   // 刪除course集合的 _id為idNum的課程
-  db.collection('course') .doc(idNum) .remove() 
+  await db.collection('course') .doc(idNum) .remove() 
   .then(res=>{
     // 刪除user集合中myCourses的該課，將主持次數-1
     db.collection('user') .where({
@@ -28,7 +28,7 @@ exports.main = async (event, context) => {
     }) .update({
       data: {
         myCourses: _.pull(_.in([idNum])),
-        ['userInfoInput.'+event.holdTimesIndex+'.input'] : _.inc(-1),   // 主持次數-1
+        ['userInfoInput.'+event.holdTimesIndex+'.input'] : _.inc(courseState=='finish'?-1:0),   // 主持次數-1
       }
     }) .then(res=>{
       console.log(res);
@@ -45,26 +45,31 @@ exports.main = async (event, context) => {
       }
     })
 
+    
+  }) .catch(err=>{
+    console.error(err);
+    return err
+  })
 
-    // 刪除關聯文件 - 未測試
-    db.collection('fileList') .where({
-      'courseInfo.courseId' : idNum
-    }) .field({  cloudFileId:true  }) .get() .then(res=>{
+  // 刪除關聯文件 - 未測試
+  await db.collection('fileList') .where({
+    'courseInfo.courseId' : idNum
+  }) .field({  cloudFileId:true  }) .get() .then(res=>{
+    if (res.data.length!=0) {
       let fileList = res.data.map(function(e,index,item){
-        return cloudFileId
+        return e.cloudFileId
       })
-      wx.cloud.deleteFile({
+      cloud.deleteFile({
         fileList: fileList
       }).then(res => {
-        console.log(res.fileList)
+        console.log("已刪除文件：",res.fileList)
       }).catch(error => {
         console.error(error);
         return error
       })
-    })
-  }) .catch(err=>{
-    console.error(err);
-    return err
+    } else{
+      console.log("無上傳文件");
+    }
   })
     
 }

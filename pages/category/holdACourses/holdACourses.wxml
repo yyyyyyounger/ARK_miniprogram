@@ -119,7 +119,8 @@
           <text class="text-grey">分享時間</text>
         </view>
       </view>
-      <van-cell title-class="text-grey cu-item">    <!-- 允許投票switch -->
+      <!-- 允許投票switch -->
+      <!-- <van-cell title-class="text-grey cu-item">    
         <view slot="title">
           <view class="van-cell-text" bindtap="onChange_Switch">允許投票(默認不允許)</view>
         </view>
@@ -130,7 +131,7 @@
           bind:change="onChange_Switch"
           size="46rpx"
         />
-      </van-cell>
+      </van-cell> -->
       <van-cell title="{{allowVote?'投票日期範圍':'选择Date'}}" bind:click="{{ courseInfoInput[shortNameIndex.courseTime].canEdit ? 'onDisplay_date' : '' }}" is-link title-class="text-grey cu-item"/>
       <van-cell wx:if="{{datePick}}" value="{{ datePick }}" title-class="text-grey cu-item" />
       <van-cell title="{{allowVote ? '投票時間區間（開始）' : '选择Time（開始）'}}" value="{{ allowVote ? '' : timePickArray[0].begin }}" bind:click="{{ courseInfoInput[shortNameIndex.courseTime].canEdit ? 'onDisplay_time' : '' }}" data-model="begin" is-link title-class="text-grey cu-item" />
