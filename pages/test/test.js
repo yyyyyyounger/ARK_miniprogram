@@ -240,8 +240,9 @@ Page({
         
     },
 
-    // 圖片預覽test
+    // 圖片預覽
     clickImg: function(e){
+        console.log(e);
         // var imgUrl = this.data.imgUrl;
         var imgUrl = 'https://public-cdn.mokahr.com/f9c78d80-2e7f-4680-8086-9301233bfa4e.jpeg';
         wx.previewImage({
@@ -251,5 +252,5 @@ Page({
           fail: function (res) { },
           complete: function (res) { },
         })
-      },
+    },
 });

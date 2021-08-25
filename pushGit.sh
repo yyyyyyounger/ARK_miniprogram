@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復IOS無法加載的問題 - npm的got組件出現在本地安裝的情況"
+git commit -m "更新了首頁輪播圖"
 
 git push origin dev
 git push local dev

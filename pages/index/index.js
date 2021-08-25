@@ -18,24 +18,25 @@ Page({
     swiperList: [{
       id: 0,
       type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
+      url: 'https://i.loli.net/2021/08/25/GAuOr7SR4TvsBPj.png'
     }, {
       id: 1,
         type: 'image',
-        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg',
+        url: 'https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg',
     }, {
       id: 2,
       type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-    }, {
+      url: 'https://i.loli.net/2021/08/24/PIh8sfRW9yMn2CD.jpg'
+    },{
       id: 3,
       type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-    }, {
+      url: 'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg'
+    },{
       id: 4,
       type: 'image',
-      url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-    }],
+      url: 'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg'
+    },
+  ],
     // Color - end
     moto:[],    // 一言API
     ARK_Notice:"ARK協議v1.01已發佈！點擊查看",
@@ -335,6 +336,18 @@ Page({
     wx.navigateTo({
       url: '../test/test'
     });
+  },
+  // 圖片預覽
+  clickImg: function(e){
+    let selectId = e.currentTarget.dataset.id;
+    let imgUrl = this.data.swiperList[selectId].url;
+    wx.previewImage({
+      urls: [imgUrl], //需要预览的图片http链接列表，注意是数组
+      current: '', // 当前显示图片的http链接，默认是第一个
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
   },
 }); 
   
