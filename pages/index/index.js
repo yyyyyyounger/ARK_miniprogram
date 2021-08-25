@@ -15,28 +15,25 @@ Page({
     // Vant - end
     // 輪播圖
     cardCur: 0,
-    swiperList: [{
-      id: 0,
-      type: 'image',
-      url: 'https://i.loli.net/2021/08/25/GAuOr7SR4TvsBPj.png'
-    }, {
-      id: 1,
+    swiperList: [
+      {
+        id: 0,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg',
-    }, {
-      id: 2,
-      type: 'image',
-      url: 'https://i.loli.net/2021/08/24/PIh8sfRW9yMn2CD.jpg'
-    },{
-      id: 3,
-      type: 'image',
-      url: 'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg'
-    },{
-      id: 4,
-      type: 'image',
-      url: 'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg'
-    },
-  ],
+        url: 'https://i.loli.net/2021/08/25/GAuOr7SR4TvsBPj.png'
+      }, {
+        id: 1,
+          type: 'image',
+          url: 'https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg',
+      }, {
+        id: 2,
+        type: 'image',
+        url: 'https://i.loli.net/2021/08/24/PIh8sfRW9yMn2CD.jpg'
+      },{
+        id: 3,
+        type: 'image',
+        url: 'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg'
+      },
+    ],
     // Color - end
     moto:[],    // 一言API
     ARK_Notice:"ARK協議v1.01已發佈！點擊查看",
