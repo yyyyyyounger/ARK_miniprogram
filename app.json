@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/category/category",
     "pages/user/user",
+    "pages/user/userDetail/userDetail",
     "pages/test/test",
     "pages/category/courseDetail/courseDetail",
     "pages/category/holdACourses/holdACourses",
