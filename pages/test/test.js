@@ -43,6 +43,17 @@ Page({
         //       console.error(err);
         //   }
         // })
+
+        let x = [
+            {arkid : 1,haveAttend:true},
+            {arkid : 2,},
+            {arkid : 3,haveAttend:true},
+        ]
+        x.forEach(e => {
+            if (e.haveAttend) {
+                console.log("已有人簽到！", e);
+            }
+        });
         
     },
     onReady: function(){
