@@ -19,17 +19,35 @@ Page({
       {
         id: 0,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/25/GAuOr7SR4TvsBPj.png'
-      }, {
+        url: 'https://i.loli.net/2021/08/26/R7PjTXudSoxqtZe.jpg'
+      }, 
+      {
         id: 1,
           type: 'image',
-          url: 'https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg',
-      }, {
+          url: 'https://i.loli.net/2021/08/26/dlIu4YthJaXTA5E.jpg',
+      }, 
+      {
         id: 2,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/24/PIh8sfRW9yMn2CD.jpg'
-      },{
+        url: 'https://i.loli.net/2021/08/26/tCMGbShnQmxLopg.jpg'
+      },
+      {
         id: 3,
+        type: 'image',
+        url: 'https://i.loli.net/2021/08/25/GAuOr7SR4TvsBPj.png'
+      },
+      {
+        id: 4,
+        type: 'image',
+        url: 'https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg'
+      },
+      {
+        id: 5,
+        type: 'image',
+        url: 'https://i.loli.net/2021/08/24/PIh8sfRW9yMn2CD.jpg'
+      },
+      {
+        id: 6,
         type: 'image',
         url: 'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg'
       },
@@ -338,9 +356,12 @@ Page({
   clickImg: function(e){
     let selectId = e.currentTarget.dataset.id;
     let imgUrl = this.data.swiperList[selectId].url;
+    let imgUrlArr = this.data.swiperList.map((e)=>{
+      return e.url
+    })
     wx.previewImage({
-      urls: [imgUrl], //需要预览的图片http链接列表，注意是数组
-      current: '', // 当前显示图片的http链接，默认是第一个
+      urls: imgUrlArr, // [imgUrl], //需要预览的图片http链接列表，注意是数组
+      current: imgUrl, // 当前显示图片的http链接，默认是第一个
       success: function (res) { },
       fail: function (res) { },
       complete: function (res) { },
