@@ -28,32 +28,22 @@ Page({
             })
         }
 
-
-      const fileList = [
-        'cloud://cloud1-5gtulf1g864cd4ea.636c-cloud1-5gtulf1g864cd4ea-1306144658/ECE/3/通過GitHub託管代碼 by Rookie.docx', 
-        'cloud://cloud1-5gtulf1g864cd4ea.636c-cloud1-5gtulf1g864cd4ea-1306144658/ECE/3/weui-miniprogram-1.0.8.zip'
-      ]
-    //   獲取雲文件真實下載鏈接
-        // wx.cloud.getTempFileURL({
-        //   fileList : [fileList[0]]      // 傳參為數組形式
-        // }).then(res => {
-        //   // get temp file URL
-        //   console.log("可下載的真實鏈接為：",res.fileList)
-        //   wx.setClipboardData({
-        //     data: res.fileList[0].tempFileURL,
-        //     success (res) {
-        //       wx.getClipboardData({
-        //         success (res) {
-        //           console.log("複製的內容",res.data) // data
-        //         }
-        //       })
-        //     }
-        //   })
-        // }).catch(error => {
-        //   // handle error
-        //   console.error(error);
+        // 請求學生會網站介紹的IET的代碼
+        // wx.request({
+        //   url: 'https://umsu.org.mo/%e9%99%84%e5%b1%ac%e7%b5%84%e7%b9%94/%e5%b7%a5%e7%a8%8b%e5%8f%8a%e7%a7%91%e6%8a%80%e5%ad%b8%e6%9c%83%e9%a6%99%e6%b8%af%e5%88%86%e6%9c%83%e9%9d%92%e5%b9%b4%e6%9c%83%e5%93%a1%e9%83%a8%e6%be%b3%e9%96%80%e5%ad%b8%e7%94%9f%e6%94%af%e9%83%a8/',
+        //   method : 'GET',
+        // //   header : {
+        // //     'Host': "umsu.org.mo",
+        // //     'Referer': "https://umsu.org.mo/%e9%99%84%e5%b1%ac%e7%b5%84%e7%b9%94/",
+        // //   },
+        //   success (res) {
+        //       console.log(res.data);
+        //   },
+        //   fail (err) {
+        //       console.error(err);
+        //   }
         // })
-
+        
     },
     onReady: function(){
         
