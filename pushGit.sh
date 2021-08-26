@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "準備開始用戶詳情頁"
+git commit -m "修改了IET的名字說明"
 
 git push origin dev
 git push local dev
