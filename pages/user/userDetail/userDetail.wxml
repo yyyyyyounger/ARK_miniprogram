@@ -1,2 +1,9 @@
-<!--pages/user/userDetail/userDetail.wxml-->
-<text>pages/user/userDetail/userDetail.wxml</text>
+<!-- 這頁用於展示某ark用戶的基礎信息 -->
+<!-- 不涉及 umid、 -->
+
+<!-- 頭像 -->
+<view>頭像</view>
+<!-- 信息 -->
+<view>信息</view>
+
+<view class="bottom-watch"></view>

@@ -59,6 +59,12 @@
           "pathName": "pages/more/smallFun/smallFun",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "用戶信息查看",
+          "pathName": "pages/user/userDetail/userDetail",
+          "query": "detailInfo={\"arkid\":3}",
+          "scene": null
         }
       ]
     }
