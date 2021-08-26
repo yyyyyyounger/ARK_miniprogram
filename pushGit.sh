@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "嘗試從學生會官網解析IET介紹頁的代碼"
+git commit -m "修改了小功能頁源代碼佈局"
 
 git push origin dev
 git push local dev
