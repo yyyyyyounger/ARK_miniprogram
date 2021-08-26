@@ -36,9 +36,9 @@
                   <view >by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
                 </view>
                 <!-- add/cancel Follow按鈕 -->
+                <!-- disabled = "{{(recentCourseInfoArray[index].courseState)=='finish' || recentCourseInfoArray[index].timeStampPick+24*60*60*1000<nowTimeStamp}}"  -->
                 <van-button 
-                  wx:if="{{recentCourseInfoArray[index].arkid!=userCloudDataStorage.arkid}}"
-                  disabled = "{{(recentCourseInfoArray[index].courseState)=='finish' || recentCourseInfoArray[index].timeStampPick<nowTimeStamp}}" 
+                  wx:if="{{ recentCourseInfoArray[index].arkid!=userCloudDataStorage.arkid && (recentCourseInfoArray[index].courseState)!='finish' && recentCourseInfoArray[index].timeStampPick+24*60*60*1000<nowTimeStamp || recentCourseInfoArray[index].haveFollow }}"
                   style="margin-right:5px;"
                   icon="{{ recentCourseInfoArray[index].haveFollow ? 'delete-o' : 'star-o'}}"
                   size="small" 
@@ -71,7 +71,8 @@
           <!-- 分割線 -->
           <van-divider />
         </view>
-
+        <!-- 底部說明 -->
+        <van-divider contentPosition="center">已結束的課程將不能再Follow</van-divider>
         <van-divider contentPosition="center">“最新發佈” 只顯示最近30日的新增課程~</van-divider>
       </block>
 
