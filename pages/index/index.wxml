@@ -124,9 +124,9 @@ bind:close="closePopup"
 				<text class="cuIcon-title text-themeBlue"></text>一言(點擊刷新)
 			</view>
 		</view>
-		<view >
-			<view class="word" >{{moto.hitokoto}}</view>
-			<view class="author" >—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
+		<view class="text-grey">
+			<view class="word" ><text style="padding-left: 15px;"></text>{{moto.hitokoto}}</view>
+			<view class="author text-gray" >—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
 		</view>
 	</view>
 </block>
