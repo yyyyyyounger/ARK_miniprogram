@@ -34,14 +34,16 @@ bind:close="closePopup"
 </van-popup>
 
 <!-- 公告區 -->
-<!-- scrollable -->
+<view style="margin-top: 12px;"></view>
 <van-notice-bar
   left-icon="volume-o"
+	color="#a4b0be"
   text="{{ARK_Notice}}" 
 	bindtap="handleTapProtocol"
+	mode="closeable"
 />
 <!-- 輪播 - 輪播內容未完成 -->
-<swiper class="card-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#3498DB">
+<swiper class="card-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#3498DB" style="margin-top: -8px;">
   <swiper-item wx:for="{{swiperList}}" wx:key="id" class="{{cardCur==index?'cur':''}}">
     <view class="swiper-item" bindtap="clickImg" data-id="{{item.id}}">
       <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
@@ -102,7 +104,7 @@ bind:close="closePopup"
 
 <!-- 關於ARK -->
 <block>
-	<view class="cu-bar bg-white margin-top">
+	<view class="cu-bar bg-white">
 		<view class="action">
 			<text class="cuIcon-title text-themeBlue"></text>關於ARK
 		</view>
@@ -119,7 +121,7 @@ bind:close="closePopup"
 <!-- 一言 -->
 <block>
 	<view bindtap="cloudGetOneMoto">
-		<view class="cu-bar bg-white margin-top">
+		<view class="cu-bar bg-white">
 			<view class="action">
 				<text class="cuIcon-title text-themeBlue"></text>一言<text class="text-gray" style="margin-left: 10rpx;">(點擊刷新)</text>
 			</view>
@@ -133,7 +135,7 @@ bind:close="closePopup"
 
 <!-- 使用小貼士 -->
 <block>
-	<view class="cu-bar bg-white margin-top">
+	<view class="cu-bar bg-white">
 		<view class="action">
 			<text class="cuIcon-title text-themeBlue"></text>使用小貼士
 		</view>

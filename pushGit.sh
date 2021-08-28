@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了主頁“關於ARK”的樣式"
+git commit -m "修改了主頁的佈局"
 
 git push origin dev
 git push local dev
