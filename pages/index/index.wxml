@@ -121,7 +121,7 @@ bind:close="closePopup"
 	<view bindtap="cloudGetOneMoto">
 		<view class="cu-bar bg-white margin-top">
 			<view class="action">
-				<text class="cuIcon-title text-themeBlue"></text>一言(點擊刷新)
+				<text class="cuIcon-title text-themeBlue"></text>一言<text class="text-gray" style="margin-left: 10rpx;">(點擊刷新)</text>
 			</view>
 		</view>
 		<view class="text-grey">
