@@ -134,6 +134,7 @@ Page({
     });
     if (!this.data.isSignIn) {              // if 未登錄，則 複製cloudData.js的空數據 → 本地
       consoleMeg = '未登錄 - ';
+      Toast('快快註冊吧！');    // 提示註冊
       this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
     }
     else {                                  // if 已登錄，歡迎語
@@ -171,14 +172,14 @@ Page({
     
     if (needWait) {   // 存在緩存，需要等待異步請求返回
       getUserCloudData().then(res => {
-        setTimeout(() => {
+        // setTimeout(() => {
           // log出提示消息
           console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
     
           // 初始化各種數組
           this.ArrayDataInit(this);
           this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
-        }, 600);
+        // }, 600);
 
   // 未理解的神秘執行(必須存在) - 未完成
         if (wx.getUserProfile) {
@@ -314,6 +315,8 @@ Page({
         })
       });
     };
+    // 返回majorTagArray的信息
+    this.returnMajorTagArray(this);
 
     getUserProfilePro().then(res=>{    // 同意登錄
       Notify({ type: 'success', message: '登錄成功！' });
@@ -328,9 +331,6 @@ Page({
 
       // 成功登錄後，局部 → 全局isSignIn → true
       app.globalData.isSignIn = true;
-
-      // 返回majorTagArray的信息
-      this.returnMajorTagArray(this);
 
       // 登錄成功後，判斷是否已註冊 - 數據庫是否存在該用戶openid（查找_id）
       getUserCloudData().then(res => {    // 鏈式調用，能在該鏈上使用該userCloudData的返回值
