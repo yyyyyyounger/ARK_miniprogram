@@ -107,11 +107,11 @@ bind:close="closePopup"
 			<text class="cuIcon-title text-themeBlue"></text>關於ARK
 		</view>
 	</view>
-	<view class="flexCenter" bindtap="jumpToAbout">
-		<text>項目開始時間：2021/06/03</text>
-		<text> 今天是：{{today}} </text>
-		<view>ARK平台已經開發了
-			<text class="devColor">{{durationDay}}</text> 天
+	<view bindtap="jumpToAbout">
+		<!-- <text>項目開始時間：2021/06/03</text> -->
+		<!-- <text> 今天是：{{today}} </text> -->
+		<view class="text-grey word"><text style="padding-left: 15px;"></text>ARK平台已經開發了
+			<text class="text-gray" style="font-weight:bold;">{{durationDay}}</text> 天
 		</view>
 	</view>
 </block>
