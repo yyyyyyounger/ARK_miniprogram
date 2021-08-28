@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "增加了課程頁可點擊範圍"
+git commit -m "添加課程頁跳轉中加載狀態"
 
 git push origin dev
 git push local dev

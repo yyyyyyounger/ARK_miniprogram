@@ -331,6 +331,7 @@ Page({
 
 // 頁面跳轉
   jumpToCourseDetail (e){
+    Toast.loading('跳轉中...')
     let selectId = e.currentTarget.dataset.courseid;
     let user = "normal"
 
