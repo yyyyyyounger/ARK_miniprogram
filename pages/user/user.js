@@ -138,6 +138,10 @@ Page({
       this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
     }
     else {                                  // if 已登錄，歡迎語
+      Toast.loading({
+        message: '請稍等...',
+        forbidClick: true,
+      })
       // 返回majorTagArray的信息
       this.returnMajorTagArray(this);
       // 如果存在userInfo的緩存，則先渲染著，再請求雲端返回
