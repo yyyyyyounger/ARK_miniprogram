@@ -31,12 +31,11 @@
                 <view class="cu-avatar round lg" style="background-image:url( {{ recentCourseInfoArray[index].avatarUrl }} );">
                   <view class="tag" style="top:35px;">{{recentCourseInfoArray[index].courseInfoInput[3].input[0]}}</view>
                 </view>
-                <view class="content flex-sub text-gray text-lg">
+                <view class="content flex-sub text-gray text-lg">   <!-- 課程主題 & 講者信息 -->
                   <view class="text-black text-lg title">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
                   <view >by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
                 </view>
                 <!-- add/cancel Follow按鈕 -->
-                <!-- disabled = "{{(recentCourseInfoArray[index].courseState)=='finish' || recentCourseInfoArray[index].timeStampPick+24*60*60*1000<nowTimeStamp}}"  -->
                 <van-button 
                   wx:if="{{ recentCourseInfoArray[index].arkid!=userCloudDataStorage.arkid && (recentCourseInfoArray[index].courseState)!='finish' && recentCourseInfoArray[index].timeStampPick+24*60*60*1000<nowTimeStamp || recentCourseInfoArray[index].haveFollow }}"
                   style="margin-right:5px;"
@@ -50,7 +49,7 @@
                   bind:click="{{ recentCourseInfoArray[index].haveFollow ? 'deleteFollow' : 'addFollow'}}"><text decode="{{true}}" style="padding-right:{{ recentCourseInfoArray[index].haveFollow ? '' : '18rpx'}};">{{ recentCourseInfoArray[index].haveFollow ? 'ByeBye' : 'Follow'}}</text></van-button>
               </view>
             </view>
-            <!-- 簡略信息 -->
+            <!-- 課程簡略信息 -->
             <view class="slot text-content" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" style="margin-top:5px">
               <view wx:if="{{recentCourseInfoArray[index].courseState=='opening'}}" class="openBg"><view class="tagText" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
               <view wx:if="{{recentCourseInfoArray[index].courseState!='opening'}}" class="noOpenBg text-orange"> <view class="tagText" style="font-weight:bold;" >{{recentCourseInfoArray[index].courseState}}</view></view>
@@ -59,6 +58,7 @@
 
               <view class="text-gray">日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }}</view>
               <view class="text-gray">時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
+              <view class="text-gray">Click me check more ~</view>
 
             </view>
             <!-- 頭像組 -->
