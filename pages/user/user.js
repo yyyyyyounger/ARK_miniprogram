@@ -241,7 +241,6 @@ Page({
 
       semFinishDay :  cloudData.semFinishDay,
       studentYear :   cloudData.studentYear,
-      // studentMajor :  cloudData.studentMajor,
     })
   },
   // 初始化各種數組

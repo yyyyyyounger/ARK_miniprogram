@@ -43,4 +43,14 @@ page{background-color:#FFFFFF;}
     background-color: #fff;
 }
 
+.cellTitle{
+    margin-left: 50rpx;
+    /* padding-left: 20px; */
+}
+.cellValue{
+    margin-right: 50rpx;
+    margin-left: -120px;
+    /* padding-left: 20px; */
+}
+
 /* Vant - end */

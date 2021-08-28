@@ -95,7 +95,7 @@
     wx:key="id"
     wx:if="{{InfoDisplay[index]}}"
   >
-    <van-cell title-width="250rpx" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
+    <van-cell title-class="cellTitle" value-class="cellValue" title-width="-5px" center size="large" title="{{item.name}}" data-cellIndex="{{index}}" bind:click="bindCellClick" >
       <view wx:if="{{(bindEditMode)&&(canEdit[index])}}">
         <view wx:if="{{(index==2)||(index==3)}}">   <!-- 可選取的值 -->
           <text wx:if="{{index==2}}">{{studentMajor_input}} </text>

@@ -36,10 +36,10 @@ exports.main = async (event, context) => {
   let idNum = 5;
 
   db.collection('user') .where({
-    arkid : _.in(followMember),
+   'userInfoInput.7.display' : true,
   }) .update({
     data: {
-      recentFollowIdArray : _.pull(_.in([idNum])),
+      'userInfoInput.7.display' : false,
     }
   })
 
