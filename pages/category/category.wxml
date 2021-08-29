@@ -59,7 +59,7 @@
 
               <view class="text-gray">日期：{{ recentCourseInfoArray[index].courseInfoInput[5].input[0] }}</view>
               <view class="text-gray">時間：{{ recentCourseInfoArray[index].courseInfoInput[5].input[1] }} - {{ recentCourseInfoArray[index].courseInfoInput[5].input[2] }}</view>
-              <view class="text-gray">Click me check more ~</view>
+              <view style="color: rgb(224, 224, 224);">Click me check more ~</view>
 
             </view>
             <!-- Follow用戶頭像組 -->

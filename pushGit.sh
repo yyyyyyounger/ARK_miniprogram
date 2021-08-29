@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "凱哥寫好了查看用戶詳情頁"
+git commit -m "修改了凱哥建議的課程頁的引導顏色"
 
 git push origin dev
 git push local dev
