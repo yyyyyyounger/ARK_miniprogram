@@ -7,7 +7,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "git新增branch測試"
+git commit -m "Kelvin寫的小功能頁再整合"
 
 git push origin dev
 git push local dev
