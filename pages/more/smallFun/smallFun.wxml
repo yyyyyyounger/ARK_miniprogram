@@ -1,19 +1,22 @@
 <!-- <view>這裡是“小功能”頁</view> -->
+<van-toast id="van-toast" zIndex:9999999/>
 
+<!-- 中間標題 -->
 <view class="header">
-<van-icon name="apps-o" size = "35" />
-<text class="title">小功能</text>
+  <van-icon name="apps-o" size = "35" />
+  <text class="title" decode="{{true}}">&nbsp;小功能</text>
 </view>
 
 <view class="nav">
-<navigator open-type="navigate" url="/pages/more/umac/{{item.uri}}/{{item.uri}}" class="nav-li" style="background-color:{{item.color}}" wx:for="{{funs}}" wx:key>
-<view class="nav-li-img">
-<van-image mode="aspectFill" src="{{item.icon}}"  />
-</view>
-<view class="nav-li-title"><em>{{item.title}}</em></view>
-</navigator>
+  <!-- 使用wx的navigator組件跳轉 -->
+  <navigator open-type="navigate" url="/pages/more/umac/{{item.name}}/{{item.name}}" class="nav-li" style="background-color:{{item.color}}" wx:for="{{funs}}" wx:key="index" bindtap="jumpTo" data-itemname="{{item.name}}">
+    <view class="nav-li-img">
+      <van-image mode="aspectFill" src="{{item.icon}}"  />
+    </view>
+    <view class="nav-li-title"><em>{{item.title}}</em></view>
+  </navigator>
 </view>
 
-<!-- <view bindtap="jumpToBus">澳大巴士報站</view> -->
+<van-divider contentPosition="center">正在開發更多內容！敬請期待！</van-divider>
 
 <view class="bottom-watch"></view>

@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "Kelvin寫的小功能頁再整合"
+git commit -m "上線小功能頁"
 
 git push origin dev
 git push local dev

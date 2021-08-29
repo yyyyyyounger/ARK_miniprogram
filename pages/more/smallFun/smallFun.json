@@ -5,5 +5,6 @@
     "van-row": "@vant/weapp/row/index",
     "van-col": "@vant/weapp/col/index",
     "van-image": "@vant/weapp/image/index"
-  }
+  },
+  "navigationBarTitleText": "ARK - 小功能頁"
 }
