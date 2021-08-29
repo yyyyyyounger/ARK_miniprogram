@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-image": "@vant/weapp/image/index"
+
+  },
+  "navigationBarTitleText": "ARK - 反饋頁"
 }

@@ -1,7 +1,33 @@
-<view>這裡是反饋頁</view>
+<!-- 方法一 -->
+<view class="cu-bar bg-white margin-top">
+	<view class="action">
+		<text class="cuIcon-title text-themeBlue"></text><text>方法一</text>
+	</view>
+</view>
+<view class="word"><text style="padding-left: 15px;"></text>在小程序右上角找到反饋按鈕，選擇您想反饋的問題並提交</view>
+<view style="text-align: center;">
+  <van-image
+    wx:for="{{image}}"
+    wx:key="id"
+    width="240px"
+    height="240px"
+    fit="contain"
+    src="{{item.url}}"
+    bindtap="clickImg"
+    data-id="{{item.id}}"
+  />
+</view>
 
-<view>可以加一些反饋教程</view>
+<!-- 方法二 -->
+<view class="cu-bar bg-white">
+	<view class="action">
+		<text class="cuIcon-title text-themeBlue"></text><text>方法二</text>
+	</view>
+</view>
+<view class="word"><text style="padding-left: 15px;"></text>在本頁面或“更多頁”下方找到“聯繫管理員”按鈕，進行反饋（問題描述+時間+任何意見）</view>
 
 <view class="padding flex flex-direction">
   <button class="cu-btn bg-themeBlue lg" open-type='contact'>聯繫管理員</button>
 </view>
+
+<view class="bottom-watch"></view>

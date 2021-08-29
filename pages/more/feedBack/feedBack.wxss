@@ -1,1 +1,13 @@
-/* pages/more/feedBack/feedBack.wxss */
+page{background-color:#FFFFFF;}
+
+.word {
+  font-size: 36rpx;
+  text-align: left;
+  line-height: 60rpx;
+  margin: 0;
+  margin-top: -8rpx;
+  margin-left : 40rpx;
+  margin-right: 40rpx;
+  word-break: break-all;
+  white-space: normal;
+}

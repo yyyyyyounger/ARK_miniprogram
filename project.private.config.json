@@ -65,6 +65,12 @@
           "pathName": "pages/user/userDetail/userDetail",
           "query": "detailInfo={\"arkid\":3}",
           "scene": null
+        },
+        {
+          "name": "反饋頁",
+          "pathName": "pages/more/feedBack/feedBack",
+          "query": "",
+          "scene": null
         }
       ]
     }
