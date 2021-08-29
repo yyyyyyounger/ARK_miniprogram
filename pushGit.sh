@@ -7,10 +7,10 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "添加課程頁跳轉中加載狀態"
+git commit -m "test"
 
-git push origin dev
-git push local dev
+git push origin test
+# git push local dev
 
 echo " "
 echo "The program has finished ~"
