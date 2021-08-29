@@ -192,6 +192,17 @@ App({
     console.log("The duration day is",durationDay);
   },
 
+  // 全局跳轉 查看用戶信息頁，需填上arkid和url
+  appJumpToUserDetail(arkid,url) {
+    let detailInfo = {
+      arkid : arkid
+    }
+    url = url + '?detailInfo=' + JSON.stringify(detailInfo)
+    wx.navigateTo({
+      url: url,
+    })
+  },
+
 // 動畫設置
   //渐入，渐出实现 
   show : function(that,param,opacity){

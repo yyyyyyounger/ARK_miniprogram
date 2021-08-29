@@ -407,4 +407,12 @@ Page({
     })
   },
 
+  // 跳轉 查看用戶信息頁，需填上arkid和url
+  jumpToUserDetail(e) {
+    let arkid = e.currentTarget.dataset.arkid;
+    arkid = parseInt(arkid)
+    let url = '../../user/userDetail/userDetail';
+    app.appJumpToUserDetail(arkid,url);
+  },
+
 });

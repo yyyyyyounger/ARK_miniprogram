@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "反饋頁加入引導教程。"
+git commit -m "詳情頁新增用戶頭像跳轉詳情信息"
 
 git push origin dev
 git push local dev

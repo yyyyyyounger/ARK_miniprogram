@@ -60,12 +60,18 @@
     <!-- 頭像 -->
     <van-col offset="{{courseCloudData.arkid!=userCloudData.arkid?(courseInfoInput[shortNameIndex.helper].input[1] ? '6' : (courseInfoInput[shortNameIndex.helper].input[0]?'8':'12')) : '12'}}">
       <block>
-        <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); ">
+        <!-- 講者頭像 -->
+        <view class="cu-avatar round lg shadow-blur" style="background-image:url({{courseCloudData.avatarUrl}}); " bindtap="jumpToUserDetail" data-arkid="{{courseCloudData.arkid}}">
           <view class="tag">講者</view>
         </view>
         <!-- Helper頭像 -->
         <block wx:for="{{courseInfoInput[shortNameIndex.helper].input}}" wx:key="index">
-          <view wx:if="{{courseInfoInput[shortNameIndex.helper].input[index]}}"  class="cu-avatar round lg shadow-blur" style="background-image:url({{courseInfoInput[shortNameIndex.helper].input[index].Avatar}}); {{index==0 ? 'margin-left:15px;' : ''}}">
+          <view 
+            wx:if="{{item}}"  
+            class="cu-avatar round lg shadow-blur" 
+            style="background-image:url({{item.Avatar}}); {{index==0 ? 'margin-left:15px;' : ''}}"
+            bindtap="jumpToUserDetail" data-arkid="{{item.arkid}}"
+            >
             <view class="tag">助手</view>
           </view>
         </block>
@@ -239,7 +245,12 @@
         </view>
         <!-- 有人follow，渲染頭像 -->
         <view style="margin-left: 5px; margin-top: 5px; margin-bottom: 8px;">
-          <text wx:for="{{courseCloudData.followMember}}" wx:key="index" class="cu-avatar round lg {{courseCloudData.followMember[index].attend?'attend':''}} shadow-blur {{courseCloudData.followMember[index].haveAttend?'attend':''}} " style="margin-bottom: 10px; margin-left: 50rpx; background-image:url( {{ courseCloudData.followMember[index].avatarUrl }} );"></text>
+          <text 
+            wx:for="{{courseCloudData.followMember}}" wx:key="index" 
+            class="cu-avatar round lg {{courseCloudData.followMember[index].attend?'attend':''}} shadow-blur {{courseCloudData.followMember[index].haveAttend?'attend':''}} " 
+            style="margin-bottom: 10px; margin-left: 50rpx; background-image:url( {{ courseCloudData.followMember[index].avatarUrl }} );" 
+            bindtap="jumpToUserDetail" data-arkid="{{courseCloudData.followMember[index].arkid}}">
+          </text>
         </view>
       </view>
     </view>
