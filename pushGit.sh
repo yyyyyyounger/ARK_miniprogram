@@ -7,10 +7,10 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "test"
+git commit -m "git新增branch測試"
 
-git push origin test
-# git push local dev
+git push origin dev
+git push local dev
 
 echo " "
 echo "The program has finished ~"
