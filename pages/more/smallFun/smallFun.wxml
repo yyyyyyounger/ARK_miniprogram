@@ -1,5 +1,19 @@
 <!-- <view>這裡是“小功能”頁</view> -->
 
-<view bindtap="jumpToBus">澳大巴士報站</view>
+<view class="header">
+<van-icon name="apps-o" size = "35" />
+<text class="title">小功能</text>
+</view>
+
+<view class="nav">
+<navigator open-type="navigate" url="/pages/more/umac/{{item.uri}}/{{item.uri}}" class="nav-li" style="background-color:{{item.color}}" wx:for="{{funs}}" wx:key>
+<view class="nav-li-img">
+<van-image mode="aspectFill" src="{{item.icon}}"  />
+</view>
+<view class="nav-li-title"><em>{{item.title}}</em></view>
+</navigator>
+</view>
+
+<!-- <view bindtap="jumpToBus">澳大巴士報站</view> -->
 
 <view class="bottom-watch"></view>
