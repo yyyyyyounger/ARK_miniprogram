@@ -1,9 +1,30 @@
 <!-- 這頁用於展示某ark用戶的基礎信息 -->
-<!-- 不涉及 umid、 -->
+<!-- 不涉及 umid、注册时间，僅管理员可见 -->
 
-<!-- 頭像 -->
-<view>頭像</view>
-<!-- 信息 -->
-<view>信息</view>
+<!-- 没写骨架屏 -->
+<!-- 头像 姓名 年级 -->
+<view>  
+  <image src="{{iconInfo}}" class="userinfo-avatar" style="height: 128rpx" style="left: 30rpx;"></image>
+  <view style="float: right; width: 530rpx; margin-top: 52rpx;"> 
+    <text style="font-size: medium; font-weight: 900;" wx:if="{{!showAdmin}}">{{showName}}\n</text>
+    <text style="font-size: medium; color:rgb(2, 57, 112);font-weight: 900;" wx:else>{{showName}}\n</text> <!-- 普通用户名字为黑色 管理员名字为深蓝色 -->
+    <text style="font-size: small; color: rgb(128, 128, 128); font-weight: 600;">{{showYear}}</text>
+  </view>
+</view>
+<view class="subTag">{{showMajor}}</view> <!--大屏幕适配有问题，不过似乎整个小程序都没适配，不管了XD-->
+
+<!-- 循环渲染用户信息 -->
+<!-- 剔除了上面渲染过的姓名，专业和年级 -->
+<!-- 不知道为什么字体比用户页小... -->
+<van-cell-group
+  wx:for="{{showInfo}}"
+  wx:key="id"
+  style="font-weight: 500;"
+>
+  <van-cell wx:if="{{item.display}}" title="{{item.name}}">
+    {{item.input}}
+  </van-cell>
+</van-cell-group>
+
 
 <view class="bottom-watch"></view>
