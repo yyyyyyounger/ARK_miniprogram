@@ -25,12 +25,15 @@ page{background-color:#FFFFFF;}
     top: 0;
 }
 .word {
-    font-size: 40rpx;
-    text-align: center;
+    font-size: 36rpx;
+    text-align: left;
     line-height: 60rpx;
-    word-break: normal;
     margin: 0;
-    padding: 15rpx 20rpx;
+    margin-top: -8rpx;
+    margin-left : 40rpx;
+    margin-right: 40rpx;
+    word-break: break-all;
+    white-space: normal;
 }
 .bracket.right {
     position: absolute;
@@ -40,9 +43,10 @@ page{background-color:#FFFFFF;}
     /* bottom: 0; */
 }
 .author {
-    font-size: 35rpx;
-    color: rgb(0, 0, 0);
+    font-size: 30rpx;
+    /* color: rgb(0, 0, 0); */
     /* float: right; */
-    text-align: center;
-    /* margin-top: 10rpx; */
+    text-align: right;
+    margin-right: 40rpx;
+    margin-top: 20rpx;
 }

@@ -94,7 +94,7 @@ App({
     
   },
   onError: function(msg) {
-    Notify({ type: 'warning', message: msg });
+    // Notify({ type: 'warning', message: msg });
   },
 //options(path,query,isEntryPage)
   onPageNotFound: function(options) {

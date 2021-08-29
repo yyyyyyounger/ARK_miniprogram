@@ -30,6 +30,26 @@
   bind:select="onSelect_sheet"
   cancel-text="取消"
 />
+<!-- 彈出郵箱驗證輸入框 -->
+<van-dialog
+  id="attend-dialog"
+  use-slot
+  title="郵箱驗證碼"
+  show="{{ show_emailCode }}"
+  show-cancel-button
+  bind:confirm="submitEmailCode"
+>
+  <!-- bind:close="onClose_dialog" -->
+  <van-field
+    value="{{ value }}"
+    center
+    password
+    clearable
+    maxlength="4"
+    placeholder="請輸入澳大Email收到的驗證碼"
+    bind:change="emailCodeInput"
+  />
+</van-dialog>
 
 <!-- 設置步驟條 - 未完成 -->
 <!-- <view class="cu-steps">

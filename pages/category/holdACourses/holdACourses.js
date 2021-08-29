@@ -771,11 +771,24 @@ Page({
       })
       .then(()=>{
         // 如果已有人簽到，可以結課，否則提示不能結課 - 未完成
-        // if (condition) {
-          
-        // }
-        this.setData({  courseState : "finish"  })
-        Toast.success('課程狀態已修改為 finish ！');
+        if (this.data.courseCloudData.followMember) {
+          function isAttend(element, index, array) {
+            return (element.haveAttend);
+          }
+          let haveAttend = this.data.courseCloudData.followMember.some(isAttend)
+          if (haveAttend) {
+            console.log("已有人簽到！");
+            this.setData({  courseState : "finish"  })
+            Toast.success('課程狀態已修改為 finish ！');
+            return true
+          } else {
+            console.log("未有人簽到！");
+            Notify({ type: 'warning', message: '不能在無人簽到的狀態下結課！' });
+          }
+        } 
+        else{
+          Notify({ type: 'warning', message: '不能在無人Follow的狀態下結課！' });
+        }
       }) .catch(()=>{})
     }
   },

@@ -6,7 +6,7 @@ git config --global user.email "k736812950@gmail.com"
 
 git add -A
 
-git commit -m "修改了課程頁邏輯"
+git commit -m "git新增branch測試"
 
 git push origin dev
 git push local dev
