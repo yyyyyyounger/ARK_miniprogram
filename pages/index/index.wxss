@@ -50,3 +50,16 @@ page{background-color:#FFFFFF;}
     margin-right: 40rpx;
     margin-top: 20rpx;
 }
+.QandA-Q {
+    color:rgb(83, 83, 83);
+    font-size: 30rpx;
+    font-weight: 600;
+    float: left;
+    margin-left: 30rpx
+}
+.QandA-A {
+    color:rgb(83, 83, 83);
+    font-size: 28rpx;
+    font-weight: 500;
+    margin-left: 60rpx
+}

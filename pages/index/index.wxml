@@ -118,6 +118,29 @@ bind:close="closePopup"
 	</view>
 </block>
 
+<!-- 常见问题Q&A -->
+<block>
+	<view class="cu-bar bg-white" bindtap="displayQandA">
+		<view class="action">
+			<text class="cuIcon-title text-themeBlue"></text>常見問題Q&A
+			<van-icon name="arrow" wx:if="{{!showQandA}}"/><!-- 收起和打开时图标变化 -->
+			<van-icon name="arrow-down" wx:else/>
+		</view>
+	</view>
+
+	<!-- QandA for循環渲染 -->
+<view wx:for="{{QandAlist}}" wx:key="id" hidden="{{!showQandA}}"><!-- 不会做动画 摆烂-->
+	<view class="QandA-Q">
+		{{item.question}}
+  </view>
+	<text>\n</text>
+	<view class="QandA-A">
+	  {{item.answer}}
+	</view>
+	<text>\n</text>
+</view>
+</block>
+
 <!-- 一言 -->
 <block>
 	<view bindtap="cloudGetOneMoto">
@@ -132,18 +155,6 @@ bind:close="closePopup"
 		</view>
 	</view>
 </block>
-
-<!-- 使用小貼士 -->
-<block>
-	<view class="cu-bar bg-white">
-		<view class="action">
-			<text class="cuIcon-title text-themeBlue"></text>使用小貼士
-		</view>
-	</view>
-	<van-skeleton row="4" />
-</block>
-
-<text>\n</text>
 
 <van-divider contentPosition="center">正在開發更多內容！敬請期待！</van-divider>
 

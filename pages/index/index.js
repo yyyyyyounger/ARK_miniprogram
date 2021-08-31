@@ -61,6 +61,45 @@ Page({
     durationDay:0,
     // 課程渲染相關
     followCourseArray:[],
+    //Q&A循環渲染数组
+    QandAlist:[
+    {
+      id:0,
+      question: 'Q1:如何Follow課程',
+      answer: '點擊下方“課程”按鈕，找到喜歡的課程進行Follow吧'
+    },
+    {
+      id:1,
+      question: 'Q2:在哪裡查看Follow的課程',
+      answer: '“首頁”，“課程”的“我的Follow”中均有記錄哦'
+    },
+    {
+      id:2,
+      question: 'Q3:如何取消Follow',
+      answer: '在“我的Follow”中點擊“ByeBye”按鈕即可'
+    },
+    {
+      id:3,
+      question: 'Q4:如何收到通知',
+      answer: '開課成功、預約成功、臨近課程時，我們將通過您的學校郵箱通知您，所以請務必正確填寫UM ID'
+    },
+    {
+      id:4,
+      question: 'Q5:如何開課',
+      answer: '在“課程”頁中找到“我要開課按鈕”，查看須知後開課'
+    },
+    {
+      id:5,
+      question: '更多...',
+      answer: '小程序還有許多附加功能，盡情探索吧！特別是“更多”頁！'
+    },
+    {
+      id:6,
+      question: '有BUG！',
+      answer: '小程序仍在測試階段，有任何BUG請在“更多”頁中的“反饋”中查看上報方法！'
+    },
+    ],
+    showQandA:false
   },
   onLoad: function(scene) {
     this.app = getApp();
@@ -367,5 +406,10 @@ Page({
       complete: function (res) { },
     })
   },
+  displayQandA(){//Q&A收放
+    this.setData({
+      showQandA:!this.data.showQandA
+    })
+  }
 }); 
   
