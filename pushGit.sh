@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "詳情頁新增用戶頭像跳轉詳情信息"
+git commit -m "嘗試請求moodle的信息返回，失敗。不過Chrome能看到返回的timeline是json數據了"
 
 git push origin dev
 git push local dev

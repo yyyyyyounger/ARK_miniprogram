@@ -43,6 +43,39 @@ Page({
         //       console.error(err);
         //   }
         // })
+
+
+        // 請求學生會網站介紹的IET的代碼
+        wx.request({
+          url: 'https://ummoodle.um.edu.mo/lib/ajax/service.php?sesskey=KNL8YqECKS&info=core_calendar_get_action_events_by_timesort',
+          method : 'POST',
+          header : {
+            "POST": `/lib/ajax/service.php?sesskey=KNL8YqECKS&info=core_calendar_get_action_events_by_timesort HTTP/1.1`,
+            "Host": "ummoodle.um.edu.mo",
+            // "Connection": keep-alive,
+            // "Content-Length": 178,
+            // "sec-ch-ua": `"Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"`,
+            "Accept": `application/json, text/javascript, */*; q=0.01`,
+            'X-Requested-With': XMLHttpRequest,
+            // 'sec-ch-ua-mobile': "?0",
+            // 'User-Agent': `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36`,
+            'Content-Type': 'application/json',
+            'Origin': 'https://ummoodle.um.edu.mo',
+            // 'Sec-Fetch-Site': 'same-origin',
+            // 'Sec-Fetch-Mode': 'cors',
+            // 'Sec-Fetch-Dest': 'empty',
+            'Referer': `https://ummoodle.um.edu.mo/my/`,
+            'Accept-Encoding': `gzip, deflate, br`,
+            // 'Accept-Language': zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6,
+            // Cookie: _ga=GA1.3.939117989.1589807953; GUEST_LANGUAGE_ID=en_US; MOODLEID1_ummoodle2=%25C1%2523%25B4ScM%25CE; intelliboardPage=site; intelliboardParam=1; MDL_SSP_SessID=1a49f46ae90c6b771fea57319f432f6f; MDL_SSP_AuthToken=_a1d7c0b447d91d81e9404f769cefc7e0f7cdb96f5f; MoodleSession=187t545lag7010r9utve452ri0; MOODLEID1_=%25C1%2523%25B4ScM%25CE; _gid=GA1.3.2058068316.1630395632; intelliboardTime=23; _gat_gtag_UA_156162951_1=1,
+        },
+          success (res) {
+              console.log(res.data);
+          },
+          fail (err) {
+              console.error(err);
+          }
+        })
         
     },
     onShow: function(){
