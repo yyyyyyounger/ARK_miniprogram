@@ -192,7 +192,7 @@ App({
     console.log("The duration day is",durationDay);
   },
 
-  // 全局跳轉 查看用戶信息頁，需填上arkid和url
+  // 全局跳轉 查看用戶信息頁，需填上arkid和url。url為調用該函數的js對userDetail的相對路徑。
   appJumpToUserDetail(arkid,url) {
     let detailInfo = {
       arkid : arkid

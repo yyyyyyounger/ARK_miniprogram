@@ -3,7 +3,7 @@
 
 <!-- 没写骨架屏 -->
 <!-- 头像 姓名 年级 -->
-<view>  
+<view style="margin-top: 20px; margin-left: 20px;">  
   <image src="{{iconInfo}}" class="userinfo-avatar" style="height: 128rpx" style="left: 30rpx;"></image>
   <view style="float: right; width: 530rpx; margin-top: 52rpx;"> 
     <text style="font-size: medium; font-weight: 900;" wx:if="{{!showAdmin}}">{{showName}}\n</text>
@@ -21,7 +21,7 @@
   wx:key="id"
   style="font-weight: 500;"
 >
-  <van-cell wx:if="{{item.display}}" title="{{item.name}}">
+  <van-cell wx:if="{{item.display}}" title="{{item.name}}" title-class="cellTitle" value-class="cellValue">
     {{item.input}}
   </van-cell>
 </van-cell-group>

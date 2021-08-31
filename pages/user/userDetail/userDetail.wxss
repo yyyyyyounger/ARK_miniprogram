@@ -25,7 +25,17 @@ van-cell-group{
   font-size: 12px;
   color: #3498DB;
   padding: 0 3px;
-  top: 110rpx;
-  right: 550rpx;
+  top: 150rpx;
+  right: 535rpx;
   white-space: nowrap;
+}
+
+.cellTitle{
+  margin-left: 50rpx;
+  /* padding-left: 20px; */
+}
+.cellValue{
+  margin-right: 50rpx;
+  margin-left: -120px;
+  /* padding-left: 20px; */
 }
