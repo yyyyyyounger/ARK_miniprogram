@@ -242,6 +242,9 @@ Page({
 
   onShow (){  //頁面展示時，觸發動畫
     this.getTabBar().init();
+    this.setData({
+      showQandA:false
+    })
   },
 
   // 下拉刷新
@@ -249,6 +252,9 @@ Page({
     this.cloudGetOneMoto();
     // this.showPopup();     // 展示頂部彈出層
     this.app.onPullDownRefresh(this);
+    this.setData({
+      showQandA:false
+    })
   },
 
   // Vant - 打開頂部彈出層
