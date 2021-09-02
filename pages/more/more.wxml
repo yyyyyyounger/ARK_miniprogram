@@ -40,9 +40,9 @@
 	</view>
 </view>
 <!-- 學會logo -->
-<view class="padding" style="text-align:center; margin-top:-20px;">
+<view class="padding" style="text-align:center; margin-top:-20px;"  bindtap="toPartner">
   <!-- 電腦學會 -->
-	<view bindtap="toOtherMiniProgram">
+	<view>
     <van-image
       round
       width="120rpx"
@@ -52,7 +52,7 @@
 		<view class="text-gray" style="margin-top:-10px;">電腦學會</view>
 	</view>
   <!-- IET學會 - 未完成 -->
-	<view bindtap="toOtherMiniProgram">
+	<view>
     <van-image
       round
       width="120rpx"
@@ -68,5 +68,4 @@
 <view class="padding flex flex-direction" style="padding-top:20vh">
   <button class="cu-btn bg-gray lg" bindtap="clearStorage">點我清除緩存</button>
 </view>
-
 <view class="bottom-watch"></view>

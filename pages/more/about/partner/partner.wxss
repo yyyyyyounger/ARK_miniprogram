@@ -1,1 +1,7 @@
 /* pages/more/about/partner/partner.wxss */
+page{background-color:#FFFFFF;}
+
+.bottomInfo{
+  font-size: small;
+  color: rgb(99, 99, 99);
+}

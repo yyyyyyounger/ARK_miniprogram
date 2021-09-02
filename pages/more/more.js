@@ -2,7 +2,7 @@ import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
   data: {
-    
+    institution:'1'    
   },
   onLoad: function(){
     this.app = getApp();
@@ -98,4 +98,10 @@ Page({
         }
       })
   },
+  //跳转学会介绍页
+  toPartner(){
+    wx.navigateTo({
+      url: './about/partner/partner',
+    })
+  }
 });

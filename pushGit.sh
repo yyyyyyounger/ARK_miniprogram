@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "新增合作夥伴介紹頁"
+git commit -m "合作學會頁以完成 by 凱哥"
 
 git push origin dev
 git push local dev
