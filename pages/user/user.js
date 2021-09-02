@@ -5,17 +5,6 @@ import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 var cloudData = require('../../data/cloud.js')
 const db = wx.cloud.database();   // 數據庫
 
-const beforeClose = (action) => new Promise((resolve) => {
-  setTimeout(() => {
-    if (action === 'confirm') {
-      resolve(true);
-    } else {
-      // 拦截取消操作
-      resolve(false);
-    }
-  }, 1000);
-});
-
 const getUserCloudData = () => {    // 新增promise，抓取所調用雲函數的返回值，準備鏈式調用
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({   // 獲取數據庫該用戶的資料
@@ -141,6 +130,7 @@ Page({
       Toast.loading({
         message: '請稍等...',
         forbidClick: true,
+        duration : 0,
       })
       // 返回majorTagArray的信息
       this.returnMajorTagArray(this);

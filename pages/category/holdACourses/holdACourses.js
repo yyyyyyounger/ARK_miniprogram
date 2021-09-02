@@ -18,7 +18,10 @@ const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函�
       console.log(err);
     })
   });
-};
+}
+
+let verifyCode;       // 郵件驗證碼生成
+let verifyCodeInput;  // 郵件驗證碼輸入
 
 Page({
   data: {
@@ -63,7 +66,8 @@ Page({
       },
     ],
     actions_sheetStrArr:['checking','opening'],
-
+    // 郵箱驗證狀態
+    showVerifyBtn : false,
     // 文件上傳
     fileList  : [],
     deleteFilePaths : [],
@@ -453,6 +457,61 @@ Page({
     console.log("校驗結果：",haveSetArr);
     this.setData({  haveSetArr  })
   },
+  // 郵箱驗證碼輸入
+  emailCodeInput (e) {
+    verifyCodeInput = e.detail;
+  },
+  // 喚出dialog輸入框
+  showVerifyDialog () {
+    Dialog.confirm({
+      title:"郵箱驗證碼",
+      selector : '#email-dialog',
+    }) .then(res=>{
+      if ( verifyCodeInput==verifyCode ) {  // 密碼輸入正確
+        this.setData({  showVerifyBtn : false,  })
+        Toast.success('密碼正確')
+        // 調用add課雲函數
+        Toast.loading({
+          message: '瘋狂請求中',
+          forbidClick: true,
+          zIndex: 9999999999999,
+          duration : 0,
+        })
+        const userCloudDataStorage = wx.getStorageSync('userCloudData')
+        wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
+          name : 'courseAdd',
+          data : {
+            avatarUrl       : userCloudDataStorage.data.avatarUrl,
+            arkid           : userCloudDataStorage.data.arkid,
+            courseInfoInput : this.data.courseInfoInput ,
+            allowVote       : this.data.allowVote,
+            datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
+            timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
+            timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
+          }
+        }) .then (res=>{
+          console.log("該課程的courseId為",res.result);
+          // 獲取用戶新增課程的id，然後帶參跳轉課程詳情頁
+          let detailInfo = {
+            user      :   "speaker",
+            courseId  :   res.result,
+          }
+          detailInfo = JSON.stringify(detailInfo);
+          Toast.success('開課成功！');
+          wx.redirectTo({   // 銷毀當前頁的帶參跳轉
+            url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
+          })
+        }) .catch (err=>{
+          console.error(err);
+          Notify({ type: 'danger', message: err });
+        })
+      } 
+      else{                                 // 密碼輸入錯誤
+        this.setData({  showVerifyBtn : true  })
+        Toast.fail('密碼錯誤')
+      }
+    })
+  },
 
 // 提交 / 退出 按鈕綁定事件
   onClick_saveSubmit (e) {
@@ -505,38 +564,59 @@ Page({
           Toast.loading({
             message: '拼命上傳中...',
             forbidClick: true,
+            duration : 0,
           })
           // 上傳數據 本地 → 雲端
           if (!this.data.courseCloudData) {   // 開課mode
             console.log("首次開課模式！");
-            wx.cloud.callFunction({   // 調用加課的雲函數 courseAdd
-              name : 'courseAdd',
-              data : {
-                avatarUrl       : userCloudDataStorage.data.avatarUrl,
-                arkid           : userCloudDataStorage.data.arkid,
-                courseInfoInput : this.data.courseInfoInput ,
-                allowVote       : this.data.allowVote,
-                datePickArray   : this.data.datePickArray,      // 投票模式下的 日期選擇 數組
-                timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
-                timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
-              }
-            }) .then (res=>{
-              // 雲函數調用後返回法
-              console.log("該課程的courseId為",res.result);
-              // 獲取用戶新增課程的id，然後帶參跳轉課程詳情頁
-              let detailInfo = {
-                user      :   "speaker",
-                courseId  :   res.result,
-              }
-              detailInfo = JSON.stringify(detailInfo);
-              Toast.success('開課成功！');
-              wx.redirectTo({   // 銷毀當前頁的帶參跳轉
-                url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
-              })
-            }) .catch (err=>{
-              console.error(err);
-              Notify({ type: 'danger', message: err });
+            // 郵箱校驗，密碼輸入正確後允許開課
+            Toast.loading({
+              message: '正在發送\n驗證碼',
+              forbidClick: true,
+              zIndex: 9999999999999,
+              duration : 0,
             })
+            this.setData({
+              showVerifyBtn   : true,
+            })
+            // 獲取用戶umid，調用雲函數發送驗證信息
+            let umid = this.data.userInfoInput[0].input;
+            umid = umid.slice(0,-1)   // 7位的umid
+            // 生成隨機驗證碼
+            verifyCode = Math.round(Math.random() * (9999 - 1000)) + 1000;
+            console.log("生成的隨機驗證碼為",verifyCode+'');
+            // 調用發送郵箱驗證雲函數
+            wx.cloud.callFunction({
+              name: 'emailCheck',
+              data:{
+                userName: this.data.userInfoInput[1].input,
+                subject:  this.data.courseInfoInput[this.data.shortNameIndex.courseName].input,
+                umId:     umid,
+                code:     verifyCode,
+              },
+              success: res=>{
+                console.log("驗證碼發送成功！");
+              },
+              complete: res => {
+                console.log('result: ', res)
+                if (res.result=='success') {    // 發送成功
+                  Toast({
+                    message: '已發送驗證碼到'+umid+'@um.edu.mo\n請前往查看！',
+                    forbidClick: true,
+                    zIndex: 9999999999999,
+                  })
+                } else {
+                  Toast.fail({
+                    message: '發送失敗',
+                    forbidClick: true,
+                    zIndex: 9999999999999,
+                  })
+                }
+              }
+            })
+            // 喚起dialog
+            this.showVerifyDialog();
+
           } 
           else {                              // 更新課程信息mode
             console.log("更新課程信息模式！");
@@ -614,7 +694,11 @@ Page({
               }
             }) .then (res=>{
               if (this.data.filePaths || this.data.addFilePaths) {
-                Toast.success('請等待文件上傳！');
+                Toast.loading({
+                  message: '請等待文件上傳！',
+                  forbidClick: true,
+                  duration : 0,
+                })
               } else {
                 Toast.success('修改成功！');
               }
@@ -636,7 +720,7 @@ Page({
             btn_finish : false,
           });
         })
-      } // if輸入校驗 - end
+      } // if輸入校驗ok - end
     } // if點擊了submit button - end
 
   },
@@ -651,6 +735,7 @@ Page({
         message: '請稍後',
         forbidClick : true,
         zIndex      : 99999999,
+        duration : 0,
       })
       // 刪除該課 - 使用雲函數，保證admin都能有刪除權限
       if (this.data.courseCloudData.followMember) { // 如果有用戶follow，生成只有arkid的followMember數組，便於後面調用

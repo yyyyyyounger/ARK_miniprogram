@@ -53,6 +53,7 @@ Page({
         message: '瘋狂加載中...',
         forbidClick: true,
         // zIndex: 9999999999999,
+        duration : 0,
       })
 
       // 返回最近課程信息
@@ -73,6 +74,7 @@ Page({
     Toast.loading({
       message: '拼命加載中...',
       forbidClick: true,
+      duration : 0,
     })
     setTimeout(() => {
       wx.stopPullDownRefresh();

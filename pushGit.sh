@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "寫了下近期備註"
+git commit -m "完成開課前郵箱驗證邏輯。"
 
 git push origin dev
 git push local dev

@@ -32,14 +32,11 @@
 />
 <!-- 彈出郵箱驗證輸入框 -->
 <van-dialog
-  id="attend-dialog"
+  id="email-dialog"
   use-slot
   title="郵箱驗證碼"
-  show="{{ show_emailCode }}"
   show-cancel-button
-  bind:confirm="submitEmailCode"
 >
-  <!-- bind:close="onClose_dialog" -->
   <van-field
     value="{{ value }}"
     center
@@ -304,6 +301,7 @@
 
 <!-- 提交審核/修改按鈕 -->
 <view class="padding flex flex-direction">
+  <button class="shadow cu-btn bg-green margin-tb-sm lg" wx:if="{{showVerifyBtn}}"   bindtap="showVerifyDialog">輸入驗證碼</button>
   <button class="shadow cu-btn bg-themeBlue margin-tb-sm lg" data-model="btn_submit" bindtap="onClick_saveSubmit">提交{{courseCloudData?'修改':'審核'}}</button>
   <button wx:if="{{courseState=='opening' && nowTimeStamp>timeStampPick}}" class="shadow cu-btn bg-green margin-tb-sm lg" data-model="finish" bindtap="onClick_changeCourseState">結課</button>
   <button class="shadow cu-btn bg-grey lg margin-tb-sm lg" data-model="btn_quit" bindtap="onClick_saveSubmit">退出</button>

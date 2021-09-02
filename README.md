@@ -378,18 +378,19 @@ courseTag目前版本默認只添加用戶的majorTag，但仍留有2個tag位�
 
 
 #### 2021-9-2
+完成開課前郵箱驗證邏輯。
+Toast.loading狀態下設置duration : 0,可以提升延時效率。
 **提上日程**：
 **可能的BUG** 進入課程編輯後如果信息有更新，將不能同步。可能的辦法：提交修改時再拉取一次最新數據。
 **BUG** 小功能頁真機無法顯示icon的圖片
 **BUG** 巴士報站未整合為雲函數請求
-2 訂閱功能，先做預約工具類的訂閱。
-3 開課前的郵箱驗證
-4 第一次進入小程序的操作介紹
-5 關於頁的介紹
-7 邀請曾開過ARK的講者，復原歷史ARK
-8 ARK Logo
-9 宣傳圖
-10 主頁刷新時判斷recentFollow列表的課是否過期，過期的操作數據庫除去recentFollowIdArr。（思路：定義鏈式調用查詢recentFollowIdArray，then判斷過期與否進行刪除，then正常獲取邏輯）
+1 訂閱功能，先做預約工具類的訂閱。
+2 第一次進入小程序的操作介紹
+3 關於頁的介紹
+4 邀請曾開過ARK的講者，復原歷史ARK
+5 ARK Logo
+6 宣傳圖
+7 主頁刷新時判斷recentFollow列表的課是否過期，過期的操作數據庫除去recentFollowIdArr。（思路：定義鏈式調用查詢recentFollowIdArray，then判斷過期與否進行刪除，then正常獲取邏輯）
 
 
 

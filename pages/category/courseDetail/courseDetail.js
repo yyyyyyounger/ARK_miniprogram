@@ -149,6 +149,7 @@ Page({
     Toast.loading({
       message: '拼命加載中...',
       forbidClick: true,
+      duration : 0,
     })
 
     this.returnCourseData();

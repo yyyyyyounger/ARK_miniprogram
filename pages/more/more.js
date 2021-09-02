@@ -1,8 +1,17 @@
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 Page({
-  data: {
-    institution:'1'    
+  data: {  
+    institutionInfo:[{
+      id:0,
+      iconSrc:'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg',
+      name:'電腦學會',
+    },
+    {
+      id:1,
+      iconSrc:'https://i.loli.net/2021/08/24/PIh8sfRW9yMn2CD.jpg',
+      name:'IET澳門學生支部',
+    },] 
   },
   onLoad: function(){
     this.app = getApp();

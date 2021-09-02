@@ -65,6 +65,12 @@
           "pathName": "pages/user/userDetail/userDetail",
           "query": "detailInfo={\"arkid\":3}",
           "scene": null
+        },
+        {
+          "name": "開課頁",
+          "pathName": "pages/category/holdACourses/holdACourses",
+          "query": "",
+          "scene": null
         }
       ]
     }
