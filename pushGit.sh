@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "寫了下工作日誌"
+git commit -m "修改了課程頁-歸檔tabs的可選擇按鈕"
 
 git push origin dev
 git push local dev
