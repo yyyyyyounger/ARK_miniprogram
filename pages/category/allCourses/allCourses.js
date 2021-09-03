@@ -55,6 +55,7 @@ Page({
   onLoad: function (options) {
     this.app = getApp();
     var checkmap = [];
+    // js獨有promise語法
     db.collection('course').where({
       _id : _.gt (0),
       courseState : _.eq('opening').or(_.eq('finish'))
@@ -62,7 +63,9 @@ Page({
     .then(res=>{                      // 查詢成功，寫入allCourse準備wxml渲染
       this.setData({  allCourse: res.data  })
       Toast.success('加載成功！')
-    }) 
+    }) .catch(err=>{
+      console.error(err);
+    })
   },
 
   onShow: function () {

@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "小功能頁logo錯位修復"
+git commit -m "所有課程頁更新基礎請求"
 
 git push origin dev
 git push local dev
