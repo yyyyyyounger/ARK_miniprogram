@@ -396,6 +396,7 @@ Additional
 1 課程頁 - 歸檔記錄 - 所有課程 的排序
 2 課程頁 - 歸檔記錄 - 參與記錄
 3 課程頁 - 歸檔記錄 - 我的開課頁 搜索、排序等
+4 圖片更換為雲儲存id提升速度
 
 
   [1]: https://youzan.github.io/vant-weapp/#/home

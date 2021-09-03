@@ -45,13 +45,14 @@
 <swiper 
   class="padding" 
   style="text-align:center; margin-top:-20px;"  
-  bindtap="toPartner" 
   indicator-active-color="#EA444C"
   autoplay="true"
   interval="2500">
   <swiper-item wx:for="{{institutionInfo}}" wx:key="id">  
     <!-- 學會Logo -->
     <van-image
+    data-id="{{index}}"
+    bindtap="toPartner" 
     width="200rpx"
     height="200rpx"
     src="{{item.iconSrc}}"

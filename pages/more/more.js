@@ -108,7 +108,9 @@ Page({
       })
   },
   //跳转学会介绍页
-  toPartner(){
+  toPartner(e){
+    let selectItemIndex = e.currentTarget.dataset.id; 
+    console.log(selectItemIndex);
     wx.navigateTo({
       url: './about/partner/partner',
     })
