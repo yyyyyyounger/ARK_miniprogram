@@ -62,6 +62,8 @@ App({
       console.error(err);
     })
 
+    // 首次進入該小程式，觸發教程
+
   },
   onShow: function(options) {
     // 小程序更新邏輯 - 唯有上線版可以實現該功能
