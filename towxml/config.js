@@ -23,7 +23,7 @@ module.exports = {
 
     // 代码高亮配置，保留需要的选项即可（尽量越少越好，不要随意调整顺序。部分高亮有顺序依赖）
     highlight:[
-        // 'c-like',
+        'c-like',
         'c',
         'bash',
         'css',
