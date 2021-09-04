@@ -28,15 +28,19 @@ Component({
   methods: {
     onChange(event) {
       let index = event.detail;
+      const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+      if (userCloudDataStorage && index==1) {
+        console.log("用戶已登錄，準備請求訂閱");
+      }
       wx.switchTab({
-          url: this.data.list[index].url
-      });
+        url: this.data.list[index].url
+      })
     },
     init() {
       const page = getCurrentPages().pop();
       this.setData({
-          active: this.data.list.findIndex(item => item.url === `/${page.route}`)
-      });
+        active: this.data.list.findIndex(item => item.url === `/${page.route}`)
+      })
     }
   }
 })
