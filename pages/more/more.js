@@ -1,30 +1,32 @@
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
+var cloudData = require('../../data/cloud.js')
+
 Page({
-  data: {  
-    institutionInfo:[{
-      id:0,
-      iconSrc:'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg',
-      name:'電腦學會',
-    },
-    {
-      id:1,
-      iconSrc:'https://i.loli.net/2021/08/24/PIh8sfRW9yMn2CD.jpg',
-      name:'IET澳門學生支部',
-    },] 
+  data: {
   },
   onLoad: function(){
-    this.app = getApp();
-    
+    this.app = getApp();   
+    let institutionNum = JSON.parse(JSON.stringify(cloudData.institutionNum));
+    let institutionInfo = JSON.parse(JSON.stringify(cloudData.institutionInfo));
+    this.setData({  
+      institutionNum       : institutionNum,
+      institutionInfo : institutionInfo,
+    });
   },
   onReady: function(){
     
   },
   onShow: function(){
     this.getTabBar().init();
+    this.setData({
+      swiperAutoplay:true
+    })
   },
   onHide: function(){
-
+    this.setData({
+      swiperAutoplay:false
+    })
   },
   onUnload: function(){
 
@@ -109,10 +111,11 @@ Page({
   },
   //跳转学会介绍页
   toPartner(e){
-    let selectItemIndex = e.currentTarget.dataset.id; 
-    console.log(selectItemIndex);
+    let pageNum = e.currentTarget.dataset.pagenum
+    pageNum = JSON.stringify(pageNum);
+    console.log(pageNum)
     wx.navigateTo({
-      url: './about/partner/partner',
+      url: './about/partner/partner?pageNum=' + pageNum,
     })
-  }
+  },
 });

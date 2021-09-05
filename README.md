@@ -440,6 +440,25 @@ Toast.loading狀態下設置duration : 0,可以提升延時效率。
 4 圖片更換為雲儲存id提升速度
 
 
+#### 2021-9-5
+新版更多頁和關於頁上線 by 凱哥。
+**提上日程**：
+**可能的BUG** 進入課程編輯後如果信息有更新，將不能同步。可能的辦法：提交修改時的updateLocalData前再拉取一次最新數據。or 進入編輯頁時再請求服務器。
+**BUG** 巴士報站未整合為雲函數請求
+**BUG** 更多頁學會輪播圖實機遮擋bug
+1 訂閱功能，先做預約工具類的訂閱。
+2 第一次進入小程序的操作介紹
+3 邀請曾開過ARK的講者，復原歷史ARK
+4 ARK Logo
+5 宣傳圖
+6 主頁刷新時判斷recentFollow列表的課是否過期，過期的操作數據庫除去recentFollowIdArr。（思路：定義鏈式調用查詢recentFollowIdArray，then判斷過期與否進行刪除，then正常獲取邏輯）
+**Additional**
+1 課程頁 - 歸檔記錄 - 所有課程 的排序
+2 課程頁 - 歸檔記錄 - 參與記錄
+3 課程頁 - 歸檔記錄 - 我的開課頁 搜索、排序等
+4 圖片更換為雲儲存id提升速度
+
+
   [1]: https://youzan.github.io/vant-weapp/#/home
   [2]: http://demo.color-ui.com/
   [3]: https://github.com/weilanwl/ColorUI

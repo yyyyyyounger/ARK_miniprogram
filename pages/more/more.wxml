@@ -1,17 +1,15 @@
 <!-- 彈出類元素 -->
 <van-dialog id="van-dialog" />
 
-<!-- 相應功能塊跳轉 -->
 <view style="margin-top:20rpx">
   <van-grid gutter="{{ 10 }}" column-num="1">
-    <van-grid-item icon="apps-o" text="小功能"         bindtap="jumpToSmallFun" />
+    <van-grid-item icon="apps-o" text="小功能"         bindtap="jumpToSmallFun"/>
     <van-grid-item icon="more-o"    text="關於"           bindtap="jumpToAbout" />
     <van-grid-item icon="chat-o"    text="反饋"           bindtap="jumpToFeedBack" />
     <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
   </van-grid>
 </view>
 
-<!-- 聯繫管理員跳轉 -->
 <view class="padding flex flex-direction">
   <button class="cu-btn bg-themeBlue lg" open-type='contact'>聯繫管理員</button>
 </view>
@@ -29,7 +27,7 @@
       round
       width="120rpx"
       height="120rpx"
-      src="../../../../icons/UMLogo.png"
+      src="https://i0.hdslb.com/bfs/album/c8885ad0a9e99652ee808aaf7d3aa8aac715f89d.png"
     />
 		<view class="text-gray" style="margin-top:-10px;">選咩課</view>
 	</view>
@@ -41,32 +39,29 @@
 		<text class="cuIcon-title text-themeBlue"></text>合作學會
 	</view>
 </view>
-<!-- 学会图标及名称 for循环轮播图, 添加修改请移步JS数组-->
+<!-- 学会图标及名称 for循环轮播图, 添加修改请移步JS数组 -->
 <swiper 
   class="padding" 
-  style="text-align:center; margin-top:-20px;"  
+  style="text-align:center; margin-top:-20rpx;height:320rpx"  
   indicator-active-color="#EA444C"
-  autoplay="true"
-  interval="2500">
-  <swiper-item wx:for="{{institutionInfo}}" wx:key="id">  
-    <!-- 學會Logo -->
-    <van-image
-    data-id="{{index}}"
-    bindtap="toPartner" 
-    width="200rpx"
-    height="200rpx"
-    src="{{item.iconSrc}}"
-    />
-    <!-- 名称 -->
-    <view class="text-gray" style="margin-top:-10px;">{{item.name}}</view>
+  autoplay="{{swiperAutoplay}}"
+  interval="3000"><!-- 离开页面时停止滚动 -->
+  <swiper-item wx:for="{{institutionInfo}}" wx:key="id" bindtap="toPartner"
+  data-pagenum="{{institutionInfo[index].id}}">  
+<!-- 图标 -->
+      <van-image
+      width="200rpx"
+      height="200rpx"
+      src="{{item.iconSrc}}"
+      />
+      <!-- 名称 -->
+    <view class="text-gray">{{item.name}}</view>
   </swiper-item>
 </swiper>
 
-<van-divider contentPosition="center">正在開發更多內容！敬請期待！</van-divider>
+<van-divider contentPosition="center" custom-style="margin-top:100rpx;font-size:20rpx">正在開發更多內容！敬請期待！</van-divider>
 
-<!-- 清除緩存按鈕 -->
-<view class="padding flex flex-direction" style="padding-top:20vh">
+<view class="padding flex flex-direction" style="padding-top:20rpx">
   <button class="cu-btn bg-gray lg" bindtap="clearStorage">點我清除緩存</button>
 </view>
-
 <view class="bottom-watch"></view>

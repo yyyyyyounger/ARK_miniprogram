@@ -1,34 +1,83 @@
-<view class="cu-bar bg-white">
-  <view class="action">
-    <text class="cuIcon-title text-themeBlue"></text>
-    <text class="text-xl text-bold">关于我们</text>
-  </view>
-</view>
-
 <view style="text-align:center;">
   <van-image
     round
-    width="10rem"
-    height="10rem"
+    width="300rpx"
+    height="300rpx"
     src="https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg"
   />
   <!-- <view class="cu-avatar round" style="background-image:url(../../../icons/ARKlogo.jpg); height: 150px; width: 150px;"></view> -->
-  <view text-gray style="margin-top:-10px;">2021.06版ARK logo</view>
+  <view text-gray style="text-decoration:underline;margin-top:-30rpx;" bindtap="jumpToProtocol">ARK UM</view>
 </view>
 <text>\n</text>
 
-<view class="iconfont">
-  <text>項目開始時間：2021/06/03
-  今天是：{{today}}</text>
-  <view>ARK平台已經開發了
-    <text class="devColor">{{durationDay}}</text> 天
+<view class="days" style="margin-left: 30rpx;">
+	<view class="action">
+		<text class="cuIcon-title text-themeBlue"></text>ARK已經航行
+    <text style="color:#163a52">{{durationDay}}</text> 天了  
+    <image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="shipAnim"></image><!--小船~-->
+    <image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png"     class="floodAnim"></image><!--海浪~-->
+    <view style="margin-left: 40rpx;font-size: 28rpx;margin-right: 60rpx;color:rgb(116, 116, 116)">
+      <text>·ARK活動由ECE同學開創，於2020-2021年下半學期開始。目的在於幫助同學互相交流學習。
+      ·經過一個學期，活動進展順利，參與同學都認為ARK活動很有幫助。
+      ·我們希望這樣良好的學習氛圍能一直延續並發揚下去，並且希望活動範圍不限於2020級和ECE。
+      ·此小程序旨在方便收集整理活動信息，也便於剛接觸本活動的同學盡早熟悉流程並參與進來。
+      ·更多詳細信息可以點擊上方“ARK UM”查看。
+      </text>
+    </view>
+
   </view>
-  <view>查看<text class="devColor" bindtap="jumpToProtocol">ARK協議</text></view>
-</view>
-<text>\n</text>
 
-<van-tag type="danger" size="large">Vant</van-tag>
-<text>\n\n</text>
-<van-tag type="danger" size="large">一言API</van-tag>
-<text>\n\n</text>
-<van-tag type="danger" size="large">打賞頁</van-tag>
+  <text>\n</text>
+
+  <!-- 合作小程式 -->
+  <text class="cuIcon-title text-themeBlue"></text>合作小程序
+  <!-- 小程序logo -->
+  <view class="padding" style="text-align:center; margin-top:-20px;margin-right: 40rpx;">
+  	<view bindtap="toOtherMiniProgram">
+      <van-image
+        round
+        width="120rpx"
+        height="120rpx"
+        src="https://i0.hdslb.com/bfs/album/c8885ad0a9e99652ee808aaf7d3aa8aac715f89d.png"
+      />
+	  	<view class="text-gray" style="margin-top:-10px;">選咩課</view>
+	  </view>
+  </view>
+
+  <!-- 合作學會 -->
+  <text class="cuIcon-title text-themeBlue"></text>合作學會
+  <!-- 学会图标及名称 for循环轮播图, 添加修改请移步JS数组 -->
+  <swiper 
+    class="padding" 
+    style="text-align:center; margin-top:-20rpx;height:320rpx;margin-right: 40rpx;"  
+    indicator-active-color="#EA444C"
+    autoplay="true"
+    autoplay="{{swiperAutoplay}}"
+    interval="3000">
+    <swiper-item wx:for="{{institutionInfo}}" wx:key="id" bindtap="toPartner" data-pagenum="{{institutionInfo[index].id}}">  
+  <!-- 图标 -->
+      <van-image
+        width="120rpx"
+        height="120rpx"
+        src="{{item.iconSrc}}"
+        />
+        <!-- 名称 -->
+      <view class="text-gray" style="font-size: 28rpx;margin-top:-20rpx">{{item.name}}</view>
+    </swiper-item>
+  </swiper>
+
+  <view style="margin-top: 20rpx;">
+
+    <view style="position:relative;font-size: 20rpx;text-align: center;right:20rpx;color:rgb(104, 104, 104)">
+    <text>版權聲明
+    </text>
+      <text bindtap="colorUI" decode="true">ColorUI&nbsp;&nbsp;&nbsp;&nbsp;</text>
+      <text bindtap="towxml" decode="true">Towxml&nbsp;&nbsp;&nbsp;&nbsp;</text>
+      <text bindtap="vantWeapp" decode="true">Vant Weapp&nbsp;&nbsp;&nbsp;&nbsp;</text>
+      <text bindtap="oneWord" decode="true">一言API</text>
+      <text>    
+      版權方式:
+      MIT協議 GPL協議</text>
+    </view>
+	</view>
+</view>

@@ -1,5 +1,49 @@
 page{background-color:#FFFFFF;}
+@keyframes shipShakes{
+  25%{
+    transform: rotateZ(7deg);
+  }
+  50%{  
+    transform: rotateZ(-7deg);
+  }
+}
+@keyframes floodShakes{
+  25%{
+    transform: translate(1rpx,1rpx);
+  }
+  25%{
+    transform: translate(1rpx,-1rpx);
+  }
+  75%{  
+    transform: translate(-1rpx,-1rpx);
+  }
+  25%{
+    transform: translate(-1rpx,1rpx);
+  }
+}
 
+.shipAnim{
+  left:-5rpx;
+  top:-5rpx;
+  height:40rpx;
+  width:40rpx;
+  animation-name: shipShakes;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+}
+
+.floodAnim{
+  top:15rpx;
+  left:-45rpx;
+  width:40rpx;
+  height:7rpx;
+  animation-name: floodShakes;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+}
+.days{
+  color:rgb(71, 71, 71)
+}
 /* page {
     height: 100%;
     width: 750rpx;

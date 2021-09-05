@@ -2,6 +2,9 @@
   "usingComponents": {
     "van-tag": "@vant/weapp/tag/index",
 
-    "van-image": "@vant/weapp/image/index"
-  }
+    "van-image": "@vant/weapp/image/index",
+
+    "towxml": "../../../towxml/towxml"
+  },
+  "navigationBarTitleText": "關於我們"
 }

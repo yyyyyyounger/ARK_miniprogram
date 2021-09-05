@@ -5,13 +5,13 @@ Page({
     funs:[
       {
         title:'澳大巴士報站',
-        icon:'https://i.loli.net/2021/08/29/simU9IYnBThzR3C.png',
+        icon:'https://i.loli.net/2021/08/29/Sru1gbNFOxdQ7lv.png',
         color:'#dd565a',
         name:'bus'
       },
       {
         title:'組隊約時間',
-        icon:'https://i.loli.net/2021/08/29/Sru1gbNFOxdQ7lv.png',
+        icon:'https://i.loli.net/2021/08/29/simU9IYnBThzR3C.png',
         color:'#6d90c6',
         name:'meet'
       },

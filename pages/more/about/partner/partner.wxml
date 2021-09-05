@@ -1,11 +1,5 @@
-<!-- 合作學會 -->
-<view class="cu-bar bg-white margin-top">
-	<view class="action">
-		<text class="cuIcon-title text-themeBlue"></text>合作學會
-	</view>
-</view>
-
 <!-- 学会循环渲染 显示page与id相同的一页-->
+<text>\n</text>
 <view class="padding" style="text-align:center; margin-top:-20px;" wx:for="{{institutionInfo}}" wx:key="id" wx:if="{{page==item.id}}">
 
 	<view>
