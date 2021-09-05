@@ -1,26 +1,4 @@
 page{background-color:#FFFFFF;}
-@keyframes shipShakes{
-  25%{
-    transform: rotateZ(7deg);
-  }
-  50%{  
-    transform: rotateZ(-7deg);
-  }
-}
-@keyframes floodShakes{
-  25%{
-    transform: translate(1rpx,1rpx);
-  }
-  25%{
-    transform: translate(1rpx,-1rpx);
-  }
-  75%{  
-    transform: translate(-1rpx,-1rpx);
-  }
-  25%{
-    transform: translate(-1rpx,1rpx);
-  }
-}
 
 .shipAnim{
   left:-5rpx;

@@ -63,3 +63,23 @@ page{background-color:#FFFFFF;}
     font-weight: 500;
     margin-left: 60rpx
 }
+
+.shipAnim{
+    left:-5rpx;
+    top:10rpx;
+    height:60rpx;
+    width:60rpx;
+    animation-name: shipShakes;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+  }
+  
+  .floodAnim{
+    top:8rpx;
+    left:-62rpx;
+    width:60rpx;
+    height:8rpx;
+    animation-name: floodShakes;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+  }

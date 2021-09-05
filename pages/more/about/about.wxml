@@ -66,8 +66,8 @@
     </swiper-item>
   </swiper>
 
+  <!-- 版權聲明 -->
   <view style="margin-top: 20rpx;">
-
     <view style="position:relative;font-size: 20rpx;text-align: center;right:20rpx;color:rgb(104, 104, 104)">
     <text>版權聲明
     </text>
@@ -81,3 +81,4 @@
     </view>
 	</view>
 </view>
+<text>\n</text>

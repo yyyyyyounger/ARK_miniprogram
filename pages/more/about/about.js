@@ -77,10 +77,10 @@ vantWeapp(){
   wx.setClipboardData({  data: 'https://vant-contrib.gitee.io/vant-weapp/#/home',  })
 },
 colorUI(){
-  wx.setClipboardData({  data: 'http://docs.xzeu.com/#/info/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B/%E5%BF%AB%E9%80%9F%E5%B8%83%E7%BD%B2',  })
+  wx.setClipboardData({  data: 'https://github.com/weilanwl/ColorUI2',  })
 },
 oneWord(){
-  wx.setClipboardData({  data: 'https://gushi.ci/',  })
+  wx.setClipboardData({  data: 'https://hitokoto.cn/',  })
 },
 towxml(){
   wx.setClipboardData({  data: 'https://github.com/sbfkcel/towxml',  })

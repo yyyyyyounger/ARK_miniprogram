@@ -85,3 +85,30 @@ page{
     background: transparent;
     visibility: hidden;
 }
+
+/* 美美的開船动画 */
+@keyframes shipShakes{
+    25%{
+      transform: rotateZ(15deg);
+    }
+    50%{  
+      transform: rotateZ(-15deg);
+    }
+  }
+  @keyframes floodShakes{
+    25%{
+      transform: translate(1rpx,1rpx);
+    }
+    25%{
+      transform: translate(1rpx,-1rpx);
+    }
+    75%{  
+      transform: translate(-1rpx,-1rpx);
+    }
+    25%{
+      transform: translate(-1rpx,1rpx);
+    }
+  }
+
+  
+  

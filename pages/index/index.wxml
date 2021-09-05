@@ -17,8 +17,10 @@ bind:close="closePopup"
 	<view class="flexCenter">
 		<text>項目開始時間：2021/06/03</text>
 		<text> 今天是：{{today}} </text>
-		<view>ARK平台已經開發了
-			<text class="devColor">{{durationDay}}</text> 天
+		<view>ARK已經航行了
+			<text class="devColor">{{durationDay}}</text> 天了
+			<image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="shipAnim"></image><!--小船~-->
+      <image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png"     class="floodAnim"></image><!--海浪~-->
 		</view>
 	</view>
 	
@@ -112,8 +114,10 @@ bind:close="closePopup"
 	<view bindtap="jumpToAbout">
 		<!-- <text>項目開始時間：2021/06/03</text> -->
 		<!-- <text> 今天是：{{today}} </text> -->
-		<view class="text-grey word"><text style="padding-left: 15px;"></text>ARK平台已經開發了
-			<text class="text-gray" style="font-weight:bold;">{{durationDay}}</text> 天
+		<view class="text-grey word"><text style="padding-left: 15px;"></text>ARK已經航行
+			<text class="text-gray" style="font-weight:bold;">{{durationDay}}</text> 天了
+			<image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="shipAnim"></image><!--小船~-->
+      <image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png"     class="floodAnim"></image><!--海浪~-->
 		</view>
 	</view>
 </block>
