@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "凱哥寫的小船"
+git commit -m "修改了備註"
 
 git push origin dev
 git push local dev
