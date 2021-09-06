@@ -47,7 +47,7 @@ Page({
         // 訂閱信息定時觸發條件測試
         let nowTimeStamp = Date.parse(new Date('2021-09-04 16:00'));
         console.log("當前時間",nowTimeStamp, new Date(nowTimeStamp) );
-        let beginTimeStamp = Date.parse(new Date('2021-09-04 17:45'));
+        let beginTimeStamp = Date.parse(new Date('2021-09-04 17:15'));
         let sendTimes=0;
 
         for (let i = 0; beginTimeStamp+15*4*60*1000 > nowTimeStamp; i++) {
@@ -57,13 +57,14 @@ Page({
             }
             let timeDiff = beginTimeStamp - nowTimeStamp;
             // 30分鐘內提醒2次
-            if ( 0<timeDiff && timeDiff<=31*60*1000 ) {
+            if ( 0<timeDiff && timeDiff<=30.5*60*1000 ) {
                 console.log("於",new Date(nowTimeStamp),"提醒");
                 sendTimes++
             }
         }
         console.log('總共提醒了',sendTimes,'次');
         
+        this.readyToSend();
     },
     onShow: function(){
         
@@ -182,7 +183,7 @@ Page({
         })
     },
 
-    subscribeTest() {   // 推送
+    subscribeTest() {   // 推送 訂閱
         wx.requestSubscribeMessage({
             tmplIds: ['cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4'],
             success (res) {
@@ -198,6 +199,56 @@ Page({
                 // })
             },
             fail (err) { console.error(err);},
+        })
+    },
+    // 搜索符合觸發send訂閱條件的course
+    readyToSend () {
+        let nowTimeStamp = Date.now();
+        // 查courseState為'opening'的課，且 0< 開始時間-nowTimeStamp <=30.5min
+        db.collection('course') .where({
+            courseState     : 'opening',
+            followMember    : _.exists(true),
+            // 0< 開始時間-nowTimeStamp <=30.5min
+            timeStampPick   : _.gt(nowTimeStamp).and(_.lte(30.5*60*1000+nowTimeStamp)),
+        }) .field({
+            _id             : true,
+            courseInfoInput : true,
+            followMember    : true,
+            timePickArray   : true,
+            timeStampPick   : true,
+        }) .get()
+        .then(res=>{
+            let result = res.data;
+            if (result.length != 0) {   // 未來半小時內有課程要開始
+                for (let i = 0; i < result.length; i++) {
+                    let courseInfo      = result[i].courseInfoInput;
+                    let courseId        = result[i]._id;
+                    let beginTime       = result[i].timePickArray[0].begin;
+                    let followMember    = result[i].followMember;
+                    console.log("課程id ",courseId," ，將在 ",beginTime," 開始，有",followMember.length,"個用戶需要推送訂閱消息");
+                    let followMemberIdArr = followMember.map((e)=>{
+                        return e.arkid;
+                    })
+                    console.log("將要發送推送的純arkid數組",followMemberIdArr);
+                    db.collection('user') .where({
+                        arkid : _.in(followMemberIdArr),
+                    }) .field({
+                        _id : true
+                    }) .get() .then(res=>{
+                        let openIdArr = res.data.map((e)=>{
+                            return e._id;
+                        })
+                        console.log("將要發送推送的純OPENID數組",openIdArr);
+                        // 使用map函數循環對該OPENID推送訂閱
+                    })
+                }
+                console.log("所有符合推送訂閱條件的課程",result);
+            } else{
+                console.log("沒有符合條件的課程數據，不需要提醒訂閱。");
+            }
+        })
+        .catch(err=>{
+            console.error(err);
         })
     },
 
