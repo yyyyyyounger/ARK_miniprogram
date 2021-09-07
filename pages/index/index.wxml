@@ -133,17 +133,17 @@ bind:close="closePopup"
 		</view>
 	</view>
 
-	<!-- QandA for循環渲染 -->
-<view wx:for="{{QandAlist}}" wx:key="id" hidden="{{!showQandA}}"><!-- 不会做动画 摆烂-->
-	<view class="QandA-Q">
-		{{item.question}}
-  </view>
-	<text>\n</text>
-	<view class="QandA-A">
-	  {{item.answer}}
+	<!-- QandA for循環渲染 --> <!-- 不会做动画 摆烂 - by Rainbow-->
+	<view wx:for="{{QandAlist}}" wx:key="id" hidden="{{!showQandA}}" bindtap="displayQandA">
+		<view class="QandA-Q">
+			{{item.question}}
+		</view>
+		<text>\n</text>
+		<view class="QandA-A">
+			{{item.answer}}
+		</view>
+		<text>\n</text>
 	</view>
-	<text>\n</text>
-</view>
 </block>
 
 <!-- 一言 -->

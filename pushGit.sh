@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了圖床改為內地網站，主頁頂部樣式修改。by凱哥"
+git commit -m "修改了主頁QA交互機制。"
 
 git push origin dev
 git push local dev
