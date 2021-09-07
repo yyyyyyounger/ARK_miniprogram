@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了data/cloud.js的備註"
+git commit -m "修改了工作日誌"
 
 git push origin dev
 git push local dev

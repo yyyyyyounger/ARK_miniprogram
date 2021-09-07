@@ -487,12 +487,15 @@ test頁完成15min檢查課程狀態的主要邏輯，準備進入推送環節�
 3 ARK Logo
 4 宣傳圖
 5 主頁刷新時判斷recentFollow列表的課是否過期，過期的操作數據庫除去recentFollowIdArr。（思路：定義鏈式調用查詢recentFollowIdArray，then判斷過期與否進行刪除，then正常獲取邏輯）
+6 checking和opening不夠明白。
+7 結課說明不清晰
 **Additional**
 1 課程頁 - 歸檔記錄 - 所有課程 的排序
 2 課程頁 - 歸檔記錄 - 參與記錄
 3 課程頁 - 歸檔記錄 - 我的開課頁 搜索、排序等
 4 圖片更換為雲儲存id提升速度
 5 第一次進入小程序的操作介紹
+6 距離今天最近的假期
 
 
 
