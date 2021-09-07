@@ -8,7 +8,6 @@ const _ = db.command
 
 Page({
   data: {
-    notAnim:true,
     // Vant - begin
     active_collapse: 0,
     active_col:0,
@@ -100,7 +99,7 @@ Page({
       answer: '小程序仍在測試階段，有任何BUG請在“更多”頁中的“反饋”中查看上報方法！'
     },
     ],
-    showQandA:false
+    showQandA:false,
   },
   onLoad: function(scene) {
     this.app = getApp();
@@ -419,30 +418,35 @@ Page({
       complete: function (res) { },
     })
   },
-  displayQandA(){//Q&A收放
+
+  //Q&A收放
+  displayQandA(){
     this.setData({
       showQandA:!this.data.showQandA
     })
   },
   
-  shipTouched(){//小船翻转动画 （CSS）只能触发一次
-    if(this.data.notAnim){
-      this.setData({
-        shipClass:'shipRoll'
-      })
-      var shipClass = this.data.shipClass
-      this.setData({
-        notAnim:false
-      })
-      setTimeout(this.reClass,500)
-    }
-
+  // 點按小船，觸發翻转动画
+  shipTouched(){
+    // 翻轉動畫
+    this.shipRoll();
+    
+    setTimeout(()=>{
+      this.jumpToAbout();
+    }, 500)
   },
-  reClass(){//翻转后重新载入 小船摇曳动画
+  // 小船翻转后重新载入 小船摇曳动画
+  shipRoll(){
+    // 小船翻轉
     this.setData({
-      shipClass:'shipAnim1'
+      shipClass:'shipRoll',
     })
-    var shipClass = this.data.shipClass
+    // 延遲500ms，恢復默認狀態
+    setTimeout(()=>{
+      this.setData({
+        shipClass:'shipAnim1'
+      })
+    }, 500)
   }
 }); 
   

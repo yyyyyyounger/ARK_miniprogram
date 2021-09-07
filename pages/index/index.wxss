@@ -91,6 +91,7 @@ page{background-color:#FFFFFF;}
     margin-left: 60rpx
 }
 
+  /* 默認 小船摇曳动画 */
 .shipAnim0{
     left:-5rpx;
     top:10rpx;
@@ -100,7 +101,6 @@ page{background-color:#FFFFFF;}
     animation-duration: 5s;
     animation-iteration-count: infinite;
   }
-
   .shipAnim1{
     left:-5rpx;
     top:10rpx;
@@ -110,8 +110,8 @@ page{background-color:#FFFFFF;}
     animation-duration: 5s;
     animation-iteration-count: infinite;
   }
-  
-  .floodAnim{
+  /* 海浪動畫 */
+.floodAnim{
     top:8rpx;
     left:-62rpx;
     width:60rpx;
@@ -119,7 +119,17 @@ page{background-color:#FFFFFF;}
     animation-name: floodShakes;
     animation-duration: 3s;
     animation-iteration-count: infinite;
-  }
+}
+/* 小船旋轉動畫 */
+.shipRoll{
+    animation-name: rolling;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    left:-5rpx;
+    top:10rpx;
+    height:60rpx;
+    width:60rpx;
+}
 
   .colorShining{
     animation-delay: 5s;
@@ -135,14 +145,4 @@ page{background-color:#FFFFFF;}
   .van-steps{
       position: relative;
       right:5rpx
-  }
-
-  .shipRoll{
-      animation-name: rolling;
-      animation-duration: 0.5s;
-      animation-iteration-count: 1;
-      left:-5rpx;
-      top:10rpx;
-      height:60rpx;
-      width:60rpx;
   }
