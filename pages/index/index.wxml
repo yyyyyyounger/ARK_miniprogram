@@ -19,7 +19,7 @@ bind:close="closePopup"
 		<text> 今天是：{{today}} </text>
 		<view>ARK已經航行了
 			<text class="devColor">{{durationDay}}</text> 天了
-			<image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="shipAnim"></image><!--小船~-->
+			<image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="shipAnim {{shiptouched}}?:shipRoll" bindtap="shiptouched"></image><!--小船~-->
       <image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png"     class="floodAnim"></image><!--海浪~-->
 		</view>
 	</view>
@@ -39,10 +39,10 @@ bind:close="closePopup"
 <view style="margin-top: 12px;"></view>
 <van-notice-bar
   left-icon="volume-o"
-	color="#a4b0be"
-  text="{{ARK_Notice}}" 
-	bindtap="handleTapProtocol"
-	mode="closeable"
+  color="#1989fa"
+  background="#ecf9ff"
+  text="{{indexAnnouncement}}"
+	bindtap="handleTapAnnouncement"
 />
 <!-- 輪播 - 輪播內容未完成 -->
 <swiper class="card-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#3498DB" style="margin-top: -8px;">
@@ -62,10 +62,10 @@ bind:close="closePopup"
 <van-row wx:if="{{recentCourseInfoArray[0]}}">
 	<van-col span="16">
 		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange_collapse">
-			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:key="index" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}">
+			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:key="index" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}" style="position:relative;left:38rpx;">
 				<view bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}">
 					<view>時間：{{recentCourseInfoArray[index].courseInfoInput[5].input[1]}} - {{recentCourseInfoArray[index].courseInfoInput[5].input[2]}}</view>
-					<view>地點：{{recentCourseInfoArray[index].courseInfoInput[4].input}}</view>
+					<view>地點：{{recentCourseInfoArray[index].courseInfoInput[4].input}} ...</view>
 				</view>
 			</van-collapse-item>
 		</van-collapse>
@@ -106,17 +106,18 @@ bind:close="closePopup"
 
 <!-- 關於ARK -->
 <block>
-	<view class="cu-bar bg-white">
+	<view class="cu-bar bg-white"  bindtap="jumpToAbout">
 		<view class="action">
 			<text class="cuIcon-title text-themeBlue"></text>關於ARK
+			<van-icon name="arrow"/>
 		</view>
 	</view>
-	<view bindtap="jumpToAbout">
+	<view>
 		<!-- <text>項目開始時間：2021/06/03</text> -->
 		<!-- <text> 今天是：{{today}} </text> -->
 		<view class="text-grey word"><text style="padding-left: 15px;"></text>ARK已經航行
 			<text class="text-gray" style="font-weight:bold;">{{durationDay}}</text> 天了
-			<image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="shipAnim"></image><!--小船~-->
+			<image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="{{shipClass}}" bindtap="shipTouched"></image><!--小船~-->
       <image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png"     class="floodAnim"></image><!--海浪~-->
 		</view>
 	</view>
@@ -125,7 +126,7 @@ bind:close="closePopup"
 <!-- 常见问题Q&A -->
 <block>
 	<view class="cu-bar bg-white" bindtap="displayQandA">
-		<view class="action">
+		<view class="action colorShining">
 			<text class="cuIcon-title text-themeBlue"></text>常見問題Q&A
 			<van-icon name="arrow" wx:if="{{!showQandA}}"/><!-- 收起和打开时图标变化 -->
 			<van-icon name="arrow-down" wx:else/>

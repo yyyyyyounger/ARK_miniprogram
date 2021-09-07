@@ -6,7 +6,7 @@
     src="https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg"
   />
   <!-- <view class="cu-avatar round" style="background-image:url(../../../icons/ARKlogo.jpg); height: 150px; width: 150px;"></view> -->
-  <view text-gray style="text-decoration:underline;margin-top:-30rpx;" bindtap="jumpToProtocol">ARK UM</view>
+  <view text-gray style="text-decoration:underline;margin-top:-30rpx;color:rgb(0, 39, 70)" bindtap="jumpToProtocol">ARK UM</view>
 </view>
 <text>\n</text>
 

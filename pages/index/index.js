@@ -1,3 +1,4 @@
+import { ARKVersion } from '../../data/cloud.js';
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 
 var app = getApp();
@@ -7,6 +8,7 @@ const _ = db.command
 
 Page({
   data: {
+    notAnim:true,
     // Vant - begin
     active_collapse: 0,
     active_col:0,
@@ -19,42 +21,41 @@ Page({
       {
         id: 0,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/26/R7PjTXudSoxqtZe.jpg'
+        url: 'https://i0.hdslb.com/bfs/album/dec826ae3cddacd1c4328a208fd7a2d64e8b878d.jpg'
       }, 
       {
         id: 1,
           type: 'image',
-          url: 'https://i.loli.net/2021/08/26/dlIu4YthJaXTA5E.jpg',
+          url: 'https://i0.hdslb.com/bfs/album/5e84ac5924085d3155846926da3f32c18bbb2049.jpg',
       }, 
       {
         id: 2,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/26/tCMGbShnQmxLopg.jpg'
+        url: 'https://i0.hdslb.com/bfs/album/5b6a070c62297faf3cf6fd304f5a61b8e944d49c.jpg'
       },
       {
         id: 3,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/25/GAuOr7SR4TvsBPj.png'
+        url: 'https://i0.hdslb.com/bfs/album/2fe21e078b9bfc16ae6627ef3cb5afe37ffcc987.png'
       },
       {
         id: 4,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/08/4X7iQcVU9AKxIaH.jpg'
+        url: 'https://i0.hdslb.com/bfs/album/57c90fcd1e3ac67a42f496e52f2c20e5bf49de13.jpg'
       },
       {
         id: 5,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/24/PIh8sfRW9yMn2CD.jpg'
+        url: 'https://i0.hdslb.com/bfs/album/51979c04c6d6eaa7ae0b917cce9053596863ead4.jpg'
       },
       {
         id: 6,
         type: 'image',
-        url: 'https://i.loli.net/2021/08/24/mQj168BbwCuJOUN.jpg'
+        url: 'https://i0.hdslb.com/bfs/album/4155c2b9eeff4a6f90c4f219f83810b6f51aae2e.jpg'
       },
     ],
     // Color - end
     moto:[],    // 一言API
-    ARK_Notice:"ARK協議v1.01已發佈！點擊查看",
     isShow : false,
     projStartTime: [],
     today:'',
@@ -103,6 +104,10 @@ Page({
   },
   onLoad: function(scene) {
     this.app = getApp();
+    this.setData({//小船动画初始化
+      shipClass:'shipAnim0'
+    })
+    var shipClass = this.data.shipClass
 
     // 非下拉刷新的場景時 - 首次加載
     if (scene!="refresh") {
@@ -116,6 +121,9 @@ Page({
       //     zIndex  : 99999999999999
       //   })
       // }, 5000)
+      this.setData({//主頁公告 在cloudData裡
+        indexAnnouncement:cloudData.indexAnnouncement
+      })
     }
 
     // 轉發按鈕所必須
@@ -161,7 +169,6 @@ Page({
     
     // 獲取已follow的課程列表
     this.returnMyFollowCourses();
-
   },
   // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
   findSetData() {
@@ -243,7 +250,7 @@ Page({
   onShow (){  //頁面展示時，觸發動畫
     this.getTabBar().init();
     this.setData({
-      showQandA:false
+      showQandA:false,
     })
   },
 
@@ -361,7 +368,7 @@ Page({
   },
 
   // 跳轉“協議”頁
-  handleTapProtocol () {
+  handleTapAnnouncement () {
     console.log("跳轉ARK協議頁");
     wx:wx.navigateTo({
       url: '../protocol/protocol'
@@ -416,6 +423,26 @@ Page({
     this.setData({
       showQandA:!this.data.showQandA
     })
+  },
+  
+  shipTouched(){//小船翻转动画 （CSS）只能触发一次
+    if(this.data.notAnim){
+      this.setData({
+        shipClass:'shipRoll'
+      })
+      var shipClass = this.data.shipClass
+      this.setData({
+        notAnim:false
+      })
+      setTimeout(this.reClass,500)
+    }
+
+  },
+  reClass(){//翻转后重新载入 小船摇曳动画
+    this.setData({
+      shipClass:'shipAnim1'
+    })
+    var shipClass = this.data.shipClass
   }
 }); 
   

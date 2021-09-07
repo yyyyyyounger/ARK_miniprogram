@@ -1,5 +1,32 @@
 page{background-color:#FFFFFF;}
 
+@keyframes highTechColor{
+    0%{
+        color:rgb(4, 121, 255)
+    }
+    25%{
+        color:rgb(131, 185, 255)
+    }
+    50%{
+        color:rgb(4, 121, 255)
+    }
+    75%{
+        color:rgb(131, 185, 255)
+    }
+    100%{
+        color:rgb(4, 121, 255)
+    }
+}
+
+@keyframes rolling{
+    from{
+        transform: rotateZ(9deg);
+    }
+    to{
+        transform: rotateZ(-360deg);
+    }
+}
+
 .weui-cell_example .weui-cell__hd image{
     width:20px;
     height:20px;
@@ -64,7 +91,17 @@ page{background-color:#FFFFFF;}
     margin-left: 60rpx
 }
 
-.shipAnim{
+.shipAnim0{
+    left:-5rpx;
+    top:10rpx;
+    height:60rpx;
+    width:60rpx;
+    animation-name: shipShakes;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+  }
+
+  .shipAnim1{
     left:-5rpx;
     top:10rpx;
     height:60rpx;
@@ -82,4 +119,30 @@ page{background-color:#FFFFFF;}
     animation-name: floodShakes;
     animation-duration: 3s;
     animation-iteration-count: infinite;
+  }
+
+  .colorShining{
+    animation-delay: 5s;
+    animation-name: highTechColor;
+    animation-duration: 5s;
+    animation-iteration-count: 2;
+  }
+
+  .van-collapse-item{
+      width: 400rpx;
+  }
+
+  .van-steps{
+      position: relative;
+      right:5rpx
+  }
+
+  .shipRoll{
+      animation-name: rolling;
+      animation-duration: 0.5s;
+      animation-iteration-count: 1;
+      left:-5rpx;
+      top:10rpx;
+      height:60rpx;
+      width:60rpx;
   }
