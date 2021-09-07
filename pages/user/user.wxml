@@ -142,8 +142,8 @@
 <!-- 進度條 -->
   <!-- <van-progress percentage="{{durationDay_Grudate_progress}}" /> -->
 
-  <!-- <van-divider contentPosition="center">如果編輯狀態下選項異常，請下拉刷新再試</van-divider> -->
   <van-divider contentPosition="center">若顯示 / 邏輯異常，請下拉刷新再試</van-divider>
+  <van-divider contentPosition="center">如遇頭像異常等，更多頁清除緩存再試</van-divider>
 
 </van-skeleton>
 
