@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復了課程編輯狀態刪文件無限loading的bug"
+git commit -m "增加了課程編輯頁的指引和說明"
 
 git push origin dev
 git push local dev
