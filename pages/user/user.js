@@ -130,7 +130,6 @@ Page({
       Toast.loading({
         message: '請稍等...',
         forbidClick: true,
-        duration : 0,
       })
       // 返回majorTagArray的信息
       this.returnMajorTagArray(this);
@@ -182,14 +181,6 @@ Page({
 
       // 初始化各種數組
       this.ArrayDataInit(this);
-
-      // 未理解的神秘執行 - 未完成
-      if (wx.getUserProfile) {
-        console.log("wx.getUserProfile為true");
-        this.setData({
-          canIUseGetUserProfile: true   // 用戶授權狀態設為true
-        })
-      } else{  console.log("user頁 - onLoad() - GetuserProfile ***fail***"); }
 
       // 頁面加載完成時，取消骨架屏
       this.setData({  loading: false  });   
