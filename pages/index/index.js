@@ -65,24 +65,29 @@ Page({
     //Q&A循環渲染数组
     QandAlist:[
     {
+      id:7,
+      question: 'Q0:這個小程序是什麼？',
+      answer: '目前作為FST ARK活動運作平台(可查看頂部協議)，正在開發其他契合澳大生活的功能，爭取實現UM All In One~'
+    },
+    {
       id:0,
       question: 'Q1:如何Follow課程',
-      answer: '點擊下方“課程”按鈕，找到喜歡的課程進行Follow吧'
+      answer: '點擊下方“課程”按鈕，找到喜歡的課程進行Follow吧~'
     },
     {
       id:1,
       question: 'Q2:在哪裡查看Follow的課程',
-      answer: '“首頁”，“課程”的“我的Follow”中均有記錄哦'
+      answer: '“首頁”，“課程”的“我的Follow”中均有記錄哦~'
     },
     {
       id:2,
       question: 'Q3:如何取消Follow',
-      answer: '在“我的Follow”中點擊“ByeBye”按鈕即可'
+      answer: '在“我的Follow”中點擊“ByeBye”按鈕即可~'
     },
     {
       id:3,
       question: 'Q4:如何收到通知',
-      answer: '開課成功、預約成功、臨近課程時，我們將通過您的學校郵箱通知您，所以請務必正確填寫UM ID'
+      answer: '開課成功、臨近課程時，我們將通過微信-服務通知提醒您，所以請同意接受訂閱並勾選不再詢問！'
     },
     {
       id:4,
