@@ -49,6 +49,9 @@ Page({
       }, 
       fail (err) {
           console.error(err);
+          this.setData({
+            result : undefined
+          })
       }
     })
   },

@@ -1,3 +1,4 @@
+<!-- ARK LOGO -->
 <view style="text-align:center;">
   <van-image
     round
@@ -65,6 +66,23 @@
       <view class="text-gray" style="font-size: 28rpx;margin-top:-20rpx">{{item.name}}</view>
     </swiper-item>
   </swiper>
+
+  <!-- 作者介紹 -->
+  <text class="cuIcon-title text-themeBlue"></text>開發者
+  <view style="margin-left: 40rpx;font-size: 28rpx;margin-right: 60rpx;color:rgb(116, 116, 116)">
+      <text>2021.09.08上線第一版主要代碼貢獻者(不分先後)：Rookie、Rainbow、Box、Kelvin、KaLo、Fgg。
+            參與籌劃人：James、Bil、Csm。
+            藝術設計人：Xxy、。
+      </text>
+  </view>
+
+  <!-- 有興趣開發 -->
+  <text class="cuIcon-title text-themeBlue"></text>參與開發
+  <view style="margin-left: 40rpx;font-size: 28rpx;margin-right: 60rpx;color:rgb(116, 116, 116)">
+      <text>如有興趣參與維護、開發、設計、宣傳等，都可以直接點擊更多頁的“聯繫管理員”按鈕聯繫我們！
+      非常期待你的加入。ヾ(@^▽^@)ノ
+      </text>
+  </view>
 
   <!-- 版權聲明 -->
   <view style="margin-top: 20rpx;">
