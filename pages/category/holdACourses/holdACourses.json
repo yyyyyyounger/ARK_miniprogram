@@ -21,5 +21,6 @@
 
     "van-action-sheet": "@vant/weapp/action-sheet/index"
 
-  }
+  },
+  "navigationBarTitleText": "開課頁"
 }
