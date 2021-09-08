@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "增加bus說明和關於頁作者說明。"
+git commit -m "訂閱成功發送。"
 
 git push origin dev
 git push local dev

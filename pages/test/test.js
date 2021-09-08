@@ -218,95 +218,76 @@ Page({
                         return e.arkid;
                     })
                     console.log("將要發送推送的純arkid數組",followMemberIdArr);
-                    if (false) {
-                        
-                        db.collection('user') .where({
-                            arkid : _.in(followMemberIdArr),
-                        }) .field({
-                            _id : true
-                        }) .get() .then(res=>{
-                            let openIdArr = res.data.map((e)=>{
-                                cloud.openapi.subscribeMessage.send({
-                                    "touser": e._id,   // 推送訂閱到調用解析到的OPENID的user
-                                    "templateId": 'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',
-                                    "page" : './pages/index',
-                                    "data": {
-                                      "thing1": {             // 發起方
-                                        "value": 'test1'
-                                      },
-                                      "thing6": {             // 活動名稱
-                                        "value": 'test2'
-                                      },
-                                      "character_string10": { // 活動時間
-                                        "value": 'test3'
-                                      },
-                                      "thing4": {             // 活動地點
-                                        "value": 'test4'
-                                      },
-                                      "thing11": {            // 備註
-                                        "value": 'test5'
-                                      },
+
+                    db.collection('user') .where({
+                        arkid : _.in(followMemberIdArr),
+                    }) .field({
+                        _id : true
+                    }) .get() .then(res=>{
+                        let openIdArr = res.data.map((userInfo)=>{
+                            if (false) {
+                                // 發送訂閱雲函數
+                                let SendData = {
+                                    "thing1": {             // 發起方
+                                    "value": 'test1'
                                     },
+                                    "thing6": {             // 活動名稱
+                                    "value": 'test2'
+                                    },
+                                    "character_string10": { // 活動時間
+                                    "value": 'test3'
+                                    },
+                                    "thing4": {             // 活動地點
+                                    "value": 'test4'
+                                    },
+                                    "thing11": {            // 備註
+                                    "value": 'test5'
+                                    },
+                                };
+                                wx.cloud.callFunction({
+                                    name:'subscribeMessageSend',
+                                    data : {
+                                        data    : SendData,
+                                        OPENID  : userInfo._id,
+                                    }
                                 }) .then(res=>{
-                                    return res;
-                                }) .catch (err=>{
-                                    return err;
+                                    console.log("雲函數調用成功：",res.result);
+                                }) .catch(err=>{
+                                    console.error("雲函數調用失敗：",err);
                                 })
-                                return e._id;
-                            })
-                            console.log("將要發送推送的純OPENID數組",openIdArr);
-                            // 使用map函數循環對該OPENID推送訂閱
+                                // cloud.openapi.subscribeMessage.send({
+                                //     "touser": e._id,   // 推送訂閱到調用解析到的OPENID的user
+                                //     "templateId": 'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',
+                                //     "page" : './pages/index',
+                                //     "data": {
+                                //         "thing1": {             // 發起方
+                                //         "value": 'test1'
+                                //         },
+                                //         "thing6": {             // 活動名稱
+                                //         "value": 'test2'
+                                //         },
+                                //         "character_string10": { // 活動時間
+                                //         "value": 'test3'
+                                //         },
+                                //         "thing4": {             // 活動地點
+                                //         "value": 'test4'
+                                //         },
+                                //         "thing11": {            // 備註
+                                //         "value": 'test5'
+                                //         },
+                                //     },
+                                // }) .then(res=>{
+                                //     return res;
+                                // }) .catch (err=>{
+                                //     return err;
+                                // })
+                            }
+                            return userInfo._id;
                         })
-                    }
+                        console.log("將要發送推送的純OPENID數組",openIdArr);
+                        // 使用map函數循環對該OPENID推送訂閱
+                    })
                 })
-                // for (let i = 0; i < result.length; i++) {
-                //     let courseInfo      = result[i].courseInfoInput;
-                //     let courseId        = result[i]._id;
-                //     let beginTime       = result[i].timePickArray[0].begin;
-                //     let followMember    = result[i].followMember;
-                //     console.log("課程id ",courseId," ，將在 ",beginTime," 開始，有",followMember.length,"個用戶需要推送訂閱消息");
-                //     let followMemberIdArr = followMember.map((e)=>{
-                //         return e.arkid;
-                //     })
-                //     console.log("將要發送推送的純arkid數組",followMemberIdArr);
-                //     db.collection('user') .where({
-                //         arkid : _.in(followMemberIdArr),
-                //     }) .field({
-                //         _id : true
-                //     }) .get() .then(res=>{
-                //         let openIdArr = res.data.map((e)=>{
-                //             cloud.openapi.subscribeMessage.send({
-                //                 "touser": e._id,   // 推送訂閱到調用解析到的OPENID的user
-                //                 "templateId": 'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',
-                //                 "page" : './pages/index',
-                //                 "data": {
-                //                   "thing1": {             // 發起方
-                //                     "value": 'test1'
-                //                   },
-                //                   "thing6": {             // 活動名稱
-                //                     "value": 'test2'
-                //                   },
-                //                   "character_string10": { // 活動時間
-                //                     "value": 'test3'
-                //                   },
-                //                   "thing4": {             // 活動地點
-                //                     "value": 'test4'
-                //                   },
-                //                   "thing11": {            // 備註
-                //                     "value": 'test5'
-                //                   },
-                //                 },
-                //             }) .then(res=>{
-                //                 return res;
-                //             }) .catch (err=>{
-                //                 return err;
-                //             })
-                //             return e._id;
-                //         })
-                //         console.log("將要發送推送的純OPENID數組",openIdArr);
-                //         // 使用map函數循環對該OPENID推送訂閱
-                //     })
-                // }
                 console.log("所有符合推送訂閱條件的課程",result);
             } else{
                 console.log("沒有符合條件的課程數據，不需要提醒訂閱。");
