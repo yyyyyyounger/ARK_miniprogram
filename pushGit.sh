@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復：課程頁奇怪的不能follow的bug；增加課程頁默認排序：時間越遠越靠前；"
+git commit -m "修改了user頁的加載結構，提速。"
 
 git push origin dev
 git push local dev
