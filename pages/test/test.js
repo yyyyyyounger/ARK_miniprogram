@@ -187,8 +187,12 @@ Page({
         wx.requestSubscribeMessage({
             tmplIds: ['cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4'],
             success (res) {
-                // 不管點擊允許還是取消，都會執行success的回調函數
-                console.log("用戶同意接受推送：",res);
+                let result = res.cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4;
+                console.log(result);
+                // 不管點擊允許還是取消，都會執行success的回調函數。。。
+                // if (result != "reject") {
+                //     console.log("用戶同意接受推送：",res);
+                // }
                 // 發送訂閱雲函數
                 // wx.cloud.callFunction({
                 //     name:'subscribeMessageSend',
@@ -236,6 +240,32 @@ Page({
                         _id : true
                     }) .get() .then(res=>{
                         let openIdArr = res.data.map((e)=>{
+                            cloud.openapi.subscribeMessage.send({
+                                "touser": e._id,   // 推送訂閱到調用解析到的OPENID的user
+                                "templateId": 'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',
+                                "page" : './pages/index',
+                                "data": {
+                                  "thing1": {             // 發起方
+                                    "value": 'test1'
+                                  },
+                                  "thing6": {             // 活動名稱
+                                    "value": 'test2'
+                                  },
+                                  "character_string10": { // 活動時間
+                                    "value": 'test3'
+                                  },
+                                  "thing4": {             // 活動地點
+                                    "value": 'test4'
+                                  },
+                                  "thing11": {            // 備註
+                                    "value": 'test5'
+                                  },
+                                },
+                            }) .then(res=>{
+                                return res;
+                            }) .catch (err=>{
+                                return err;
+                            })
                             return e._id;
                         })
                         console.log("將要發送推送的純OPENID數組",openIdArr);

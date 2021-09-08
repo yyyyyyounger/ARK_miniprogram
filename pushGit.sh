@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了工作日誌"
+git commit -m "修復： 課程頁 - 歸檔、我要開課 分欄，下拉刷新不斷加載bug"
 
 git push origin dev
 git push local dev

@@ -78,9 +78,15 @@ Page({
     })
     setTimeout(() => {
       wx.stopPullDownRefresh();
-    }, 1000);
+    }, 500);
 
-    this.onShow();
+    if ( clickTabs==2 || clickTabs==3 ) { // 不需要刷新的分欄
+      Toast('這個分欄不需要刷新呢')
+    }
+    else {                                // 課程查看分欄，獲取課程信息
+      this.onShow();
+    }
+
   },
 
   // 返回最近課程信息

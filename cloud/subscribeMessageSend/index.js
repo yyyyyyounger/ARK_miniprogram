@@ -2,13 +2,13 @@ const cloud = require('wx-server-sdk')
 cloud.init({
   env: 'cloud1-5gtulf1g864cd4ea',
 })
- 
+
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
 
   try {
     const result = await cloud.openapi.subscribeMessage.send({
-        "touser": wxContext.OPENID,
+        "touser": wxContext.OPENID,   // 推送訂閱到調用該雲函數的user
         "templateId": 'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',
         "page" : './pages/index',
         "data": {
@@ -38,6 +38,15 @@ exports.main = async (event, context) => {
     return err
   }
 }
+
+// 定時觸發器
+// "triggers": [
+//   {
+//     "name": "sendMessagerTimer",
+//     "type": "timer",
+//     "config": "0 */1 * * * ?"
+//   }
+// ]
 
 // exports.main = async (event, context) => {
 //   try {

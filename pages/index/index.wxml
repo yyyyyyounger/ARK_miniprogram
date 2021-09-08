@@ -163,7 +163,7 @@ bind:close="closePopup"
 
 <van-divider contentPosition="center">正在開發更多內容！敬請期待！</van-divider>
 
-<button bindtap="jumpToTestPage">跳轉測試頁（請不要擅自進入）</button>
+<button bindtap="jumpToTestPage" wx:if="{{admin}}">跳轉測試頁（請不要擅自進入）</button>
 
 <!-- 免除自定義tabbar阻擋 -->
 <view class="bottom-watch"></view>
