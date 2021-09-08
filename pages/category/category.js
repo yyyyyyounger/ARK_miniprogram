@@ -114,6 +114,18 @@ Page({
     .then(res=>{
         console.log("符合條件的最近的課為",res.data)
         let recentCourseInfoArray = res.data;
+
+        // 排序為時間越遠，越靠前 - 未完成，應該為距今天越近越靠前
+        function compare(p){ // 这是比较函数
+          return function(m,n){
+              var a = m[p];
+              var b = n[p];
+              return b - a; // a-b升序；b-a降序；
+          }
+        }
+        recentCourseInfoArray.sort(compare("timeStampPick"));
+        console.log("排序後",recentCourseInfoArray); 
+
         // 生成已經Follow了的課程Info的數組形式
         this.setData({  recentCourseInfoArray  })
 

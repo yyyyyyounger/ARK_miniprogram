@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復： 課程頁 - 歸檔、我要開課 分欄，下拉刷新不斷加載bug"
+git commit -m "修復：課程頁奇怪的不能follow的bug；增加課程頁默認排序：時間越遠越靠前；"
 
 git push origin dev
 git push local dev
