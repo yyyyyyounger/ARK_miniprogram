@@ -2,6 +2,7 @@ import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 
+var towxml = require('../../towxml/index');
 var cloudData = require('../../data/cloud.js')
 var app = getApp();
 const db = wx.cloud.database();
@@ -9,6 +10,29 @@ const _ = db.command
 
 let clickTabs = 0;
 
+// 開課欄目的教程 - Markdown語法
+let notification = `
+**開課按鈕在本頁下方！**
+課程狀態分類：
+&nbsp; **·** 審核中 '**checking**'
+&nbsp; **·** 開放follow中 '**opening**'
+&nbsp; **·** 已結束課程 '**finish**'
+
+&nbsp; **·** 審核通過後可以再修改某些信息，修改權限可以與管理員協商。
+&nbsp; **·** 設定的Helper不算入任何參與/主持次數，需自行follow課程。
+&nbsp; **·** opening狀態課程可以上傳文件（從微信聊天選取，可以先傳送到聊天再到小程式上傳文件），當前版本不支持電腦版ARK上傳文件。
+&nbsp; **·** 到開始時間後會開啟簽到，簽到完成的follower才可以查看上傳的文件。
+&nbsp; **·** 需要自行預約房間，圖書館可以使用三張學生卡提前預約。
+
+如有特別情況或錯誤，請前往**更多頁**聯繫管理員！`;
+let process = `
+1 . 點擊“我要開課”，填寫必填或選填信息
+2 . 確認無誤後提交審核
+3 . 等待審核通過
+4 . 通過後仍可修改部分信息
+5 . 在預定的時間舉辦課程並指揮同學簽到
+6 . 課程結束後點擊結課按鈕（課程詳情頁中）
+7 . 一次ARK完整結束！✿✿ヽ(°▽°)ノ✿`;
 
 Page({
   data: {
@@ -39,12 +63,17 @@ Page({
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     this.setData({  userCloudDataStorage : userCloudDataStorage.data,  })
 
+    //开课须知 和 流程说明的Markdown渲染
+    this.setData({
+      notificationMD  : towxml(notification,'markdown'),
+      processMD       : towxml(process,'markdown'),
+    })
+
     // 返回最近課程信息 - 在onShow()操作
 
     if (userCloudDataStorage) { // 如果已登錄，獲取admin權限
       this.setData({  admin : userCloudDataStorage.data.admin  })
     }
-
   },
   onShow: function() {
     if (clickTabs==0 || clickTabs==1) {   // 課程頁面
@@ -191,19 +220,19 @@ Page({
     // tabs由0開始
     clickTabs = e.detail.name;
     switch (e.detail.name) {
-      case 0:
+      case 0:   // 最近發佈
         
         break;
     
-      case 1:
-      
+      case 1:   // 我的follow
+        
         break;
-    
-      case 2:
+        
+      case 2:   // 歸檔記錄
         
         break;
     
-      case 3:
+      case 3:   // 我要開課
         
         break;
     }

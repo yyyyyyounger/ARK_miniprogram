@@ -28,22 +28,6 @@ Page({
             })
         }
 
-        // 請求學生會網站介紹的IET的代碼
-        // wx.request({
-        //   url: 'https://umsu.org.mo/%e9%99%84%e5%b1%ac%e7%b5%84%e7%b9%94/%e5%b7%a5%e7%a8%8b%e5%8f%8a%e7%a7%91%e6%8a%80%e5%ad%b8%e6%9c%83%e9%a6%99%e6%b8%af%e5%88%86%e6%9c%83%e9%9d%92%e5%b9%b4%e6%9c%83%e5%93%a1%e9%83%a8%e6%be%b3%e9%96%80%e5%ad%b8%e7%94%9f%e6%94%af%e9%83%a8/',
-        //   method : 'GET',
-        // //   header : {
-        // //     'Host': "umsu.org.mo",
-        // //     'Referer': "https://umsu.org.mo/%e9%99%84%e5%b1%ac%e7%b5%84%e7%b9%94/",
-        // //   },
-        //   success (res) {
-        //       console.log(res.data);
-        //   },
-        //   fail (err) {
-        //       console.error(err);
-        //   }
-        // })
-
         // 訂閱信息定時觸發條件測試
         let nowTimeStamp = Date.parse(new Date('2021-09-04 16:00'));
         console.log("當前時間",nowTimeStamp, new Date(nowTimeStamp) );

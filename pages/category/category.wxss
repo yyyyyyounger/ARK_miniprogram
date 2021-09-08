@@ -46,3 +46,9 @@ page{background-color:#FFFFFF;}
   border-radius: 50rpx;
   width: auto;
 }
+
+.contents{
+  color:rgb(114, 114, 114);
+  margin-left: 30rpx; 
+  margin-top: -65rpx;
+}

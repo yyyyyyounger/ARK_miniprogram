@@ -169,22 +169,28 @@
   
   <van-tab title="我要開課">
 
-    <view class="cu-bar bg-white margin-top">
+    <!-- 開課須知 -->
+    <view class="cu-bar">
       <view class="action">
         <text class="cuIcon-title text-themeBlue"></text>開課須知
       </view>
     </view>
-    <van-skeleton row="4" />
+    <view class="contents">
+       <towxml nodes="{{notificationMD}}"/>
+    </view>
 
-    <view class="cu-bar bg-white margin-top">
+    <!-- 流程說明 -->
+    <view class="cu-bar">
       <view class="action">
-        <text class="cuIcon-title text-themeBlue"></text>流程說明
+        <text class="cuIcon-title text-themeBlue"></text>ARK 流程說明
       </view>
     </view>
-    <van-skeleton row="4" />
+    <view class="contents">
+      <towxml nodes="{{processMD}}"/>
+    </view>
 
-
-    <view style="margin-top:150rpx">
+    <!-- 開課按鈕 -->
+    <view>
       <van-button type="primary" size="normal" color="#3498DB" round class="flexCenter" bindtap="jumpToholdACourses">我要開課<van-icon name="plus"/></van-button>
     </view>
 

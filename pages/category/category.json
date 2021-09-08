@@ -21,8 +21,9 @@
     "van-grid": "@vant/weapp/grid/index",
     "van-grid-item": "@vant/weapp/grid-item/index",
 
-    "van-sticky": "@vant/weapp/sticky/index"
+    "van-sticky": "@vant/weapp/sticky/index",
 
+    "towxml": "../../towxml/towxml"
   },
   "navigationBarTitleText": "課程頁"
 }

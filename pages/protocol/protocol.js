@@ -1,5 +1,4 @@
 // 2021.8.8更新：將註冊的最後一步改為帶參跳轉後的協議頁同意按鈕
-
 var cloudData = require('../../data/cloud');
 var towxml = require('../../towxml/index');
 const { el } = require('../../towxml/parse/parse2/entities/maps/entities');
@@ -12,7 +11,6 @@ Page({
   data: {
     article: {},                     // 渲染內容數據
     isLoading: true,                    // 判断是否尚在加载中
-
   },
   onLoad: function(options){
     if (options.detailInfo) { //存在帶參跳轉
@@ -34,13 +32,11 @@ Page({
       this.setData({  shortNameIndex  })
     }
 
-    // 渲染ARK協議 - 應改成雲端獲取 - 未完成
-    this.setData({  ARK: cloudData.ARK  });
-    let result = towxml(this.data.ARK,'markdown',);
+    // 渲染ARK協議 - ARK協議在cloud.js修改
     this.setData({
-      article:result,
-      isLoading: false,
-    });
+      article   : towxml(cloudData.ARK,'markdown'),
+      isLoading : false,
+    })
 
   },
   onShow: function(){
