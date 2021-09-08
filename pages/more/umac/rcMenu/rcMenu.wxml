@@ -1,0 +1,5 @@
+<!-- 這個界面為書院菜單查詢 -->
+
+<!-- 建議使用wx:for -->
+
+<view class="bottom-watch"></view>
