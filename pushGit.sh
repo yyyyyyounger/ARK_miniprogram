@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "訂閱成功發送。"
+git commit -m "修改了關於頁的參與人。"
 
 git push origin dev
 git push local dev
