@@ -97,8 +97,10 @@ Page({
 
   },
   onPullDownRefresh: function() {
-    // 設定至加載狀態 - 骨架屏
-    this.setData({  loading : true  })
+    if ( clickTabs==0 || clickTabs==1 ) { // 不需要刷新的分欄
+      // 設定至加載狀態 - 骨架屏
+      this.setData({  loading : true  })
+    }
 
     Toast.loading({
       message: '拼命加載中...',
@@ -110,7 +112,7 @@ Page({
     }, 500);
 
     if ( clickTabs==2 || clickTabs==3 ) { // 不需要刷新的分欄
-      Toast('這個分欄不需要刷新呢')
+      Toast('這個分欄不需要刷新呢\n           (✺ω✺)')
     }
     else {                                // 課程查看分欄，獲取課程信息
       this.onShow();
@@ -199,7 +201,7 @@ Page({
             // 交由wxml渲染
             this.setData({  recentCourseInfoArray  })
 
-            Toast('  加載完成！\n下拉可刷新！');
+            this.toastNotice();
 
             // 結束loading狀態
             this.setData({  loading : false  })
@@ -209,10 +211,14 @@ Page({
         else {
           // 結束loading狀態
           this.setData({  loading : false  })
-          Toast('  加載完成！\n下拉可刷新！');
+          this.toastNotice();
         }
 
     }) .catch(err=>{  console.error(err);  })
+  },
+  // 加載完成提示
+  toastNotice(){
+    Toast('  加載完成！\n下拉可刷新！\n[]~(￣▽￣)~*');
   },
 
   // 頂部tabs的點擊切換事件 - 不同tabs時執行不同，節省資源，未完成

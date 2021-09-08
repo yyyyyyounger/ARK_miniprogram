@@ -44,7 +44,7 @@ bind:close="closePopup"
   text="{{indexAnnouncement}}"
 	bindtap="handleTapAnnouncement"
 />
-<!-- 輪播 - 輪播內容未完成 -->
+<!-- 輪播圖 -->
 <swiper class="card-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#3498DB" style="margin-top: -8px;">
   <swiper-item wx:for="{{swiperList}}" wx:key="id" class="{{cardCur==index?'cur':''}}">
     <view class="swiper-item" bindtap="clickImg" data-id="{{item.id}}">

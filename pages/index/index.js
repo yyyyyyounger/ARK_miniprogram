@@ -20,38 +20,39 @@ Page({
       {
         id: 0,
         type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/dec826ae3cddacd1c4328a208fd7a2d64e8b878d.jpg'
-      }, 
-      {
-        id: 1,
-          type: 'image',
-          url: 'https://i0.hdslb.com/bfs/album/5e84ac5924085d3155846926da3f32c18bbb2049.jpg',
-      }, 
-      {
-        id: 2,
-        type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/5b6a070c62297faf3cf6fd304f5a61b8e944d49c.jpg'
-      },
-      {
-        id: 3,
-        type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/2fe21e078b9bfc16ae6627ef3cb5afe37ffcc987.png'
-      },
-      {
-        id: 4,
-        type: 'image',
         url: 'https://i0.hdslb.com/bfs/album/57c90fcd1e3ac67a42f496e52f2c20e5bf49de13.jpg'
       },
       {
-        id: 5,
+        id: 1,
         type: 'image',
         url: 'https://i0.hdslb.com/bfs/album/51979c04c6d6eaa7ae0b917cce9053596863ead4.jpg'
       },
       {
-        id: 6,
+        id: 2,
         type: 'image',
         url: 'https://i0.hdslb.com/bfs/album/4155c2b9eeff4a6f90c4f219f83810b6f51aae2e.jpg'
       },
+      {
+        id: 3,
+        type: 'image',
+        url: 'https://i0.hdslb.com/bfs/album/dec826ae3cddacd1c4328a208fd7a2d64e8b878d.jpg'
+      }, 
+      {
+        id: 4,
+          type: 'image',
+          url: 'https://i0.hdslb.com/bfs/album/5e84ac5924085d3155846926da3f32c18bbb2049.jpg',
+      }, 
+      {
+        id: 5,
+        type: 'image',
+        url: 'https://i0.hdslb.com/bfs/album/5b6a070c62297faf3cf6fd304f5a61b8e944d49c.jpg'
+      },
+      {
+        id: 6,
+        type: 'image',
+        url: 'https://i0.hdslb.com/bfs/album/2fe21e078b9bfc16ae6627ef3cb5afe37ffcc987.png'
+      },
+      
     ],
     // Color - end
     moto:[],    // 一言API
@@ -138,7 +139,7 @@ Page({
         message : '登錄後才能體驗完整功能哦！',
         zIndex  : 99999999999999
       })
-    } else {  // 存放userCloudData
+    } else {  // 已登錄，存放userCloudData
       this.setData({  userCloudData : userCloudDataStorage.data  })
     }
     // 查詢該用戶的管理員權限，是管理員則返回checkingCourseList
@@ -233,17 +234,24 @@ Page({
 
             // 豎向步驟條設定
             this.stepsSetup();
-            Toast('  加載完成！\n下拉可刷新！');
+            // 加載完成提示
+            this.toastNotice();
           })
         } else{
-          Toast('  加載完成！\n下拉可刷新！');
+          // 加載完成提示
+          this.toastNotice();
         }
 
       }) .catch(err=>{ console.error(err); })
     } else {
-      Toast('  加載完成！\n下拉可刷新！');
+      // 加載完成提示
+      this.toastNotice();
     }
 
+  },
+  // 加載完成提示
+  toastNotice(){
+    Toast('  加載完成！\n下拉可刷新！\n[]~(￣▽￣)~*');
   },
 
   onShow (){  //頁面展示時，觸發動畫

@@ -154,7 +154,7 @@ Page({
           wx.setStorageSync('userCloudData', {time:Date.now(), data:userCloudData})
           // 個性化歡迎語
           let userNameInput = this.data.userInfoInput.find(o => o.shortName === 'name');   // 查找用戶修改的姓名
-          Toast('Dear '+userNameInput.input+' , Welcome Back ~');    // 個性化歡迎語  
+          Toast('Dear '+userNameInput.input+' , Welcome Back ~\n              []~(￣▽￣)~*');    // 個性化歡迎語  
         }
         else{                                           // 未註冊，提示註冊
           Toast('請盡快前往個人信息頁完成註冊喔 !');
