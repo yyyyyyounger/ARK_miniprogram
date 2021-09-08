@@ -695,9 +695,8 @@ Page({
             }) .then (res=>{
               if (this.data.filePaths || this.data.addFilePaths) {
                 Toast.loading({
-                  message: '請等待文件上傳！',
+                  message: '等待文件上傳！',
                   forbidClick: true,
-                  duration : 0,
                 })
               } else {
                 Toast.success('修改成功！');
