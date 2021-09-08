@@ -49,7 +49,7 @@
     <!-- add/cancel Follow按鈕 -->
     <van-col offset="2" >
       <van-button 
-        wx:if="{{courseCloudData.arkid!=userCloudData.arkid}}"
+        wx:if="{{courseCloudData.arkid!=userCloudData.arkid && courseCloudData.courseState!='finish'}}"
         icon="{{ haveFollow ? 'delete-o' : 'star-o'}}"
         size="small" 
         color="{{ haveFollow ? '#f8ad72' : '#3498DB'}}" 

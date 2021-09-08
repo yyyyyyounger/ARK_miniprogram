@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "優化用戶頁可能出現的持續加載bug"
+git commit -m "修復課程詳情頁finish狀態課程仍能follow的bug。"
 
 git push origin dev
 git push local dev
