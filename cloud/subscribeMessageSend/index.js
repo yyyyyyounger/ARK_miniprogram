@@ -18,10 +18,10 @@ exports.main = async (event, context) => {
   try {
     const result = await cloud.openapi.subscribeMessage.send({
       // "touser": wxContext.OPENID,   // 推送訂閱到調用該雲函數的user
-      "touser": event.OPENID,   // 推送訂閱到前端輸入的OPENID
-      "templateId": 'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',
-      "page"  : '/pages/category/courseDetail/courseDetail?detailInfo=' + detailInfo,
-      "data"  : event.data
+      "touser"    : event.OPENID,   // 推送訂閱到前端輸入的OPENID
+      "templateId": event.templateId,
+      "page"      : '/pages/category/courseDetail/courseDetail?detailInfo=' + detailInfo,
+      "data"      : event.data
     }) .then(res=>{
       return res;
     }) .catch (err=>{

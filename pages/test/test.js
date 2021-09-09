@@ -196,7 +196,7 @@ Page({
         .then(res=>{
             let result = res.data;
             if (result.length != 0) {   // 未來半小時內有課程要開始，觸發訂閱雲函數
-                let sendCourse = result.map((item)=>{
+                result.map((item)=>{
                     let courseInfo      = item.courseInfoInput;
                     let courseId        = item._id;
                     let beginTime       = item.timePickArray[0].begin;
@@ -216,20 +216,21 @@ Page({
                             if (false) {
                                 // 整理為對象數據傳入雲函數
                                 let SendData = {
-                                    "thing1": {             // 發起方
+                                    "thing12": {             // 主辦方
                                         "value": courseInfo[6].input
                                     },
-                                    "thing6": {             // 活動名稱
+                                    "thing2": {             // 活動名稱
                                         "value": courseInfo[1].input
                                     },
-                                    "character_string10": { // 活動時間
-                                        "value": courseInfo[5].input[0]+', '+courseInfo[5].input[1]+' ~ '+courseInfo[5].input[2]
+                                    "date3": {              // 活動日期
+                                        "value": courseInfo[5].input[0]
+                                        // "value": courseInfo[5].input[0]+courseInfo[5].input[1]+'~'+courseInfo[5].input[2]
                                     },
-                                    "thing4": {             // 活動地點
+                                    "thing10": {             // 活動地點
                                         "value": courseInfo[4].input
                                     },
                                     "thing11": {            // 備註
-                                        "value": '即將開課！'
+                                        "value": '半個小時內即將開課！'
                                     },
                                 };
                                 // 發送訂閱雲函數
@@ -237,6 +238,7 @@ Page({
                                     name:'subscribeMessageSend',
                                     data : {
                                         data        : SendData,
+                                        templateId  : app.globalData.tmplIds[0],
                                         OPENID      : userInfo._id,
                                         courseId    : courseId,
                                     }

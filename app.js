@@ -119,7 +119,8 @@ App({
 // 檢查訂閱狀態，有過訂閱則直接show訂閱選項，無則提示。
   checkSubscribe(){
     const subscribeState = wx.getStorageSync('subscribeState');
-    if (!subscribeState) {
+    const userCloudData = wx.getStorageSync('userCloudData');
+    if (!subscribeState && userCloudData) {
       // 如果為首次提醒訂閱，展示引導訂閱的Dialog
       Dialog.alert({
         title   : '@.@ 重要功能の提示 @.@',
@@ -134,24 +135,30 @@ App({
   },
   showSubscribe(){
     let that = this;
-    wx.requestSubscribeMessage({
-      tmplIds: that.globalData.tmplIds,
-      success (res) {
-        that.globalData.tmplIds.map((e)=>{
-          if (res[e]=='accept') {   // 同意訂閱
-            console.log("已同意訂閱模板ID：",e);
-            wx.setStorageSync('subscribeState', { allowSubscribe : true } )
-          }
-        })
-      },
-      fail (err) { console.error(err);},
-    })
+    const userCloudData = wx.getStorageSync('userCloudData');
+    if (userCloudData) {
+      wx.requestSubscribeMessage({
+        tmplIds: that.globalData.tmplIds,
+        success (res) {
+          that.globalData.tmplIds.map((e)=>{
+            if (res[e]=='accept') {   // 同意訂閱
+              console.log("已同意訂閱模板ID：",e);
+              wx.setStorageSync('subscribeState', { allowSubscribe : true } )
+            }
+          })
+        },
+        fail (err) { console.error(err);},
+      })
+    }
   },
 
   // 全局數據
   globalData: {
     // 訂閱ID
-    tmplIds: ['cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4'],
+    tmplIds: [
+      'jp1f0Qh-gXjSEr5IYfSQo6fE_uGsinZ3yqjQFWoB8qI',    // 活動開始提醒
+      'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',    // 新活動提醒
+    ],
     // 項目運作時間
     projStartTime: [{
       Year: '2021',

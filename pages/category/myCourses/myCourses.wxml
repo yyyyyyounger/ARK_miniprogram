@@ -35,7 +35,7 @@
     <!-- 頭像組 -->
     <view class="slot text-right helper" wx:if="{{myCoursesInfoArray[index].followMember[1]}}">
       <view class="cu-avatar-group">
-        <view class="cu-avatar round lg" wx:for="{{myCoursesInfoArray[index].followMember}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key="avatarIndex" style="background-image:url({{myCoursesInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
+        <view class="cu-avatar round lg" wx:for="{{myCoursesInfoArray[index].followMember.length<4 ? myCoursesInfoArray[index].followMember : 4}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key="avatarIndex" style="background-image:url({{myCoursesInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
       </view> <text decode="true">...&nbsp;&nbsp;</text>
     </view>
   </view>
