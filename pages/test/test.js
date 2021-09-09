@@ -208,7 +208,7 @@ Page({
         .then(res=>{
             let result = res.data;
             if (result.length != 0) {   // 未來半小時內有課程要開始，觸發訂閱雲函數
-                let resultItem = result.map((item)=>{
+                let sendCourse = result.map((item)=>{
                     let courseInfo      = item.courseInfoInput;
                     let courseId        = item._id;
                     let beginTime       = item.timePickArray[0].begin;
@@ -225,7 +225,7 @@ Page({
                         _id : true
                     }) .get() .then(res=>{
                         let openIdArr = res.data.map((userInfo)=>{
-                            if (false) {
+                            if (true) {
                                 // 整理為對象數據傳入雲函數
                                 let SendData = {
                                     "thing1": {             // 發起方

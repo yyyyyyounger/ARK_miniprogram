@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "已完成訂閱卡片的跳轉和附帶正確信息。"
+git commit -m "修改了雲函數的使用內存，節省流量。"
 
 git push origin dev
 git push local dev
