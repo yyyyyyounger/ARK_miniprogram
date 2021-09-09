@@ -1,14 +1,12 @@
-// 全局備註：用戶信息等的讀取權限，應好好配置，當前階段為方便設置為所有人可讀
-
 import cloud from './data/cloud';
 import Toast from './miniprogram_npm/@vant/weapp/toast/toast';
+import Dialog from './miniprogram_npm/@vant/weapp/dialog/dialog';
 import Notify from './miniprogram_npm/@vant/weapp/notify/notify';
 
 // var b = JSON.parse(JSON.stringify(數組a));  複製一份數組a的數據到數組b
 // var date = new Date(Date.parse(new Date()));    // Date.parse(new Date()) 和 Date.now()為當前時間戳 - 數字。new Date(時間戳)後化為帶有中文的字符串
 // console.log(date.toLocaleDateString());
 
-//app.js
 App({
   onLaunch: function(options) {
     wx.cloud.init({
@@ -16,6 +14,7 @@ App({
     })
     .then(res=>{
       const db = wx.cloud.database();   // 數據庫
+      // 獲取是否需要清除緩存狀態
       db.collection('config') .doc('clearStorage') .field({
         _openid : false,
       }) .get() 
@@ -61,8 +60,6 @@ App({
     .catch(err=>{
       console.error(err);
     })
-
-    // 首次進入該小程式，觸發教程
 
   },
   onShow: function(options) {
@@ -119,9 +116,42 @@ App({
       wx.stopPullDownRefresh();
     }, 1000);
   },
-  
+// 檢查訂閱狀態，有過訂閱則直接show訂閱選項，無則提示。
+  checkSubscribe(){
+    const subscribeState = wx.getStorageSync('subscribeState');
+    if (!subscribeState) {
+      // 如果為首次提醒訂閱，展示引導訂閱的Dialog
+      Dialog.alert({
+        title   : '@.@ 重要功能の提示 @.@',
+        message : 'Follow課程後擁有推送訂閱功能，推薦在訂閱彈窗中勾選“不再詢問”以默認接收Follow課程信息！\n可隨時在更多頁修改權限！\n[]~(￣▽￣)~*',
+        zIndex  : 9999999,
+      }).then(() => {
+        this.showSubscribe();
+      });
+    } else {
+      this.showSubscribe();
+    }
+  },
+  showSubscribe(){
+    let that = this;
+    wx.requestSubscribeMessage({
+      tmplIds: that.globalData.tmplIds,
+      success (res) {
+        that.globalData.tmplIds.map((e)=>{
+          if (res[e]=='accept') {   // 同意訂閱
+            console.log("已同意訂閱模板ID：",e);
+            wx.setStorageSync('subscribeState', { allowSubscribe : true } )
+          }
+        })
+      },
+      fail (err) { console.error(err);},
+    })
+  },
+
   // 全局數據
   globalData: {
+    // 訂閱ID
+    tmplIds: ['cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4'],
     // 項目運作時間
     projStartTime: [{
       Year: '2021',

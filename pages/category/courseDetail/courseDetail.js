@@ -189,6 +189,7 @@ Page({
         zIndex:99999999,
       })
       .then(res=>{            // on confirm
+        app.checkSubscribe();
         // 加載提示
         Toast.loading({
           message: '拼命加載中...',

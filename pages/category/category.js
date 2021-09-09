@@ -1,6 +1,7 @@
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
+import { ap } from '../../towxml/parse/parse2/entities/maps/entities';
 
 var towxml = require('../../towxml/index');
 var cloudData = require('../../data/cloud.js')
@@ -73,6 +74,11 @@ Page({
 
     if (userCloudDataStorage) { // 如果已登錄，獲取admin權限
       this.setData({  admin : userCloudDataStorage.data.admin  })
+
+      const subscribeState = wx.getStorageSync('subscribeState');
+      if (!subscribeState) {
+        app.checkSubscribe();
+      }
     }
   },
   onShow: function() {
@@ -266,6 +272,7 @@ Page({
         zIndex:99999999,
       })
       .then(res=>{            // on confirm
+        app.checkSubscribe();
         // 加載提示
         Toast.loading({
           message: '拼命加載中...',
@@ -386,6 +393,7 @@ Page({
 
 // 頁面跳轉
   jumpToCourseDetail (e){
+    app.checkSubscribe();
     Toast.loading('跳轉中...')
     let selectId = e.currentTarget.dataset.courseid;
     let user = "normal"

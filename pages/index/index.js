@@ -131,12 +131,6 @@ Page({
       })
     }
 
-    // 轉發按鈕所必須
-    wx.showShareMenu({
-      withShareTicket: true,
-      menus: ['shareAppMessage', 'shareTimeline']
-    })
-
     // 沒有登錄則提醒
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     if (!userCloudDataStorage) {
@@ -174,6 +168,12 @@ Page({
     
     // 獲取已follow的課程列表
     this.returnMyFollowCourses();
+
+    // 轉發按鈕所必須
+    wx.showShareMenu({
+      withShareTicket: true,
+      menus: ['shareAppMessage', 'shareTimeline']
+    })
   },
   // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
   findSetData() {
