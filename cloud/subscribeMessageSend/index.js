@@ -1,3 +1,7 @@
+/*
+*  定時掃描雲函數，用於檢查臨近開課的課程，並給follow的用戶提供訂閱推送功能
+*/
+
 const cloud = require('wx-server-sdk')
 cloud.init({
   env: 'cloud1-5gtulf1g864cd4ea',
@@ -5,19 +9,24 @@ cloud.init({
 
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
+  // 整理courseId信息，用於訂閱卡片的跳轉
+  let detailInfo = {
+    courseId  :   event.courseId,
+  }
+  detailInfo = JSON.stringify(detailInfo);
 
   try {
     const result = await cloud.openapi.subscribeMessage.send({
-        // "touser": wxContext.OPENID,   // 推送訂閱到調用該雲函數的user
-        "touser": event.OPENID,   // 推送訂閱到前端輸入的OPENID
-        "templateId": 'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',
-        "page"  : './pages/index',
-        "data"  : event.data
-      }) .then(res=>{
-        return res;
-      }) .catch (err=>{
-        return err;
-      })
+      // "touser": wxContext.OPENID,   // 推送訂閱到調用該雲函數的user
+      "touser": event.OPENID,   // 推送訂閱到前端輸入的OPENID
+      "templateId": 'cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4',
+      "page"  : '/pages/category/courseDetail/courseDetail?detailInfo=' + detailInfo,
+      "data"  : event.data
+    }) .then(res=>{
+      return res;
+    }) .catch (err=>{
+      return err;
+    })
     return result
   } catch (err) {
     return err

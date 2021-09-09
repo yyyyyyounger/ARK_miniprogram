@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "課程詳情頁已增加正確跳轉"
+git commit -m "已完成訂閱卡片的跳轉和附帶正確信息。"
 
 git push origin dev
 git push local dev
