@@ -171,20 +171,8 @@ Page({
         wx.requestSubscribeMessage({
             tmplIds: ['cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4'],
             success (res) {
-                let result = res.cpl1QItBmdS4w43NRUeAjn-ZgDSulaaHk4IyMYRRhj4;
-                console.log(result);
-                // 不管點擊允許還是取消，都會執行success的回調函數。。。
-                // if (result != "reject") {
-                //     console.log("用戶同意接受推送：",res);
-                // }
-                // 發送訂閱雲函數
-                // wx.cloud.callFunction({
-                //     name:'subscribeMessageSend',
-                // }) .then(res=>{
-                //     console.log("雲函數調用成功：",res.result);
-                // }) .catch(err=>{
-                //     console.error("雲函數調用失敗：",err);
-                // })
+                console.log('success');
+                console.log(res);
             },
             fail (err) { console.error(err);},
         })
@@ -225,7 +213,7 @@ Page({
                         _id : true
                     }) .get() .then(res=>{
                         let openIdArr = res.data.map((userInfo)=>{
-                            if (true) {
+                            if (false) {
                                 // 整理為對象數據傳入雲函數
                                 let SendData = {
                                     "thing1": {             // 發起方
