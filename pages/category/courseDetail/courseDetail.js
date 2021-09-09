@@ -159,6 +159,24 @@ Page({
     }, 1000);
   },
   onShareAppMessage: function(){
+    // 點擊轉發卡片正確跳轉
+    let that =this;
+    let detailInfo = {
+      courseId  :   that.data.courseCloudData._id,
+    }
+    detailInfo = JSON.stringify(detailInfo);
+
+    return {
+      title : 'ARK分享：'+that.data.courseCloudData.courseInfoInput[1].input,
+      path  : '/pages/category/courseDetail/courseDetail?detailInfo=' + detailInfo, //这里拼接需要携带的参数
+      // imageUrl:'https://ceshi.guirenpu.com/images/banner.png', // 可自定義背景圖
+      success:function(res){
+        console.log("转发成功"+res);
+      },
+      fail:function(err){
+        console.error(err);
+      }
+    }
 
   },
 

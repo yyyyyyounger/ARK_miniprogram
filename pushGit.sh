@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復課程頁展示follower過長問題"
+git commit -m "課程詳情頁已增加正確跳轉"
 
 git push origin dev
 git push local dev
