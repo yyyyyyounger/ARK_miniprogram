@@ -48,7 +48,21 @@ Page({
         }
         console.log('總共提醒了',sendTimes,'次');
         
-        this.readyToSend();
+        // this.readyToSend();
+        // 從數據庫返回模板id - 未完成
+
+        if (false) {
+            wx.cloud.callFunction({
+                name:'send',
+                data:{
+                    templateId : templateId
+                }
+            }) .then(res=>{
+                console.log("雲函數調用成功：",res.result);
+            }) .catch(err=>{
+                console.error("雲函數調用失敗：",err);
+            })
+        }
     },
     onShow: function(){
         

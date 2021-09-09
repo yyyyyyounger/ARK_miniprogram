@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了訂閱邏輯對沒登錄用戶的bug"
+git commit -m "正在進行定時訂閱的測試"
 
 git push origin dev
 git push local dev
