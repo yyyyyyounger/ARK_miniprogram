@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復了課程詳情頁的講者無法查看文件bug"
+git commit -m "修改了README.MD"
 
 git push origin dev
 git push local dev
