@@ -67,7 +67,7 @@
             <!-- Follow用戶頭像組 -->
             <view class="slot text-right helper" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" wx:if="{{recentCourseInfoArray[index].followMember[1]}}">
               <view class="cu-avatar-group">
-                <view class="cu-avatar round lg" wx:for="{{recentCourseInfoArray[index].followMember}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key="avatarIndex" style="background-image:url({{recentCourseInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
+                <view class="cu-avatar round lg" wx:for="{{recentCourseInfoArray[index].followMember.length<4 ? recentCourseInfoArray[index].followMember : 4}}" wx:for-index="avatarIndex" wx:for-item="avatarItem" wx:key="avatarIndex" style="background-image:url({{recentCourseInfoArray[index].followMember[avatarIndex].avatarUrl}});"></view>
               </view> <text decode="true">...&nbsp;&nbsp;</text>
             </view>
           </view>
