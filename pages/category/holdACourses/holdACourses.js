@@ -623,7 +623,7 @@ Page({
             // 非本人操作情況下保留原數據
             let avatarUrl = this.data.courseCloudData.avatarUrl;
             let arkid     = this.data.courseCloudData.arkid;
-            // 本人情況下，才覆蓋緩存中的userInfo數據
+            // 本人情況下，才覆蓋緩存中的userInfo數據（頭像、userName）
             if (this.data.courseCloudData.arkid==userCloudDataStorage.data.arkid) {
               console.log("本次操作為本人操作 - 上傳前");
               avatarUrl = userCloudDataStorage.data.avatarUrl;
@@ -632,15 +632,15 @@ Page({
             // 如果filePaths或allFilePaths有數據，則準備上傳 - filePaths選擇文件的臨時路徑
             if (this.data.filePaths) {
               console.log("需要上傳文件",this.data.filePaths);
-              var successUp = 0;              //成功
-              var failUp = 0;                 //失败
-              var length = this.data.filePaths.length; //总数
-              var count = 0;                  //第几张
-              if (!this.data.courseCloudData.filePaths) {          // 首次加文件mode
+              var length = this.data.filePaths.length;  // 總文件數
+              var successUp = 0;                        // 成功數
+              var failUp = 0;                           // 失败數
+              var count = 0;                            // 第几個文件
+              if (!this.data.courseCloudData.filePaths) {         // 首次加文件mode
                 console.log("首次加文件mode");
                 this.uploadOneByOne(this.data.filePaths,successUp,failUp,count,length);     // 首次上傳，上傳全部filePaths內的文件
               }
-              if(this.data.addFilePaths) {  // 額外添加mode
+              if(this.data.addFilePaths) {                        // 額外添加mode
                 console.log("額外添加mode");
                 length = this.data.addFilePaths.length;
                 this.uploadOneByOne(this.data.addFilePaths,successUp,failUp,count,length);  // 額外上傳，僅上傳addFilePaths內的文件
@@ -695,7 +695,7 @@ Page({
             }) .then (res=>{
               if (this.data.filePaths || this.data.addFilePaths) {
                 Toast.loading({
-                  message: '等待文件上傳！',
+                  message: '等待文件上傳',
                   forbidClick: true,
                 })
               } else {
@@ -1035,18 +1035,22 @@ Page({
         that.setData({  addFilePaths : filePaths  })    // 寫入addFilePaths數組
 
         let allSize = 0;
+        // 計算本次添加文件的size
         for (let i = 0; i < filePaths.length; i++) {
-          allSize += filePaths[i].size; // 本次添加文件的size
-        } 
-        for (let i = 0; i < that.data.filePaths.length; i++) {
-          allSize += that.data.filePaths[i].size; // 已添加文件的size
+          allSize += filePaths[i].size;
         }
-        allSize = (allSize/1000000).toFixed(2);   // 總大小，精確到2位小數
+        // 計算所有已添加文件的size
+        for (let i = 0; i < that.data.filePaths.length; i++) {
+          allSize += that.data.filePaths[i].size;
+        }
+        // 計算總大小，精確到2位小數，MB單位
+        allSize = (allSize/1000000).toFixed(2);
         console.log("總大小為 ",allSize," MB");
 
         if (allSize < 50) {   // 小於50MB即可上傳
           let filePathsTemp = JSON.parse(JSON.stringify(that.data.filePaths));
-          // 返回原已上傳文件的文件名
+          // 通過判斷文件名方式判斷是否有相同需要覆蓋
+          // 返回原數據庫已存在的文件的文件名
           let filePathsOriginName = filePathsTemp.map(function (e, index, item) {
             return e.name;
           })

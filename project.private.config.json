@@ -19,12 +19,6 @@
           "scene": null
         },
         {
-          "name": "user頁",
-          "pathName": "pages/user/user",
-          "query": "",
-          "scene": null
-        },
-        {
           "name": "更多頁",
           "pathName": "pages/more/more",
           "query": "",
@@ -57,18 +51,6 @@
         {
           "name": "小功能頁",
           "pathName": "pages/more/smallFun/smallFun",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "用戶信息查看",
-          "pathName": "pages/user/userDetail/userDetail",
-          "query": "detailInfo={\"arkid\":3}",
-          "scene": null
-        },
-        {
-          "name": "開課頁",
-          "pathName": "pages/category/holdACourses/holdACourses",
           "query": "",
           "scene": null
         }

@@ -263,7 +263,8 @@
       </view>
 
       <view class="cu-list menu sm-border card-menu margin-top" >
-        <view class="cu-item" wx:if="{{courseCloudData.filePaths && haveAttend}}" >
+        <!-- 唯有1、存在文件 2、簽到完成 3、是開課者 4、是管理員 能直接查看文件 -->
+        <view class="cu-item" wx:if="{{courseCloudData.filePaths.length!=0 && haveAttend || courseCloudData.arkid==userCloudData.arkid || admin}}" >
           <view class="content" style="margin-top:20rpx;">
             <view class="text-sl" wx:for="{{courseCloudData.filePaths}}" wx:key="index" data-index="{{index}}" style="margin-bottom:20rpx;" bindtap="downLoadFile">
               <view>
@@ -274,7 +275,7 @@
             </view>
           </view>
         </view>
-        <view wx:else >
+        <view wx:else>
           <van-cell title-class="text-grey cu-item">
             <view slot="title" style="text-align: center;">
               <view class="van-cell-text" >此處會顯示這節課上傳的文件！</view>
