@@ -49,20 +49,17 @@ Page({
         console.log('總共提醒了',sendTimes,'次');
         
         // this.readyToSend();
-        // 從數據庫返回模板id - 未完成
 
         if (false) {
             wx.cloud.callFunction({
-                name:'send',
-                data:{
-                    templateId : templateId
-                }
+                name:'send'
             }) .then(res=>{
                 console.log("雲函數調用成功：",res.result);
             }) .catch(err=>{
                 console.error("雲函數調用失敗：",err);
             })
         }
+
     },
     onShow: function(){
         
@@ -221,51 +218,53 @@ Page({
                     })
                     console.log("將要發送推送的純arkid數組",followMemberIdArr);
 
-                    db.collection('user') .where({
-                        arkid : _.in(followMemberIdArr),
-                    }) .field({
-                        _id : true
-                    }) .get() .then(res=>{
-                        let openIdArr = res.data.map((userInfo)=>{
-                            if (false) {
-                                // 整理為對象數據傳入雲函數
-                                let SendData = {
-                                    "thing12": {             // 主辦方
-                                        "value": courseInfo[6].input
-                                    },
-                                    "thing2": {             // 活動名稱
-                                        "value": courseInfo[1].input
-                                    },
-                                    "date3": {              // 活動日期
-                                        "value": courseInfo[5].input[0]
-                                        // "value": courseInfo[5].input[0]+courseInfo[5].input[1]+'~'+courseInfo[5].input[2]
-                                    },
-                                    "thing10": {             // 活動地點
-                                        "value": courseInfo[4].input
-                                    },
-                                    "thing11": {            // 備註
-                                        "value": '半個小時內即將開課！'
-                                    },
-                                };
-                                // 發送訂閱雲函數
-                                wx.cloud.callFunction({
-                                    name:'subscribeMessageSend',
-                                    data : {
-                                        data        : SendData,
-                                        templateId  : app.globalData.tmplIds[0],
-                                        OPENID      : userInfo._id,
-                                        courseId    : courseId,
-                                    }
-                                }) .then(res=>{
-                                    console.log("雲函數調用成功：",res.result);
-                                }) .catch(err=>{
-                                    console.error("雲函數調用失敗：",err);
-                                })
-                            }
-                            return userInfo._id;
+                    if (false) {
+                        db.collection('user') .where({
+                            arkid : _.in(followMemberIdArr),
+                        }) .field({
+                            _id : true
+                        }) .get() .then(res=>{
+                            let openIdArr = res.data.map((userInfo)=>{
+                                if (false) {
+                                    // 整理為對象數據傳入雲函數
+                                    let SendData = {
+                                        "thing12": {             // 主辦方
+                                            "value": courseInfo[6].input
+                                        },
+                                        "thing2": {             // 活動名稱
+                                            "value": courseInfo[1].input
+                                        },
+                                        "date3": {              // 活動日期
+                                            "value": courseInfo[5].input[0]
+                                            // "value": courseInfo[5].input[0]+courseInfo[5].input[1]+'~'+courseInfo[5].input[2]
+                                        },
+                                        "thing10": {             // 活動地點
+                                            "value": courseInfo[4].input
+                                        },
+                                        "thing11": {            // 備註
+                                            "value": '半個小時內即將開課！'
+                                        },
+                                    };
+                                    // 發送訂閱雲函數
+                                    wx.cloud.callFunction({
+                                        name:'subscribeMessageSend',
+                                        data : {
+                                            data        : SendData,
+                                            templateId  : app.globalData.tmplIds[0],
+                                            OPENID      : userInfo._id,
+                                            courseId    : courseId,
+                                        }
+                                    }) .then(res=>{
+                                        console.log("雲函數調用成功：",res.result);
+                                    }) .catch(err=>{
+                                        console.error("雲函數調用失敗：",err);
+                                    })
+                                }
+                                return userInfo._id;
+                            })
+                            console.log("將要發送推送的純OPENID數組",openIdArr);
                         })
-                        console.log("將要發送推送的純OPENID數組",openIdArr);
-                    })
+                    }
                 })
                 console.log("所有符合推送訂閱條件的課程",result);
             } else{                     // 未來半小時沒有課程要開始
