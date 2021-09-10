@@ -70,6 +70,11 @@ Page({
       answer: '作者為愛發電，目前作為FST ARK活動運作平台(可查看頂部協議)，正在開發其他契合澳大生活的功能，爭取實現UM All In One~ 成為普及全澳大的效率工具~'
     },
     {
+      id:8,
+      question: 'Q0.1:這個小程序能做什麼？',
+      answer: '眾所周知知識不只存在於書上，你可以在這裡分享任何你認為有價值的東西，也可以從其他同學那裡獲取相對應的資源！只要遵守ARK協議！不久的未來將提供一連串的澳大校園應用，敬請期待，可以前往更多頁-小功能查看~'
+    },
+    {
       id:0,
       question: 'Q1:如何Follow課程',
       answer: '點擊下方“課程”按鈕，找到喜歡的課程進行Follow吧~'
@@ -164,7 +169,7 @@ Page({
       nowTimeStamp  : Date.now() ,
     })
     // 計算開發已過日期
-    this.app.calcDurationDay(this,1,'2021/06/03');
+    this.app.calcDurationDay(this,1,'2021/04/06');
     
     // 獲取已follow的課程列表
     this.returnMyFollowCourses();

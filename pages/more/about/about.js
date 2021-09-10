@@ -65,7 +65,7 @@ Page({
     var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
     let today = Y+'/'+M+'/'+D;
     console.log("The today is",today);
-    let durationDay = (new Date(today).getTime() - new Date('2021/06/03').getTime()) / (1000 * 60 * 60*24);
+    let durationDay = (new Date(today).getTime() - new Date('2021/04/06').getTime()) / (1000 * 60 * 60*24);
     this.setData({
       durationDay,
       today

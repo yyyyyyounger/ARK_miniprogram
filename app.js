@@ -161,9 +161,14 @@ App({
     ],
     // 項目運作時間
     projStartTime: [{
+      // ARK首次舉辦時間
       Year: '2021',
-      Month: '06',
-      Day: '03',
+      Month: '04',
+      Day: '06',
+      // 注釋為ARK小程序開始時間
+      // Year: '2021',
+      // Month: '06',
+      // Day: '03',
     }],
     // 用戶信息全局變量
     userInfoInput: [],
@@ -185,8 +190,8 @@ App({
     // 項目運作時間
     that.app.globalData.projStartTime= [{
       Year: '2021',
-      Month: '06',
-      Day: '03',
+      Month: '04',
+      Day: '06',
     }];
     // 用戶信息全局變量
     that.app.globalData.userInfoInput = [];

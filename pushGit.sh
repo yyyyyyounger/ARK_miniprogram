@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了訂閱的時間格式，增加強制跳轉至正式版"
+git commit -m "更新主頁說明和ARK運作時間"
 
 git push origin dev
 git push local dev
