@@ -1,5 +1,4 @@
 const cloud = require('wx-server-sdk');
-const { star } = require('../../towxml/parse/parse2/entities/maps/entities');
 cloud.init({
   env: 'cloud1-5gtulf1g864cd4ea',
 })
