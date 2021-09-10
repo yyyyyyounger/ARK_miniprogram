@@ -3,6 +3,7 @@ import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 import { ap } from '../../towxml/parse/parse2/entities/maps/entities';
 
+var tipClass = false
 var towxml = require('../../towxml/index');
 var cloudData = require('../../data/cloud.js')
 var app = getApp();
@@ -37,6 +38,9 @@ let process = `
 
 Page({
   data: {
+    //小贴士
+    tipsNotHide:false,
+    tipsclass:true,
     // 頁面加載狀態
     loading : true,
     // 默認點擊第0個tabs
@@ -60,6 +64,9 @@ Page({
     followCourseArray:[],
   },
   onLoad (page) {
+    this.setData({
+      tipClass:'tipsHide'
+    })
     this.app = getApp();
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     this.setData({  userCloudDataStorage : userCloudDataStorage.data,  })
@@ -450,5 +457,26 @@ Page({
         });
     }
   },
+  //小贴士
+  onTap_tip(){//点击后根据状态完成CSS动画显示或消失
+     if(!this.data.tipsclass){
+     this.setData({
+       tipClass:'tipsHide',
+       tipsclass:!this.data.tipsclass
+      })
+    setTimeout(()=>{//等待CSS动画完全结束（1s）之后再停止tips渲染
+      this.setData({
+        tipsNotHide:false
+      });
+    }, 200)
+    }
+    else{
+      this.setData({
+        tipClass:'tipsShow',
+        tipsclass:!this.data.tipsclass,
+        tipsNotHide:true
+      })
+     }
+  }
 });
   

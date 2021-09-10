@@ -1,6 +1,23 @@
 page{background-color:#FFFFFF;}
 
 /* .page{background-color:var(--weui-BG-2)} */
+@keyframes tipsAnimShow{
+  from{
+    opacity: 0;
+  }  
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes tipsAnimHide{
+  from{
+    opacity: 1;
+  }  
+  to{
+    opacity: 0;
+  }
+}
 
 .flexCenter {
   display: flex;
@@ -51,4 +68,28 @@ page{background-color:#FFFFFF;}
   color:rgb(114, 114, 114);
   margin-left: 30rpx; 
   margin-top: -65rpx;
+}
+
+.tips{
+  position: relative;
+  left: 30rpx;
+  font-size: 30rpx;
+  color:rgb(83, 83, 83);
+  border:solid#a5dbff;
+  border-radius: 20rpx;
+  background : rgba(231, 246, 255, 0.726);
+  backdrop-filter: blur(5rpx);
+  /* animation-name: tipsAnimHide; */
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}
+
+.tipsShow{
+  animation-name: tipsAnimShow;
+  animation-duration:0.2s
+}
+
+.tipsHide{
+  animation-name: tipsAnimHide;
+  animation-duration:0.2s
 }

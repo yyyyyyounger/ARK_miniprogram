@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復雲函數send不能自動檢查bug"
+git commit -m "課程頁新增懸浮氣泡"
 
 git push origin dev
 git push local dev

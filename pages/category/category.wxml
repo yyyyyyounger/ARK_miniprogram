@@ -5,8 +5,17 @@
 
 <van-tabs sticky swipeable animated color="#3498DB" bind:click="onClick_tabs">
 
-  <van-tab title="最近發佈">
-
+  <view style="position: fixed;  top: 90rpx;left: 0;z-index: 1000;" bindtap="onTap_tip">
+    <image src="https://i0.hdslb.com/bfs/album/8cf8b64cd7d20162a08ab17d973c846689246979.png" style="height: 50rpx;width: 50rpx;background-color: 3498DB;border-radius: 50%;background-color: #64b1e3;  border:solid#a5dbff;"></image><!--tips问号-->
+    <view class="tips {{tipClass}}?:tipsShow {{!tipClass}}?:tipHide" wx:if="{{tipsNotHide}}"><!--tips 快速点击会出现小BUG-->
+      <view><text decode="true">&nbsp;訂閱後請選中訂閱提示中的“不再詢問”以免反復彈窗&nbsp;</text> </view>     
+      <view><text decode="true">&nbsp;訂閱權限可隨時前往更多頁修改&nbsp;</text></view>
+      <view><text decode="true">&nbsp;課程開始前半小時將會通過微信推送提醒&nbsp;</text></view>   
+    </view>
+  </view>
+  
+  <van-tab title="最近發佈"><!-- 这里z-index是为了在一些基础元素如<view>之上-->
+ 
     <!-- 下拉菜單 - 排序未完成 -->
     <!-- <van-sticky>
       <van-dropdown-menu>
@@ -24,11 +33,10 @@
       </block>
       <block wx:else>
         <!-- <van-divider contentPosition="center">拉 到 最 下 有 提 示 ~</van-divider> -->
-        <van-divider contentPosition="center">訂閱權限可隨時前往更多頁修改</van-divider>
-        <van-divider contentPosition="center" custom-style="margin-top:-20rpx;">訂閱推送只在課程開始前半小時觸發</van-divider>
-        <van-divider contentPosition="center" custom-style="margin-top:-20rpx;">無論取消/確認，建議勾選訂閱提示的“不再詢問”</van-divider>
+
+
         <!-- 課程卡片 -->
-        <view class="cu-card dynamic course" wx:for="{{recentCourseInfoArray}}" wx:key="index" style="{{(index>=1 ? 'margin-top:-40rpx;' : '') + (index==0 ? 'margin-top:-55rpx;' : '')}}">
+        <view class="cu-card dynamic course" wx:for="{{recentCourseInfoArray}}" wx:key="index" style="{{(index>=1 ? 'margin-top:-40rpx;' : '') }}">
           <view class="cu-item">
             <!-- 課程主題 & 講者 -->
             <view class="cu-list menu-avatar">

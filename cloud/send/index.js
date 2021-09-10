@@ -1,3 +1,5 @@
+// 該雲函數用於定時檢查，有無需要推送的課程。
+
 const cloud = require('wx-server-sdk');
 cloud.init({
   env: 'cloud1-5gtulf1g864cd4ea',
