@@ -23,8 +23,12 @@
         </view>
       </block>
       <block wx:else>
+        <!-- <van-divider contentPosition="center">拉 到 最 下 有 提 示 ~</van-divider> -->
+        <van-divider contentPosition="center">訂閱權限可隨時前往更多頁修改</van-divider>
+        <van-divider contentPosition="center" custom-style="margin-top:-20rpx;">訂閱推送只在課程開始前半小時觸發</van-divider>
+        <van-divider contentPosition="center" custom-style="margin-top:-20rpx;">無論取消/確認，建議勾選訂閱提示的“不再詢問”</van-divider>
         <!-- 課程卡片 -->
-        <view class="cu-card dynamic course" wx:for="{{recentCourseInfoArray}}" wx:key="index" style="{{index>=1 ? 'margin-top:-40rpx;' : ''}}">
+        <view class="cu-card dynamic course" wx:for="{{recentCourseInfoArray}}" wx:key="index" style="{{(index>=1 ? 'margin-top:-40rpx;' : '') + (index==0 ? 'margin-top:-55rpx;' : '')}}">
           <view class="cu-item">
             <!-- 課程主題 & 講者 -->
             <view class="cu-list menu-avatar">
@@ -75,8 +79,8 @@
           <van-divider />
         </view>
         <!-- 底部說明 -->
-        <van-divider contentPosition="center">已結束的課程將不能再Follow</van-divider>
-        <van-divider contentPosition="center">“最近發佈” 顯示最近30日的新增課程~</van-divider>
+        <van-divider contentPosition="center" custom-style="margin-top:-20rpx;">FINISH狀態的課程不能再Follow</van-divider>
+        <van-divider contentPosition="center">“最近發佈” 顯示半年來的新增課程~</van-divider>
       </block>
 
   </van-tab>
@@ -146,8 +150,8 @@
         <van-divider />
       </view>
 
-      <van-divider contentPosition="center">“我的Follow” 只顯示最近30日的Follow</van-divider>
-      <van-divider contentPosition="center">快挑選些分享加入吧！</van-divider>
+      <van-divider contentPosition="center" custom-style="margin-top:-20rpx;">快挑選些分享加入吧！</van-divider>
+      <van-divider contentPosition="center" custom-style="margin-top:-20rpx;">“我的Follow” 顯示近半年的Follow</van-divider>
     </block>
 
   </van-tab>
@@ -168,9 +172,10 @@
   </van-tab>
   
   <van-tab title="我要開課">
+    <van-divider contentPosition="center">請開課前認真閱讀 ARK協議 及 本須知</van-divider>
 
     <!-- 開課須知 -->
-    <view class="cu-bar">
+    <view class="cu-bar" style="margin-top: -40rpx;">
       <view class="action">
         <text class="cuIcon-title text-themeBlue"></text>開課須知
       </view>

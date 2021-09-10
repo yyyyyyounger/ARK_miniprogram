@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "完成觸發器邏輯！"
+git commit -m "課程頁提示與獲取資料邏輯更新"
 
 git push origin dev
 git push local dev

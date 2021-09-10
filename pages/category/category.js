@@ -131,17 +131,17 @@ Page({
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     // 查詢course集合中，符合條件的課程 - 未完成
     db.collection('course') .where( _.or([
-      { // 路人/普通用戶可查看最近已opening的課程
-        timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,
+      { // 路人/普通用戶可查看最近已opening的課程，和半年（182.5天）前已經finish的課程
+        timeStampPick : _.gte(Date.now()-182.5*24*60*60*1000) ,
         courseState   : _.eq('opening').or(_.eq('finish')) ,
       },
       { // 已開課的用戶可查看近期自己仍在checking，opening，finish的課程
-        timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
+        timeStampPick : _.gte(Date.now()-182.5*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
         courseState   : _.eq('checking').or(_.eq('opening')).or(_.eq('finish')) ,
         arkid         : _.eq(userCloudDataStorage ? userCloudDataStorage.data.arkid : 0) , // 自己的開課
       },
-      { // 添加管理員查看checking權限 - 未完成
-        timeStampPick : _.gte(Date.now()-15*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
+      { // 添加管理員查看checking權限
+        timeStampPick : _.gte(Date.now()-182.5*24*60*60*1000) ,    // 半個月前到未來期間的仍是checking，opening，finish狀態的課程
         courseState   : _.eq(userCloudDataStorage ? (userCloudDataStorage.data.admin ? 'checking' : 0) : 0) ,
       },
     ]) ) .field({
