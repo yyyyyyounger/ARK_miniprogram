@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "課程頁提示與獲取資料邏輯更新"
+git commit -m "修改了訂閱的時間格式，增加強制跳轉至正式版"
 
 git push origin dev
 git push local dev

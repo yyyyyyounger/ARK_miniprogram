@@ -20,6 +20,7 @@ exports.main = async (event, context) => {
       // "touser": wxContext.OPENID,   // 推送訂閱到調用該雲函數的user
       "touser"    : event.OPENID,   // 推送訂閱到前端輸入的OPENID
       "templateId": event.templateId,
+      "subscribeMessage": 'formal',
       "page"      : '/pages/category/courseDetail/courseDetail?detailInfo=' + detailInfo,
       "data"      : event.data
     }) .then(res=>{

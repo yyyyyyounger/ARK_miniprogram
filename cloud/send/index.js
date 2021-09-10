@@ -1,4 +1,5 @@
-const cloud = require('wx-server-sdk')
+const cloud = require('wx-server-sdk');
+const { star } = require('../../towxml/parse/parse2/entities/maps/entities');
 cloud.init({
   env: 'cloud1-5gtulf1g864cd4ea',
 })
@@ -37,6 +38,8 @@ exports.main = async (event, context) => {
           })
           console.log("將要發送推送的純arkid數組",followMemberIdArr);
           // 整理為對象數據，準備傳入雲函數
+          let startTime = courseInfo[5].input[0]+' '+courseInfo[5].input[1]+'~'+courseInfo[5].input[2];
+          console.log(startTime);
           let SendData = {
             "thing12": {             // 主辦方
                 "value": courseInfo[6].input
@@ -45,7 +48,8 @@ exports.main = async (event, context) => {
                 "value": courseInfo[1].input
             },
             "date3": {              // 活動日期
-              "value": courseInfo[5].input[0]
+              "value": startTime
+              // "value": courseInfo[5].input[0]
               // "value": '2021-09-04'
             },
             "thing10": {             // 活動地點
