@@ -387,9 +387,8 @@ Page({
       })
       // 開課 mode，以用戶majorTag寫入courseTag的首位
       let userMajorTag = userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.studentMajor].majorTag;
-      console.log(userMajorTag);
       this.setData({
-        ['courseInfoInput['+this.data.shortNameIndex.courseTag+'].input[0]']  : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.studentMajor].majorTag,   // 寫入講者majorTag
+        ['courseInfoInput['+this.data.shortNameIndex.courseTag+'].input[0]']  : userMajorTag,   // 寫入講者majorTag
       })
       // 更新課程mode，允許自定義courseTag - 未完成
     }
