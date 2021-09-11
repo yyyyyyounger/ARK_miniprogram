@@ -53,36 +53,59 @@ Page({
         // 車到站時有13元素，未到站有12元素
         let allSite = doc.selectAll('//span');
         let busArrive = false;
-        allSite = allSite.map((e)=>{
+        let arriveStop;
+        allSite = allSite.map((e,index)=>{
           if (e.content.length>1) {
             busArrive = true;
+            arriveStop = allSite[index+1].content[0];
+            console.log("巴士到了：",arriveStop);
           }
-          return e.content[0]
+          return e.content[0];
         })
         console.log("Bus到站狀態",busArrive);
+
         // 解析所有div元素
-        // let allDiv = doc.selectAll('//div');
         let allDiv = doc.selectAll('//div');
         // 解析所有文本元素
         let allText = doc.text();
         
-        console.log(allSite);
+        console.log("所有站點名",allSite);
+        console.log("所有div節點",allDiv);
 
-        allDiv = JSON.parse( JSON.stringify(allDiv) );
-        console.log(allDiv);
-        // console.log(allText);
+        busArrive=false
+        // 如果巴士未到站，算法查詢到哪
+        let busArriveWhere = [];
+        if (!busArrive) {
+          allDiv = allDiv.map((e,index)=>{
+            let isBus = e.attributes.class=="left out-left";
+            if (e.attributes.class=="right" || isBus) {
+              if (isBus) {
+                // if (index<30) {
+                  console.log(e.content[0]);
+                  busArriveWhere.push(e.content[0])
+                  console.log(e.content);
+                // }
+              } else {
+                busArriveWhere.push(e.content[1].content[0])
+                console.log(e.content[1].content[0]); // 站點名
+              }
+            }
+          })
+        }
+        console.log(busArriveWhere);
 
-        // 思路1，先獲取所有站點名稱，通過allDiv遍歷判斷車到哪個站點
+        // 思路1，先獲取所有站點名稱，通過allDiv遍歷判斷車到哪個站點 - 貌似不可行
         // 思路2，先獲取所有站點名稱，通過allText遍歷判斷車道哪個站點，可以得出距離
         // 技巧：利用attributes分析該元素屬於哪個class
 
         // 放入data，給wxml渲染
         that.setData({  result  })
-        // 5s返回一次
-        // setTimeout(() => {
-        //   that.checkBus();
-        // }, 5000);
         Toast.success('加載成功！')
+
+        // 5s返回一次
+        setTimeout(() => {
+          // that.checkBus();
+        }, 10000);
       }, 
       fail (err) {
           console.error(err);

@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "增加巴士報站jq解析庫"
+git commit -m "解析巴士報站html最後階段"
 
 git push origin dev
 git push local dev
