@@ -18,6 +18,8 @@
 .main {
   float: left;
   width: 100%;
+  position: relative;
+  top:100rpx;
 }
 
 .left {
@@ -28,11 +30,11 @@
   padding-top: 50rpx;
   min-height: 23px;
   position: relative;
-  bottom: 3px;
+  bottom: 40px;
 }
 .out-left {
   height: 40px;
-  padding-top: 7px;
+  padding-top: 10px;
   padding-right: 25px;
 }
 
@@ -45,7 +47,7 @@
   text-align: center;
   position: relative;
   left: 267rpx;
-  top: 42rpx;
+  top: -115rpx;
   /* right: 8px; */
   color: #ffffff;
 }
@@ -55,7 +57,7 @@
   position: relative;
   left: 267rpx;
   /* right: 8px; */
-  top: 3rpx;
+  top: -135rpx;
   border-style: solid;
   border-width: 9px 6px;
   border-color: #3498DB transparent transparent;
@@ -67,7 +69,7 @@
   width: 61%;
   position: relative;
   left: 276rpx;
-  top:0px;
+  top:-78px;
   /* right: 15px; */
   border-top: 50px;
   border-left: 3px solid #3498DB;

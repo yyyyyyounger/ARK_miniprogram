@@ -5,11 +5,11 @@
 <view>到此站時間: {{datetime}}</view>
 <view>車牌: {{vehiclePlateNumber}}</view> -->
 
-<view wx:if="{{result}}">
+<view wx:if="{{admin}}">
   <rich-text nodes="{{result}}"></rich-text>
 </view>
-<view wx:else>
-已完成，協商後上線
+<view wx:else style="text-align: center;">
+代碼已完成，協商後上線
 </view>
 
 <view class="bottom-watch"></view>

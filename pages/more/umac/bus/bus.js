@@ -8,6 +8,12 @@ Page({
   },
   onLoad: function() {
     this.checkBus();
+    
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+     // 查詢該用戶的管理員權限
+     if (userCloudDataStorage && userCloudDataStorage.data.admin) {
+      this.setData({  admin : userCloudDataStorage.data.admin  })
+     }
   },
   onShow: function() {
   },
