@@ -1,6 +1,6 @@
 {
   "usingComponents": {
     "towxml": "../../towxml/towxml"
-
-  }
+  },
+  "navigationBarTitleText": "A R K - 協 議"
 }

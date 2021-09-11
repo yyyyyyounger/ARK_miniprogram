@@ -103,7 +103,7 @@ Page({
 
     // 獲取緩存，打開小程序時就會判斷是否有頭像緩存，然後寫入globalData.isSignIn
     const userInfoStorage = wx.getStorageSync('userInfo');
-    if (app.globalData.isSignIn) {      // 全局已登錄
+    if (app.globalData.isSignIn) {      // 全局已登錄，已註冊用戶
       this.setData({
         userInfo: userInfoStorage.data, // 用戶暱稱、頭像數據
         hasUserInfo: true,      // 已獲取用戶信息
@@ -124,6 +124,11 @@ Page({
     if (!this.data.isSignIn) {              // if 未登錄，則 複製cloudData.js的空數據 → 本地
       consoleMeg = '未登錄 - ';
       Toast('快快註冊吧！');    // 提示註冊
+      console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
+  
+      // 初始化各種數組
+      this.ArrayDataInit(this);
+
       this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
     }
     else {                                  // if 已登錄，歡迎語
@@ -158,32 +163,17 @@ Page({
         else{                                           // 未註冊，提示註冊
           Toast('請盡快前往個人信息頁完成註冊喔 !');
         }
-      }) .catch(err => {    console.log(err);    });
-
-      consoleMeg = '已登錄 - ';
-    }
-    
-    if (needWait) {   // 存在緩存，需要等待異步請求返回
-      getUserCloudData().then(res => {
+      }) 
+      .then(()=>{
         console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
   
         // 初始化各種數組
         this.ArrayDataInit(this);
         this.setData({  loading: false  });   // 頁面加載完成時，取消骨架屏
+      })
+      .catch(err => {    console.log(err);    });
 
-        // 計算持續時間
-        // this.calcTime();
-      }) .catch(err => {    console.error(err)    });
-    } 
-    else {
-      // log出提示消息
-      console.log(consoleMeg+'當前js的userInfo為',this.data.userInfoInput); 
-
-      // 初始化各種數組
-      this.ArrayDataInit(this);
-
-      // 頁面加載完成時，取消骨架屏
-      this.setData({  loading: false  });   
+      consoleMeg = '已登錄 - ';
     }
 
     // 未理解的神秘執行(必須存在) - 未完成
