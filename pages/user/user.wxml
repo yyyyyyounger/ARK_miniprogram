@@ -41,11 +41,7 @@
   <!-- 如果不能使用openData，且當下沒有用戶信息，則提示授權 -->
   <block wx:elif="{{!hasUserInfo}}">
     <!-- 如果onLoad時查詢程序可以調用用戶信息，則向用戶發出授權按鈕提示，獲取准確的用戶信息 -->
-    <van-button wx:if="{{canIUseGetUserProfile}}" color="#3498DB" bindtap="getUserProfile" type="info" size="normal" round>微信登錄</van-button>
-    <!-- 不可調用則使用匿名的用戶信息 -->
-    <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 獲取頭像暱稱canIUse </button>
-    <!-- <view wx:else> 请使用1.4.4及以上版本基础库 </view> -->
-    <view class="devColor" wx:else> 這裡有BUG，速查！ </view>
+    <van-button color="#3498DB" bindtap="getUserProfile" type="info" size="normal" round>微信登錄</van-button>
   </block>
   <!-- 如果都沒有權限，則調用wx.getUserInfo獲取匿名信息 -->
   <block wx:else>

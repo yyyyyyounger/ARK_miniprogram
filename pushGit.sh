@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "用戶頁提速"
+git commit -m "用戶頁超級提速"
 
 git push origin dev
 git push local dev

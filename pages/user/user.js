@@ -84,7 +84,7 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    canIUseGetUserProfile: false,
+    // canIUseGetUserProfile: false,
     canIUseOpenData: false,
     // canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为false
 // 此處應該與雲端綁定
@@ -177,13 +177,13 @@ Page({
     }
 
     // 未理解的神秘執行(必須存在) - 未完成
-    if (wx.getUserProfile) {
-      console.log("wx.getUserProfile為true");
-      this.setData({
-        // 用戶授權狀態設為true
-        canIUseGetUserProfile: true
-      })
-    } else{  console.log("user頁 - onLoad() - GetuserProfile ***fail***"); }
+    // if (wx.getUserProfile) {
+    //   console.log("wx.getUserProfile為true");
+    //   this.setData({
+    //     // 用戶授權狀態設為true
+    //     canIUseGetUserProfile: true
+    //   })
+    // } else{  console.log("user頁 - onLoad() - GetuserProfile ***fail***"); }
   },
   findSetData(shortNameArray) { // 初始化所有index，匹配對應input值用於顯示
     this.setData({
