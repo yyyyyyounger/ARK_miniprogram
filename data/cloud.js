@@ -40,6 +40,9 @@ var studentMajor = [  // 用作用戶修改信息時的彈出選擇。
   "MMA - 數學", 
   "PHC - 物理化學", 
 ];
+let majorTagArray = studentMajor.map((e)=>{
+  return e.substring(0,3);
+})
 // 学会数量 和 學會相关信息
 var institutionNum = 2;
 // 如果需要修改学会信息，只需要修改数组和上方institutionNum为学会数量即可
@@ -161,6 +164,7 @@ module.exports = {
   semFinishDay :          semFinishDay,
   studentYear :           studentYear,
   studentMajor :          studentMajor,
+  majorTagArray :          majorTagArray,
   courseInfo_empty :      courseInfo_empty,
   
   indexAnnouncement : indexAnnouncement,

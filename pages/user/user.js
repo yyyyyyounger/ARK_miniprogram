@@ -382,20 +382,19 @@ Page({
   },
   // 返回數據庫中新的majorTagArray
   returnMajorTagArray (that) {
-    db.collection('config').doc('studentMajor') .get().then(res=>{
-      that.setData({
-        majorTagArray : res.data.majorTagArray, 
-        studentMajor  : res.data.studentMajor, 
-      })
-      // 抽取數組元素 插入major選項數組
-      let studentMajorArray = [];
-      for (let i = 0; i < that.data.studentMajor.length; i++) { 
-        let studentMajorObj = {};
-        studentMajorObj.name = that.data.studentMajor[i];
-        studentMajorArray.push(studentMajorObj)
-      }
-      that.setData({  actions_sheet_major:studentMajorArray  })
-    }) .catch(err=>{  console.error(err);  })
+    // 21/09/11修改為用本地方式訪問該數據
+    that.setData({
+      majorTagArray : cloudData.majorTagArray, 
+      studentMajor  : cloudData.studentMajor, 
+    })
+    // 抽取數組元素 插入major選項數組
+    let studentMajorArray = [];
+    for (let i = 0; i < that.data.studentMajor.length; i++) { 
+      let studentMajorObj = {};
+      studentMajorObj.name = that.data.studentMajor[i];
+      studentMajorArray.push(studentMajorObj)
+    }
+    that.setData({  actions_sheet_major:studentMajorArray  })
   },
   // 返回數據庫config集合中最新的 empty 模板數據
   returnUserInfoEmpty (that) {
@@ -511,7 +510,7 @@ Page({
         ['userInfoInput['+w2+'].input']     : that.data.studentMajor_input,
         ['userInfoInput['+w2+'].majorTag']  : that.data.studentMajorTag_input,
         ['userInfoInput['+w3+'].input']     : that.data.studentYear_input,
-      });
+      })
       
 // if 本地註冊狀態為false（新用戶），註冊邏輯。能執行此條件的為正確輸入，因此寫入本地註冊時間和ARKid
       if (!that.data.userInfoInput[that.data.userInfoInput_isSignUpIndex].input) {
@@ -624,8 +623,12 @@ Page({
             userInfoInput : that.data.userInfoInput,
         }
       }) .then(res=>{
-        Notify({ type: 'success', message: '修改成功！建議使用下拉刷新頁面喔！' });
         app.globalData.userInfoInput = JSON.parse(JSON.stringify(that.data.userInfoInput));
+        // 即時修改緩存數據
+        let userCloudDataStorage = wx.getStorageSync('userCloudData')
+        userCloudDataStorage.data.userInfoInput = that.data.userInfoInput;
+        wx.setStorageSync('userCloudData',{ data:userCloudDataStorage.data, time:Date.now() } )
+        Notify({ type: 'success', message: '修改成功！若有延遲請下拉刷新頁面喔！' });
       }).catch(err=>{  console.error(err);  })
     }
     else {
