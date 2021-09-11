@@ -41,6 +41,7 @@ var studentMajor = [  // 用作用戶修改信息時的彈出選擇。
   "PHC - 物理化學", 
 ];
 let majorTagArray = studentMajor.map((e)=>{
+  // bug風險：有專業是四位，當增加專業時需留意
   return e.substring(0,3);
 })
 // 学会数量 和 學會相关信息
