@@ -8,6 +8,7 @@ import Notify from './miniprogram_npm/@vant/weapp/notify/notify';
 // console.log(date.toLocaleDateString());
 
 App({
+  // 用於js的require
   require : function($uri){return require($uri)},
 
   onLaunch: function(options) {

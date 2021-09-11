@@ -1,4 +1,7 @@
+let app = getApp();
+
 import Toast from '../../../../miniprogram_npm/@vant/weapp/toast/toast';
+import pjXML from '../../../../plugin/pjxml';   // JQ庫
 
 Page({
   data: {
@@ -38,14 +41,42 @@ Page({
         // 'Cookie': "_ga=GA1.3.1723930737.1590572330",
       },
       success (res) {
+        // 獲取返回的html數據
         let result = res.data._tapestry.content[0][1];
-        // result = result.replace(/div/g, 'view');
-        // result = result.replace(/<a/g, '<view');
-        // result = result.replace(/a>/g, 'view>');
-        // result = result.replace(/span/g, 'text');
-        // result = result.replace(/img/g, 'image');
-
         console.log(result);
+
+        // 解析返回的html
+        var doc = pjXML.parse(result);
+        // console.log(doc);
+
+        // 解析所有站點名稱
+        // 車到站時有13元素，未到站有12元素
+        let allSite = doc.selectAll('//span');
+        let busArrive = false;
+        allSite = allSite.map((e)=>{
+          if (e.content.length>1) {
+            busArrive = true;
+          }
+          return e.content[0]
+        })
+        console.log("Bus到站狀態",busArrive);
+        // 解析所有div元素
+        // let allDiv = doc.selectAll('//div');
+        let allDiv = doc.selectAll('//div');
+        // 解析所有文本元素
+        let allText = doc.text();
+        
+        console.log(allSite);
+
+        allDiv = JSON.parse( JSON.stringify(allDiv) );
+        console.log(allDiv);
+        // console.log(allText);
+
+        // 思路1，先獲取所有站點名稱，通過allDiv遍歷判斷車到哪個站點
+        // 思路2，先獲取所有站點名稱，通過allText遍歷判斷車道哪個站點，可以得出距離
+        // 技巧：利用attributes分析該元素屬於哪個class
+
+        // 放入data，給wxml渲染
         that.setData({  result  })
         // 5s返回一次
         // setTimeout(() => {
