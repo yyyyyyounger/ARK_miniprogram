@@ -1,12 +1,11 @@
+var app = getApp();
+
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
-import { ap } from '../../towxml/parse/parse2/entities/maps/entities';
 
-var tipClass = false
-var towxml = require('../../towxml/index');
+var towxml = app.require('/towxml/index');
 var cloudData = require('../../data/cloud.js')
-var app = getApp();
 const db = wx.cloud.database();
 const _ = db.command
 

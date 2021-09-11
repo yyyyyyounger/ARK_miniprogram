@@ -8,6 +8,8 @@ import Notify from './miniprogram_npm/@vant/weapp/notify/notify';
 // console.log(date.toLocaleDateString());
 
 App({
+  require : function($uri){return require($uri)},
+
   onLaunch: function(options) {
     wx.cloud.init({
       env: 'cloud1-5gtulf1g864cd4ea'

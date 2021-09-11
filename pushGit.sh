@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了巴士報站的樣式"
+git commit -m "修改了towxml的引用，這個庫必須放在小程序根目錄。。。"
 
 git push origin dev
 git push local dev

@@ -1,8 +1,8 @@
 // 2021.8.8更新：將註冊的最後一步改為帶參跳轉後的協議頁同意按鈕
-var cloudData = require('../../data/cloud');
-var towxml = require('../../towxml/index');
-const { el } = require('../../towxml/parse/parse2/entities/maps/entities');
 var app = getApp();
+
+var cloudData = require('../../data/cloud');
+var towxml = app.require('/towxml/index');
 
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';

@@ -29,18 +29,18 @@ module.exports = {
         'css',
         // 'dart',
         // 'go',
-        // 'java',
-        // 'javascript',
-        // 'json',
+        'java',
+        'javascript',
+        'json',
         // 'less',
         // 'scss',
-        // 'shell',
+        'shell',
         // 'xml',
-        // 'htmlbars',
+        'htmlbars',
         // 'nginx',
-        // 'php',
-        // 'python',
-        // 'python-repl',
+        'php',
+        'python',
+        'python-repl',
         // 'typescript',
         
         // 'csharp',
@@ -255,9 +255,9 @@ module.exports = {
     components:[
         // 'audio-player',             // 音频组件，建议保留，由于小程序原生audio存在诸多问题，towxml解决了原生音频播放器的相关问题
         // 'echarts',                  // echarts图表支持
-        'latex',                    // 数学公式支持
-        'table',                    // 表格支持
-        'todogroup',                // todo支持
+        // 'latex',                    // 数学公式支持
+        // 'table',                    // 表格支持
+        // 'todogroup',                // todo支持
         'yuml',                     // yuml图表支持
         'img'                       // 图片解析组件
     ],

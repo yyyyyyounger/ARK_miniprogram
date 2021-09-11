@@ -41,17 +41,15 @@ Page({
   onShareAppMessage: function() {
 
   },
-  onPageScroll: function() {
 
-  },
-  onTabItemTap:function(item) {
-
-  },
+  // 跳轉協議頁
   jumpToProtocol() {
     wx.navigateTo({
       url: '../../protocol/protocol',
     });
   },
+
+  // 計算持續時間
   calcDurationDay() {
     // 獲取當前時間軸
     var timestamp = Date.parse(new Date());
@@ -72,36 +70,40 @@ Page({
     })
     console.log("The duration day is",durationDay);
   },
+
   // 复制的方法
-vantWeapp(){
-  wx.setClipboardData({  data: 'https://vant-contrib.gitee.io/vant-weapp/#/home',  })
-},
-colorUI(){
-  wx.setClipboardData({  data: 'https://github.com/weilanwl/ColorUI2',  })
-},
-oneWord(){
-  wx.setClipboardData({  data: 'https://hitokoto.cn/',  })
-},
-towxml(){
-  wx.setClipboardData({  data: 'https://github.com/sbfkcel/towxml',  })
-},
-toOtherMiniProgram() {
-  wx.navigateToMiniProgram({
-      appId: 'wxd2449edafe0c532a',//要打开的小程序 appId
-      path: '',//打开的页面路径，如果为空则打开首页。
-      success(res) {
-        // 打开成功
-        console.log("跳轉成功");
-      }
+  vantWeapp(){
+    wx.setClipboardData({  data: 'https://vant-contrib.gitee.io/vant-weapp/#/home',  })
+  },
+  colorUI(){
+    wx.setClipboardData({  data: 'https://github.com/weilanwl/ColorUI2',  })
+  },
+  oneWord(){
+    wx.setClipboardData({  data: 'https://hitokoto.cn/',  })
+  },
+  towxml(){
+    wx.setClipboardData({  data: 'https://github.com/sbfkcel/towxml',  })
+  },
+
+  // 跳轉選乜課
+  toOtherMiniProgram() {
+    wx.navigateToMiniProgram({
+        appId: 'wxd2449edafe0c532a',//要打开的小程序 appId
+        path: '',//打开的页面路径，如果为空则打开首页。
+        success(res) {
+          // 打开成功
+          console.log("跳轉成功");
+        }
+      })
+  },
+  // 跳轉合作學會頁
+  toPartner(e){
+    let pageNum = e.currentTarget.dataset.pagenum
+    pageNum = JSON.stringify(pageNum);
+    console.log(pageNum)
+    wx.navigateTo({
+      url: './partner/partner?pageNum=' + pageNum,
     })
-},
-toPartner(e){
-  let pageNum = e.currentTarget.dataset.pagenum
-  pageNum = JSON.stringify(pageNum);
-  console.log(pageNum)
-  wx.navigateTo({
-    url: './partner/partner?pageNum=' + pageNum,
-  })
-},
+  },
 });
   
