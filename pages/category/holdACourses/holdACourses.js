@@ -23,6 +23,8 @@ const getCourseInfoArray = () => {    // 新增promise，抓取所調用雲函�
 let verifyCode;       // 郵件驗證碼生成
 let verifyCodeInput;  // 郵件驗證碼輸入
 
+let firstTime = true; // 默認首次按結課仍保留，未結課
+
 Page({
   data: {
     // 步驟條 - begin
@@ -98,6 +100,10 @@ Page({
           allowVote       : detailInfo.courseCloudData.allowVote,
           courseState     : detailInfo.courseCloudData.courseState,
         })
+        if (this.data.courseState=='finish') {
+          firstTime = false;    // 已經結束過課程，follow的人不用疊加次數
+        }
+        console.log("是否要疊加參與次數",firstTime);
         // 還原已輸入的日期時間等其他數據到data
         if (!this.data.allowVote) {   // 講者設定時間mode
           this.setData({
@@ -418,12 +424,6 @@ Page({
       }
     }
 
-    if (this.data.courseCloudData) {
-      let followMemberArr = this.checkFollowMember();
-      if (!!followMemberArr) {
-        this.setData({  followMemberArr : this.checkFollowMember()  })
-      }
-    }
   },
   // 輸入校驗
   inputCheck () {
@@ -511,25 +511,6 @@ Page({
         Toast.fail('密碼錯誤')
       }
     })
-  },
-  // 查詢數據庫返回followMember數組信息
-  checkFollowMember () {
-    // 如是OPEN狀態的編輯課程模式，再獲取該courseId的followMember情況，以免操作延時
-    if (this.data.courseCloudData) {
-      db.collection('course') .doc(this.data.courseCloudData._id) .field({followMemberArr:true}) .get() 
-      .then( res =>{
-        if (res.data.followMember) {    // 已有人followMember，覆蓋當前js的followMember數據
-          this.setData({  'this.data.courseCloudData.followMember' : res.data.followMember  })
-          // 生成followMember數組，用於提交時的判斷
-          let followMemberArr = this.data.courseCloudData.followMember.map(function (e, index, item) {
-            return e.arkid;
-          })
-          return followMemberArr
-        } else {
-          return undefined
-        }
-      }) .catch( err =>{  console.error(err);  })
-    }
   },
 
 // 提交 / 退出 按鈕綁定事件
@@ -706,19 +687,20 @@ Page({
                 timePickArray   : this.data.timePickArray,      // 投票模式下的 時間選擇 數組
                 timeStampPick   : this.data.timeStampPick,      // 投票模式下的 日期 時間 選擇（最早的，格式yyyy/m/d hh:mm）
                 filePaths       : (this.data.filePaths?this.data.filePaths:undefined),   // 上傳的文件
-                followMember    : (this.data.courseState=="finish"?this.data.followMemberArr:undefined),   // 上傳的文件
-                joinTimesIndex  : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.userInfoShortNameIndex.joinTimes :undefined),   // 參與次數的Index
-                holdTimesIndex  : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.userInfoShortNameIndex.holdTimes :undefined),   // 主持次數的Index
-                speakerId       : (this.data.courseState=="finish"&&this.data.followMemberArr? this.data.courseCloudData.arkid :undefined),              // 主持人的arkid
+                // followMember    : (this.data.courseState=="finish" ? this.data.followMemberArr:undefined),   // 上傳的文件
+                firstTime       : firstTime,   // 是否第一次按下結課，默認TRUE，False時為管理員結課後還修改信息。
+                joinTimesIndex  : (this.data.courseState=="finish" ? this.data.userInfoShortNameIndex.joinTimes :undefined),   // 參與次數的Index
+                holdTimesIndex  : (this.data.courseState=="finish" ? this.data.userInfoShortNameIndex.holdTimes :undefined),   // 主持次數的Index
+                speakerId       : (this.data.courseState=="finish" ? this.data.courseCloudData.arkid :undefined),              // 主持人的arkid
               }
             }) .then (res=>{
               if (this.data.filePaths || this.data.addFilePaths) {
                 Toast.loading({
-                  message: '等待文件上傳',
+                  message: '文件更新',
                   forbidClick: true,
                 })
               } else {
-                Toast.success('修改成功！');
+                Toast.success('修改成功');
               }
               Dialog.alert({
                 title: '操作提示',
@@ -732,8 +714,8 @@ Page({
           }
         })
         .catch(err=>{
-          console.error(err);
-          this.setData({    
+          console.log("用戶取消上傳");
+          this.setData({
             btn_submit : false,
             btn_finish : false,
           });

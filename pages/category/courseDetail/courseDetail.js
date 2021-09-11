@@ -92,7 +92,7 @@ Page({
       }
 
 
-      // 獲取follow狀態，更換前台顯示
+      // 獲取follow狀態，刷新前台顯示
       let followMember = this.data.courseCloudData.followMember;
       if (followMember && userCloudDataStorage) {
         // 判斷是否follow了該課程，follow狀態更改wxml的按鈕形態
