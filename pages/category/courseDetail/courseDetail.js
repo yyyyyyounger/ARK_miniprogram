@@ -368,6 +368,7 @@ Page({
     let selectIndex = e.currentTarget.dataset.index;
     let size = this.data.courseCloudData.filePaths[selectIndex].size;
     let mes;
+    // 計算文件大小
     if (size>1000) {
       size = size/1000000;
       mes = size.toFixed(2)+" MB";

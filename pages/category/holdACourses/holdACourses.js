@@ -88,7 +88,7 @@ Page({
       // 初始化所有index
       this.findSetData();
 
-      // if從詳情頁的編輯按鈕跳轉，將會攜帶參數
+      // if從詳情頁的編輯按鈕跳轉，將會攜帶參數，將具體的輸入復原
       if (options.detailInfo) { // 如果存在帶參跳轉才執行
         let detailInfo = JSON.parse(options.detailInfo);
         console.log("上個頁面傳遞值為：",detailInfo)
@@ -378,20 +378,22 @@ Page({
       ['courseInfoInput['+this.data.shortNameIndex.helper+'].input[0]']     : this.data.helperInfoArray[0],  // 寫入helper 1的信息
       ['courseInfoInput['+this.data.shortNameIndex.helper+'].input[1]']     : this.data.helperInfoArray[1],  // 寫入helper 2的信息
     })
+
     if ( !this.data.courseCloudData || this.data.courseCloudData.arkid==userCloudDataStorage.data.arkid) {   // 開學mode，或本人情況下，才覆蓋緩存的userInfo數據
       console.log("該次修改信息為本人操作！");
       this.setData({
         ['courseInfoInput['+this.data.shortNameIndex.speakerName+'].input']   : this.data.userInfoInput[this.data.userInfoShortNameIndex.name].input, // 寫入講者姓名
         ['courseInfoInput['+this.data.shortNameIndex.speakerid+'].input']     : this.data.userInfoInput[this.data.userInfoShortNameIndex.arkId].input,   // 寫入講者arkid
       })
-      if ( !this.data.courseCloudData ) {   // 開課 mode，以用戶majorTag寫入courseTag的首位
-        this.setData({
-          ['courseInfoInput['+this.data.shortNameIndex.courseTag+'].input[0]']  : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.studentMajor].majorTag,   // 寫入講者majorTag
-        })
-      } else {                              // 更新課程mode，允許自定義courseTag
-        console.log("未完成 - 更新課程模式下允許自定義courseTag，等待後續開發。");
-      }
+      // 開課 mode，以用戶majorTag寫入courseTag的首位
+      let userMajorTag = userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.studentMajor].majorTag;
+      console.log(userMajorTag);
+      this.setData({
+        ['courseInfoInput['+this.data.shortNameIndex.courseTag+'].input[0]']  : userCloudDataStorage.data.userInfoInput[this.data.userInfoShortNameIndex.studentMajor].majorTag,   // 寫入講者majorTag
+      })
+      // 更新課程mode，允許自定義courseTag - 未完成
     }
+
     if (!this.data.allowVote) {    // 講者設定時間mode，直接將具體時間寫入courseInfoInput數組內
       this.setData({
         ['courseInfoInput['+this.data.shortNameIndex.courseTime+'].input[0]'] : this.data.datePick,
@@ -417,12 +419,11 @@ Page({
       }
     }
 
-    if (this.data.courseCloudData && this.data.courseCloudData.followMember) {
-      // 生成followMember數組
-      let followMemberArr = this.data.courseCloudData.followMember.map(function (e, index, item) {
-        return e.arkid;
-      })
-      this.setData({  followMemberArr  })
+    if (this.data.courseCloudData) {
+      let followMemberArr = this.checkFollowMember();
+      if (!!followMemberArr) {
+        this.setData({  followMemberArr : this.checkFollowMember()  })
+      }
     }
   },
   // 輸入校驗
@@ -511,6 +512,25 @@ Page({
         Toast.fail('密碼錯誤')
       }
     })
+  },
+  // 查詢數據庫返回followMember數組信息
+  checkFollowMember () {
+    // 如是OPEN狀態的編輯課程模式，再獲取該courseId的followMember情況，以免操作延時
+    if (this.data.courseCloudData) {
+      db.collection('course') .doc(this.data.courseCloudData._id) .field({followMemberArr:true}) .get() 
+      .then( res =>{
+        if (res.data.followMember) {    // 已有人followMember，覆蓋當前js的followMember數據
+          this.setData({  'this.data.courseCloudData.followMember' : res.data.followMember  })
+          // 生成followMember數組，用於提交時的判斷
+          let followMemberArr = this.data.courseCloudData.followMember.map(function (e, index, item) {
+            return e.arkid;
+          })
+          return followMemberArr
+        } else {
+          return undefined
+        }
+      }) .catch( err =>{  console.error(err);  })
+    }
   },
 
 // 提交 / 退出 按鈕綁定事件
@@ -674,7 +694,7 @@ Page({
             }
 
             // 調用課程更新的雲函數 courseUpdate
-            wx.cloud.callFunction({   // 調用更新的雲函數 courseUpdate
+            wx.cloud.callFunction({   // 調用 更新課程信息雲函數 courseUpdate
               name : 'courseUpdate',
               data : {
                 idNum           : this.data.courseCloudData._id,
@@ -731,18 +751,16 @@ Page({
     })
     .then(() => {   // on confirm
       Toast.loading({
-        message: '請稍後',
+        message: '刪除中',
         forbidClick : true,
         zIndex      : 99999999,
         duration : 0,
       })
       // 刪除該課 - 使用雲函數，保證admin都能有刪除權限
-      if (this.data.courseCloudData.followMember) { // 如果有用戶follow，生成只有arkid的followMember數組，便於後面調用
-        var followMember = this.data.courseCloudData.followMember.map((e,item)=>{ // 生成僅有arkid的數組
-          return e.arkid
-        })
-      }  else{  console.log("沒有人follow該課！")  }
-      console.log("followMember的純數組形式為",followMember);
+      // var followMember = this.checkFollowMember();
+      // if (!!followMember) {
+      //   console.log("followMember的純數組形式為",followMember);
+      // } else{  console.log("沒有人follow該課！")  }
 
       wx.cloud.callFunction({   // 調用courseDelete雲函數
         name:'courseDelete',
@@ -750,7 +768,7 @@ Page({
           idNum         : this.data.courseCloudData._id,
           speakerid     : this.data.courseCloudData.arkid,
           courseState   : this.data.courseCloudData.courseState,
-          followMember  : ((this.data.courseCloudData).hasOwnProperty('followMember')?followMember:[0]),
+          // followMember  : ((this.data.courseCloudData).hasOwnProperty('followMember')?followMember:[0]),
           holdTimesIndex  : this.data.userInfoShortNameIndex.holdTimes,   // 主持次數的Index
         }
       }) .then(res=>{
@@ -758,7 +776,7 @@ Page({
         wx.switchTab({
           url: '../category'
         })
-      }) .catch(err=>{  
+      }) .catch(err=>{
         console.error(err);
         Toast.fail('刪除失敗！請聯繫管理員回報bug');
       })

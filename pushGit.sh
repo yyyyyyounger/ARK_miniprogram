@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "解析巴士報站html最後階段"
+git commit -m "修改了課程刪除的邏輯，優化編輯頁長停留導致followMember不實時問題"
 
 git push origin dev
 git push local dev

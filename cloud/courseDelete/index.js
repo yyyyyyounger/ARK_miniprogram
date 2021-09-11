@@ -14,7 +14,7 @@ exports.main = async (event, context) => {
 
   let courseState   = event.courseState;    // 獲取課程狀態
   let speakerid     = event.speakerid;
-  let followMember  = event.followMember;   // 此時的followMember應該是對象數組
+  // let followMember  = event.followMember;   // 此時的followMember應該是對象數組
   let idNum         = event.idNum;          // 獲取課程id
 
   // 刪除course集合的 _id為idNum的課程
@@ -25,7 +25,7 @@ exports.main = async (event, context) => {
       arkid : speakerid
     }) .update({
       data: {
-        myCourses: _.pull(idNum),
+        myCourses : _.pull(idNum),
         ['userInfoInput.'+event.holdTimesIndex+'.input'] : _.inc(courseState=='finish'?-1:0),   // 主持次數-1
       }
     }) .then(res=>{
@@ -36,23 +36,6 @@ exports.main = async (event, context) => {
     console.error(err);
     return err
   })
-
-  // 刪除記錄的followMember中的allJoinId - user的課程參與記錄
-  if (followMember!=[0]) {
-    await db.collection('user') .where({
-      arkid : _.in(followMember),
-    }) .update({
-      data: {
-        allJoinId           : _.pull(_.in([idNum])),
-        recentFollowIdArray : _.pull(_.in([idNum])),
-      }
-    }) .then(res=>{
-      console.log(res);
-    }) .catch(err=>{
-      console.error(err);
-      return err
-    })
-  }
 
   // 刪除關聯文件 & fileList集合記錄
   await db.collection('fileList') .where({
@@ -80,3 +63,20 @@ exports.main = async (event, context) => {
   })
     
 }
+
+  // 刪除記錄的followMember中的allJoinId - user的課程參與記錄 - 21/9/11修改為不刪除
+  // if (followMember!=[0]) {
+  //   await db.collection('user') .where({
+  //     arkid : _.in(followMember),
+  //   }) .update({
+  //     data: {
+  //       allJoinId           : _.pull(_.in([idNum])),
+  //       recentFollowIdArray : _.pull(_.in([idNum])),
+  //     }
+  //   }) .then(res=>{
+  //     console.log(res);
+  //   }) .catch(err=>{
+  //     console.error(err);
+  //     return err
+  //   })
+  // }
