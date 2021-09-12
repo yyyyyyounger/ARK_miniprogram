@@ -73,11 +73,11 @@ bind:close="closePopup"
 	<!-- steps步驟條 -->
   <van-col span="8">
 		<van-steps
-			steps="{{ steps }}"
-			active="{{ active_col }}"
-			direction="vertical"
-			active-color="#3498DB"
-			bind:click-step="bindTapSteps"
+			steps	=	"{{ steps }}"
+			active	=	"{{ active_col }}"
+			direction	=	"vertical"
+			active-color = "#3498DB"
+			bind:click-step = "bindTapSteps"
 		/>
 	</van-col>
 </van-row>

@@ -329,8 +329,8 @@ Page({
       objTemp = {
         text: this.data.recentCourseInfoArray[i].courseInfoInput[1].input,
         desc: this.checkDate(this.data.recentCourseInfoArray[i].timeStampPick),
-        inactiveIcon: 'cross',
-        activeIcon: 'success',
+        inactiveIcon: 'underway',
+        activeIcon: 'checked',
       }
       stepsTemp.push(objTemp);
     }
