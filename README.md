@@ -594,6 +594,7 @@ test頁完成15min檢查課程狀態的主要邏輯，準備進入推送環節�
 6 設置一言的返回分類
 7 課程頁數據分批獲取
 8 使用雲函數看門狗，課程頁過期半年的課則操作數據庫除去recentFollowIdArr。（思路：判斷當前時間戳，超過半年的課且為finish時，搜索user集合recentFollowIdArr裡仍有該courseId的用戶，對其刪除。
+9 ARK時間軸
 
 
 
