@@ -158,7 +158,7 @@ Page({
         console.log("符合條件的最近的課為",res.data)
         let recentCourseInfoArray = res.data;
 
-        // 排序為時間越遠，越靠前 - 未完成，應該為距今天越近越靠前
+        // 排序為時間越遠，越靠前
         function compare(p){ // 这是比较函数
           return function(m,n){
               var a = m[p];
