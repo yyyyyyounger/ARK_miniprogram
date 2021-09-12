@@ -169,6 +169,26 @@ Page({
         recentCourseInfoArray.sort(compare("timeStampPick"));
         console.log("排序後",recentCourseInfoArray); 
 
+        // 將finish課程置底
+        let openCourse    = [];
+        let finishCourse  = [];
+        // 分解finish課程和open課程
+        recentCourseInfoArray.map((e,index)=>{
+          if (e.courseState=='finish') {
+            console.log("已結束課程：",index,e);
+            finishCourse.push(e)
+          } else {
+            openCourse.push(e)
+          }
+        })
+        // 如果存在已結束課程，插入opening課程的最後
+        if (finishCourse[0]) {
+          finishCourse.map((e)=>{
+            openCourse.push(e)
+          })
+        }
+        recentCourseInfoArray = openCourse;
+
         // 生成已經Follow了的課程Info的數組形式
         this.setData({  recentCourseInfoArray  })
 

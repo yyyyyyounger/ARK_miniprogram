@@ -450,7 +450,7 @@ Page({
     })
   },
   
-  // 點按小船，觸發翻转动画
+  // 點按ARK介紹，小船翻轉後，跳轉
   shipTouched(){
     // 翻轉動畫
     this.shipRoll();
@@ -461,6 +461,7 @@ Page({
   },
   // 小船翻转后重新载入 小船摇曳动画
   shipRoll(){
+    Toast('上 船 ！')
     // 小船翻轉
     this.setData({
       shipClass:'shipRoll',
