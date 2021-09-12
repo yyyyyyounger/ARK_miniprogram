@@ -1,4 +1,3 @@
-import { ARKVersion } from '../../data/cloud.js';
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 
 var app = getApp();
@@ -221,10 +220,9 @@ Page({
       .then(res=>{
         let recentFollowIdArray = res.data[0].recentFollowIdArray;
         console.log("數據庫我的followCourseArray為：",recentFollowIdArray);
-        if (!!recentFollowIdArray) {
-          this.setData({  recentFollowIdArray  })
 
-          // 有follow則獲取courseId對應的課程
+        if (!!recentFollowIdArray) {  // 如果有follow的課程
+          // 獲取courseId對應的課程，只返回15日內的課
           db.collection('course').where({
             timeStampPick : _.gte(this.data.nowTimeStamp-15*24*60*60*1000) ,
             _id           : _.in(recentFollowIdArray) ,
@@ -239,8 +237,16 @@ Page({
               nickName  : false,
           }) .orderBy("timeStampPick","asc") .get()
           .then(res=>{
-            console.log("我follow的課程的信息為：",res.data);
-            this.setData({  recentCourseInfoArray : res.data  })
+            let recentCourseInfoArray = res.data;
+            console.log("我follow的課程的信息為：",recentCourseInfoArray);
+            // 將過長的課程名整成省略號
+            recentCourseInfoArray.map((e)=>{
+              if (e.courseInfoInput[1].input.length>7) {
+                console.log(e.courseInfoInput[1].input,"需截取");
+                e.courseInfoInput[1].input = e.courseInfoInput[1].input.substring(0,7) + '...'
+              }
+            })
+            this.setData({  recentCourseInfoArray  })
 
             // 豎向步驟條設定
             this.stepsSetup();
@@ -335,7 +341,7 @@ Page({
     let logMes="";
     let nowTime = new Date().getTime();
     if (end_date < nowTime) {   // 已經結束
-        logMes="已經結束";
+        logMes="講完了~";
         return logMes;
     }
     let tempTime = 1628179200000;

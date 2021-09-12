@@ -81,7 +81,7 @@ bind:close="closePopup"
 		/>
 	</van-col>
 </van-row>
-<van-divider wx:if="{{!recentFollowIdArray[0]}}" contentPosition="center">快挑選些分享加入吧！</van-divider>
+<van-divider wx:if="{{!recentCourseInfoArray[0]}}" contentPosition="center">快挑選些分享加入吧！</van-divider>
 
 <!-- 管理員權限 - 列出待審核課程 -->
 <block wx:if="{{admin}}">
