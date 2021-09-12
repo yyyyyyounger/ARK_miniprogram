@@ -5,8 +5,9 @@
 
 <van-tabs sticky swipeable animated color="#3498DB" bind:click="onClick_tabs">
 
-  <view style="position: fixed;  top: 90rpx;left: 0;z-index: 1000;" bindtap="onTap_tip">
-    <image src="https://i0.hdslb.com/bfs/album/8cf8b64cd7d20162a08ab17d973c846689246979.png" style="height: 50rpx;width: 50rpx;background-color: 3498DB;border-radius: 50%;background-color: #64b1e3;  border:solid#a5dbff;"></image><!--tips问号-->
+<!-- Tips -->
+  <view style="position: fixed;  top: 120rpx;left: 15rpx;z-index: 1000;" bindtap="onTap_tip">
+    <image src="https://i0.hdslb.com/bfs/album/8cf8b64cd7d20162a08ab17d973c846689246979.png" style="height: 80rpx;width: 80rpx;background-color: 3498DB;border-radius: 50%;background-color: #64b1e3;  border:solid#a5dbff;"></image><!--tips问号-->
     <view class="tips {{tipClass}}?:tipsShow {{!tipClass}}?:tipHide" wx:if="{{tipsNotHide}}"><!--tips 快速点击会出现小BUG-->
       <view><text decode="true">&nbsp;訂閱後請選中訂閱提示中的“不再詢問”以免反復彈窗&nbsp;</text> </view>     
       <view><text decode="true">&nbsp;訂閱權限可隨時前往更多頁修改&nbsp;</text></view>

@@ -629,14 +629,14 @@ Page({
               avatarUrl = userCloudDataStorage.data.avatarUrl;
               arkid     = userCloudDataStorage.data.arkid;
             }
-            // 如果filePaths或allFilePaths有數據，則準備上傳 - filePaths選擇文件的臨時路徑
+            // 如果filePaths或allFilePaths有數據，則準備上傳 - filePaths為選擇文件的臨時路徑
             if (this.data.filePaths) {
               console.log("需要上傳文件",this.data.filePaths);
               var length = this.data.filePaths.length;  // 總文件數
               var successUp = 0;                        // 成功數
               var failUp = 0;                           // 失败數
               var count = 0;                            // 第几個文件
-              if (!this.data.courseCloudData.filePaths) {         // 首次加文件mode
+              if (!this.data.courseCloudData.filePaths || !this.data.courseCloudData.filePaths[0]) {         // 首次加文件mode
                 console.log("首次加文件mode");
                 this.uploadOneByOne(this.data.filePaths,successUp,failUp,count,length);     // 首次上傳，上傳全部filePaths內的文件
               }
@@ -1024,6 +1024,7 @@ Page({
 
   // 有文件的情況下再addFile - 額外添加mode
   addFile(){
+    console.log("額外添加文件mode");
     var that = this;
     wx.chooseMessageFile({    // 選擇文件
       count: 5 - that.data.filePaths.length,

@@ -72,7 +72,7 @@ page{background-color:#FFFFFF;}
 
 .tips{
   position: relative;
-  left: 30rpx;
+  left: 10rpx;
   font-size: 30rpx;
   color:rgb(83, 83, 83);
   border:solid#a5dbff;

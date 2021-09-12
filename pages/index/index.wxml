@@ -118,8 +118,8 @@ bind:close="closePopup"
 		<text bindtap="shipTouched" decode="true">ARK已經航行&nbsp;</text>
 		<text bindtap="shipTouched" class="text-gray" style="font-weight:bold;">{{durationDay}}</text>
 		<text bindtap="shipTouched" decode="true">&nbsp;天了&nbsp;&nbsp;</text>
-		<image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="{{shipClass}}" bindtap="shipRoll"></image><!--小船~-->
-		<image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png"     class="floodAnim"></image><!--海浪~-->
+		<image src="https://i.niupic.com/images/2021/09/12/9vbZ.png" class="{{shipClass}}" bindtap="shipRoll"></image><!--小船~-->
+		<image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png" class="floodAnim"></image><!--海浪~-->
 	</view>
 </block>
 
