@@ -1,5 +1,22 @@
-<!-- 這個界面為書院菜單查詢 -->
-
 <!-- 建議使用wx:for -->
+
+<view
+  wx:for="{{RC}}"
+>
+  <van-image
+    width="5rem"
+    height="5rem"
+    fit="contain"
+    src="{{item.rcIcon}}"
+  />
+  <view style="margin-left: 40rpx;">我是居中文字</view>
+
+</view>
+
+
+<van-button type="primary" block bindtap="sdfasfadf">默认按钮</van-button>
+
+<view>test</view>
+
 
 <view class="bottom-watch"></view>

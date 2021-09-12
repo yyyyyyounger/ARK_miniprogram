@@ -19,7 +19,7 @@ Page({
         title:'書院食堂菜單',
         icon:'https://i.loli.net/2021/08/29/lWoTjui9vF3CIEt.png',
         color:'#6da14e',
-        name:'menu'
+        name:'rcMenu'
       },
       {
         title:'Deadline提醒',

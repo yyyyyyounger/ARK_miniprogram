@@ -59,6 +59,12 @@
           "pathName": "pages/more/umac/bus/bus",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "rcMenu",
+          "pathName": "pages/more/umac/rcMenu/rcMenu",
+          "query": "",
+          "scene": null
         }
       ]
     }
