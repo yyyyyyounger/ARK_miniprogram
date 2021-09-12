@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改小船圖床link"
+git commit -m "增加其他專業分類"
 
 git push origin dev
 git push local dev
