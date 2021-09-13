@@ -15,7 +15,7 @@
 	<view class="action">
 		<text class="cuIcon-title text-themeBlue"></text>ARK已經航行
     <text style="color:#163a52">{{durationDay}}</text> 天了  
-    <image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="shipAnim"></image><!--小船~-->
+    <image src="https://i.niupic.com/images/2021/09/12/9vbZ.png" class="shipAnim"></image><!--小船~-->
     <image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png"     class="floodAnim"></image><!--海浪~-->
     <view style="margin-left: 40rpx;font-size: 28rpx;margin-right: 60rpx;color:rgb(116, 116, 116)">
       <text>·ARK活動由ECE同學開創，於2020-2021年下半學期開始。目的在於幫助同學互相交流學習。

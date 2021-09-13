@@ -9,7 +9,7 @@ Component({
       },
       {
         icon: 'label',
-        text: '課程',
+        text: 'ARK',
         url: '/pages/category/category'
       },
       {

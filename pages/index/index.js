@@ -34,18 +34,18 @@ Page({
       {
         id: 3,
         type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/dec826ae3cddacd1c4328a208fd7a2d64e8b878d.jpg'
-      }, 
+        url: 'https://i0.hdslb.com/bfs/album/6bf877ab5fe7ae81171472f87e72ccc9254e8ead.png'
+      },
       {
         id: 4,
           type: 'image',
           url: 'https://i0.hdslb.com/bfs/album/5e84ac5924085d3155846926da3f32c18bbb2049.jpg',
-      }, 
+      },
       {
         id: 5,
         type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/5b6a070c62297faf3cf6fd304f5a61b8e944d49c.jpg'
-      },
+        url: 'https://i0.hdslb.com/bfs/album/dec826ae3cddacd1c4328a208fd7a2d64e8b878d.jpg'
+      }, 
       {
         id: 6,
         type: 'image',
@@ -63,6 +63,27 @@ Page({
     followCourseArray:[],
     //Q&A循環渲染数组
     QandAlist:[
+//       **ARK的舉辦目標：**
+// - 幫助同學總結、溫習課程內容，解決難題；
+// - **鍛煉講者準備、講解課題等能力**；
+// - 營造系內良好的溝通氛圍；
+// - 督促同學互相學習；
+
+// 舉辦原因：
+// -----
+//  - 讓學習不那麼枯燥；    
+//  - 工程師專業與其他專業不同，需要更多的合作、交流、辯論等；
+//  - 日常課程較多，每人吸收程度不同，每人時間精力有限，有機會能吸收認真總結出來的知識便最好；
+
+// 流程：
+// ---
+//  1、由活動組織/同學自發提出分享內容；
+//  2、活動組織/同學們一齊討論剛需程度/感興趣程度；
+//  3、立題後確定講者，由自發、投票、抽籤選出；
+//  4、活動組織者擬定/同學們一齊投票確定舉行日期；（可變）
+//  5、準備階段活動組織會向講者提供幫助；（技巧教學，製作建議，課程審核等）
+//  6、講者在小程序中開啟課程，聽者Follow課程確定大約人數，確定時間，預定合適房間；
+//  7、分享開始；
     {
       id:7,
       question: 'Q0:這個小程序是什麼？',
@@ -113,22 +134,19 @@ Page({
   },
   onLoad: function(scene) {
     this.app = getApp();
-    this.setData({//小船动画初始化
-      shipClass:'shipAnim0'
+
+    // 小船动画初始化
+    this.setData({
+      shipClass : 'shipAnim0'
     })
-    var shipClass = this.data.shipClass
 
     // 非下拉刷新的場景時 - 首次加載
     if (scene!="refresh") {
-      // this.showPopup();     // 展示頂部彈出層
+      this.showPopup();     // 展示頂部彈出層
       this.cloudGetOneMoto();  // 雲函數請求返回api
-      // 5s後關閉彈出層 - 彈出層棄用狀態，可以用來賣廣告笑
+      // 5s後關閉彈出層
       // setTimeout(() => {
-      //   this.closePopup()  //關閉彈出層
-      //   Toast({
-      //     message : '下拉刷新可重新獲取彈出層內容！',
-      //     zIndex  : 99999999999999
-      //   })
+        // this.closePopup()  //關閉彈出層
       // }, 5000)
       this.setData({//主頁公告 在cloudData裡
         indexAnnouncement:cloudData.indexAnnouncement
@@ -144,6 +162,10 @@ Page({
       })
     } else {  // 已登錄，存放userCloudData
       this.setData({  userCloudData : userCloudDataStorage.data  })
+      Toast({
+        message : '\t歡迎回來！\t\n   第 '+userCloudDataStorage.data.arkid+' 位 ARKer！\n\t[]~(￣▽￣)~*',
+        zIndex  : 99999999999999
+      })
     }
     // 查詢該用戶的管理員權限，是管理員則返回checkingCourseList
     if (userCloudDataStorage) {
@@ -170,8 +192,8 @@ Page({
     // 計算開發已過日期
     this.app.calcDurationDay(this,1,'2021/04/06');
     
-    // 獲取已follow的課程列表
-    this.returnMyFollowCourses();
+    // 獲取已follow的課程列表 - 棄用狀態
+    // this.returnMyFollowCourses();
 
     // 轉發按鈕所必須
     wx.showShareMenu({
@@ -280,7 +302,9 @@ Page({
   // 下拉刷新
   onPullDownRefresh() {
     this.cloudGetOneMoto();
-    // this.showPopup();     // 展示頂部彈出層
+    if (!this.data.userCloudData) {
+      this.showPopup();     // 展示頂部彈出層
+    }
     this.app.onPullDownRefresh(this);
     this.setData({
       showQandA:false
@@ -289,11 +313,19 @@ Page({
 
   // Vant - 打開頂部彈出層
   showPopup() {
-    this.setData({ show_popup: true });
+    const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
+    // 沒有登錄的用戶則展示彈出層，展示ARK協議
+    if (!userCloudDataStorage) {
+      this.setData({ show_popup: true });
+    }
   },
   // Vant - 關閉頂部彈出層
   closePopup() {
     this.setData({ show_popup: false });
+    Toast({
+      message : '下拉刷新可重新獲取彈出層內容！',
+      zIndex  : 99999999999999
+    })
   },
 
   // Vant - 折疊面板

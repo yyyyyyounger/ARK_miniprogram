@@ -3,9 +3,9 @@
 <!-- show_popup -->
 <van-popup 
 z-index="9999999"
-show="{{ false }}" 
+show="{{ show_popup }}"
 position="top"
-duration="500"
+duration="700"
 safe-area-inset-top	
 safe-area-inset-bottom	
 round
@@ -14,25 +14,18 @@ close-on-click-overlay
 close-icon-position="bottom-right"
 bind:close="closePopup"
 >
+	<!-- 未登錄用戶，展示ARK用途 -->
 	<view class="flexCenter">
-		<text>項目開始時間：2021/06/03</text>
-		<text> 今天是：{{today}} </text>
-		<view>ARK已經航行了
-			<text class="devColor">{{durationDay}}</text> 天了
-			<image src="https://www.hualigs.cn/image/61324d2d2b214.jpg" class="shipAnim {{shiptouched}}?:shipRoll" bindtap="shiptouched"></image><!--小船~-->
-      <image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png"     class="floodAnim"></image><!--海浪~-->
-		</view>
+		<view>ARK小程式是什麼？</view>
+		<view>ARK小程式能做什麼？</view>
+		<view>ARK 方舟活動 是什麼？</view>
 	</view>
-	
-	<view>
-		<view class="word" id="hitokoto_text">{{moto.hitokoto}}</view>
-		<view class="author" id="hitokoto_author">—— 「{{(!moto.from_who) ? moto.from : moto.from_who}}」</view>
-	</view>
-	
-	<view class="flexCenter" wx:if="{{isSignIn && isSignUp}}">
+
+	<!-- 已登錄用戶則顯示這是來到ARK的第多少天 -->
+
+	<!-- <view class="flexCenter" wx:if="{{userCloudData}}">
 		歡迎回來！第 {{arkId}} 位ARKer ！
-	</view>
-	<button bindtap="jumpToTestPage">跳轉測試頁（請不要擅自進入）</button>
+	</view> -->
 </van-popup>
 
 <!-- 公告區 -->
@@ -53,13 +46,13 @@ bind:close="closePopup"
   </swiper-item>
 </swiper>
 
-<!-- Follow課程展示區 -->
-<view class="cu-bar bg-white margin-top">
+<!-- Follow課程展示區 - 棄用狀態 -->
+<!-- <view class="cu-bar bg-white margin-top">
 	<view class="action">
 		<text class="cuIcon-title text-themeBlue"></text>我Follow的分享
 	</view>
-</view>
-<van-row wx:if="{{recentCourseInfoArray[0]}}">
+</view> -->
+<!-- <van-row wx:if="{{recentCourseInfoArray[0]}}">
 	<van-col span="16">
 		<van-collapse value="{{ active_collapse }}" accordion bind:change="onChange_collapse">
 			<van-collapse-item wx:for="{{recentCourseInfoArray}}" wx:key="index" title="{{recentCourseInfoArray[index].courseInfoInput[1].input}}" name="{{index}}" style="position:relative;left:38rpx;">
@@ -70,7 +63,7 @@ bind:close="closePopup"
 			</van-collapse-item>
 		</van-collapse>
 	</van-col>
-	<!-- steps步驟條 -->
+	steps步驟條
   <van-col span="8">
 		<van-steps
 			steps	=	"{{ steps }}"
@@ -81,7 +74,7 @@ bind:close="closePopup"
 		/>
 	</van-col>
 </van-row>
-<van-divider wx:if="{{!recentCourseInfoArray[0]}}" contentPosition="center">快挑選些分享加入吧！</van-divider>
+<van-divider wx:if="{{!recentCourseInfoArray[0]}}" contentPosition="center">快挑選些分享加入吧！</van-divider> -->
 
 <!-- 管理員權限 - 列出待審核課程 -->
 <block wx:if="{{admin}}">
@@ -103,6 +96,15 @@ bind:close="closePopup"
 		</van-collapse>
 	</block>
 </block>
+
+<!-- 主頁功能按鈕 -->
+<view class="flexCenter">
+	<view>新增ARK</view>
+	<view>最近ARK</view>
+	<view>巴士報站</view>
+	<view>書院菜單</view>
+	<view>更多澳大小功能</view>
+</view>
 
 <!-- 關於ARK -->
 <block>
