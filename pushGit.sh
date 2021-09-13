@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "開會後主頁大修改，增加引導"
+git commit -m "關於頁的ARK logo改為cloud.js獲取"
 
 git push origin dev
 git push local dev

@@ -15,7 +15,8 @@ Page({
   data: {
     today:'',
     durationDay:0,
-    ARK:ARK
+    ARK:ARK,
+    ARKLogo:cloudData.ARKLogo,
   },
   onLoad: function() {
     // 計算開發天數
