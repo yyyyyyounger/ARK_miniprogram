@@ -43,11 +43,10 @@ Page({
       success (res) {
         // 獲取返回的html數據
         let result = res.data._tapestry.content[0][1];
-        console.log(result);
+        // console.log(result);   //  純html純文本
 
         // 解析返回的html
         var doc = pjXML.parse(result);
-        // console.log(doc);
 
         // 解析所有站點名稱
         // 車到站時有13元素，未到站有12元素
@@ -63,40 +62,72 @@ Page({
           return e.content[0];
         })
         console.log("Bus到站狀態",busArrive);
+        that.setData({  busArrive  })
 
         // 解析所有div元素
         let allDiv = doc.selectAll('//div');
-        // 解析所有文本元素
-        let allText = doc.text();
         
-        console.log("所有站點名",allSite);
-        console.log("所有div節點",allDiv);
-
-        busArrive=false
-        // 如果巴士未到站，算法查詢到哪
-        let busArriveWhere = [];
-        if (!busArrive) {
-          allDiv = allDiv.map((e,index)=>{
-            let isBus = e.attributes.class=="left out-left";
-            if (e.attributes.class=="right" || isBus) {
-              if (isBus) {
-                // if (index<30) {
-                  console.log(e.content[0]);
-                  busArriveWhere.push(e.content[0])
-                  console.log(e.content);
-                // }
-              } else {
-                busArriveWhere.push(e.content[1].content[0])
-                console.log(e.content[1].content[0]); // 站點名
-              }
+        let busName;
+        let busStop=[];
+        // console.log("到站時的數據",allSite);
+        if (busArrive) {
+          // 獲取車牌名 和 站點名
+          allSite.map((e,index)=>{
+            if (e.substring(0,4).indexOf(" ") == -1) {
+              // console.log("没有空格，index為",index);
+            } else {
+              // console.log("有空格，index為",index,'該為站點');
+              busStop.push(e)
+            }
+            if(escape(e).indexOf("%u")<0){
+              // console.log("没有包含中文，這是bus，數組索引為",index);
+              busName = e;
+              busStop.push(busName)
+            } else{
+              // console.log("包含中文");
             }
           })
         }
-        console.log(busArriveWhere);
 
-        // 思路1，先獲取所有站點名稱，通過allDiv遍歷判斷車到哪個站點 - 貌似不可行
-        // 思路2，先獲取所有站點名稱，通過allText遍歷判斷車道哪個站點，可以得出距離
-        // 技巧：利用attributes分析該元素屬於哪個class
+        // 如果巴士未到站，算法查詢到哪
+        let busArriveWhere = [];
+        if (!busArrive) {
+          allDiv = allDiv.map((e)=>{
+            let isBus = e.attributes.class=="left out-left";
+            if (e.attributes.class=="right" || isBus) {
+              if (isBus && e.content[0].length>17) {
+                busName = e.content[0].replace(/\s+/g, '');
+                // console.log("這是Bus",busName);
+                busArriveWhere.push(busName)
+              } else if (!isBus) {
+                busArriveWhere.push(e.content[1].content[0])
+                // console.log(e.content[1].content[0]); // 站點名
+              }
+            }
+          })
+          // console.log("未到站的Bus數據",busArriveWhere);
+          busStop = busArriveWhere;
+          // 獲取站點名
+          if (false) {
+            
+            busArriveWhere.map((e)=>{
+              if (e.substring(0,4).indexOf(" ") == -1) {
+                // console.log("没有空格");
+              } else {
+                // console.log("有空格",'該為站點');
+                busStop.push(e)
+              }
+            })
+          }
+        }
+
+        console.log('巴士名為',busName);
+        console.log('巴士站為',busStop);
+        that.setData({
+          busName,
+          busStop,
+        })
+
 
         // 放入data，給wxml渲染
         that.setData({  result  })

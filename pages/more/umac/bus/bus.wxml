@@ -6,7 +6,17 @@
 <view>車牌: {{vehiclePlateNumber}}</view> -->
 
 <view wx:if="{{admin}}">
-  <rich-text nodes="{{result}}"></rich-text>
+  <!-- <rich-text nodes="{{result}}"></rich-text> -->
+  <view>Bus到站狀態：{{busArrive}}</view>
+  <view>Bus名為：{{busName}}</view>
+  <text>\n站點信息\n</text>
+  <view
+    wx:for="{{busStop}}"
+    wx:key = "index"
+    style="text-align: center;"
+  >
+  {{item}}
+  </view>
 </view>
 <view wx:else style="text-align: center;">
 代碼已完成，協商後上線
