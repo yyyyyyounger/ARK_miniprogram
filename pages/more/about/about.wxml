@@ -6,7 +6,6 @@
     height="300rpx"
     src="{{ARKLogo}}"
   />
-  <!-- <view class="cu-avatar round" style="background-image:url(../../../icons/ARKlogo.jpg); height: 150px; width: 150px;"></view> -->
   <view text-gray style="text-decoration:underline;margin-top:-10rpx;color:rgb(0, 39, 70)" bindtap="jumpToProtocol">ARK UM</view>
 </view>
 <text>\n</text>
