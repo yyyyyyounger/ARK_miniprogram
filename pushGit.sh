@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "寫了主頁彈出層的文案"
+git commit -m "已佈置好主頁佈局"
 
 git push origin dev
 git push local dev

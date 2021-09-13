@@ -101,13 +101,31 @@ bind:close="closePopup"
 </block>
 
 <!-- 主頁功能按鈕 -->
-<view class="flexCenter">
-	<view>新增ARK</view>
-	<view>最近ARK</view>
-	<view>巴士報站</view>
-	<view>書院菜單</view>
-	<view>更多澳大小功能</view>
+<!-- 使用wx的navigator組件跳轉 -->
+<!-- <navigator open-type="navigate" class="nav-li" style="background-color:{{item.color}}" 
+wx:for="{{buttonArr}}" wx:key="index" 
+url="/pages/{{item.path}}">
+	<view class="nav-li-img">
+		<van-image mode="aspectFill" src="{{item.icon}}"  />
+	</view>
+	<view class="nav-li-title"><em>{{item.name}}</em></view>
+</navigator> -->
+
+<view class="grid col-3 padding-sm">
+  <view class="padding-sm" wx:for="{{ColorList}}" wx:key>
+    <view class="bg-{{item.name}} padding radius text-center shadow-blur">
+      <view class="text-lg">{{item.title}}</view>
+      <view class="margin-top-sm text-Abc">{{item.name}}</view>
+    </view>
+  </view>
 </view>
+
+<!-- <view 
+	wx:for="{{buttonArr}}" 
+	wx:key="name"
+>
+{{item.name}}
+</view><text>\n</text> -->
 
 <!-- 關於ARK -->
 <block>
