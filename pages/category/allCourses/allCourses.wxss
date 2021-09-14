@@ -1,72 +1,113 @@
 /* pages/category/allCourses/allCourses.wxss */
+
 .table {
-  border: 0px solid darkgray;
- }
- .tr {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  height: 4rem;
-  align-items: center;
- }
- .td {
-  width:25%;
-  justify-content: center;
-  text-align: center;
-  height: 1rem;
- }
- .th {
-  width: 40%;
-  justify-content: center;
-  background: #3498DB;
-  color: #fff;
-  display: flex;
-  height: 3rem;
-  align-items: center;
- }
- .th_id{
- width:10%;
- justify-content: center;
-  background: #3498DB;
-  color: #fff;
-  display: flex;
-  height: 3rem;
-  align-items: center;
- }
- .th_cour{
- width:60%;
- justify-content: center;
-  background: #3498DB;
-  color: #fff;
-  display: flex;
-  height: 3rem;
-  align-items: center;
- }
+    border: 0px solid darkgray;
+}
 
- .td_id{
-  width:5%;
-  justify-content: center;
-  text-align: center;
-  height: 1rem;
-  }
- .td_cour{
-   display:block;
-  width:40%;
-  justify-content: center;
-  text-align: center;
-  height: 1rem;
-  }
+.tr {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 3rem;
+    align-items: center;
+}
 
-  .wrapper {
+.td {
+    width: 25%;
+    justify-content: center;
+    text-align: center;
+    height: 1.3rem;
+}
+
+.th {
+    width: 40%;
+    justify-content: center;
+    background: #3498DB;
+    color: #fff;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+}
+
+.th_id {
+    width: 10%;
+    justify-content: center;
+    background: #3498DB;
+    color: #fff;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    padding-left: 0.75rem;
+}
+
+.th_cour {
+    width: 60%;
+    justify-content: center;
+    background: #3498DB;
+    color: #fff;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+}
+
+.th_time{
+    width: 40%;
+    justify-content: center;
+    background: #3498DB;
+    color: #fff;
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    padding-right: 0.75rem;
+}
+
+.td_id {
+    width: 5%;
+    justify-content: center;
+    text-align: center;
+    height: 1.3rem;
+    padding-left: 0.75rem;
+}
+
+.td_cour {
+    display: block;
+    width: 40%;
+    justify-content: center;
+    text-align: center;
+    height: 1.3rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.td_time{
+    width: 25%;
+    justify-content: center;
+    text-align: center;
+    height: 1.3rem;
+    padding-right: 0.75rem;
+}
+
+.wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-  }
-  
-  .block {
+}
+
+.block {
     width: 70%;
     height: 50%;
     background-color: #fff;
     margin-bottom: 40%;
-  }
+}
+
+.sort-icon {
+    width: 3rem;
+    background-color: white;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #f0f0f0;
+}
