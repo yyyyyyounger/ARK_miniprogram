@@ -1,54 +1,92 @@
 <!-- 彈出類 -->
-<van-toast id="van-toast" zIndex:9999999/>
+<van-toast id="van-toast" zIndex:9999999 />
 
-<wxs module="m1">
-  function format(ts) {
-    var d = getDate(ts)
-    return [d.getFullYear(), d.getMonth()+1, d.getDate()].join('-')
-      + ' '
-      + [d.getHours(), d.getMinutes()].join(':')
-  }
-  module.exports.format = format
-</wxs>
-
-
+<!--下拉選單-->
 <van-dropdown-menu active-color="#3498DB">
-  <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" bind:change="mySort"/>
-  <van-button type="primary" bind:click="onClickShow" custom-style="height:100%;background:#3498DB">筛选</van-button>
-  <van-overlay show="{{ show }}" bind:click="onClickHide">
-  <view class="wrapper">
-    <view class="block" catch:tap="noop">
-    <van-tree-select
-        items="{{ items }}"
-        main-active-index="{{ mainActiveIndex }}"
-        active-id="{{ activeId }}"
-        max="{{ max }}"
-        bind:click-nav="onClickNav"
-        bind:click-item="onClickItem"
-      />
-    </view>
+  <van-dropdown-item
+    value="{{ value1 }}"
+    options="{{ option1 }}"
+    bind:change="change_menu_item"
+  />
+
+  <!--順序/倒序-->
+  <view class="sort-icon" bindtap="change_sort_order">
+    <image
+      wx:if="{{up_or_down=='up'}}"
+      mode="aspectFill"
+      style="width:1.75rem; height:1.75rem"
+      src="https://i0.hdslb.com/bfs/album/edcb45ab2992ca2ce6012e823d87d4bac89810a0.png"
+    />
+    <image
+      wx:if="{{up_or_down=='down'}}"
+      mode="aspectFill"
+      style="width:1.75rem; height:1.75rem"
+      src="https://i0.hdslb.com/bfs/album/f3a9d23fff7fb90170ce8537066d3c4971876f78.png"
+    />
   </view>
-</van-overlay>
+
+  <!--筛选-->
+  <van-button
+    type="primary"
+    bind:click="onClickShow"
+    custom-style="height:100%;background:#3498DB"
+  >筛选
+  </van-button>
+
+  <!--筛选視窗-->
+  <van-overlay show="{{ show }}" bind:click="onClickHide">
+    <view class="wrapper">
+      <view class="block" catch:tap="noop">
+        <van-tree-select
+          items="{{ items }}"
+          main-active-index="{{ mainActiveIndex }}"
+          active-id="{{ activeId }}"
+          max="{{ max }}"
+          bind:click-nav="onClickNav"
+          bind:click-item="onClickItem"
+        />
+      </view>
+    </view>
+  </van-overlay>
+
 </van-dropdown-menu>
+
+<!--搜索功能-->
+<van-search
+    v-model="value"
+    show-action
+    placeholder="請輸入關鍵字進行搜索"
+/>
 
 <view class="table">
 
- <view class="tr">
-  <view class="th_id">ID</view>
-  <view class="th">专业标签</view>
-  <view class="th_cour">课程名</view>
-  <view class="th">讲师</view>
-  <view class="th">时间</view>
- </view>
+  <view class="tr">
+    <view class="th_id">ID</view>
+    <view class="th">专业标签</view>
+    <view class="th_cour">课程名</view>
+    <view class="th">讲师</view>
+    <view class="th_time">时间</view>
+  </view>
 
- <view wx:for="{{allCourse}}" class="tr" wx:key="index" >
-  <view class="td_id" >{{allCourse[index]._id}}</view>
-  <view class="td">{{allCourse[index].courseInfoInput[3].input[0]}}</view>
-  <view class="td_cour">{{allCourse[index].courseInfoInput[1].input}}</view>
-  <view class="td">{{allCourse[index].courseInfoInput[6].input}}</view>
-  <view class="td">{{allCourse[index].courseInfoInput[5].input[0]}}</view>
+  <view
+    wx:for="{{allCourse}}"
+    class="tr"
+    wx:key="index"
+  >
+    <view class="td_id">{{allCourse[index]._id}}</view>
+    <view class="td">{{allCourse[index].courseInfoInput[3].input[0]}}</view>
+    <view class="td_cour">{{allCourse[index].courseInfoInput[1].input}}</view>
+    <view class="td">{{allCourse[index].courseInfoInput[6].input}}</view>
+    <view class="td_time">{{m1.subDate(allCourse[index].courseInfoInput[5].input[0])}}</view>
 
- </view>
-
+  </view>
 
 </view>
+
+<wxs module='m1'>
+var subDate = function(date) {
+  return date.slice(2)
+}
+module.exports.subDate = subDate
+</wxs>
+
