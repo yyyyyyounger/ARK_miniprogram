@@ -112,29 +112,29 @@ Page({
     showQandA:false,
     buttonArr : [
       {
-        name  : '新增ARK',
+        name  : '新增\nARK',
         path  : '',
-        color:'#dd565a',
+        color:'#3498DB',
       },
       {
-        name  : '最近ARK',
+        name  : '最近\nARK',
         path  : '',
-        color:'#6d90c6',
+        color:'#3498DB',
       },
       {
-        name  : '巴士報站',
+        name  : '巴士\n報站',
         path  : '',
-        color:'#6da14e',
+        color:'#64b1e3',
       },
       {
-        name  : '書院菜單',
+        name  : '書院\n菜單',
         path  : '',
-        color:'#d5793e',
+        color:'#64b1e3',
       },
       {
-        name  : '更多澳大小功能',
+        name  : '更多澳大功能',
         path  : '',
-        color:'#d5793e',
+        color:'#9eceee',
       },
     ],
     ColorList: [

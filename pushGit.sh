@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "加入工程師學會的說明。"
+git commit -m "修改主頁樣式"
 
 git push origin dev
 git push local dev

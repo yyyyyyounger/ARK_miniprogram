@@ -3,7 +3,7 @@
 <!-- show_popup -->
 <van-popup 
 z-index="9999999"
-show="{{ show_popup }}"
+show="{{ false }}"
 position="top"
 duration="700"
 safe-area-inset-top	
@@ -111,13 +111,16 @@ url="/pages/{{item.path}}">
 	<view class="nav-li-title"><em>{{item.name}}</em></view>
 </navigator> -->
 
-<view class="grid col-3 padding-sm">
-  <view class="padding-sm" wx:for="{{ColorList}}" wx:key>
-    <view class="bg-{{item.name}} padding radius text-center shadow-blur">
-      <view class="text-lg">{{item.title}}</view>
-      <view class="margin-top-sm text-Abc">{{item.name}}</view>
+<view class="grid col-2 padding-sm">
+  <view class="padding-sm" wx:for="{{buttonArr}}" wx:key>
+    <view wx:if="{{index!=buttonArr.length-1}}" class="radius text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 15rpx; padding: 15rpx;">
+      <text class="text-lg">{{item.name}}</text>
     </view>
   </view>
+</view>
+
+<view  class="grid col-1 padding-sm padding radius text-center shadow-blur" style="background-color: {{buttonArr[4].color}}; color: var(--white);">
+	<text class="text-lg">{{buttonArr[4].name}}</text>
 </view>
 
 <!-- <view 
