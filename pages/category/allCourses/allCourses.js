@@ -233,4 +233,18 @@ Page({
     onSearch() {
         Toast("search");
     },
+
+    jumpToCourseDetail(e){
+        let selectId = e.currentTarget.dataset.courseid;
+        // 跳轉課程詳情頁
+        let detailInfo = {
+            user      : "normal",
+            courseId  : selectId,
+        }
+        detailInfo = JSON.stringify(detailInfo);
+        console.log(detailInfo);
+        wx.navigateTo({
+            url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
+        })
+    },
 })

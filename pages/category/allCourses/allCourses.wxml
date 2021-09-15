@@ -72,6 +72,8 @@
     wx:for="{{allCourse}}"
     class="tr"
     wx:key="index"
+    data-courseid="{{item._id}}"
+    bindtap="jumpToCourseDetail"
   >
     <view class="td_id">{{allCourse[index]._id}}</view>
     <view class="td">{{allCourse[index].courseInfoInput[3].input[0]}}</view>
