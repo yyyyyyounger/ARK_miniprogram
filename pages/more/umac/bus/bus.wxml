@@ -19,7 +19,7 @@
   </view>
 </view>
 <view wx:else style="text-align: center;">
-代碼已完成，協商後上線
+協商已完成，等待最後樣式佈置。
 </view>
 
 <view class="bottom-watch"></view>

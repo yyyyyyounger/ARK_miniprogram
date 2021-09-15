@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "所有課程頁跳轉"
+git commit -m "修改bus頁文字"
 
 git push origin dev
 git push local dev
