@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了主頁輪播圖。"
+git commit -m "添加一言的補充說明。"
 
 git push origin dev
 git push local dev

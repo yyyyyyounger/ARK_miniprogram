@@ -47,7 +47,7 @@ bind:close="closePopup"
 		<view class="popup_word" bindtap="handleTapAnnouncement"><text style="padding-left: 15px;"></text>沒有專業限制！沒有年級限制！沒有內容限制！舉辦一場由同學自主發起的知識分享會！首頁頂部查看詳情協議！</view><text>\n</text>
 	</view>
 
-	<!-- 已登錄用戶則顯示這是來到ARK的第多少天 -->
+	<!-- 已登錄用戶則顯示這是來到ARK的第多少天 - 未完成，可以用Toast -->
 
 	<!-- <view class="flexCenter" wx:if="{{userCloudData}}">
 		歡迎回來！第 {{arkId}} 位ARKer ！
@@ -191,7 +191,7 @@ url="/pages/{{item.path}}">
 	<view bindtap="cloudGetOneMoto">
 		<view class="cu-bar bg-white">
 			<view class="action">
-				<text class="cuIcon-title text-themeBlue"></text>一言<text class="text-gray" style="margin-left: 10rpx;">(點擊刷新)</text>
+				<text class="cuIcon-title text-themeBlue"></text>一言<text class="text-gray" style="margin-left: 10rpx;">(隨機生成，點擊刷新)</text>
 			</view>
 		</view>
 		<view class="text-grey">
