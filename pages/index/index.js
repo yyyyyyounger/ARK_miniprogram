@@ -113,26 +113,35 @@ Page({
     buttonArr : [
       {
         name  : '新增\nARK',
+        shortName  : 'newARK',
         path  : '',
         color:'#3498DB',
       },
       {
         name  : '最近\nARK',
+        shortName  : 'recentARK',
         path  : '',
         color:'#3498DB',
       },
       {
         name  : '巴士\n報站',
+        shortName  : 'bus',
         path  : '',
         color:'#64b1e3',
       },
       {
         name  : '書院\n菜單',
+        shortName  : 'rcMenu',
         path  : '',
         color:'#64b1e3',
       },
       {
-        name  : '更多澳大功能',
+        name  : '合作\n學會',
+        path  : '',
+        color:'#9eceee',
+      },
+      {
+        name  : '更多\n功能',
         path  : '',
         color:'#9eceee',
       },

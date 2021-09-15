@@ -112,15 +112,11 @@ url="/pages/{{item.path}}">
 </navigator> -->
 
 <view class="grid col-2 padding-sm">
-  <view class="padding-sm" wx:for="{{buttonArr}}" wx:key>
-    <view wx:if="{{index!=buttonArr.length-1}}" class="radius text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 15rpx; padding: 15rpx;">
+  <view class="padding-sm" wx:for="{{buttonArr}}" wx:key="index" >
+    <view class="radius padding text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 15rpx; ">
       <text class="text-lg">{{item.name}}</text>
     </view>
   </view>
-</view>
-
-<view  class="grid col-1 padding-sm padding radius text-center shadow-blur" style="background-color: {{buttonArr[4].color}}; color: var(--white);">
-	<text class="text-lg">{{buttonArr[4].name}}</text>
 </view>
 
 <!-- <view 
