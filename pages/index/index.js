@@ -127,57 +127,27 @@ Page({
         name  : '巴士\n報站',
         shortName  : 'bus',
         path  : '',
-        color:'#64b1e3',
+        color:'#4ba4df',
       },
       {
         name  : '書院\n菜單',
         shortName  : 'rcMenu',
         path  : '',
-        color:'#64b1e3',
+        color:'#4ba4df',
       },
       {
         name  : '合作\n學會',
+        shortName  : 'partner',
         path  : '',
-        color:'#9eceee',
+        color:'#64b1e3',
       },
       {
         name  : '更多\n功能',
+        shortName  : 'more',
         path  : '',
-        color:'#9eceee',
+        color:'#64b1e3',
       },
     ],
-    ColorList: [
-    {
-      title: '嫣红',
-      name: 'red',
-      color: '#e54d42'
-    },
-    {
-      title: '桔橙',
-      name: 'orange',
-      color: '#f37b1d'
-    },
-    {
-      title: '明黄',
-      name: 'yellow',
-      color: '#fbbd08'
-    },
-    {
-      title: '橄榄',
-      name: 'olive',
-      color: '#8dc63f'
-    },
-    {
-      title: '森绿',
-      name: 'green',
-      color: '#39b54a'
-    },
-    {
-      title: '天青',
-      name: 'cyan',
-      color: '#1cbbb4'
-    },
-  ]
   },
   onLoad: function(scene) {
     this.app = getApp();
@@ -506,6 +476,56 @@ Page({
       url: '../test/test'
     });
   },
+  // 主頁快捷按鈕跳轉
+  indexButtonJump (e) {
+    let clickItem = e.currentTarget.dataset.name;
+    console.log("用戶點擊",clickItem,'按鈕');
+    switch (clickItem) {
+      case 'newARK':
+        // 使用app.global數據協助跳轉，0 1 2 3對應課程頁tabs的索引
+        app.globalData.switchTabs = 3;
+        wx.switchTab({
+          url: '/pages/category/category',
+        })
+        break;
+    
+      case 'recentARK':
+        wx.switchTab({
+          url: '/pages/category/category',
+        })
+        break;
+    
+      case 'bus':
+        wx.navigateTo({
+          url: '/pages/more/umac/bus/bus',
+        })
+        break;
+    
+      case 'rcMenu':
+        wx.navigateTo({
+          url: '/pages/more/umac/rcMenu/rcMenu',
+        })
+        break;
+    
+      case 'partner':
+        let pageNum = 0;
+        pageNum = JSON.stringify(pageNum);
+        wx.navigateTo({
+          url: '/pages/more/about/partner/partner?pageNum='+pageNum,
+        })
+        break;
+    
+      case 'more':
+        wx.switchTab({
+          url: '/pages/more/more',
+        })
+        break;
+    
+      default:
+        break;
+    }
+  },
+
   // 圖片預覽
   clickImg: function(e){
     let selectId = e.currentTarget.dataset.id;

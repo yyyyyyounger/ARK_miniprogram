@@ -113,7 +113,8 @@ url="/pages/{{item.path}}">
 
 <view class="grid col-2 padding-sm">
   <view class="padding-sm" wx:for="{{buttonArr}}" wx:key="index" >
-    <view class="radius padding text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 15rpx; ">
+    <view class="radius padding text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 15rpx; "
+		data-name="{{item.shortName}}" bindtap="indexButtonJump">
       <text class="text-lg">{{item.name}}</text>
     </view>
   </view>

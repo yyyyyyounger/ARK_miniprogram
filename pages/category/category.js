@@ -9,6 +9,7 @@ var cloudData = require('../../data/cloud.js')
 const db = wx.cloud.database();
 const _ = db.command
 
+// tabs狀態，默認點擊第0個tabs
 let clickTabs = 0;
 
 // 開課欄目的教程 - Markdown語法
@@ -37,13 +38,13 @@ let process = `
 
 Page({
   data: {
+    // 默認tabs打開頁
+    // tabs_active:0,
     //小贴士
     tipsNotHide:false,
     tipsclass:true,
     // 頁面加載狀態
     loading : true,
-    // 默認點擊第0個tabs
-    clickTabs : 0,
     // 下拉菜單
     option1: [
       { text: '按日期排序', value: 0 },
@@ -62,7 +63,7 @@ Page({
     // 課程渲染相關
     followCourseArray:[],
   },
-  onLoad (page) {
+  onLoad (options,page) {
     this.setData({
       tipClass:'tipsHide'
     })
@@ -87,7 +88,14 @@ Page({
       }
     }
   },
-  onShow: function() {
+  onShow () {
+    this.setData({  tabs_active : 0  })
+    // 設定跳轉的tabs
+    if (!!app.globalData.switchTabs) {    // 有設定跳轉參數
+      this.setData({  tabs_active : app.globalData.switchTabs  })
+      app.globalData.switchTabs = 0;      // 復位
+    }
+
     if (clickTabs==0 || clickTabs==1) {   // 課程頁面
       // 向服務器請求的延時
       Toast.loading({

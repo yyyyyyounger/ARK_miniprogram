@@ -3,7 +3,7 @@
 
 <view style="margin-top:20rpx">
   <van-grid gutter="{{ 10 }}" column-num="1">
-    <van-grid-item icon="apps-o" text="小功能"         bindtap="jumpToSmallFun"/>
+    <van-grid-item icon="apps-o"    text="澳大小功能"     bindtap="jumpToSmallFun"/>
     <van-grid-item icon="more-o"    text="關於"           bindtap="jumpToAbout" />
     <van-grid-item icon="chat-o"    text="反饋"           bindtap="jumpToFeedBack" />
     <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />

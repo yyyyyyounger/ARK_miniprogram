@@ -1,12 +1,9 @@
 var cloudData = require('../../../../data/cloud')
 
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
   },
-  onLoad:function(e){//不知道是不是我乱改了些代码的原因，下面这一段放在onShow中则无法运行=-=
+  onLoad:function(e) {
     let pageNum = JSON.parse(e.pageNum)
     this.setData({
       page:pageNum
