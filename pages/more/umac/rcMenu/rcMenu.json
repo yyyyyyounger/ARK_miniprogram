@@ -1,5 +1,6 @@
 {
   "usingComponents": {
     "van-image": "@vant/weapp/image/index"
-  }
+  },
+  "navigationBarTitleText": "ARK - 書院飯堂1菜單"
 }
