@@ -19,17 +19,17 @@ Page({
       {
         id: 0,
         type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/57c90fcd1e3ac67a42f496e52f2c20e5bf49de13.jpg'
+        url: 'https://i0.hdslb.com/bfs/album/0c842e4780ab9f8251a97ae09a261a0288db03b3.png'
       },
       {
         id: 1,
         type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/51979c04c6d6eaa7ae0b917cce9053596863ead4.jpg'
+        url: 'https://i0.hdslb.com/bfs/album/83cf2b7ec7d9a873980182d9fd777f90112eada9.png'
       },
       {
         id: 2,
         type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/4155c2b9eeff4a6f90c4f219f83810b6f51aae2e.jpg'
+        url: 'https://i0.hdslb.com/bfs/album/4ef0bfd4d4177573eb0ff9935024f77675d1f4be.png'
       },
       {
         id: 3,
@@ -45,13 +45,12 @@ Page({
         id: 5,
         type: 'image',
         url: 'https://i0.hdslb.com/bfs/album/dec826ae3cddacd1c4328a208fd7a2d64e8b878d.jpg'
-      }, 
+      },       
       {
         id: 6,
         type: 'image',
-        url: 'https://i0.hdslb.com/bfs/album/2fe21e078b9bfc16ae6627ef3cb5afe37ffcc987.png'
-      },
-      
+        url: 'https://i0.hdslb.com/bfs/album/e9ca52265e0d70005509621a20ce5ed28cba8ccc.png'
+      },       
     ],
     // Color - end
     moto:[],    // 一言API
