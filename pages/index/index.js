@@ -452,6 +452,12 @@ Page({
       url: '../more/about/about',
     });
   },
+  // 跳轉“更多”頁
+  jumpToMore () {
+    wx.switchTab({
+      url: '../more/more',
+    })
+  },
   // 跳轉“公告”頁
   jumpToNotice () {
     wx.navigateTo({

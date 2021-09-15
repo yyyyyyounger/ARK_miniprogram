@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了菜單頁和主頁"
+git commit -m "未登錄用戶，展示ARK用途"
 
 git push origin dev
 git push local dev

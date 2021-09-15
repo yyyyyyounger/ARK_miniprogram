@@ -16,12 +16,35 @@ bind:close="closePopup"
 >
 	<!-- 未登錄用戶，展示ARK用途 -->
 	<view class="flexCenter">
-		<view>ARK小程式是什麼？</view>
-		<view>立志成為UMer人手一份的UM All In One小程式，也作為FST ARK活動運作平台！</view><text>\n</text>
-		<view>ARK小程式能做什麼？</view>
-		<view>ARK開課、Follow課程提醒、巴士報站、書院菜單等等等等 ~</view><text>\n</text>
-		<view>ARK 方舟活動 是什麼？</view>
-		<view>沒有專業限制！沒有年級限制！沒有內容限制！舉辦一場由同學自主發起的知識分享會！詳情查看首頁頂部協議入口！</view><text>\n</text>
+		<view style="font-weight:bold;">歡迎！To 第一次來到 <text class="text-themeBlue">ARK</text> 的你：</view>
+
+		<view class="cu-bar" bindtap="jumpToAbout">
+			<view class="action" style="text-align: left;">
+				<text class="cuIcon-title text-themeBlue"></text>
+				<view class="popup_title text-black">什麼是 <text class="text-themeBlue">ARK</text> 小程式？</view>
+			</view>
+			<van-icon name="arrow"/>
+		</view>
+		<view class="popup_word text-black text-cut" bindtap="jumpToAbout"><text style="padding-left: 15px;"></text>ARK 是立志成為 <text style="font-weight:bold;">UM All In One</text> 的小程式，目前還作為 FST ARK 活動運作平台！</view>
+		<text>\n</text>
+
+		<view class="cu-bar" bindtap="jumpToMore">
+			<view class="action" style="text-align: left;">
+				<text class="cuIcon-title text-themeBlue"></text>
+				<view class="popup_title text-black"><text class="text-themeBlue">ARK</text> 小程式能做什麼？</view>
+			</view>
+			<van-icon name="arrow"/>
+		</view>
+		<view class="popup_word" bindtap="jumpToMore"><text style="padding-left: 15px;"></text>ARK開課、Follow課程提醒、澳大校園巴士報站、查看書院菜單等等等等 ~</view><text>\n</text>
+		
+		<view class="cu-bar" bindtap="handleTapAnnouncement">
+			<view class="action" style="text-align: left;">
+				<text class="cuIcon-title text-themeBlue"></text>
+				<view class="popup_title text-black"><text class="text-themeBlue">ARK 方舟活動</text> 是什麼？</view>
+				<van-icon name="arrow"/>
+			</view>
+		</view>
+		<view class="popup_word" bindtap="handleTapAnnouncement"><text style="padding-left: 15px;"></text>沒有專業限制！沒有年級限制！沒有內容限制！舉辦一場由同學自主發起的知識分享會！首頁頂部查看詳情協議！</view><text>\n</text>
 	</view>
 
 	<!-- 已登錄用戶則顯示這是來到ARK的第多少天 -->
@@ -112,7 +135,7 @@ url="/pages/{{item.path}}">
 </navigator> -->
 <view class="grid col-2 padding-sm" style="margin-top: -20rpx;">
   <view class="padding-sm" wx:for="{{buttonArr}}" wx:key="index" >
-    <view class="radius padding text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 15rpx; "
+    <view class="radius padding text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 10rpx; "
 		data-name="{{item.shortName}}" bindtap="indexButtonJump">
       <text class="text-lg">{{item.name}}</text>
     </view>
