@@ -3,7 +3,7 @@
 <!-- show_popup -->
 <van-popup 
 z-index="9999999"
-show="{{ false }}"
+show="{{ show_popup }}"
 position="top"
 duration="700"
 safe-area-inset-top	
@@ -110,8 +110,7 @@ url="/pages/{{item.path}}">
 	</view>
 	<view class="nav-li-title"><em>{{item.name}}</em></view>
 </navigator> -->
-
-<view class="grid col-2 padding-sm">
+<view class="grid col-2 padding-sm" style="margin-top: -20rpx;">
   <view class="padding-sm" wx:for="{{buttonArr}}" wx:key="index" >
     <view class="radius padding text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 15rpx; "
 		data-name="{{item.shortName}}" bindtap="indexButtonJump">
@@ -120,12 +119,7 @@ url="/pages/{{item.path}}">
   </view>
 </view>
 
-<!-- <view 
-	wx:for="{{buttonArr}}" 
-	wx:key="name"
->
-{{item.name}}
-</view><text>\n</text> -->
+<van-divider contentPosition="center" custom-style='margin-top:-15rpx;' >下方會有什麼...</van-divider>
 
 <!-- 關於ARK -->
 <block>
