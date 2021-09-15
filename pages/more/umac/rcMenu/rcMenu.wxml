@@ -1,7 +1,10 @@
+<!-- 彈出類 -->
+<van-toast id="van-toast" />
+
 <view class="grid col-2">
   <view wx:for="{{RC}}" wx:key="index">
     <view class="radius padding text-center shadow-blur" style="border-radius: 15rpx; "
-		data-name="{{item.rcName}}" bindtap="indexButtonJump">
+		data-name="{{item.rcName}}" data-index="{{index}}" bindtap="seeMenu">
       <van-image
         width="10rem"
         height="10rem"

@@ -65,6 +65,12 @@
           "pathName": "pages/more/umac/rcMenu/rcMenu",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "飯堂菜單",
+          "pathName": "pages/more/umac/rcMenu/rcMenu",
+          "query": "",
+          "scene": null
         }
       ]
     }

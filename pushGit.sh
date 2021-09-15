@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改bus頁文字"
+git commit -m "增加書院菜單預覽圖片。"
 
 git push origin dev
 git push local dev
