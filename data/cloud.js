@@ -46,7 +46,7 @@ let majorTagArray = studentMajor.map((e)=>{
   return e.substring(0,3);
 })
 // 学会数量 和 學會相关信息
-var institutionNum = 2;
+var institutionNum = 3;
 // 如果需要修改学会信息，只需要修改数组和上方institutionNum为学会数量即可
 let institutionInfo = [
   {
@@ -65,6 +65,23 @@ let institutionInfo = [
     info    : '&nbsp;&nbsp;工程及科技學會是一個國際性的工程師學會，是一個能分享專業知識的專業平台以及向大家宣傳科學的正面訊息。工程及科技學會的總會設立於倫敦，在全球127個國家裏有超過150,000名會員。工程及科技學會分別在歐洲，北美對及香港等地方設立分會。工程及科技學會同時也能提供國際認可的專業證書。',
     bottomInfo  : `聯絡電郵 : umsu.iet@umac.mo
     Facebook專頁: The IET Hong Kong Students Section Macau`,
+  },
+  {
+    id      : 2,
+    iconSrc : 'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+    name    : '澳門工程師學會學生分部',
+    info    : `&nbsp;&nbsp;澳門工程師學會學生分部成立於2011年，宗旨是透過舉辦不同的活動讓學生關心工程界的動向、提升學生對工程專業的認知；在學界與業界間搭建溝通的橋樑，作為協助學生邁向專業及執業資格的平台。總會是澳門歷史最悠久的工程組織：澳門工程師學會。
+
+    &nbsp;&nbsp;本會會員由澳門大學工程系學生組成，歡迎土木與環境工程、計算機科學、電機及電腦工程及機電工程學系學生入會。內閣成員除了正副會長外，還設有秘書處、財務部、宣傳及資訊部、文康部，希望有才能的你也能成為我們內閣的一員。
+    
+    
+    Introduction:
+    &nbsp;&nbsp;AEMEUM aims to let the student members concern about the trends of engineering industry as well as receive more current information apart from learning from lectures. We also set up a platform that links the students up with the industry and leads them towards professional qualifications. In the past, we have organized a variety of activities such as exchange trips, workshops, competitions and seminars etc. and there will be more in the future.
+
+    &nbsp;&nbsp;If you are a student from the Department of Civil and Environmental Engineering, Electrical and Computer Engineering and Electromechanical Engineering, you should join us! Moreover, we welcome you to become a part of our cabinet if you would like to learn more and enrich your university life.
+    `,
+    bottomInfo  : `聯絡電郵 : umsu.aeme@umac.mo
+    Facebook專頁: 澳門工程師學會學生分部`,
   },
 ];
 
