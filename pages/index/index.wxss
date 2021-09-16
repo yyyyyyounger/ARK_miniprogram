@@ -174,3 +174,17 @@ page{background-color:#FFFFFF;}
   word-break: break-all;
   white-space: normal;
 }
+.iconCon{
+    width: 25%;
+    display: inline-block;
+    position: relative;
+}
+.icontext{
+    position: absolute;
+    width: 100%;
+    top: -10rpx;
+    font-size: 30rpx;
+    color: #3498DB;
+    text-align: center;
+    margin: auto;
+}
