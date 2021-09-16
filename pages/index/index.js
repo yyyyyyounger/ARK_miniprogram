@@ -506,11 +506,11 @@ Page({
         })
         break;
     
-      case 'rcMenu':
-        wx.navigateTo({
-          url: '/pages/more/umac/rcMenu/rcMenu',
-        })
-        break;
+      // case 'rcMenu':
+      //   wx.navigateTo({
+      //     url: '/pages/more/umac/rcMenu/rcMenu',
+      //   })
+      //   break;
     
       case 'partner':
         let pageNum = 0;
@@ -520,11 +520,11 @@ Page({
         })
         break;
     
-      case 'more':
-        wx.switchTab({
-          url: '/pages/more/more',
-        })
-        break;
+      // case 'more':
+      //   wx.switchTab({
+      //     url: '/pages/more/more',
+      //   })
+      //   break;
     
       default:
         break;

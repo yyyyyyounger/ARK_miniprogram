@@ -133,23 +133,23 @@ url="/pages/{{item.path}}">
 	</view>
 	<view class="nav-li-title"><em>{{item.name}}</em></view>
 </navigator> -->
-<view class="link">
-	<view class="iconCon">
+<view class="link" style="margin-top: 10px;">
+	<view class="iconCon" data-name="newARK" bindtap="indexButtonJump">
 		<view class="iconfont icon-heiban"></view>
 		<view class="icontext">新增</view>
 		<!-- <view class="icontext">ARK</view> -->
 	</view>
-	<view class="iconCon">
+	<view class="iconCon" data-name="recentARK" bindtap="indexButtonJump">
 		<view class="iconfont icon-zhengceguizhang2"></view>
 		<view class="icontext">最近</view>
 	</view>
-	<view class="iconCon">
+	<view class="iconCon" data-name="bus" bindtap="indexButtonJump">
 		<view class="iconfont icon-bancheshike"></view>
 		<view class="icontext">校巴</view>
 	</view>
-	<view class="iconCon">
+	<view class="iconCon" data-name="partner" bindtap="indexButtonJump">
 		<view class="iconfont icon-a-xiaobaoxueshuqikan"></view>
-		<view class="icontext">菜單</view>
+		<view class="icontext">社團</view>
 	</view>
 </view>
 <!-- <view class="grid col-2 padding-sm" style="margin-top: -20rpx;">
@@ -161,7 +161,7 @@ url="/pages/{{item.path}}">
   </view>
 </view> -->
 
-<van-divider contentPosition="center" custom-style='margin-top:-15rpx;' >下方會有什麼...</van-divider>
+<van-divider contentPosition="center" custom-style='margin-top:-5rpx;' >下方會有什麼...</van-divider>
 
 <!-- 關於ARK -->
 <block>

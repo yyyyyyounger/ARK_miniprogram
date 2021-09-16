@@ -357,6 +357,7 @@ Page({
       })
       .then(res=>{
         console.log("進行重啟頁面");
+        Toast.loading('稍等');
         wx.reLaunch({
           url: './user',
         })
