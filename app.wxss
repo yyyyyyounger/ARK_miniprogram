@@ -110,5 +110,38 @@ page{
     }
   }
 
+  @font-face {
+    font-family: 'iconfont';  /* Project id 2818575 */
+    src: url('//at.alicdn.com/t/font_2818575_7c8xe4hg1ev.woff2?t=1631796000224') format('woff2'),
+         url('//at.alicdn.com/t/font_2818575_7c8xe4hg1ev.woff?t=1631796000224') format('woff'),
+         url('//at.alicdn.com/t/font_2818575_7c8xe4hg1ev.ttf?t=1631796000224') format('truetype');
+  }
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 80rpx;
+    color: #3498DB;
+    font-style: normal;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-zhengceguizhang2:before {
+    content: "\e617";
+  }
+  
+  .icon-heiban:before {
+    content: "\e619";
+  }
+  
+  .icon-bancheshike:before {
+    content: "\e61c";
+  }
+  
+  .icon-a-xiaobaoxueshuqikan:before {
+    content: "\e61d";
+  }
+  
+
   
   
