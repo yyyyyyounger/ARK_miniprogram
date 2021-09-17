@@ -37,8 +37,8 @@ var studentMajor = [  // 用作用戶修改信息時的彈出選擇。
   "CIS - 計算機", 
   "CEE - 土木", 
   "EME - 機電", 
-  "MMA - 數學", 
-  "PHC - 物理化學", 
+  "MAT - 數學", 
+  "DPC - 物理化學", 
   "ETC - 其他", 
 ];
 let majorTagArray = studentMajor.map((e)=>{

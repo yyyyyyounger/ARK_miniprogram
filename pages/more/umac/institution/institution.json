@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-image": "@vant/weapp/image/index"
+  },
+  "navigationBarTitleText": "ARK - 社團 學會 宣傳頁"
 }
