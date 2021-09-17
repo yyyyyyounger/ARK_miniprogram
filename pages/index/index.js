@@ -513,10 +513,13 @@ Page({
       //   break;
     
       case 'partner':
-        let pageNum = 0;
-        pageNum = JSON.stringify(pageNum);
+        // let pageNum = 0;
+        // pageNum = JSON.stringify(pageNum);
+        // wx.navigateTo({
+        //   url: '/pages/more/about/partner/partner?pageNum='+pageNum,
+        // })
         wx.navigateTo({
-          url: '/pages/more/about/partner/partner?pageNum='+pageNum,
+          url: '/pages/more/umac/institution/institution',
         })
         break;
     
