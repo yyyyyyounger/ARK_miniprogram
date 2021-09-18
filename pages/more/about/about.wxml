@@ -98,6 +98,46 @@
       </text>
   </view>
 
+  <!-- ARK時間軸 -->
+  <view class="cu-timeline text-df">
+    <view class="cu-time">2021</view>
+    <view class="cu-item cur">
+      <view class="content bg-green shadow-blur">
+        <text>03-25</text> ARK協議1.0發佈
+      </view>
+    </view>
+    <view class="cu-item text-red">
+      <view class="content bg-red shadow-blur">
+        <text>04-06</text> 第一次ARK分享
+      </view>
+    </view>
+    <view class="cu-item text-grey">
+      <view class="content bg-grey shadow-blur">
+        <text>06-03</text> ARK小程式開發團隊著急完畢
+      </view>
+      <view class="content bg-grey shadow-blur">
+        <text>08-15</text> IET學會、電腦學會、選乜課加入
+      </view>
+    </view>
+    <view class="cu-item text-blue">
+      <view class="bg-cyan content">
+        <text>09-08</text> ARK小程式正式版上線
+      </view>
+      <view class="bg-cyan content">
+        <text>09-14</text> ARK協議3.0發佈，工程師學會加入
+      </view>
+      <view class="bg-cyan content">
+        <text>09-18</text> 機電學會加入
+      </view>
+    </view>
+    <view class="cu-item text-blue">
+      <view class="bg-blue content">
+        <text>09-20</text> FST ARK正式對外宣傳
+      </view>
+    </view>
+  </view>
+
+
   <!-- 版權聲明 -->
   <view style="margin-top: 20rpx;">
     <view style="position:relative;font-size: 20rpx;text-align: center;right:20rpx;color:rgb(104, 104, 104)">

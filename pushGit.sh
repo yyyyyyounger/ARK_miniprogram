@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "學會活動頁體驗優化。"
+git commit -m "新增ARK時間軸。"
 
 git push origin dev
 git push local dev
