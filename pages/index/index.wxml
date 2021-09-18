@@ -143,13 +143,13 @@ url="/pages/{{item.path}}">
 		<view class="icontext">開ARK</view>
 		<!-- <view class="icontext">ARK</view> -->
 	</view>
-	<view class="iconCon" data-name="bus" bindtap="indexButtonJump">
-		<view class="iconfont icon-bancheshike"></view>
-		<view class="icontext">校巴</view>
-	</view>
 	<view class="iconCon" data-name="partner" bindtap="indexButtonJump">
 		<view class="iconfont icon-a-xiaobaoxueshuqikan"></view>
 		<view class="icontext">社團</view>
+	</view>
+	<view class="iconCon" data-name="bus" bindtap="indexButtonJump">
+		<view class="iconfont icon-bancheshike"></view>
+		<view class="icontext">校巴</view>
 	</view>
 </view>
 <!-- <view class="grid col-2 padding-sm" style="margin-top: -20rpx;">
