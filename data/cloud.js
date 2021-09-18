@@ -53,6 +53,7 @@ let institutionInfo = [
     id      : 0,
     iconSrc : 'https://i0.hdslb.com/bfs/album/5e84ac5924085d3155846926da3f32c18bbb2049.jpg',
     name    : '電腦學會',
+    shortName : 'CPSUMSU',
     info    : '&nbsp;&nbsp;澳門大學學生會電腦學會是以電腦為主題的學會，希望透過活動提升電腦系同學的歸屬感及團體精神。我們亦歡迎所有不同學系的同學，目的是透過舉辦工作坊、踏上IT第一步等等教授同學不同的電腦知識及認識電腦行業的前景。電競也是我們的主打之一，現時電競遊戲是一個十分熱門的話題，我們透過舉辦大大小小的比賽及交流活動等等，如最近所舉辦的澳大電競日從而推廣電競文化，讓不論是有接觸過電競與否的朋友也可以透過活動來認識電競及享受遊戲的樂趣。',
     bottomInfo  : `聯絡電郵：umsu.cps@umac.mo
     Facebook專頁 : 澳門大學學生會電腦學會
@@ -62,6 +63,7 @@ let institutionInfo = [
     id      : 1,
     iconSrc : 'https://i0.hdslb.com/bfs/album/d572ee89fab0391368407851137867d92d58c084.jpg',
     name    : 'IET澳門學生支部',
+    shortName : 'IET',
     info    : '&nbsp;&nbsp;工程及科技學會是一個國際性的工程師學會，是一個能分享專業知識的專業平台以及向大家宣傳科學的正面訊息。工程及科技學會的總會設立於倫敦，在全球127個國家裏有超過150,000名會員。工程及科技學會分別在歐洲，北美對及香港等地方設立分會。工程及科技學會同時也能提供國際認可的專業證書。',
     bottomInfo  : `聯絡電郵 : umsu.iet@umac.mo
     Facebook專頁: The IET Hong Kong Students Section Macau`,
@@ -70,6 +72,7 @@ let institutionInfo = [
     id      : 2,
     iconSrc : 'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
     name    : '澳門工程師學會學生分部',
+    shortName : 'AEMEUM',
     info    : `&nbsp;&nbsp;澳門工程師學會學生分部成立於2011年，宗旨是透過舉辦不同的活動讓學生關心工程界的動向、提升學生對工程專業的認知；在學界與業界間搭建溝通的橋樑，作為協助學生邁向專業及執業資格的平台。總會是澳門歷史最悠久的工程組織：澳門工程師學會。
 
     &nbsp;&nbsp;本會會員由澳門大學工程系學生組成，歡迎土木與環境工程、計算機科學、電機及電腦工程及機電工程學系學生入會。內閣成員除了正副會長外，還設有秘書處、財務部、宣傳及資訊部、文康部，希望有才能的你也能成為我們內閣的一員。

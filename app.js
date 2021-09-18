@@ -102,16 +102,12 @@ App({
   onPageNotFound: function(options) {
 
   },
-// 自定義Toast樣式，保證全局一樣
-  toastLoadingDIY : function() {
+// 下拉刷新函數，調用該函數可保證刷新完回彈
+  onPullDownRefresh : function(that) {
     Toast.loading({
       message: '拼命加載中...',
       forbidClick: true,
     });
-  },
-// 下拉刷新函數，調用該函數可保證刷新完回彈
-  onPullDownRefresh : function(that) {
-    that.app.toastLoadingDIY();
     // setTimeout(() => {
     that.onLoad("refresh");
     // }, 2500);

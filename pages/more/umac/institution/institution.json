@@ -2,5 +2,5 @@
   "usingComponents": {
     "van-image": "@vant/weapp/image/index"
   },
-  "navigationBarTitleText": "ARK - 社團 學會 宣傳頁"
+  "navigationBarTitleText": "ARK - 社團活動 宣傳頁"
 }

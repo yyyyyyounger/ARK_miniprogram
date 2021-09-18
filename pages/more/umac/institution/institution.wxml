@@ -9,7 +9,7 @@
 <view class="grid col-2">
   <view wx:for="{{institutes}}" wx:key="index">
     <view class="radius padding text-center shadow-blur" style="border-radius: 15rpx; ">
-      <!-- 學會poster -->
+      <!-- 社團poster -->
       <van-image
         wx:if="{{item.posterUrl[0]}}"
         data-index="{{index}}"
@@ -19,13 +19,15 @@
         fit="contain"
         src="{{item.posterUrl}}"
       />
+      <!-- 社團logo -->
       <van-image
+        data-shortname="{{item.shortName}}"
+        bindtap="jumpToPartner"
         width="3rem"
         height="3rem"
         fit="contain"
         src="{{item.iconUrl}}"
       />
-      <!-- style="font-size: 80%;" -->
       <view class="text-cut" style="width:150px;">{{item.name}}</view>
     </view>
   </view>
