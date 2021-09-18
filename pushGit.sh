@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "學會數據新增shortName表示。"
+git commit -m "學會頁js修改按日期排序。"
 
 git push origin dev
 git push local dev

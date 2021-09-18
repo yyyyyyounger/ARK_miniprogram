@@ -1,13 +1,23 @@
 <!-- 彈出類 -->
 <van-toast id="van-toast" />
 
-<!-- 使用粘性佈局 - 貼+號用於學會新增poster -->
+<!-- 使用粘性佈局 - 貼+號用於學會新增poster - 日程上未完成 -->
+<!-- Tips -->
+<view style="position: fixed;  top: 120rpx;left: 15rpx;z-index: 1000;" bindtap="onTap_tip">
+  <image src="https://i0.hdslb.com/bfs/album/8cf8b64cd7d20162a08ab17d973c846689246979.png" style="height: 80rpx;width: 80rpx;background-color: 3498DB;border-radius: 50%;background-color: #64b1e3;  border:solid#a5dbff;"></image><!--tips问号-->
+  <view class="tips {{tipClass}}?:tipsShow {{!tipClass}}?:tipHide" wx:if="{{tipsNotHide}}"><!--tips 快速点击会出现小BUG-->
+    <view><text decode="true">&nbsp;Q：當前版本如何發佈活動宣傳？&nbsp;</text> </view>     
+    <view><text decode="true">&nbsp;A：可以直接前往“更多頁”，點擊“聯繫管理員”，&nbsp;</text></view>
+    <view><text decode="true">&nbsp;提供poster以及時間信息即可。&nbsp;</text></view>   
+    <view><text decode="true">&nbsp;10月下旬版本會考慮更方便社團的方式來發佈宣傳。&nbsp;</text></view>   
+  </view>
+</view>
 
-<van-divider contentPosition="center">過往精彩</van-divider>
 
 <!-- 雙列渲染poster -->
+<van-divider wx:if="{{nowTimeStamp>events[0].date}}" contentPosition="center">過往精彩</van-divider>
 <view class="grid col-2">
-  <view wx:for="{{institutes}}" wx:key="index">
+  <view wx:for="{{events}}" wx:key="index">
     <view class="radius padding text-center shadow-blur" style="border-radius: 15rpx; ">
       <!-- 社團poster -->
       <van-image
@@ -19,16 +29,19 @@
         fit="contain"
         src="{{item.posterUrl}}"
       />
-      <!-- 社團logo -->
-      <van-image
+      <view
         data-shortname="{{item.shortName}}"
         bindtap="jumpToPartner"
-        width="3rem"
-        height="3rem"
-        fit="contain"
-        src="{{item.iconUrl}}"
-      />
-      <view class="text-cut" style="width:150px;">{{item.name}}</view>
+        >
+        <!-- 社團logo -->
+        <van-image
+          width="3rem"
+          height="3rem"
+          fit="contain"
+          src="{{item.iconUrl}}"
+        />
+        <view class="text-cut" style="width:150px;">{{item.name}}</view>
+      </view>
     </view>
   </view>
 </view>
