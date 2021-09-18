@@ -34,3 +34,5 @@
       bindtap="pageUp"/> <!-- 页数范围,在js中修改institutionNum -->
     </view>
 </view>
+
+<view class="bottom-watch"></view>

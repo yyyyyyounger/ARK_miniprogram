@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改全局loading的函數"
+git commit -m "學會介紹頁防止觸底"
 
 git push origin dev
 git push local dev
