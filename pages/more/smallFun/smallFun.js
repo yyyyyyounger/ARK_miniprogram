@@ -16,16 +16,16 @@ Page({
         name:'meet'
       },
       {
-        title:'書院食堂菜單',
-        icon:'https://i.loli.net/2021/08/29/lWoTjui9vF3CIEt.png',
-        color:'#6da14e',
-        name:'rcMenu'
-      },
-      {
         title:'Deadline提醒',
         icon:'https://i.loli.net/2021/08/29/SQPC85UVoRsD3TF.png',
         color:'#d5793e',
         name:'deadline'
+      },
+      {
+        title:'施工中...',
+        icon:'https://i.loli.net/2021/08/29/lWoTjui9vF3CIEt.png',
+        color:'#6da14e',
+        name:'rcMenux'
       },
     ]
   },
