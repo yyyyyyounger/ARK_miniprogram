@@ -3,8 +3,17 @@ let localData = require('../../../../data/cloud.js');
 
 import Toast from '../../../../miniprogram_npm/@vant/weapp/toast/toast';
 
+const db = wx.cloud.database();
+const _ = db.command
+
+const MAX_LIMIT = 10; //分页的大小
+
+
 Page({
   data: {
+    infoPageNum : 1,
+    canUp : false,
+    canDown : true,
     // 學會poster數據 - 模擬
     events:[
       {
@@ -97,85 +106,183 @@ Page({
         posterUrl:['https://i0.hdslb.com/bfs/album/2e86ac91e0a56dde75554f0f64b84bee28efe6da.png'
         ],
       },
+      {
+        id:10,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2020-09-20',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/e6c7278e6a3e163b4cf38e3bad2955c8da61febb.png'
+        ],
+      },
+      {
+        id:11,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2020-12-09',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/54ac3caa76042737a029c7f145885f7992692d2a.png'
+        ],
+      },
+      {
+        id:12,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2020-11-25',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/04024d925f151424ca768a0e08dc554c9c0bea93.png'
+        ],
+      },
+      {
+        id:13,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2020-09-16',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/1a3f276150ee7bf62c3e52246b97f0acf478380d.png'
+        ],
+      },
+      {
+        id:14,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2020-10-17',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/307fcc1627c1b161ffda5c1068b4d8c52bab8cef.png'
+        ],
+      },
     ],
   },
 
   onLoad: function (options) {
-    // 以時間降序，獲取數據庫宣傳數據 - 未完成
-
-    // 查詢對應shortName的社團頭像url
-    let institutionShortName = localData.institutionShortName;
-    this.data.events.map((e)=>{
-      let shortName = e.shortName;
-      let shortNameIndex = institutionShortName.indexOf(shortName);
-      // 如果已收錄則覆蓋頭像、名字信息
-      if (shortNameIndex!=-1) {
-        let institutionInfo = localData.institutionInfo[shortNameIndex]
-        e.iconUrl = institutionInfo.iconSrc;
-        e.name = institutionInfo.name;
-      } else {
-        console.log('未收錄');
-      }
-    })
-
     // yyyy-mm-dd形式換算為時間戳操作
     let nowTimeStamp = Date.now();
     this.setData({  nowTimeStamp  })
     console.log('現在的時間戳',nowTimeStamp);
-    this.data.events.map((e)=>{
-      let date = e.date;
-      let eventTimeStamp = Date.parse( new Date(date) );
-      // console.log(eventTimeStamp);
-      e.date = eventTimeStamp;
+
+    Toast.loading({
+      message: '等我Load一下',
+      forbidClick: true,
+    });
+    
+    // 以時間降序，獲取數據庫宣傳數據 - 未完成
+    db.collection('institution') .where({
+      posterUrl : _.exists(true)
+    }) .orderBy('date', 'desc') .limit(MAX_LIMIT) .skip( (this.data.infoPageNum-1) * MAX_LIMIT )
+    .get()
+    .then(res=>{
+      console.log(res.data);
+      this.setData({  events : res.data  })
+
+      if (res.data.length>0) {
+        // 查詢對應shortName的社團頭像url
+        let institutionShortName = localData.institutionShortName;
+        this.data.events.map((e)=>{
+          let shortName = e.shortName;
+          let shortNameIndex = institutionShortName.indexOf(shortName);
+          // 如果已收錄則覆蓋頭像、名字信息
+          if (shortNameIndex!=-1) {
+            let institutionInfo = localData.institutionInfo[shortNameIndex]
+            e.iconUrl = institutionInfo.iconSrc;
+            e.name = institutionInfo.name;
+          } else {
+            console.log('未收錄');
+          }
+        })
+  
+        // 分開未過期活動 與 過期活動
+        let overdueArr  = [];
+        let comingArr   = [];
+        this.data.events.map((e)=>{
+          if (e.date>nowTimeStamp) {
+            comingArr.push(e)
+          } else {
+            overdueArr.push(e)
+          }
+        })
+        this.setData({
+          overdueArr,
+          comingArr,
+        })
+  
+        // 保證wxml更新
+        this.setData({
+          events : this.data.events,
+          canUp : this.data.infoPageNum==1 ? false : true,
+          canDown : true,
+        })
+
+        Toast('點擊圖片可查看大圖！')
+
+        if(res.data.length<MAX_LIMIT) {
+          // 沒有數據了
+          // this.data.infoPageNum --;
+          this.setData({  canDown : false  })
+        }
+      }
+      
     })
 
-    // 按活動時間戳排序，降序；過期的放下面
-    // 排序為時間越遠，越靠前
-    function compare(p){ // 这是比较函数
-      return function(m,n){
-          var a = m[p];
-          var b = n[p];
-          return b - a; // a-b升序；b-a降序；
-      }
-    }
-    this.data.events.sort(compare("date"));
-
-    // 時間戳換算為yyyy-mm-yy形式
     if (false) {
+      
       this.data.events.map((e)=>{
         let date = e.date;
-        let eventTime =  new Date(date).toLocaleDateString() ;
-        e.date = eventTime;
+        let eventTimeStamp = Date.parse( new Date(date) );
+        // console.log(eventTimeStamp);
+        e.date = eventTimeStamp;
       })
-    }
-    console.log("排序後",this.data.events);
-
-    // 分開未過期活動 與 過期活動
-    let overdueArr  = [];
-    let comingArr   = [];
-    this.data.events.map((e)=>{
-      if (e.date>nowTimeStamp) {
-        comingArr.push(e)
-      } else {
-        overdueArr.push(e)
+  
+      // 按活動時間戳排序，降序；過期的放下面
+      // 排序為時間越遠，越靠前
+      function compare(p){ // 这是比较函数
+        return function(m,n){
+            var a = m[p];
+            var b = n[p];
+            return b - a; // a-b升序；b-a降序；
+        }
       }
-    })
-    this.setData({
-      overdueArr,
-      comingArr,
-    })
+      this.data.events.sort(compare("date"));
+  
+      // 時間戳換算為yyyy-mm-yy形式
+      if (false) {
+        this.data.events.map((e)=>{
+          let date = e.date;
+          let eventTime =  new Date(date).toLocaleDateString() ;
+          e.date = eventTime;
+        })
+      }
+      console.log("排序後",this.data.events);
+  
+      // 分開未過期活動 與 過期活動
+      let overdueArr  = [];
+      let comingArr   = [];
+      this.data.events.map((e)=>{
+        if (e.date>nowTimeStamp) {
+          comingArr.push(e)
+        } else {
+          overdueArr.push(e)
+        }
+      })
+      this.setData({
+        overdueArr,
+        comingArr,
+      })
+  
+      // 保證wxml更新
+      this.setData({  events : this.data.events  })
+    }
 
-    // 保證wxml更新
-    this.setData({  events : this.data.events  })
   },
   onShow: function () {
-
+    
   },
   onPullDownRefresh: function () {
     app.onPullDownRefresh(this);
   },
   onReachBottom: function () {
-
+    if (!this.data.canDown) {
+      Toast('暫時收錄這麼多~')
+    }
   },
   onShareAppMessage: function () {
 
@@ -220,6 +327,19 @@ Page({
        tipsNotHide:true
      })
     }
+  },
+  controlPage(e){
+    let mode = e.currentTarget.dataset.mode;
+    if (mode=="up") {
+      this.data.infoPageNum --;
+    }
+    else {
+      this.data.infoPageNum ++;
+    }
+    this.onLoad();
+    wx.pageScrollTo({
+      scrollTop: 0
+    })
   },
   // 跳轉合作協會頁
   jumpToPartner(e){

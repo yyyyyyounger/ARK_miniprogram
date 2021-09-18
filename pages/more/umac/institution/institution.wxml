@@ -13,6 +13,11 @@
   </view>
 </view>
 
+<!-- 上一頁button -->
+<view class="padding flex flex-direction">
+  <button class="cu-btn bg-themeBlue lg" data-mode="up" bindtap="controlPage" wx:if="{{canUp}}">上一頁</button>
+</view>
+
 <!-- Poster渲染 -->
 <!-- 即將開始 -->
 <van-divider wx:if="{{comingArr[0]}}" contentPosition="center" custom-style="margin-bottom:-10px;">即將開始</van-divider>
@@ -28,7 +33,7 @@
         width="160"
         height="200"
         fit="contain"
-        src="{{item.posterUrl}}"
+        src="{{item.posterUrl[0]}}"
       />
       <view data-shortname="{{item.shortName}}" bindtap="jumpToPartner" >
         <!-- 社團logo -->
@@ -58,7 +63,7 @@
         width="160"
         height="200"
         fit="contain"
-        src="{{item.posterUrl}}"
+        src="{{item.posterUrl[0]}}"
       />
       <view data-shortname="{{item.shortName}}" bindtap="jumpToPartner" >
         <!-- 社團logo -->
@@ -74,5 +79,9 @@
   </view>
 </view>
 
+<!-- 下一頁button -->
+<view class="padding flex flex-direction">
+  <button class="cu-btn bg-themeBlue lg" data-mode="down" bindtap="controlPage" wx:if="{{canDown}}">下一頁</button>
+</view>
 
 <view class="bottom-watch"></view>

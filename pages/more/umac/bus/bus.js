@@ -5,17 +5,7 @@ import pjXML from '../../../../plugin/pjxml';   // JQ庫
 let stationIndex
 let nextBus
 let serviceStatus
-//站点背景色
-let backgroundColor=[
-  {
-    id:0,
-    color:'background-color: rgb(207, 207, 207)',
-  },
-  {
-    id:0,
-    color:'background-color: rgb(207, 207, 207)',
-  },
-]
+
 //巴士icon style数据
 let busStyle=[{
   id:0,
@@ -76,6 +66,10 @@ let busStyle=[{
 {
   id:14,
   style:'left:60rpx; top: 1000rpx',
+},
+{
+  id:15,
+  style:'left:6000rpx',//没车的时候把车移到屏幕外=-=
 }
 ]
 
@@ -92,7 +86,7 @@ Page({
     vehiclePlateNumber: "",
     station: "",
     popupShow:false,
-
+    //站点名以及对应图片 用于点击站点后弹出层的渲染
     imageSrc:[
       {
         id:0,
@@ -140,6 +134,10 @@ Page({
   },
   onShow: function() {
     timeStamp = Date.now();
+    Toast.loading({
+      message: '等我Load一下',
+      forbidClick: true,
+    });
     this.checkBusNew();
   },
   onHide: function() {
@@ -202,9 +200,9 @@ Page({
             console.log("巴士到了：",arriveStop);
             // 找到站点对应的index，并减3（stationIndex 0~7 为到站对应的CSS数组数据）
             stationIndex = index-4;
-            nextBus = allSite[1].content[0];
-            serviceStatus = allSite[2].content[0];
-            console.log(nextBus)
+            nextBus = allSite[1].content[0];//到站时的查找下一辆车发车时间
+            serviceStatus = allSite[2].content[0];//到站时的查找服务状态
+            console.log(allSite,'allSite')
           }
           return e.content[0];
         })
@@ -240,8 +238,14 @@ Page({
         let busArriveWhere = [];
         if (!busArrive) {
           allDiv = allDiv.map((e)=>{
-            nextBus = allDiv[2].content[1].content[0];
-            serviceStatus = allDiv[3].content[1].content[0];
+            if(busName){//当有车在校园中且没到站时（就是有BUSName显示的时候)
+              nextBus = allDiv[2].content[1].content[0];//下一班时间
+              serviceStatus = allDiv[3].content[1].content[0];//服务状态
+            }
+            else{//校园中没车的时候
+              nextBus = '下一班：No info';//下一班时间
+              serviceStatus = allDiv[2].content[1].content[0];//服务状态
+            }
             let isBus = e.attributes.class=="left out-left";
             if (e.attributes.class=="right" || isBus) {
               if (isBus && e.content[0].length>17) {
@@ -257,8 +261,13 @@ Page({
 
           // console.log("未到站的Bus數據",busArriveWhere);
           busStop = busArriveWhere;
-          // 找到下一站对应的index，并加7（stationIndex 8~14 为未到站对应的CSS数组数据）
-          var stationIndex = busArriveWhere.indexOf(busName)+7
+          // 找到下一站对应的index，并加7（stationIndex 8~14 将CSS更改为未到站对应的数组数据）
+          if(busName){
+            var stationIndex = busArriveWhere.indexOf(busName)+7
+          }
+          else{//没车的时候 stationIndex 15 为无车的CSS，隐藏车车
+            var stationIndex = 15
+          }
           // 獲取站點名
           if (false) {
             
@@ -341,9 +350,9 @@ Page({
           console.log("巴士到了：",arriveStop);
           // 找到站点对应的index，并减3（stationIndex 0~7 为到站对应的CSS数组数据）
           stationIndex = index-4;
-          nextBus = allSite[1].content[0];
-          serviceStatus = allSite[2].content[0];
-          console.log(nextBus)
+          nextBus = allSite[1].content[0];//车到站时的查找下一班车时间
+          serviceStatus = allSite[2].content[0];//车到站时的查找服务状态
+          // console.log(nextBus)
         }
         return e.content[0];
       })
@@ -379,8 +388,14 @@ Page({
       let busArriveWhere = [];
       if (!busArrive) {
         allDiv = allDiv.map((e)=>{
-          nextBus = allDiv[2].content[1].content[0];
-          serviceStatus = allDiv[3].content[1].content[0];
+          if(busName){//当有车在校园中且没到站时（就是有busName显示的时候)
+            nextBus = allDiv[2].content[1].content[0];//下一班时间
+            serviceStatus = allDiv[3].content[1].content[0];//服务状态
+          }
+          else{//校园中没车的时候
+            nextBus = '下一班：No info';//下一班时间
+            serviceStatus = allDiv[2].content[1].content[0];//服务状态
+          }
           let isBus = e.attributes.class=="left out-left";
           if (e.attributes.class=="right" || isBus) {
             if (isBus && e.content[0].length>17) {
@@ -396,8 +411,14 @@ Page({
 
         // console.log("未到站的Bus數據",busArriveWhere);
         busStop = busArriveWhere;
-        // 找到下一站对应的index，并加7（stationIndex 8~14 为未到站对应的CSS数组数据）
-        var stationIndex = busArriveWhere.indexOf(busName)+7
+        // 找到下一站对应的index，并加7（stationIndex 8~14 将CSS更改为未到站对应的数组数据）
+        if(busName){
+          var stationIndex = busArriveWhere.indexOf(busName)+7
+        }
+        else{//没车的时候 stationIndex 15 将CSS更改为把车移除
+          var stationIndex = 15
+        }
+
         // 獲取站點名
         if (false) {
           
@@ -411,11 +432,11 @@ Page({
           })
         }
       }
-      console.log("stationIndex",stationIndex);
-      console.log('巴士名為',busName);
-      console.log('巴士站為',busStop);
+      // console.log("stationIndex",stationIndex);
+      // console.log('巴士名為',busName);
+      // console.log('巴士站為',busStop);
       var busNowStyle = busStyle[stationIndex].style;
-      let noBusStr = 'No bus Now';
+      let noBusStr = 'No bus';
       if (!busName) {
         busName = noBusStr
       }

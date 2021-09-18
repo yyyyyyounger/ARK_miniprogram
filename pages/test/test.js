@@ -81,15 +81,173 @@ Page({
 
     // 雲函數test
     addTest(){
-        db.collection('course').add({
+        // db.collection('course').add({
+        //     data: {
+        //         _id                         : 0,
+        //         comment                     : '用於佔位，以下的課程都可以使用排序後+1的方法，_id用num表示',
+        //         createAt                    : Date.now()
+        //     },
+        // }).catch(err=>{
+        //     console.error(err);
+        // })
+        let event = {
+            // id:14,
+            // name:'澳門工程師學會學生分部',
+            shortName : 'CPSUMSU',
+            date : Date.parse( new Date( '2020-10-17' ) ),        // 最裡面的括號格式為yyyy/mm/dd
+            // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+            posterUrl:['https://i0.hdslb.com/bfs/album/307fcc1627c1b161ffda5c1068b4d8c52bab8cef.png'
+            ],
+        }
+
+        let events = [
+            {
+              id:0,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'AEMEUM',
+              date : '2021-03-24',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/e62ad0ad7ff6f0f1f71e1f7746dbff1bc82bf409.jpg'
+              ],
+            },
+            {
+              id:1,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'AEMEUM',
+              date : '2021-05-05',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/71c2f3678e2497626d703e3f449e5038717f39fa.jpg'
+              ],
+            },
+            {
+              id:2,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'AEMEUM',
+              date : '2020-12-02',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/41a51f80485e341a46f960e20c3c7c83b64ee85e.jpg'
+              ],
+            },
+            {
+              id:3,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'AEMEUM',
+              date : '2020-10-24',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/ee84c55c45ce0bbfdb00f3b97da594ae351267a3.jpg'
+              ],
+            },
+            {
+              id:4,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'AEMEUM',
+              date : '2021-04-21',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/428ebcf5de63655f903fe21cb4978003aa7d8116.png'
+              ],
+            },
+            {
+              id:5,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2021-03-06',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/0489fdef456915bb22a392c0a8907c6de1ed04e3.jpg'
+              ],
+            },
+            {
+              id:6,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2021-05-01',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/3b91e9ad43d31bde104849445f15a42309837dd3.png'
+              ],
+            },
+            {
+              id:7,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2021-09-19',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/53f8d4400369e1284729a391c9b2ab340f78e107.png'
+              ],
+            },
+            {
+              id:8,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2021-04-02',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/7de8392d8d7a3e271370b14507cb2b654335058e.png'
+              ],
+            },
+            {
+              id:9,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2021-03-20',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/2e86ac91e0a56dde75554f0f64b84bee28efe6da.png'
+              ],
+            },
+            {
+              id:10,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2020-09-20',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/e6c7278e6a3e163b4cf38e3bad2955c8da61febb.png'
+              ],
+            },
+            {
+              id:11,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2020-12-09',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/54ac3caa76042737a029c7f145885f7992692d2a.png'
+              ],
+            },
+            {
+              id:12,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2020-11-25',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/04024d925f151424ca768a0e08dc554c9c0bea93.png'
+              ],
+            },
+            {
+              id:13,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2020-09-16',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/1a3f276150ee7bf62c3e52246b97f0acf478380d.png'
+              ],
+            },
+            {
+              id:14,
+              // name:'澳門工程師學會學生分部',
+              shortName : 'CPSUMSU',
+              date : '2020-10-17',
+              // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+              posterUrl:['https://i0.hdslb.com/bfs/album/307fcc1627c1b161ffda5c1068b4d8c52bab8cef.png'
+              ],
+            },
+        ];
+
+        db.collection('institution').add({
             data: {
-                _id                         : 0,
-                comment                     : '用於佔位，以下的課程都可以使用排序後+1的方法，_id用num表示',
-                createAt                    : Date.now()
+                shortName : e.shortName,
+                date : eventTimeStamp,        // 最裡面的括號格式為yyyy/mm/dd
+                posterUrl: e.posterUrl,
             },
         }).catch(err=>{
             console.error(err);
         })
+
     },
     searchTest() {
         // 以 _id 獲取某條記錄

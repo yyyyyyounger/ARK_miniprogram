@@ -57,7 +57,7 @@
 
   <view id="7" bindtap="tapped">
     <text style="position: absolute; top: 1140rpx;left: 480rpx;">|</text>
-    <text class="stationName {{stationIndex==7?'backgroudBlue':'backgroudGray'}}"  style="position: absolute; top: 1180rpx;right: 100rpx;">S4 研究生宿舍\n南四座（終）</text>
+    <text class="stationName {{stationIndex==7?'backgroudBlue':'backgroudGray'}}"  style="position: absolute; top: 1190rpx;right: 100rpx;">S4 研究生宿舍\n南四座（終）</text>
   </view>
 </view>
 
