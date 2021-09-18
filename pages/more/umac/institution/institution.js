@@ -1,4 +1,5 @@
 let app = getApp();
+let localData = require('../../../../data/cloud.js');
 
 import Toast from '../../../../miniprogram_npm/@vant/weapp/toast/toast';
 
@@ -81,6 +82,20 @@ Page({
     } else {
       console.log('尚未收錄Poster');
       Toast('暫未收錄Poster\n  晚些再來看看吧！\n    []~(￣▽￣)~*')
+    }
+  },
+  // 跳轉合作協會頁
+  jumpToPartner(e){
+    let selectName = e.currentTarget.dataset.shortname;
+    let institutionShortName = localData.institutionShortName;
+    let partnerIndex = institutionShortName.indexOf(selectName);
+    if (partnerIndex!=-1) {
+      console.log('合作學會已收錄，跳轉');
+      let pageNum = partnerIndex;
+      pageNum = JSON.stringify(partnerIndex);
+      wx.navigateTo({
+        url: '/pages/more/about/partner/partner?pageNum='+pageNum,
+      })
     }
   },
 })

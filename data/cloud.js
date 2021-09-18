@@ -87,6 +87,9 @@ let institutionInfo = [
     Facebook專頁: 澳門工程師學會學生分部`,
   },
 ];
+let institutionShortName = institutionInfo.map((e)=>{
+  return e.shortName
+})
 
 // ARK協議 v3.0
 const indexAnnouncement = 'ARK 協議 v3.0 已發佈！點擊查看';
@@ -144,5 +147,6 @@ module.exports = {
   ARKLogo :    ARKLogo,
 
   institutionNum:institutionNum,
-  institutionInfo:institutionInfo
+  institutionInfo:institutionInfo,
+  institutionShortName:institutionShortName,
 }
