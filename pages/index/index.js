@@ -159,7 +159,8 @@ Page({
     // 非下拉刷新的場景時 - 首次加載
     if (scene!="refresh") {
       this.showPopup();     // 展示頂部彈出層
-      this.cloudGetOneMoto();  // 雲函數請求返回api
+      // this.cloudGetOneMoto();  // 雲函數請求返回api
+      this.hitokotoLocal();
       // 5s後關閉彈出層
       // setTimeout(() => {
         // this.closePopup()  //關閉彈出層
@@ -317,7 +318,8 @@ Page({
 
   // 下拉刷新
   onPullDownRefresh() {
-    this.cloudGetOneMoto();
+    // this.cloudGetOneMoto();
+    this.hitokotoLocal();
     if (!this.data.userCloudData) {
       this.showPopup();     // 展示頂部彈出層
     }
@@ -428,6 +430,20 @@ Page({
       this.setData({    moto : result  })
     }).catch(res=>{
       console.log("雲函數cloudGetOneMoto請求失敗",res);
+    })
+  },
+// 本地請求一言api
+  hitokotoLocal(e) {
+    let that = this;
+    wx.request({
+      url: 'https://v1.hitokoto.cn?c=d&c=h&c=i&c=k&c=l',
+      success(res){
+        console.log(res.data);
+        that.setData({    moto : res.data  })
+      },
+      fail(err){
+        console.log("本地一言請求失敗",res);
+      }
     })
   },
 // Color - 輪播

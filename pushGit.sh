@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "設置一言合法域名"
+git commit -m "一言設置了獲取篩選分類。"
 
 git push origin dev
 git push local dev

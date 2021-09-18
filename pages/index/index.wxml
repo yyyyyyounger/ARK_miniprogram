@@ -207,7 +207,7 @@ url="/pages/{{item.path}}">
 
 <!-- 一言 -->
 <block>
-	<view bindtap="cloudGetOneMoto">
+	<view bindtap="hitokotoLocal">
 		<view class="cu-bar bg-white">
 			<view class="action">
 				<text class="cuIcon-title text-themeBlue"></text>一言<text class="text-gray" style="margin-left: 10rpx;">(隨機生成，點擊刷新)</text>
