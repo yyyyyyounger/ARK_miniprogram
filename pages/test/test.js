@@ -62,24 +62,6 @@ Page({
             })
         }
 
-        wx.cloud.callFunction({
-            name:'httpPost',
-            data: {
-                uri:'https://campusloop.cmdo.um.edu.mo/zh_TW/busstopinfo.zone:refreshzone',
-                headers: {
-                    'Host': "campusloop.cmdo.um.edu.mo",
-                    'X-Requested-With': "XMLHttpRequest",
-                    'Origin': "https://campusloop.cmdo.um.edu.mo",
-                    'Referer': "https://campusloop.cmdo.um.edu.mo/zh_TW/busstopinfo",
-                },
-            }
-        }).then(rqRes => {
-            // console.log(rqRes)
-            const data = JSON.parse(rqRes.result)
-            // console.log(data)
-            let result = data._tapestry.content[0][1];
-            console.log(result);
-        })
     },
     onShow: function(){
         
