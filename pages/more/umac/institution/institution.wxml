@@ -3,6 +3,8 @@
 
 <!-- 使用粘性佈局 - 貼+號用於學會新增poster -->
 
+<van-divider contentPosition="center">過往精彩</van-divider>
+
 <!-- 雙列渲染poster -->
 <view class="grid col-2">
   <view wx:for="{{institutes}}" wx:key="index">
