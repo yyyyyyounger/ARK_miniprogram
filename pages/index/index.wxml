@@ -35,7 +35,7 @@ bind:close="closePopup"
 			</view>
 			<van-icon name="arrow"/>
 		</view>
-		<view class="popup_word" bindtap="jumpToMore"><text style="padding-left: 15px;"></text>ARK開課、Follow課程提醒、澳大校園巴士報站、查看書院菜單等等等等 ~</view><text>\n</text>
+		<view class="popup_word" bindtap="jumpToMore"><text style="padding-left: 15px;"></text>ARK開課、Follow課程提醒、澳大校園巴士報站、社團活動公佈欄等等等等 ~</view><text>\n</text>
 		
 		<view class="cu-bar" bindtap="handleTapAnnouncement">
 			<view class="action" style="text-align: left;">
