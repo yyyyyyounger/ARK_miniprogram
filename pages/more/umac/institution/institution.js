@@ -106,6 +106,8 @@ Page({
     console.log("排序後",this.data.events);
 
     // 分開未過期活動 與 過期活動
+    let overdueArr  = [];
+    let comingArr   = [];
 
     // 保證wxml更新
     this.setData({  events : this.data.events  })

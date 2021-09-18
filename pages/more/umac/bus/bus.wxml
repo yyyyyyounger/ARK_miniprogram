@@ -1,25 +1,72 @@
 <van-toast id="van-toast" />
-<!-- api巴士報站法 - 棄用狀態 -->
-<!-- <button bindtap="btnClick">Refresh</button>
-<view>現在位置: {{station}}</view>
-<view>到此站時間: {{datetime}}</view>
-<view>車牌: {{vehiclePlateNumber}}</view> -->
 
-<view wx:if="{{admin}}">
-  <!-- <rich-text nodes="{{result}}"></rich-text> -->
-  <view>Bus到站狀態：{{busArrive}}</view>
-  <view>Bus名為：{{busName}}</view>
-  <text>\n站點信息\n</text>
-  <view
-    wx:for="{{busStop}}"
-    wx:key = "index"
-    style="text-align: center;"
-  >
-  {{item}}
+<!-- 校园地图 -->
+<view>
+  <image src="https://i0.hdslb.com/bfs/album/d1c883a0a78d26d1fee47fe19f888e992bae058a.png" style="position:absolute;height: 1200rpx;width: 600rpx;left: 75rpx;top: 20rpx;"></image>
+</view>
+
+<!-- 箭头 -->
+<view style="z-index: 99999;">
+  <image class="arrow1" src="https://i0.hdslb.com/bfs/album/70ec0ae8283aa8d27730fa4a7da4d8219e6fb823.png"></image>
+  <image class="arrow2" src="https://i0.hdslb.com/bfs/album/70ec0ae8283aa8d27730fa4a7da4d8219e6fb823.png"></image>
+  <image class="arrow3" src="https://i0.hdslb.com/bfs/album/70ec0ae8283aa8d27730fa4a7da4d8219e6fb823.png"></image>
+  <image class="arrow4" src="https://i0.hdslb.com/bfs/album/70ec0ae8283aa8d27730fa4a7da4d8219e6fb823.png"></image>
+</view>
+
+<!-- 左上信息 -->
+<view class="busNameAll">
+  <text>BUS:</text><text decode="true" class="busName">&nbsp;{{busName}}&nbsp;</text>
+  <view style="font-size: 30rpx;">{{nextBus}}</view>
+  <view style="font-size: 20rpx;">{{serviceStatus}}</view>
+</view>
+
+<!-- 车 -->
+<view><image src="https://i0.hdslb.com/bfs/album/baddf5682dded6c45c4414bc2035a3f7650e0b5d.png" class="busIcon" style="position: absolute; {{busNowStyle}}"></image></view>
+<!-- 这里没有问题。报错？小问题 -->
+
+<!-- 站点名 本来考虑用for循环 但是由于布局的特殊性 用for循环会有很多麻烦-->
+<view>
+
+  <view style="position: absolute; top: 1000rpx;right: 150rpx;" id="0" bindtap="tapped">
+    <text class="stationName {{stationIndex==0?'backgroudBlue':'backgroudGray'}}">PGH 研究生宿舍（起）</text><text>—</text>
+  </view>
+
+  <view style="position: absolute; top: 650rpx;right: 150rpx;" id="1" bindtap="tapped">
+    <text class="stationName {{stationIndex==1?'backgroudBlue':'backgroudGray'}}">E4 劉少榮樓</text><text>—</text>
+  </view>
+
+  <view style="position: absolute; top: 80rpx;right: 150rpx;" id="2" bindtap="tapped">
+    <text class="stationName {{stationIndex==2?'backgroudBlue':'backgroudGray'}}">N2 大學會堂</text><text>—</text>
+  </view>
+
+  <view style="position: absolute; top: 140rpx;left: 310rpx;" id="3" bindtap="tapped">
+    <text>—</text><text class="stationName {{stationIndex==3?'backgroudBlue':'backgroudGray'}}">N6 行政樓</text>
+  </view>
+
+  <view style="position: absolute; top: 340rpx;left: 150rpx;" id="4" bindtap="tapped">
+    <text>—</text><text class="stationName {{stationIndex==4?'backgroudBlue':'backgroudGray'}}">E11 科技學院</text>
+  </view>
+
+  <view style="position: absolute; top: 600rpx;left: 150rpx;" id="5" bindtap="tapped">
+    <text>—</text><text class="stationName {{stationIndex==5?'backgroudBlue':'backgroudGray'}}">E21 人文社科樓</text>
+  </view>
+
+  <view style="position: absolute; top: 900rpx;left: 150rpx;" id="6" bindtap="tapped">
+    <text>—</text><text class="stationName {{stationIndex==6?'backgroudBlue':'backgroudGray'}}">E32 法學院</text>
+  </view>
+
+  <view id="7" bindtap="tapped">
+    <text style="position: absolute; top: 1140rpx;left: 480rpx;">|</text>
+    <text class="stationName {{stationIndex==7?'backgroudBlue':'backgroudGray'}}"  style="position: absolute; top: 1180rpx;right: 100rpx;">S4 研究生宿舍\n南四座（終）</text>
   </view>
 </view>
-<view wx:else style="text-align: center;">
-協商已完成，等待最後樣式佈置。
-</view>
 
+<!-- 车站弹出层预览图 -->
+<view>
+  <van-popup show="{{ popupShow }}" bind:close="onClose" round>
+  <text decode="true" style="position:relative;bottom: -18rpx;">&nbsp;&nbsp;{{popupName}}</text>
+  <van-divider />
+  <image src="{{popupSrc}}" style="margin-left: 20rpx;margin-right: 20rpx;"></image>
+  </van-popup>
+</view>
 <view class="bottom-watch"></view>

@@ -1,82 +1,84 @@
-.bus-stop-info {
-  font-size: 1em;
-  color: #000000;
-  padding-bottom: -20px;
-}
+page{background-color:#FFFFFF;}
 
-.tree {
-  padding: 0;
+/* 站点名的CSS */
+.stationName{
+  margin-left: 10rpx;
+  margin-right: 10rpx;
+  font-size: 30rpx;
+  color: #3f3f3f;
+  border-radius: 10rpx;
 }
+/* 左上角 */
+.busNameAll{
+  position:absolute;
+  background-color: #d1d1d1;
+  border-radius: 10rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  top:10rpx;
+  left:10rpx;
+}
+/* BUS车牌 */
+.busName{
+  background-color: rgb(58, 58, 58);
+  color:rgb(207, 135, 0);
+  border-radius: 6rpx;
+  border-width: 20rpx;
 
-.col-xs-12 {
-  position: relative;
-  min-height: 1px;
-  width: 100%;
-  float: left;
 }
-
-.main {
-  float: left;
-  width: 100%;
-  position: relative;
-  top:100rpx;
+/* BUS小车车的大小 */
+.busIcon{
+  width: 50rpx;
+  height: 50rpx;
 }
-
-.left {
-  width: 30%;
-  border-right: 3px solid #3498DB;
-  text-align: right;
-  padding-right: 50rpx;
-  padding-top: 50rpx;
-  min-height: 23px;
-  position: relative;
-  bottom: 40px;
+/* BUS未到此站时的边框颜色 */
+.backgroudGray{
+  border: solid#d1d1d1;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
 }
-.out-left {
-  height: 40px;
-  padding-top: 10px;
-  padding-right: 25px;
+/* BUS到此站时的边框颜色 */
+.backgroudBlue{
+  border: solid var(--themeBlue);
+  padding-left: 10rpx;
+  padding-right: 10rpx;
 }
-
-/* 圓 */
-.center {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #3498DB;
-  text-align: center;
-  position: relative;
-  left: 267rpx;
-  top: -115rpx;
-  /* right: 8px; */
-  color: #ffffff;
+/* 右上箭头 */
+.arrow1{
+  position: absolute;
+  top:10rpx;
+  right:90rpx;
+  width:50rpx; 
+  height:50rpx;
+  transform: scaleX(-1);
 }
-/* 三角 */
-.out-center {
-  text-align: center;
-  position: relative;
-  left: 267rpx;
-  /* right: 8px; */
-  top: -135rpx;
-  border-style: solid;
-  border-width: 9px 6px;
-  border-color: #3498DB transparent transparent;
-  width: 0px;
-  height: 0px;
+/* 左上箭头 */
+.arrow2{
+  position: absolute;
+  top:240rpx;
+  left:80rpx;
+  width:50rpx; 
+  height:50rpx;
+  transform: scaleX(-1);
+  rotate: -90deg;
 }
-
-.right {
-  width: 61%;
-  position: relative;
-  left: 276rpx;
-  top:-78px;
-  /* right: 15px; */
-  border-top: 50px;
-  border-left: 3px solid #3498DB;
-  padding-left: 23px;
-  z-index: -1;
-  bottom: 3px;
+/* 左下箭头 */
+.arrow3{
+  position: absolute;
+  top:1130rpx;
+  left:95rpx;
+  width:50rpx;
+  height:50rpx;
+  transform: scaleX(-1);
+  rotate: 180deg;
 }
-.out-right {
-  width: 67%;
+/* 右下箭头 */
+.arrow4{
+  position: absolute;
+  top:1120rpx;
+  right:80rpx;
+  width:50rpx;
+  height:50rpx;
+  transform: scaleX(-1);
+  rotate: 90deg;
 }
