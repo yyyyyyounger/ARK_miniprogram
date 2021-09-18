@@ -5,6 +5,8 @@ var cloudData = require('../../data/cloud.js')
 const db = wx.cloud.database();
 const _ = db.command
 
+let hitokotoTimer;
+
 Page({
   data: {
     // Vant - begin
@@ -160,7 +162,7 @@ Page({
     if (scene!="refresh") {
       this.showPopup();     // 展示頂部彈出層
       // this.cloudGetOneMoto();  // 雲函數請求返回api
-      this.hitokotoLocal();
+      // this.hitokotoLocal();
       // 5s後關閉彈出層
       // setTimeout(() => {
         // this.closePopup()  //關閉彈出層
@@ -314,6 +316,13 @@ Page({
     this.setData({
       showQandA:false,
     })
+    this.hitokotoLocal();
+  },
+  onHide (){
+    clearInterval(hitokotoTimer);
+  },
+  onUnload(){
+    clearInterval(hitokotoTimer);
   },
 
   // 下拉刷新
@@ -438,8 +447,11 @@ Page({
     wx.request({
       url: 'https://v1.hitokoto.cn?c=d&c=h&c=i&c=k&c=l',
       success(res){
-        console.log(res.data);
+        // console.\log(res.data);
         that.setData({    moto : res.data  })
+        hitokotoTimer = setTimeout(() => {
+          that.hitokotoLocal();
+        }, 10000);
       },
       fail(err){
         console.log("本地一言請求失敗",res);

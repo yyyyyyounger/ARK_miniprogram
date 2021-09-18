@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "一言設置了獲取篩選分類。"
+git commit -m "一言設置自動獲取。"
 
 git push origin dev
 git push local dev
