@@ -415,8 +415,9 @@ Page({
       console.log('巴士名為',busName);
       console.log('巴士站為',busStop);
       var busNowStyle = busStyle[stationIndex].style;
+      let noBusStr = 'No bus Now';
       if (!busName) {
-        busName = 'No bus Now'
+        busName = noBusStr
       }
       that.setData({
         busName,
@@ -430,18 +431,22 @@ Page({
       Toast.success('加載成功')
 
       // 10s返回一次
-      busTimer =  setTimeout(() => {
-        // 連續運行0.5分鐘
-        if (runTimes++ <= 2) {
-          this.checkBusNew();
-        } 
-        // 已超過1分鐘
-        else {
-          runTimes = 1;
-          clearInterval(runTimes)
-          Toast('休息一下吧。。')
-        }
-      }, 10000);
+      if (busName!=noBusStr) {
+        busTimer =  setTimeout(() => {
+          // 連續運行0.5分鐘
+          if (runTimes++ <= 2) {
+            this.checkBusNew();
+          } 
+          // 已超過1分鐘
+          else {
+            runTimes = 1;
+            clearInterval(runTimes)
+            Toast('休息一下吧。。')
+          }
+        }, 10000);
+      } else {
+        Toast('現在已經沒有Bus了...')
+      }
     })
 
   },
