@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "學會介紹頁防止觸底"
+git commit -m "巴士頁邏輯整合"
 
 git push origin dev
 git push local dev

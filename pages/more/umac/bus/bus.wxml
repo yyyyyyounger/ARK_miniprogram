@@ -1,28 +1,6 @@
 <van-toast id="van-toast" />
-<!-- api巴士報站法 - 棄用狀態 -->
-<!-- <button bindtap="btnClick">Refresh</button>
-<view>現在位置: {{station}}</view>
-<view>到此站時間: {{datetime}}</view>
-<view>車牌: {{vehiclePlateNumber}}</view> -->
 
-<!-- <view wx:if="{{admin}}"> -->
-  <!-- <rich-text nodes="{{result}}"></rich-text> -->
-  <!-- <view>Bus到站狀態：{{busArrive}}</view>
-  <view>Bus名為：{{busName}}</view>
-  <text>\n站點信息\n</text>
-  <view
-    wx:for="{{busStop}}"
-    wx:key = "index"
-    style="text-align: center;"
-  >
-  {{item}}
-  </view>
-</view>
-<view wx:else style="text-align: center;">
-協商已完成，等待最後樣式佈置。
-</view> -->
-
-<!-- 校园地图 -->
+<!-- 校园地图輪廓 -->
 <view>
   <image src="https://i0.hdslb.com/bfs/album/d1c883a0a78d26d1fee47fe19f888e992bae058a.png" style="position:absolute;height: 1200rpx;width: 600rpx;left: 75rpx;top: 20rpx;"></image>
 </view>
@@ -91,4 +69,6 @@
   <image src="{{popupSrc}}" style="margin-left: 20rpx;margin-right: 20rpx;"></image>
   </van-popup>
 </view>
+
+
 <view class="bottom-watch"></view>

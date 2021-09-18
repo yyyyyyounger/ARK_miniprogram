@@ -29,24 +29,26 @@ Page({
         }
 
         // 訂閱信息定時觸發條件測試
-        let nowTimeStamp = Date.parse(new Date('2021-09-04 16:00'));
-        console.log("當前時間",nowTimeStamp, new Date(nowTimeStamp) );
-        let beginTimeStamp = Date.parse(new Date('2021-09-04 17:15'));
-        let sendTimes=0;
-
-        for (let i = 0; beginTimeStamp+15*4*60*1000 > nowTimeStamp; i++) {
-            if (i!=0) {
-                nowTimeStamp += 15*60*1000;
-                console.log("15分鐘後",nowTimeStamp, new Date(nowTimeStamp));
+        if (false) {
+            let nowTimeStamp = Date.parse(new Date('2021-09-04 16:00'));
+            console.log("當前時間",nowTimeStamp, new Date(nowTimeStamp) );
+            let beginTimeStamp = Date.parse(new Date('2021-09-04 17:15'));
+            let sendTimes=0;
+    
+            for (let i = 0; beginTimeStamp+15*4*60*1000 > nowTimeStamp; i++) {
+                if (i!=0) {
+                    nowTimeStamp += 15*60*1000;
+                    console.log("15分鐘後",nowTimeStamp, new Date(nowTimeStamp));
+                }
+                let timeDiff = beginTimeStamp - nowTimeStamp;
+                // 30分鐘內提醒2次
+                if ( 0<timeDiff && timeDiff<=30.5*60*1000 ) {
+                    console.log("於",new Date(nowTimeStamp),"提醒");
+                    sendTimes++
+                }
             }
-            let timeDiff = beginTimeStamp - nowTimeStamp;
-            // 30分鐘內提醒2次
-            if ( 0<timeDiff && timeDiff<=30.5*60*1000 ) {
-                console.log("於",new Date(nowTimeStamp),"提醒");
-                sendTimes++
-            }
+            console.log('總共提醒了',sendTimes,'次');
         }
-        console.log('總共提醒了',sendTimes,'次');
         
         // this.readyToSend();
 
@@ -60,6 +62,24 @@ Page({
             })
         }
 
+        wx.cloud.callFunction({
+            name:'httpPost',
+            data: {
+                uri:'https://campusloop.cmdo.um.edu.mo/zh_TW/busstopinfo.zone:refreshzone',
+                headers: {
+                    'Host': "campusloop.cmdo.um.edu.mo",
+                    'X-Requested-With': "XMLHttpRequest",
+                    'Origin': "https://campusloop.cmdo.um.edu.mo",
+                    'Referer': "https://campusloop.cmdo.um.edu.mo/zh_TW/busstopinfo",
+                },
+            }
+        }).then(rqRes => {
+            // console.log(rqRes)
+            const data = JSON.parse(rqRes.result)
+            // console.log(data)
+            let result = data._tapestry.content[0][1];
+            console.log(result);
+        })
     },
     onShow: function(){
         
