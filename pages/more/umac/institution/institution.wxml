@@ -13,16 +13,47 @@
   </view>
 </view>
 
-
-<!-- 雙列渲染poster -->
-<van-divider wx:if="{{nowTimeStamp>events[0].date}}" contentPosition="center">過往精彩</van-divider>
-<view class="grid col-2">
-  <view wx:for="{{events}}" wx:key="index">
+<!-- Poster渲染 -->
+<!-- 即將開始 -->
+<van-divider wx:if="{{comingArr[0]}}" contentPosition="center" custom-style="margin-bottom:-10px;">即將開始</van-divider>
+<view class="grid col-2" wx:if="{{comingArr[0]}}">
+  <view wx:for="{{comingArr}}" wx:key="index">
     <view class="radius padding text-center shadow-blur" style="border-radius: 15rpx; ">
       <!-- 社團poster -->
       <van-image
         wx:if="{{item.posterUrl[0]}}"
         data-index="{{index}}"
+        data-array="comingArr"
+        bindtap="seeImg"
+        width="160"
+        height="200"
+        fit="contain"
+        src="{{item.posterUrl}}"
+      />
+      <view data-shortname="{{item.shortName}}" bindtap="jumpToPartner" >
+        <!-- 社團logo -->
+        <van-image
+          width="3rem"
+          height="3rem"
+          fit="contain"
+          src="{{item.iconUrl}}"
+        />
+        <view class="text-cut" style="width:150px;">{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 過往精彩 -->
+<van-divider contentPosition="center" custom-style="margin-bottom:-10px;">過往精彩</van-divider>
+<view class="grid col-2">
+  <view wx:for="{{overdueArr}}" wx:key="index">
+    <view class="radius padding text-center shadow-blur" style="border-radius: 15rpx; ">
+      <!-- 社團poster -->
+      <van-image
+        wx:if="{{item.posterUrl[0]}}"
+        data-index="{{index}}"
+        data-array="overdueArr"
         bindtap="seeImg"
         width="160"
         height="200"

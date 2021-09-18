@@ -52,6 +52,51 @@ Page({
         posterUrl:['https://i0.hdslb.com/bfs/album/428ebcf5de63655f903fe21cb4978003aa7d8116.png'
         ],
       },
+      {
+        id:5,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2021-03-06',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/0489fdef456915bb22a392c0a8907c6de1ed04e3.jpg'
+        ],
+      },
+      {
+        id:6,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2021-05-01',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/3b91e9ad43d31bde104849445f15a42309837dd3.png'
+        ],
+      },
+      {
+        id:7,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2021-09-19',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/53f8d4400369e1284729a391c9b2ab340f78e107.png'
+        ],
+      },
+      {
+        id:8,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2021-04-02',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/7de8392d8d7a3e271370b14507cb2b654335058e.png'
+        ],
+      },
+      {
+        id:9,
+        // name:'澳門工程師學會學生分部',
+        shortName : 'CPSUMSU',
+        date : '2021-03-20',
+        // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+        posterUrl:['https://i0.hdslb.com/bfs/album/2e86ac91e0a56dde75554f0f64b84bee28efe6da.png'
+        ],
+      },
     ],
   },
 
@@ -108,6 +153,17 @@ Page({
     // 分開未過期活動 與 過期活動
     let overdueArr  = [];
     let comingArr   = [];
+    this.data.events.map((e)=>{
+      if (e.date>nowTimeStamp) {
+        comingArr.push(e)
+      } else {
+        overdueArr.push(e)
+      }
+    })
+    this.setData({
+      overdueArr,
+      comingArr,
+    })
 
     // 保證wxml更新
     this.setData({  events : this.data.events  })
@@ -126,11 +182,14 @@ Page({
   },
   seeImg (e) {
     let selectIndex = e.currentTarget.dataset.index;
-    console.log(selectIndex);
-    if (this.data.events[selectIndex].posterUrl[0]) {
+    let selectArray = e.currentTarget.dataset.array;
+    console.log('選擇了array：',selectArray,'index為',selectIndex);
+
+    let dataArray = this.data[selectArray];
+    if (dataArray[selectIndex].posterUrl[0]) {
       console.log('有Poster');
       wx.previewImage({
-        urls: this.data.events[selectIndex].posterUrl, // [imgUrl], //需要预览的图片http链接列表，注意是数组
+        urls: dataArray[selectIndex].posterUrl, // [imgUrl], //需要预览的图片http链接列表，注意是数组
         // current: imgUrl, // 当前显示图片的http链接，默认是第一个
         success: function (res) { },
         fail: function (res) { },
