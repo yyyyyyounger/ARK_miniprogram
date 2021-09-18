@@ -11,8 +11,8 @@
       <!-- 學會poster -->
       <van-image
         wx:if="{{item.posterUrl[0]}}"
-        width="10rem"
-        height="10rem"
+        width="160"
+        height="200"
         fit="contain"
         src="{{item.posterUrl}}"
       />
@@ -22,7 +22,8 @@
         fit="contain"
         src="{{item.iconUrl}}"
       />
-      <text>{{item.name}}</text>
+      <!-- style="font-size: 80%;" -->
+      <view class="text-cut" style="width:150px;">{{item.name}}</view>
     </view>
   </view>
 </view>
