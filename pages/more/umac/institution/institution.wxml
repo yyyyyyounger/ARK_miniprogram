@@ -6,11 +6,12 @@
 <!-- 雙列渲染poster -->
 <view class="grid col-2">
   <view wx:for="{{institutes}}" wx:key="index">
-    <view class="radius padding text-center shadow-blur" style="border-radius: 15rpx; "
-		data-name="{{item.name}}" data-index="{{index}}" bindtap="seeImg">
+    <view class="radius padding text-center shadow-blur" style="border-radius: 15rpx; ">
       <!-- 學會poster -->
       <van-image
         wx:if="{{item.posterUrl[0]}}"
+        data-index="{{index}}"
+        bindtap="seeImg"
         width="160"
         height="200"
         fit="contain"
