@@ -59,8 +59,7 @@ page{background-color:#FFFFFF;}
   left:80rpx;
   width:50rpx; 
   height:50rpx;
-  transform: scaleX(-1);
-  rotate: -90deg;
+  transform: scaleX(-1)rotateZ(90deg);
 }
 /* 左下箭头 */
 .arrow3{
@@ -69,8 +68,7 @@ page{background-color:#FFFFFF;}
   left:95rpx;
   width:50rpx;
   height:50rpx;
-  transform: scaleX(-1);
-  rotate: 180deg;
+  transform: scaleX(-1)rotateZ(180deg);
 }
 /* 右下箭头 */
 .arrow4{
@@ -79,6 +77,5 @@ page{background-color:#FFFFFF;}
   right:80rpx;
   width:50rpx;
   height:50rpx;
-  transform: scaleX(-1);
-  rotate: 90deg;
+  transform: scaleX(-1)rotateZ(-90deg);
 }

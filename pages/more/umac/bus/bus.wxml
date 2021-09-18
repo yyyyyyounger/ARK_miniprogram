@@ -1,4 +1,26 @@
 <van-toast id="van-toast" />
+<!-- api巴士報站法 - 棄用狀態 -->
+<!-- <button bindtap="btnClick">Refresh</button>
+<view>現在位置: {{station}}</view>
+<view>到此站時間: {{datetime}}</view>
+<view>車牌: {{vehiclePlateNumber}}</view> -->
+
+<!-- <view wx:if="{{admin}}"> -->
+  <!-- <rich-text nodes="{{result}}"></rich-text> -->
+  <!-- <view>Bus到站狀態：{{busArrive}}</view>
+  <view>Bus名為：{{busName}}</view>
+  <text>\n站點信息\n</text>
+  <view
+    wx:for="{{busStop}}"
+    wx:key = "index"
+    style="text-align: center;"
+  >
+  {{item}}
+  </view>
+</view>
+<view wx:else style="text-align: center;">
+協商已完成，等待最後樣式佈置。
+</view> -->
 
 <!-- 校园地图 -->
 <view>
