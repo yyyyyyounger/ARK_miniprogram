@@ -63,7 +63,10 @@ Page({
     })
       .then(() => {
         // on confirm
-        that.app.toastLoadingDIY();
+        Toast.loading({
+          message: '拼命加載中...',
+          forbidClick: true,
+        });
         // this.app.globalData.isSignIn = false;
         wx.clearStorage({
           success(){

@@ -99,7 +99,10 @@ Page({
     this.app = getApp();
 
     // 向服務器請求的延時動畫
-    app.toastLoadingDIY();
+    Toast.loading({
+      message: '拼命加載中...',
+      forbidClick: true,
+    });
 
     // 獲取緩存，打開小程序時就會判斷是否有頭像緩存，然後寫入globalData.isSignIn
     const userInfoStorage = wx.getStorageSync('userInfo');

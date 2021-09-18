@@ -65,7 +65,10 @@ Page({
         
     },
     onPullDownRefresh : function() {
-        app.toastLoadingDIY();
+        Toast.loading({
+            message: '拼命加載中...',
+            forbidClick: true,
+        });
         // setTimeout(() => {
         this.onLoad("refresh");
         // }, 2500);
