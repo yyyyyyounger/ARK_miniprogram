@@ -29,10 +29,7 @@
         fit="contain"
         src="{{item.posterUrl}}"
       />
-      <view
-        data-shortname="{{item.shortName}}"
-        bindtap="jumpToPartner"
-        >
+      <view data-shortname="{{item.shortName}}" bindtap="jumpToPartner" >
         <!-- 社團logo -->
         <van-image
           width="3rem"
