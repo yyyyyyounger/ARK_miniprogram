@@ -65,6 +65,12 @@
           "pathName": "pages/more/umac/institution/institution",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "剩餘車位頁",
+          "pathName": "pages/more/umac/carPark/carPark",
+          "query": "",
+          "scene": null
         }
       ]
     }

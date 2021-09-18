@@ -43,7 +43,9 @@ Page({
   },
 
   onLoad: function (options) {
+    // 以時間降序，獲取數據庫宣傳數據
 
+    // 分揀已過期以及未過期宣傳
   },
   onShow: function () {
 
