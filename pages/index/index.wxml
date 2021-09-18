@@ -124,15 +124,6 @@ bind:close="closePopup"
 </block>
 
 <!-- 主頁功能按鈕 -->
-<!-- 使用wx的navigator組件跳轉 -->
-<!-- <navigator open-type="navigate" class="nav-li" style="background-color:{{item.color}}" 
-wx:for="{{buttonArr}}" wx:key="index" 
-url="/pages/{{item.path}}">
-	<view class="nav-li-img">
-		<van-image mode="aspectFill" src="{{item.icon}}"  />
-	</view>
-	<view class="nav-li-title"><em>{{item.name}}</em></view>
-</navigator> -->
 <view class="link" style="margin-top: 10px;">
 	<view class="iconCon" data-name="recentARK" bindtap="indexButtonJump">
 		<view class="iconfont icon-zhengceguizhang2"></view>
@@ -152,16 +143,8 @@ url="/pages/{{item.path}}">
 		<view class="icontext">校巴</view>
 	</view>
 </view>
-<!-- <view class="grid col-2 padding-sm" style="margin-top: -20rpx;">
-  <view class="padding-sm" wx:for="{{buttonArr}}" wx:key="index" >
-    <view class="radius padding text-center shadow-blur" style="background-color: {{item.color}}; color: var(--white); border-radius: 10rpx; "
-		data-name="{{item.shortName}}" bindtap="indexButtonJump">
-      <text class="text-lg">{{item.name}}</text>
-    </view>
-  </view>
-</view> -->
 
-<van-divider contentPosition="center" custom-style='margin-top:-5rpx;' >下方會有什麼...</van-divider>
+<!-- <van-divider contentPosition="center" custom-style='margin-top:-5rpx;' >下方會有什麼...</van-divider> -->
 
 <!-- 關於ARK -->
 <block>
