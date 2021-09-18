@@ -134,14 +134,14 @@ url="/pages/{{item.path}}">
 	<view class="nav-li-title"><em>{{item.name}}</em></view>
 </navigator> -->
 <view class="link" style="margin-top: 10px;">
-	<view class="iconCon" data-name="newARK" bindtap="indexButtonJump">
-		<view class="iconfont icon-heiban"></view>
-		<view class="icontext">新增</view>
-		<!-- <view class="icontext">ARK</view> -->
-	</view>
 	<view class="iconCon" data-name="recentARK" bindtap="indexButtonJump">
 		<view class="iconfont icon-zhengceguizhang2"></view>
 		<view class="icontext">最近</view>
+	</view>
+	<view class="iconCon" data-name="newARK" bindtap="indexButtonJump">
+		<view class="iconfont icon-heiban"></view>
+		<view class="icontext">開ARK</view>
+		<!-- <view class="icontext">ARK</view> -->
 	</view>
 	<view class="iconCon" data-name="bus" bindtap="indexButtonJump">
 		<view class="iconfont icon-bancheshike"></view>

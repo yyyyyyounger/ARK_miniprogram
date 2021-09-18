@@ -219,6 +219,8 @@ Page({
       withShareTicket: true,
       menus: ['shareAppMessage', 'shareTimeline']
     })
+
+    this.hitokotoLocal();
   },
   // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
   findSetData() {
@@ -316,7 +318,6 @@ Page({
     this.setData({
       showQandA:false,
     })
-    this.hitokotoLocal();
   },
   onHide (){
     clearInterval(hitokotoTimer);

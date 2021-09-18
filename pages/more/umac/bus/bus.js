@@ -85,8 +85,6 @@ let busTimer;
 let runTimes = 1;
 
 let timeStamp;
-// 刷新次數，避免有人狂刷新
-let freshTimes = 0;
 
 Page({
   data: {
@@ -417,6 +415,9 @@ Page({
       console.log('巴士名為',busName);
       console.log('巴士站為',busStop);
       var busNowStyle = busStyle[stationIndex].style;
+      if (!busName) {
+        busName = 'No bus Now'
+      }
       that.setData({
         busName,
         busStop,
@@ -426,11 +427,7 @@ Page({
         stationIndex,
       })
 
-
-      // 放入data，給wxml渲染
-      that.setData({  result  })
       Toast.success('加載成功')
-
 
       // 10s返回一次
       busTimer =  setTimeout(() => {
