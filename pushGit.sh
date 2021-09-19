@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "測試頁新增用戶數量查看"
+git commit -m "更新關於頁邏輯與說明"
 
 git push origin dev
 git push local dev

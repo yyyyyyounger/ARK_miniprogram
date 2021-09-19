@@ -17,8 +17,8 @@ Page({
     // 計算開發天數
     this.calcDurationDay();
     this.app = getApp();   
-    let institutionNum = JSON.parse(JSON.stringify(cloudData.institutionNum));
     let institutionInfo = JSON.parse(JSON.stringify(cloudData.institutionInfo));
+    let institutionNum = institutionInfo.length;
     this.setData({  
       institutionNum       : institutionNum,
       institutionInfo : institutionInfo,
@@ -108,5 +108,11 @@ Page({
       url: './partner/partner?pageNum=' + pageNum,
     })
   },
+
+  seeImg(e){
+    wx.previewImage({
+      urls: [cloudData.ARKLogo],
+    })
+  }
 });
   

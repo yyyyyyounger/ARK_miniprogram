@@ -5,6 +5,7 @@
     width="300rpx"
     height="300rpx"
     src="{{ARKLogo}}"
+    bindtap="seeImg"
   />
   <view text-gray style="text-decoration:underline;margin-top:-10rpx;color:rgb(0, 39, 70)" bindtap="jumpToProtocol">ARK UM</view>
 </view>
@@ -25,8 +26,9 @@
  · ARK活動由ECE同學開創，於2020-2021年下半學期開始。目的在於幫助同學互相交流學習。
  · 經過一個學期，活動進展順利，參與同學都認為ARK活動很有幫助。
  · 我們希望這樣良好的學習氛圍能一直延續並發揚下去，並且希望活動範圍不限於2020級和ECE。
- · 此小程序旨在方便收集整理活動信息，也便於剛接觸本活動的同學盡早熟悉流程並參與進來。
- · 更多詳細信息可以點擊上方“ARK UM”查看。
+ · 此小程序旨在提供更好的校园信息服务，方便ARK活动信息收集...便於新同學快速上手！
+ · 目前已集成環校巴士、社團活動公佈欄等功能，日後更會上線deadline提醒等其他澳大功能。
+ · 關於ARK的詳細可以點擊上方“ARK UM”查看。
       </text>
     </view>
 
