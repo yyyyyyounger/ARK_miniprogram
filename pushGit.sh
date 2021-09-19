@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "新增土木學會介紹"
+git commit -m "修改學會介紹頁代碼縮進"
 
 git push origin dev
 git push local dev

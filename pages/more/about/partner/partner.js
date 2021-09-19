@@ -5,34 +5,31 @@ Page({
   },
   onLoad:function(e) {
     let pageNum = JSON.parse(e.pageNum)
-    this.setData({
-      page:pageNum
-    })
-    let institutionNum = JSON.parse(JSON.stringify(cloudData.institutionNum));
+    this.setData({  page : pageNum  })
     let institutionInfo = JSON.parse(JSON.stringify(cloudData.institutionInfo));
-    this.setData({  
-      institutionNum       : institutionNum,
-      institutionInfo : institutionInfo,
+    let institutionNum = institutionInfo.length;
+    this.setData({
+      institutionNum,
+      institutionInfo,
     });
-    console.log(institutionNum)
   },
 
   onShow: function (e) {
     this.setData({
-      institutionNum:this.data.institutionNum-1,
+      institutionNum : this.data.institutionNum-1,
     })
     
   },
 
   pageUp(){
     this.setData({
-      page:this.data.page+1
+      page : this.data.page+1
     })
   },
 
   pageDown(){
     this.setData({
-      page:this.data.page-1,
+      page : this.data.page-1,
     })
   }
 })
