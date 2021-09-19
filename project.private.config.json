@@ -33,7 +33,7 @@
         {
           "name": "詳情頁3 num",
           "pathName": "pages/category/courseDetail/courseDetail",
-          "query": "detailInfo={\"user\":\"follower\",\"courseId\":3}",
+          "query": "detailInfo={\"user\":\"follower\",\"courseId\":7}",
           "scene": null
         },
         {

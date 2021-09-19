@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改學會介紹頁代碼縮進"
+git commit -m "所有課程歸檔 已完成 - by Kelvin"
 
 git push origin dev
 git push local dev

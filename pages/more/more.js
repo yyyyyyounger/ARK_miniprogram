@@ -7,8 +7,8 @@ Page({
   },
   onLoad: function(){
     this.app = getApp();   
-    let institutionNum = JSON.parse(JSON.stringify(cloudData.institutionNum));
     let institutionInfo = JSON.parse(JSON.stringify(cloudData.institutionInfo));
+    let institutionNum = institutionInfo.length;
     this.setData({  
       institutionNum       : institutionNum,
       institutionInfo : institutionInfo,

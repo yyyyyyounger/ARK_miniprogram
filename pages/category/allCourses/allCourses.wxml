@@ -34,14 +34,13 @@
   </van-button>
 
   <!--筛选視窗-->
-  <van-overlay show="{{ show }}" bind:click="onClickHide">
+  <van-overlay show="{{ show }}" bind:click="onClickHide" z-index='99999'	>
     <view class="wrapper">
       <view class="block" catch:tap="noop">
         <van-tree-select
           items="{{ items }}"
           main-active-index="{{ mainActiveIndex }}"
           active-id="{{ activeId }}"
-          max="{{ max }}"
           bind:click-nav="onClickNav"
           bind:click-item="onClickItem"
         />
@@ -55,6 +54,8 @@
 <van-search
     v-model="value"
     show-action
+    bind:search="onSearch"
+    bind:cancel="onCancel"
     placeholder="請輸入關鍵字進行搜索"
 />
 
@@ -69,17 +70,17 @@
   </view>
 
   <view
-    wx:for="{{allCourse}}"
+    wx:for="{{allCourseObj}}"
     class="tr"
     wx:key="index"
-    data-courseid="{{item._id}}"
+    data-courseid="{{item.id}}"
     bindtap="jumpToCourseDetail"
   >
-    <view class="td_id">{{allCourse[index]._id}}</view>
-    <view class="td">{{allCourse[index].courseInfoInput[3].input[0]}}</view>
-    <view class="td_cour">{{allCourse[index].courseInfoInput[1].input}}</view>
-    <view class="td">{{allCourse[index].courseInfoInput[6].input}}</view>
-    <view class="td_time">{{m1.subDate(allCourse[index].courseInfoInput[5].input[0])}}</view>
+    <view class="td_id">{{item.id}}</view>
+    <view class="td">{{item.majorTag}}</view>
+    <view class="td_cour">{{item.courseName}}</view>
+    <view class="td">{{item.lecturer}}</view>
+    <view class="td_time">{{m1.subDate(item.time)}}</view>
 
   </view>
 

@@ -45,9 +45,8 @@ let majorTagArray = studentMajor.map((e)=>{
   // bug風險：有專業是四位，當增加專業時需留意
   return e.substring(0,3);
 })
-// 学会数量 和 學會相关信息
-var institutionNum = 5;
-// 如果需要修改学会信息，只需要修改数组和上方institutionNum为学会数量即可
+// 學會相关信息
+// 如果需要修改学会信息，只需要修改下方数组
 // 圖床link：https://www.hualigs.cn/
 let institutionInfo = [
   { // 電腦學會
@@ -174,7 +173,6 @@ module.exports = {
   ARK     :    ARK,
   ARKLogo :    ARKLogo,
 
-  institutionNum:institutionNum,
   institutionInfo:institutionInfo,
   institutionShortName:institutionShortName,
 }

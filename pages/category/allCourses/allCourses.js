@@ -1,4 +1,5 @@
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+let cloudData = require('../../../data/cloud.js')
 
 const db = wx.cloud.database();
 const _ = db.command
@@ -7,35 +8,42 @@ Page({
     data: {
         items: [{
             // 导航名称
-            text: 'All Major',
+            text: 'FST',
             //是否显示小红点
             dot: false,
             // 禁用选项
             disabled: false,
             // 该导航下所有的可选项
-            children: [{
-                    // 名称
-                    text: 'ECE',
-                    // id，作为匹配选中状态的标识
-                    id: 1,
-                },
-                {
-                    text: 'CIS',
-                    id: 2,
-                },
-                {
-                    text: 'FBA',
-                    id: 3,
-                },
-                {
-                    text: 'NKU',
-                    id: 4,
-                },
-            ],
+            children: cloudData.majorTagArray.map((e,index)=>{
+                return {
+                    id : index,
+                    text : e,
+                }
+            })
+            // [
+            //     {
+            //         // 名称
+            //         text: 'ECE',
+            //         // id，作为匹配选中状态的标识
+            //         id: 1,
+            //     },
+            //     {
+            //         text: 'CIS',
+            //         id: 2,
+            //     },
+            //     {
+            //         text: 'NKU',
+            //         id: 4,
+            //     },
+            // ],
         }, ],
         mainActiveIndex: 0,
-        activeId: [1, 2, 3, 4],
-        max: 4,
+        // 篩選item的激活狀態，默認全選             [1, 2,] 意為激活第1,2的索引
+        activeId: [],
+        // activeId: cloudData.majorTagArray.map((e,index)=>{
+        //     return index
+        // }) ,
+        // max: 4,      // 允許的最大選擇個數
 
         show: false,
         option1: [
@@ -57,7 +65,8 @@ Page({
             "courseName": "课程名",
             "speakerName": "讲师名",
             "time": "时间"
-        }
+        },
+        allCourseObj : []
     },
 
     onLoad: function(options) {
@@ -71,30 +80,16 @@ Page({
             }).orderBy('_id', 'asc').get() // 默認以課程id升序排序
             .then(res => { // 查詢成功，寫入allCourse準備wxml渲染
                 this.setData({ allCourse: res.data })
+                console.log('onLoad');
+                this.createAllCourseObj(this.data.allCourse);
                 Toast.success('加載成功！')
             }).catch(err => {
                 console.error(err);
             });
     },
 
-    onShow: function() {
-
-    },
-
-    onHide: function() {
-
-    },
-
     onPullDownRefresh: function() {
         this.app.onPullDownRefresh(this)
-    },
-
-    onReachBottom: function() {
-
-    },
-
-    onShareAppMessage: function() {
-
     },
 
     //變更下拉選單時
@@ -141,6 +136,7 @@ Page({
                 allCourse: this.data.allCourse.sort(this.compare(order_by)).reverse()
             })
         }
+        this.createAllCourseObj(this.data.allCourse);
     },
 
     //用作allCourse.sort()中的順序排序function
@@ -193,10 +189,6 @@ Page({
         this.setData({ show: false });
     },
 
-    noop() {
-
-    },
-
     onClickNav({ detail = {} }) {
         this.setData({
             mainActiveIndex: detail.index || 0,
@@ -204,34 +196,43 @@ Page({
     },
 
     onClickItem({ detail = {} }) {
+        console.log(detail);
         const { activeId } = this.data;
 
-        const index = activeId.indexOf(detail.id);
-        if (index > -1) {
-            activeId.splice(index, 1);
+        if (activeId[0]) {
+            const index = activeId.indexOf(detail.id);
+            if (index > -1) {
+                activeId.splice(index, 1);
+            } else {
+                activeId.push(detail.id);
+            }
         } else {
             activeId.push(detail.id);
         }
 
+        console.log(activeId);
         this.setData({ activeId });
-        var check = [];
-        for (let i in activeId) {
-            check[i] = this.data.items[0].children[activeId[i] - 1].text;
-        }
-        console.log(check);
-        db.collection('course').where({
-            'courseInfoInput.3.input.0': _.or(check)
-        }).get({
-            //如果查询成功的话    
-            success: res => {
-                this.setData({
-                    allCourse: res.data
-                })
+
+        let check = [];
+        check = this.data.items[0].children.map((e)=>{
+            if (activeId.indexOf(e.id)>-1) {
+                return e.text
             }
         })
-    },
-    onSearch() {
-        Toast("search");
+        // 去除數組內undefined的值
+        check = check.filter(Boolean);
+        
+        console.log("check變量為",check);
+
+        db.collection('course').where({
+            'courseInfoInput.3.input.0': _.in(check)
+        }).get()
+        .then(res=>{
+            console.log('獲取成功');
+            this.createAllCourseObj(res.data)
+        }) .catch(err=>{
+            console.error(err);
+        })
     },
 
     jumpToCourseDetail(e){
@@ -247,4 +248,52 @@ Page({
             url: '../courseDetail/courseDetail?detailInfo=' + detailInfo,
         })
     },
+
+    createAllCourseObj: function (allCourse){
+        let tmp2 = [];
+        allCourse.forEach(function(x){
+            let tmp = {};
+            tmp.id = x._id;
+            tmp.majorTag = x.courseInfoInput[3].input[0];
+            tmp.courseName = x.courseInfoInput[1].input;
+            tmp.lecturer = x.courseInfoInput[6].input;
+            tmp.time = x.courseInfoInput[5].input[0];
+            tmp2.push(tmp);
+        })
+        this.setData({
+            allCourseObj: tmp2
+        })
+        console.log(tmp2);
+        return tmp2;
+    },
+
+    onSearch: function(e){
+        let original = this.createAllCourseObj(this.data.allCourse);
+        let searchStr = e.detail.toLowerCase();
+        let matchedIndex = [];
+        original.forEach(function(x, i){
+            if(x.majorTag.toLowerCase().indexOf(searchStr)!=-1){
+                matchedIndex.push(i);
+            }
+            if(x.courseName.toLowerCase().indexOf(searchStr)!=-1){
+                matchedIndex.push(i);
+            }
+            if(x.lecturer.toLowerCase().indexOf(searchStr)!=-1){
+                matchedIndex.push(i);
+            }
+        })
+        matchedIndex = Array.from(new Set(matchedIndex));
+        console.log(matchedIndex);
+        let tmp = [];
+        for(let i=0; i<matchedIndex.length; i++){
+            tmp.push(this.data.allCourseObj[matchedIndex[i]]);
+        }
+        this.setData({
+            allCourseObj: tmp
+        })
+    },
+
+    onCancel: function(){
+        this.createAllCourseObj(this.data.allCourse);
+    }
 })
