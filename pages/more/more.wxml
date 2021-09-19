@@ -53,6 +53,8 @@
       width="200rpx"
       height="200rpx"
       src="{{item.iconSrc}}"
+      lazy-load
+      fit = "contain"
       />
       <!-- 名称 -->
     <view class="text-gray">{{item.name}}</view>

@@ -46,7 +46,7 @@ let majorTagArray = studentMajor.map((e)=>{
   return e.substring(0,3);
 })
 // 学会数量 和 學會相关信息
-var institutionNum = 3;
+var institutionNum = 4;
 // 如果需要修改学会信息，只需要修改数组和上方institutionNum为学会数量即可
 let institutionInfo = [
   {
@@ -85,6 +85,16 @@ let institutionInfo = [
     `,
     bottomInfo  : `聯絡電郵 : umsu.aeme@umac.mo
     Facebook專頁: 澳門工程師學會學生分部`,
+  },
+  {
+    id      : 3,
+    iconSrc : 'https://i0.hdslb.com/bfs/album/d264a164a30556e2266a054b36f17b141451b5a0.png',
+    name    : '英國機械工程師學會澳門大學學生分部',
+    shortName : 'IMECHE',   // 標準寫法為IMechE，全稱institution of mechanical engineers 
+    info    : `&nbsp;&nbsp;英國機械工程師協會(簡稱IMechE)成立於 1847年，是世界上建立最早的機械工程學術 團體。它的成立標誌著機械工程已確立為一 個獨立的學科，機械工程師也被社會公認為 受尊敬的職稱。
+    &nbsp;&nbsp;澳門大學學生分部建立之目的，是為了方便 澳門大學就讀有關機械學科之同學，更容易 獲得有關社會資訊、幫助同學更容易接觸社 會上的團體，以便同學們日後的發展。
+    `,
+    bottomInfo  : `聯絡電郵 : imeche.umac@gmail.com`,
   },
 ];
 let institutionShortName = institutionInfo.map((e)=>{

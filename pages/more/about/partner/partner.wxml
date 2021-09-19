@@ -9,6 +9,8 @@
       width="200rpx"
       height="200rpx"
       src="{{item.iconSrc}}"
+      lazy-load
+      fit = "contain"
       />
     </view>
     <view><!--学会名-->
@@ -16,23 +18,28 @@
   	</view>
   </view>
 
+  <!--学会信息-->
   <view>
-      <view style="text-align: left; margin-left: 15rpx; margin-right: 15rpx;"><!--学会信息-->
-        <text decode="true"><!--学会简介-->
-          {{item.info}}
-        </text>
-      </view>
-        <text class="bottomInfo" selectable="true"><!--学会联系方式-->
-          {{item.bottomInfo}}
-        </text>
-      </view>
-    <view>
-      <!-- 向前跳轉箭頭 -->
-      <van-icon name="arrow-left" style="position: absolute;bottom:100rpx;left:30rpx" size="50rpx" wx:if="{{page>0}}" bindtap="pageDown"/>
-      <!-- 向後跳轉箭頭 -->
-      <van-icon name="arrow" style="position: absolute;bottom:100rpx;right:30rpx" size="50rpx" wx:if="{{page<institutionNum}}"
-      bindtap="pageUp"/> <!-- 页数范围,在js中修改institutionNum -->
+    <!--学会简介-->
+    <view style="text-align: left; margin-left: 15rpx; margin-right: 15rpx;">
+      <text decode="true">
+        {{item.info}}
+      </text>
     </view>
+    <!--学会联系方式-->
+    <text class="bottomInfo" selectable="true">
+      {{item.bottomInfo}}
+    </text>
+  </view>
+  
+  <view>
+    <!-- 向前跳轉箭頭 -->
+    <van-icon name="arrow-left" style="position: absolute;bottom:100rpx;left:30rpx" size="50rpx" wx:if="{{page>0}}" bindtap="pageDown"/>
+    <!-- 向後跳轉箭頭 -->
+    <van-icon name="arrow" style="position: absolute;bottom:100rpx;right:30rpx" size="50rpx" wx:if="{{page<institutionNum}}"
+    bindtap="pageUp"/> <!-- 页数范围,在js中修改institutionNum -->
+  </view>
+
 </view>
 
 <view class="bottom-watch"></view>
