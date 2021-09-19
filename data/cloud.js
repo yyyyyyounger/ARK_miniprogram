@@ -46,7 +46,7 @@ let majorTagArray = studentMajor.map((e)=>{
   return e.substring(0,3);
 })
 // 学会数量 和 學會相关信息
-var institutionNum = 4;
+var institutionNum = 5;
 // 如果需要修改学会信息，只需要修改数组和上方institutionNum为学会数量即可
 // 圖床link：https://www.hualigs.cn/
 let institutionInfo = [
@@ -90,12 +90,29 @@ let institutionInfo = [
   { // 英國機械工程師學會澳門大學學生分部
     id      : 3,
     iconSrc : 'https://i0.hdslb.com/bfs/album/d264a164a30556e2266a054b36f17b141451b5a0.png',
-    name    : '英國機械工程師學會澳門大學學生分部',
+    name    : '英國機械工程師學會(機電學會)',
     shortName : 'IMECHE',   // 標準寫法為IMechE，全稱institution of mechanical engineers 
     info    : `&nbsp;&nbsp;英國機械工程師協會(簡稱IMechE)成立於 1847年，是世界上建立最早的機械工程學術 團體。它的成立標誌著機械工程已確立為一 個獨立的學科，機械工程師也被社會公認為 受尊敬的職稱。
     &nbsp;&nbsp;澳門大學學生分部建立之目的，是為了方便 澳門大學就讀有關機械學科之同學，更容易 獲得有關社會資訊、幫助同學更容易接觸社 會上的團體，以便同學們日後的發展。
     `,
     bottomInfo  : `聯絡電郵 : imeche.umac@gmail.com`,
+  },
+  { // 美國土木工程師學會國際學生會澳門大學土木及環境工程學系學生支部
+    id      : 4,
+    iconSrc : 'https://i0.hdslb.com/bfs/album/66dfe945ac679591c616dfa3b57ddbd09c4d89e8.png',
+    name    : '美國土木工程師學會(土木學會)',
+    shortName : 'ASCE',   // 標準寫法為IMechE，全稱institution of mechanical engineers 
+    info    : `&nbsp;&nbsp;澳門大學學生會美國土木工程師學會國際學生會澳門大學土木及環境工程學系學生支部 (下簡稱 ASCE ISG UMCEE)隸屬於澳門大學學生會，並獲美國歷史最悠久的國家專業工程師協會美國土木工程師學會承認的一個學術組織。
+ 
+    &nbsp;&nbsp;ASCE ISG UMCEE是由一班充滿熱誠的土木及環境工程學系學生所架構而成。希望透過舉辦不同活動的形式（如建技大賽，study trip，site visit...等），促進本系同學的歸屬感及團結精神，讓同學將知識理論融入實際操作，從而提高他們對專業知識學習的積極性，在實踐中鞏固所學並深入理解，增加對土木工程學系的認識。
+    
+    &nbsp;&nbsp;除此以外，ASCE ISG UMCEE更是提供了一個平台讓同學們能夠接觸一些土木工程界的資深人士、教授等，希望透過與專業人士的交流，能培養同學成為一位稱職及有責任感的工程師，對社會作出貢獻。
+    
+    &nbsp;&nbsp;對ASCE ISG UMCEE感到興趣的您，歡迎加入成為本會的會員或內閣能夠更進一步地了解ASCE ISG UMCEE（本會會員必須為FST學生，內閣則必須為土木及環境工程學系的學生）！
+    `,
+    bottomInfo  : `Email: umsu.asce@um.edu.mo
+    asceisgumcee@gmail.com
+    Facebook: ASCE ISG UMCEE`,
   },
 ];
 let institutionShortName = institutionInfo.map((e)=>{

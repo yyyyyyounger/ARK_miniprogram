@@ -57,7 +57,7 @@
       fit = "contain"
       />
       <!-- 名称 -->
-    <view class="text-gray">{{item.name}}</view>
+    <view class="text-gray text-cut" style="width: 690rpx;">{{item.name}}</view>
   </swiper-item>
 </swiper>
 
