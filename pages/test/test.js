@@ -14,6 +14,19 @@ Page({
             courseInfo_empty : cloudData.courseInfo_empty
         })
 
+        // 獲取數據庫用戶數量
+        if (true) {
+            db.collection('user').where({
+                arkid : _.exists(true) // 填入当前用户 openid
+              }).count().then(res => {
+                  let userNum = res.total;
+                  this.setData({    userNum     })
+              })
+            .catch(err=>{
+                console.error(err);
+            })
+        }
+
         if (false) {
             wx.cloud.uploadFile({
                 cloudPath: 'test1.png',

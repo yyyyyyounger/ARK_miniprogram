@@ -1,3 +1,5 @@
+<view style="text-align: center;">已註冊用戶數量：{{userNum}}</view>
+
 <button bindtap="addTest0">插入</button>
 <button bindtap="searchTest0">查詢</button>
 <button bindtap="updateTest0">更新</button>
@@ -21,5 +23,5 @@
 
 <button bindtap="toOtherMiniProgram">跳轉選咩課</button>
 
-<view>圖片預覽測試</view>
-<image class='img' src='https://public-cdn.mokahr.com/f9c78d80-2e7f-4680-8086-9301233bfa4e.jpeg' bindtap='clickImg'></image>
+<!-- <view>圖片預覽測試</view> -->
+<!-- <image class='img' src='https://public-cdn.mokahr.com/f9c78d80-2e7f-4680-8086-9301233bfa4e.jpeg' bindtap='clickImg'></image> -->
