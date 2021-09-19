@@ -134,10 +134,6 @@ Page({
   },
   onShow: function() {
     timeStamp = Date.now();
-    Toast.loading({
-      message: '等我Load一下',
-      forbidClick: true,
-    });
     this.checkBusNew();
   },
   onHide: function() {
@@ -386,15 +382,21 @@ Page({
 
       // 如果巴士未到站，算法查詢到哪
       let busArriveWhere = [];
+      let haveNextBus
       if (!busArrive) {
         allDiv = allDiv.map((e)=>{
-          if(busName){//当有车在校园中且没到站时（就是有busName显示的时候)
+          //haveNextBus检索是否有下一班车，有为1，无为0
+          haveNextBus = allDiv[2].content[1].content[0].indexOf('下一班')+1
+          console.log(haveNextBus,'haveNextBus')
+          if(haveNextBus){//当有车在校园中且没到站时（就是有busName显示的时候)
+            console.log(allDiv,'allDiv')
             nextBus = allDiv[2].content[1].content[0];//下一班时间
             serviceStatus = allDiv[3].content[1].content[0];//服务状态
           }
           else{//校园中没车的时候
             nextBus = '下一班：No info';//下一班时间
             serviceStatus = allDiv[2].content[1].content[0];//服务状态
+            console.log(allDiv,'allDiv')
           }
           let isBus = e.attributes.class=="left out-left";
           if (e.attributes.class=="right" || isBus) {

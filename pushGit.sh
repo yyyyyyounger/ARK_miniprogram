@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "測試頁按鈕移到更多頁"
+git commit -m "修復bus解析數據的bug"
 
 git push origin dev
 git push local dev
