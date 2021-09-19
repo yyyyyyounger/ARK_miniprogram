@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "所有課程歸檔 已完成 - by Kelvin"
+git commit -m "增加首頁輪播圖"
 
 git push origin dev
 git push local dev

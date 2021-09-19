@@ -53,6 +53,16 @@ Page({
         type: 'image',
         url: 'https://i0.hdslb.com/bfs/album/e9ca52265e0d70005509621a20ce5ed28cba8ccc.png'
       },       
+      {
+        id: 7,
+        type: 'image',
+        url: 'https://i0.hdslb.com/bfs/album/d264a164a30556e2266a054b36f17b141451b5a0.png'
+      },       
+      {
+        id: 8,
+        type: 'image',
+        url: 'https://i0.hdslb.com/bfs/album/66dfe945ac679591c616dfa3b57ddbd09c4d89e8.png'
+      },       
     ],
     // Color - end
     moto:[],    // 一言API
