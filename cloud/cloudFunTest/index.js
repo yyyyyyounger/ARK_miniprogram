@@ -36,10 +36,10 @@ exports.main = async (event, context) => {
   let idNum = 5;
 
   db.collection('user') .where({
-   'userInfoInput.7.display' : true,
+   'userInfoInput.5.input' : _.neq(0),
   }) .update({
     data: {
-      'userInfoInput.7.display' : false,
+      'userInfoInput.5.input' : 0,
     }
   })
 
