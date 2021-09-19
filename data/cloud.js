@@ -48,8 +48,9 @@ let majorTagArray = studentMajor.map((e)=>{
 // 学会数量 和 學會相关信息
 var institutionNum = 4;
 // 如果需要修改学会信息，只需要修改数组和上方institutionNum为学会数量即可
+// 圖床link：https://www.hualigs.cn/
 let institutionInfo = [
-  {
+  { // 電腦學會
     id      : 0,
     iconSrc : 'https://i0.hdslb.com/bfs/album/5e84ac5924085d3155846926da3f32c18bbb2049.jpg',
     name    : '電腦學會',
@@ -59,7 +60,7 @@ let institutionInfo = [
     Facebook專頁 : 澳門大學學生會電腦學會
     Instagram: cps.umsu`,
   },
-  {
+  { // IET澳門學生支部
     id      : 1,
     iconSrc : 'https://i0.hdslb.com/bfs/album/d572ee89fab0391368407851137867d92d58c084.jpg',
     name    : 'IET澳門學生支部',
@@ -68,7 +69,7 @@ let institutionInfo = [
     bottomInfo  : `聯絡電郵 : umsu.iet@umac.mo
     Facebook專頁: The IET Hong Kong Students Section Macau`,
   },
-  {
+  { // 澳門工程師學會學生分部
     id      : 2,
     iconSrc : 'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
     name    : '澳門工程師學會學生分部',
@@ -86,7 +87,7 @@ let institutionInfo = [
     bottomInfo  : `聯絡電郵 : umsu.aeme@umac.mo
     Facebook專頁: 澳門工程師學會學生分部`,
   },
-  {
+  { // 英國機械工程師學會澳門大學學生分部
     id      : 3,
     iconSrc : 'https://i0.hdslb.com/bfs/album/d264a164a30556e2266a054b36f17b141451b5a0.png',
     name    : '英國機械工程師學會澳門大學學生分部',
@@ -153,7 +154,7 @@ module.exports = {
   courseInfo_empty :      courseInfo_empty,
   
   indexAnnouncement : indexAnnouncement,
-  ARK :    ARK,
+  ARK     :    ARK,
   ARKLogo :    ARKLogo,
 
   institutionNum:institutionNum,

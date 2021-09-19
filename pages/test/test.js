@@ -104,10 +104,55 @@ Page({
             {
                 // id:0,
                 // name:'澳門工程師學會學生分部',
-                shortName   : 'IMECHE',
-                date        : Date.parse( new Date( '2019-02-20' ) ) ,      // 最裡面的括號格式為yyyy/mm/dd
+                shortName   : 'IET',
+                date        : Date.parse( new Date( '2020-10-24' ) ) ,      // 最裡面的括號格式為yyyy/mm/dd
                 // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
-                posterUrl   : ['https://i0.hdslb.com/bfs/album/e4baa755df271a77256e0f4ac2c435e514e22311.jpg'
+                posterUrl   : ['https://i0.hdslb.com/bfs/album/dd259eda956ad8fe2875d4e8ada45413060420a3.png'
+                ],
+            },
+            {
+                // id:0,
+                // name:'澳門工程師學會學生分部',
+                shortName   : 'IET',
+                date        : Date.parse( new Date( '2021-04-28' ) ) ,      // 最裡面的括號格式為yyyy/mm/dd
+                // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+                posterUrl   : ['https://i0.hdslb.com/bfs/album/b5bc8035d697e679f2b1c553f74a995344300b7a.png'
+                ],
+            },
+            {
+                // id:0,
+                // name:'澳門工程師學會學生分部',
+                shortName   : 'IET',
+                date        : Date.parse( new Date( '2021-03-13' ) ) ,      // 最裡面的括號格式為yyyy/mm/dd
+                // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+                posterUrl   : ['https://i0.hdslb.com/bfs/album/6e7afe2b8f8eb2a4f5c8627aae431470bab89192.png'
+                ],
+            },
+            {
+                // id:0,
+                // name:'澳門工程師學會學生分部',
+                shortName   : 'IET',
+                date        : Date.parse( new Date( '2020-11-22' ) ) ,      // 最裡面的括號格式為yyyy/mm/dd
+                // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+                posterUrl   : ['https://i0.hdslb.com/bfs/album/ab244355a0497710dc742ce502267d3fd10872cd.png'
+                ],
+            },
+            {
+                // id:0,
+                // name:'澳門工程師學會學生分部',
+                shortName   : 'IET',
+                date        : Date.parse( new Date( '2021-05-15' ) ) ,      // 最裡面的括號格式為yyyy/mm/dd
+                // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+                posterUrl   : ['https://i0.hdslb.com/bfs/album/762549bbc75335277bc66abe6b48af89f8b7d5a7.png'
+                ],
+            },
+            {
+                // id:0,
+                // name:'澳門工程師學會學生分部',
+                shortName   : 'IET',
+                date        : Date.parse( new Date( '2021-04-02' ) ) ,      // 最裡面的括號格式為yyyy/mm/dd
+                // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
+                posterUrl   : ['https://i0.hdslb.com/bfs/album/0c2ffa24cf3a035b5ae0a440e2826b6e4ca6965c.png'
                 ],
             },
         ]
