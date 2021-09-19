@@ -66,4 +66,7 @@
 <view class="padding flex flex-direction" style="padding-top:20rpx">
   <button class="cu-btn bg-gray lg" bindtap="clearStorage">退出登錄 / 清除緩存</button>
 </view>
+
+<button bindtap="jumpToTestPage" wx:if="{{admin}}">跳轉測試頁（請不要擅自進入）</button>
+
 <view class="bottom-watch"></view>

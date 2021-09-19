@@ -13,6 +13,10 @@ Page({
       institutionNum       : institutionNum,
       institutionInfo : institutionInfo,
     });
+    const userCloudDataStorage = wx.getStorageSync('userCloudData')
+    if (!!userCloudDataStorage) {
+      this.setData({  admin : userCloudDataStorage.data.admin  })
+    }
   },
   onShow: function(){
     this.getTabBar().init();
@@ -84,6 +88,12 @@ Page({
   jumpToFeedBack () {
     wx.navigateTo({
       url: './feedBack/feedBack',
+    });
+  },
+  // 跳轉“測試”頁
+  jumpToTestPage () {
+    wx.navigateTo({
+      url: '../test/test'
     });
   },
 
