@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復課程頁課程卡片名稱過長問題"
+git commit -m "修改課程卡片文字截斷問題"
 
 git push origin dev
 git push local dev

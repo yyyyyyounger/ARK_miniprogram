@@ -45,7 +45,7 @@
                 </view>
                 <view class="content flex-sub text-gray text-lg" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" >   <!-- 課程主題 & 講者信息 -->
                   <view class="text-cut text-black text-lg title" style="width: 340rpx;">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
-                  <view class="text-cut" style="width: 300rpx;">by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
+                  <view class="text-cut" style="width: 300rpx; margin-left: 5px;">by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
                 </view>
                 <!-- add/cancel Follow按鈕 -->
                 <!-- 不能follow自己的課；不能follow已finish的課； -->
@@ -118,7 +118,7 @@
               </view>
               <view class="content flex-sub text-gray text-lg">
                 <view  class="text-cut text-black text-lg title" style="width: 340rpx;">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
-                <view class="text-cut" style="width: 300rpx;">by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
+                <view class="text-cut" style="width: 300rpx; margin-left: 5px;">by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
               </view>
               <!-- add/cancel Follow按鈕 -->
               <!-- <van-button 
