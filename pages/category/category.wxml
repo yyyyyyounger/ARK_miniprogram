@@ -44,11 +44,11 @@
                   <view class="tag" style="top:35px;">{{recentCourseInfoArray[index].courseInfoInput[3].input[0]}}</view>
                 </view>
                 <view class="content flex-sub text-gray text-lg" bindtap="jumpToCourseDetail" data-courseid="{{recentCourseInfoArray[index]._id}}" >   <!-- 課程主題 & 講者信息 -->
-                  <view class="text-black text-lg title">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
-                  <view >by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
+                  <view class="text-cut text-black text-lg title" style="width: 340rpx;">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
+                  <view class="text-cut" style="width: 300rpx;">by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
                 </view>
                 <!-- add/cancel Follow按鈕 -->
-                <!-- 自己不能follow自己的課；不能follow已finish的課； -->
+                <!-- 不能follow自己的課；不能follow已finish的課； -->
                 <van-button 
                   wx:if="{{ recentCourseInfoArray[index].arkid!=userCloudDataStorage.arkid && (recentCourseInfoArray[index].courseState)!='finish' }}"
                   style="margin-right:5px;"
@@ -117,8 +117,8 @@
                 <view class="tag" style="top:35px;">{{recentCourseInfoArray[index].courseInfoInput[3].input[0]}}</view>
               </view>
               <view class="content flex-sub text-gray text-lg">
-                <view class="text-black text-lg title">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
-                <view >by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
+                <view  class="text-cut text-black text-lg title" style="width: 340rpx;">{{ recentCourseInfoArray[index].courseInfoInput[1].input }}</view>
+                <view class="text-cut" style="width: 300rpx;">by {{ recentCourseInfoArray[index].courseInfoInput[6].input }}</view>
               </view>
               <!-- add/cancel Follow按鈕 -->
               <!-- <van-button 
