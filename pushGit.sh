@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改數據庫，全復原"
+git commit -m "修復一言重複獲取的bug"
 
 git push origin dev
 git push local dev

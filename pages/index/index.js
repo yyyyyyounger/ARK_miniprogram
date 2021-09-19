@@ -172,7 +172,6 @@ Page({
     if (scene!="refresh") {
       this.showPopup();     // 展示頂部彈出層
       // this.cloudGetOneMoto();  // 雲函數請求返回api
-      // this.hitokotoLocal();
       // 5s後關閉彈出層
       // setTimeout(() => {
         // this.closePopup()  //關閉彈出層
@@ -230,6 +229,7 @@ Page({
       menus: ['shareAppMessage', 'shareTimeline']
     })
 
+    clearInterval(hitokotoTimer);
     this.hitokotoLocal();
   },
   // 匹配shortName對象，單個渲染/設定時適用對象，for循環時適用數組
@@ -339,7 +339,8 @@ Page({
   // 下拉刷新
   onPullDownRefresh() {
     // this.cloudGetOneMoto();
-    this.hitokotoLocal();
+    clearInterval(hitokotoTimer);
+    // this.hitokotoLocal();
     if (!this.data.userCloudData) {
       this.showPopup();     // 展示頂部彈出層
     }
@@ -454,6 +455,8 @@ Page({
   },
 // 本地請求一言api
   hitokotoLocal(e) {
+    console.log('獲取一言');
+    clearInterval(hitokotoTimer);
     let that = this;
     wx.request({
       url: 'https://v1.hitokoto.cn?c=d&c=h&c=i&c=k&c=l',
