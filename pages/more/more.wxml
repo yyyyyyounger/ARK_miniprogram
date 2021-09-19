@@ -1,5 +1,5 @@
 <!-- 彈出類元素 -->
-<van-dialog id="van-dialog" />
+<van-dialog id="van-dialog"/>
 
 <view style="margin-top:20rpx">
   <van-grid gutter="{{ 10 }}" column-num="1">
@@ -64,6 +64,6 @@
 <van-divider contentPosition="center" custom-style="margin-top:100rpx;font-size:20rpx">正在開發更多內容！敬請期待！</van-divider>
 
 <view class="padding flex flex-direction" style="padding-top:20rpx">
-  <button class="cu-btn bg-gray lg" bindtap="clearStorage">點我清除緩存</button>
+  <button class="cu-btn bg-gray lg" bindtap="clearStorage">退出登錄 / 清除緩存</button>
 </view>
 <view class="bottom-watch"></view>

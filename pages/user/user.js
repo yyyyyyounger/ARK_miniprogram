@@ -300,6 +300,8 @@ Page({
         isSignIn:true           // 成功登錄後，局部isSignIn → true：用戶已登錄
       })
 
+      Toast.loading('稍等')
+
       // 設置userInfo帶時間的緩存
       wx.setStorageSync('userInfo', {time:Date.now() ,data:this.data.userInfo});
 
@@ -309,6 +311,7 @@ Page({
       // 登錄成功後，判斷是否已註冊 - 數據庫是否存在該用戶openid（查找_id）
       getUserCloudData().then(res => {    // 鏈式調用，能在該鏈上使用該userCloudData的返回值
         console.log("鏈式調用getUserCloudData，返回數組長度為：",res.result.userCloudData.data.length)
+        Toast.loading('稍等')
         if (res.result.userCloudData.data.length!=0) {  // 已註冊，將 數據庫user數據複製 → 本地&全局
           let userCloudData = res.result.userCloudData.data[0];
           const userInfoStorage = wx.getStorageSync('userInfo');  // 用戶頭像緩存

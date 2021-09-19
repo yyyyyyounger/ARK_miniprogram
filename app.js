@@ -186,6 +186,7 @@ App({
   },
   // 重設app.js的值，用於清除緩存，重啟小程式
   reload(that) {
+    console.log(that);
     // 項目運作時間
     that.app.globalData.projStartTime= [{
       Year: '2021',

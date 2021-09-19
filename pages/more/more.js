@@ -14,9 +14,6 @@ Page({
       institutionInfo : institutionInfo,
     });
   },
-  onReady: function(){
-    
-  },
   onShow: function(){
     this.getTabBar().init();
     this.setData({
@@ -28,22 +25,10 @@ Page({
       swiperAutoplay:false
     })
   },
-  onUnload: function(){
-
-  },
   onPullDownRefresh: function(){
     this.app.onPullDownRefresh(this);
   },
-  onReachBottom: function(){
-
-  },
   onShareAppMessage: function(){
-
-  },
-  onPageScroll: function(){
-
-  },
-  onTabItemTap:function(item){
 
   },
 
@@ -55,30 +40,31 @@ Page({
       }
     })
   },
+  // 清除緩存
   clearStorage () {
     let that = this;
     Dialog.confirm({
-      // title: '标题',
-      message: '確認要清除緩存嗎？將會重新啟動。',
+      title: '操作提示',
+      message: '確認要清除緩存嗎？\n將會重新啟動。',
+      zIndex : '9999999'
     })
-      .then(() => {
-        // on confirm
-        Toast.loading({
-          message: '拼命加載中...',
-          forbidClick: true,
-        });
-        // this.app.globalData.isSignIn = false;
-        wx.clearStorage({
-          success(){
-            that.app.reload(that);
-            wx.reLaunch({
-              url: '../user/user'
-            })
-          }
-        })
-      }) .catch(() => {
-        // on cancel
-      });
+    .then((e) => {
+      console.log('確認清除');
+      // this.app.globalData.isSignIn = false;
+      wx.clearStorage({
+        success(){
+          that.app.reload(that);
+          wx.reLaunch({
+            url: '../user/user'
+          })
+        }
+      })
+    }) 
+    .catch((err) => {
+      // on cancel
+      console.log('取消清除');
+      console.error(err);
+    });
     
   },
 

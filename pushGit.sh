@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "增加首頁輪播圖"
+git commit -m "修復more和user和課程編輯頁的bug"
 
 git push origin dev
 git push local dev

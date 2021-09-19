@@ -424,7 +424,7 @@ Page({
     }
     detailInfo = JSON.stringify(detailInfo);
     wx.navigateTo({
-      url: '../holdACourses/holdACourses?detailInfo=' + detailInfo,
+      url: '../holdACourses/holdACourses?detailInfo=' + encodeURIComponent(detailInfo),
     })
   },
 

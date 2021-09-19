@@ -92,7 +92,8 @@ Page({
 
       // if從詳情頁的編輯按鈕跳轉，將會攜帶參數，將具體的輸入復原
       if (options.detailInfo) { // 如果存在帶參跳轉才執行
-        let detailInfo = JSON.parse(options.detailInfo);
+        let detailInfo = decodeURIComponent(options.detailInfo);
+        detailInfo = JSON.parse(detailInfo);
         console.log("上個頁面傳遞值為：",detailInfo)
         this.setData({  // 將courseCloudData存入data
           courseCloudData : detailInfo.courseCloudData,
