@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復巴士頁和課程詳情的bug"
+git commit -m "修復樣式錯誤"
 
 git push origin dev
 git push local dev
