@@ -222,6 +222,7 @@ Page({
           }) .then(res=>{       // 成功提示 & 同步wxml的顯示
             Toast('Follow成功！課程編號：'+selectCourse+'\n可前往 “我的Follow” 查看');
             this.setData({  haveFollow : true  })
+            this.onShow();
           })
         }) .catch(err=>{        // 失敗提示
           console.error(err);

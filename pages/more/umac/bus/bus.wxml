@@ -14,9 +14,9 @@
 </view>
 
 <!-- 左上信息 -->
-<view class="busNameAll">
+<view class="busNameAll" bindtap="checkBusDetailInfo">
   <text>BUS:</text><text decode="true" class="busName">&nbsp;{{busName}}&nbsp;</text>
-  <view style="font-size: 30rpx;">{{nextBus}}</view>
+  <view class="text-cut" style="width: 115px; font-size: 30rpx;">{{nextBus}}</view>
   <view style="font-size: 20rpx;">{{serviceStatus}}</view>
 </view>
 
