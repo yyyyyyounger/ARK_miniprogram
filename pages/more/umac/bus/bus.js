@@ -146,6 +146,8 @@ Page({
   },
 
   onPullDownRefresh: function() {
+    // 销毁定时器
+    clearInterval(busTimer);
     // 5s內第二次刷新
     if (Date.now()-timeStamp<=10*1000) {
       Toast('10s後再試吧~')
