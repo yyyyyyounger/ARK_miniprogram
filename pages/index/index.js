@@ -532,6 +532,7 @@ Page({
   indexButtonJump (e) {
     let clickItem = e.currentTarget.dataset.name;
     console.log("用戶點擊",clickItem,'按鈕');
+    Toast.loading("Loading")
     switch (clickItem) {
       case 'newARK':
         // 使用app.global數據協助跳轉，0 1 2 3對應課程頁tabs的索引
