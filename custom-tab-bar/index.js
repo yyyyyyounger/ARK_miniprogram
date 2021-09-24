@@ -1,3 +1,4 @@
+let haveClick = false
 Component({
   data: {
     active: '',
@@ -36,6 +37,10 @@ Component({
           app.showSubscribe();
         }
       }
+      if (index==1) {
+        haveClick = true
+        this.setData({  haveClick : true  })
+      }
       wx.switchTab({
         url: this.data.list[index].url
       })
@@ -43,7 +48,8 @@ Component({
     init() {
       const page = getCurrentPages().pop();
       this.setData({
-        active: this.data.list.findIndex(item => item.url === `/${page.route}`)
+        active: this.data.list.findIndex(item => item.url === `/${page.route}`),
+        haveClick : haveClick
       })
     }
   }

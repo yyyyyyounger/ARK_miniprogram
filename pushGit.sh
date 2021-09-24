@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修復校巴頁定時器問題"
+git commit -m "新增課程頁的心理引導，dot"
 
 git push origin dev
 git push local dev

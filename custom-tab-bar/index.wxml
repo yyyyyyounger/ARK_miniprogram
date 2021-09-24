@@ -10,7 +10,9 @@ safe-area-inset-bottom
   wx:for="{{ list }}" 
   wx:key="index" 
   icon="{{ item.icon }}{{active==index?'':'-o'}}"
+  dot = '{{index==1&&!haveClick?true:false}}'
   >
+  <!-- 未登錄顯示“我的”、“ARK” 紅點；已登錄顯示 “ARK” 紅點 -->
   {{item.text}}
   </van-tabbar-item>
 </van-tabbar>
