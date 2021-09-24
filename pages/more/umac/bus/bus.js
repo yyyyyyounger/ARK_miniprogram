@@ -133,6 +133,11 @@ Page({
   onLoad: function() {
   },
   onShow: function() {
+    Toast.loading({
+      message: '等我Load一下',
+      forbidClick: true,
+      duration : 0
+    });
     timeStamp = Date.now();
     this.checkBusNew();
   },
@@ -389,7 +394,7 @@ Page({
         allDiv = allDiv.map((e)=>{
           //haveNextBus检索是否有下一班车，有为1，无为0
           haveNextBus = allDiv[2].content[1].content[0].indexOf('下一班')+1
-          console.log(haveNextBus,'haveNextBus')
+          // console.log(haveNextBus,'haveNextBus')
           if(haveNextBus){//当有车在校园中且没到站时（就是有busName显示的时候)
             console.log(allDiv,'allDiv')
             nextBus = allDiv[2].content[1].content[0];//下一班时间
@@ -455,6 +460,8 @@ Page({
 
       Toast.success('加載成功')
 
+      // 销毁定时器
+      clearInterval(busTimer);
       // 10s返回一次
       if (busName!=noBusStr) {
         busTimer =  setTimeout(() => {
