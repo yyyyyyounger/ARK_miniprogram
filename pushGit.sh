@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "bus頁新增loading狀態"
+git commit -m "修改了備註"
 
 git push origin dev
 git push local dev
