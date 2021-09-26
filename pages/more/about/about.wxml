@@ -100,13 +100,15 @@
     autoplay="{{swiperAutoplay}}"
     interval="3000">
     <swiper-item wx:for="{{institutionInfo}}" wx:key="id" bindtap="toPartner" data-pagenum="{{institutionInfo[index].id}}">  
-  <!-- 图标 -->
+    <!-- 學會logo -->
       <van-image
         width="120rpx"
         height="120rpx"
         src="{{item.iconSrc}}"
-        />
-        <!-- 名称 -->
+        lazy-load
+        fit = "contain"
+      />
+        <!-- 學會名稱 -->
       <view class="text-gray" style="font-size: 28rpx;margin-top:-20rpx">{{item.name}}</view>
     </swiper-item>
   </swiper>
