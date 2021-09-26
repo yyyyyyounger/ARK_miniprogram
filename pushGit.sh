@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m "修改了備註"
+git commit -m "user頁取消用戶微信暱稱顯示"
 
 git push origin dev
 git push local dev
