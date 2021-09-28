@@ -103,26 +103,16 @@ Page({
         // }).catch(err=>{
         //     console.error(err);
         // })
-        let event = {
-            // id:14,
-            // name:'澳門工程師學會學生分部',
-            shortName : 'CPSUMSU',
-            date : Date.parse( new Date( '2020-10-17' ) ),        // 最裡面的括號格式為yyyy/mm/dd
-            // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
-            posterUrl:['https://i0.hdslb.com/bfs/album/307fcc1627c1b161ffda5c1068b4d8c52bab8cef.png'
-            ],
-        }
-
         let events = [
             {
-                // id:0,
+                // id:14,
                 // name:'澳門工程師學會學生分部',
-                shortName   : 'IET',
-                date        : Date.parse( new Date( '2020-10-24' ) ) ,      // 最裡面的括號格式為yyyy/mm/dd
+                shortName : 'ASCE',
+                date : Date.parse( new Date( '2021-10-16' ) ),        // 最裡面的括號格式為yyyy/mm/dd
                 // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
-                posterUrl   : ['https://i0.hdslb.com/bfs/album/dd259eda956ad8fe2875d4e8ada45413060420a3.png'
+                posterUrl:['https://imgtu.com/i/4fnChd'
                 ],
-            },
+            }
         ]
         
         console.log(events);
