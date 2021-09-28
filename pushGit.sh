@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m ":art:關於頁修復學會輪播圖logo尺寸問題"
+git commit -m ":ambulance:緊急修復bus頁域名證書失效問題"
 
 git push origin dev
 git push local dev

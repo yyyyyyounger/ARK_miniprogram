@@ -1,7 +1,8 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-//引入request-promise用于做网络请求
-var rq = require('request-promise');
+// 引入request-promise用于做网络请求
+// 2021.09.28新增.defaults({strictSSL: false}) 不校驗域名證書，應對bus網站證書過期情況
+var rq = require('request-promise').defaults({strictSSL: false});
 cloud.init({
   env: 'cloud1-5gtulf1g864cd4ea',
 })
