@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m ":pencil:更新土木學會的活動信息"
+git commit -m ":sparkles:分享地址的thing類型不能超過20個字"
 
 git push origin dev
 git push local dev

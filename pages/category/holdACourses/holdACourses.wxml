@@ -122,6 +122,8 @@
         hold-keyboard
         data-model="courseAdres_input" 
         clearable
+        show-word-limit
+        maxlength="20"
         placeholder="e.g. 圖書館1111。請盡早預約！"
         border="{{ false }}"
         bind:change="onChange_field"

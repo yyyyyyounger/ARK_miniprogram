@@ -43,10 +43,10 @@ exports.main = async (event, context) => {
           console.log(startTime);
           let SendData = {
             "thing12": {             // 主辦方
-                "value": courseInfo[6].input
+              "value": courseInfo[6].input
             },
             "thing2": {             // 活動名稱
-                "value": courseInfo[1].input
+              "value": courseInfo[1].input
             },
             "date3": {              // 活動日期
               "value": startTime
@@ -54,10 +54,10 @@ exports.main = async (event, context) => {
               // "value": '2021-09-04'
             },
             "thing10": {             // 活動地點
-                "value": courseInfo[4].input
+              "value": courseInfo[4].input
             },
             "thing11": {            // 備註
-                "value": '半個小時內即將開課！'
+              "value": '半個小時內即將開課！'
             },
           };
 
