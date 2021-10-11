@@ -4,7 +4,7 @@
     "ignore": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -43,7 +43,7 @@
     "showES6CompileOption": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.5",
+  "libVersion": "2.19.6",
   "appid": "wx18d6d4846203797e",
   "projectname": "ARK_Vant",
   "debugOptions": {
