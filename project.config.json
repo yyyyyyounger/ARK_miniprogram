@@ -43,7 +43,7 @@
     "showES6CompileOption": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.6",
+  "libVersion": "2.20.0",
   "appid": "wx18d6d4846203797e",
   "projectname": "ARK_Vant",
   "debugOptions": {
