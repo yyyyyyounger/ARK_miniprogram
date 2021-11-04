@@ -795,6 +795,7 @@ Page({
 
     const userCloudDataStorage = wx.getStorageSync('userCloudData')
 
+    // 2021.11.04 SOS：添加Helper邏輯有Bug！！！！！
     if (this.data.helperInfoArray.length<2 && !!this.data.helperid_input) {   // Helper數未滿
       if (this.data.helperid_input == userCloudDataStorage.data.arkid ) {                                         // 如果搜索的是自己，提示不可以
         Notify({ type: 'warning', message: 'Helper 不能是自己！' });
@@ -831,9 +832,6 @@ Page({
               Notify({ type: 'warning', message: '該用戶不存在，請協商或反饋！' });
             }
           }) .catch(err=>{  console.error(err);  })
-        })
-        .catch(() => {
-          // on cancel
         })
       }
     } else if (this.data.helperInfoArray.length==2){                                    // Helper數已滿（2人）

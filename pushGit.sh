@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m ":package:更新Vant的npm包和微信基礎庫"
+git commit -m ":fire:添加Helper邏輯有bug！！ 更新了npm，Bug未修復"
 
 git push origin dev
 git push local dev
