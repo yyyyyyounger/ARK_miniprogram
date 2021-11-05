@@ -19,6 +19,7 @@ exports.main = async (event, context) => {
  
   let result = await got(
     'http://mpserver.umeh.top/sendemailark/?username='+userName+'&umid='+umId+'&subject='+subject+'&code='+code
+    // http://mpserver.umeh.top/sendemailark/?username='testName'&umid='testSubject'&subject='dc02581'&code='4321'
     ) 
     // .then(res=>{
     //   console.log(res);
