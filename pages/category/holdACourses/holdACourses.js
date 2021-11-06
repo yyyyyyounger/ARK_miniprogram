@@ -577,9 +577,7 @@ Page({
               zIndex: 9999999999999,
               duration : 0,
             })
-            this.setData({
-              showVerifyBtn   : true,
-            })
+            this.setData({  showVerifyBtn  : true  })
             // 獲取用戶umid，調用雲函數發送驗證信息
             let umid = this.data.userInfoInput[0].input;
             umid = umid.slice(0,-1)   // 7位的umid
@@ -608,7 +606,7 @@ Page({
                   })
                 } else {
                   Toast.fail({
-                    message: '發送失敗',
+                    message: '發送失敗，請直接輸入驗證碼:\n'+verifyCode,
                     forbidClick: true,
                     zIndex: 9999999999999,
                   })
@@ -617,7 +615,6 @@ Page({
             })
             // 喚起dialog
             this.showVerifyDialog();
-
           } 
           else {                              // 更新課程信息mode
             console.log("更新課程信息模式！");

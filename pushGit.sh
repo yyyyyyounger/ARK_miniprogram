@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m ":fire:郵件發送有bug！！！"
+git commit -m ":fire:發送email驗證碼有bug！！！改為直接輸入驗證碼！"
 
 git push origin dev
 git push local dev
