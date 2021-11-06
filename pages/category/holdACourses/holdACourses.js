@@ -606,6 +606,7 @@ Page({
                   })
                 } else {
                   Toast.fail({
+                    // 2021.11.06改為直接輸入驗證碼，待完成
                     message: '發送失敗，請直接輸入驗證碼:\n'+verifyCode,
                     forbidClick: true,
                     zIndex: 9999999999999,
