@@ -1,18 +1,9 @@
 <!-- 彈出類元素 -->
 <van-dialog id="van-dialog"/>
 
-<view style="margin-top:20rpx">
-  <van-grid gutter="{{ 10 }}" column-num="1">
-    <van-grid-item icon="apps-o"    text="澳大小功能"     bindtap="jumpToSmallFun"/>
-    <van-grid-item icon="more-o"    text="關於"           bindtap="jumpToAbout" />
-    <van-grid-item icon="chat-o"    text="反饋"           bindtap="jumpToFeedBack" />
-    <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
-  </van-grid>
-</view>
-
-<view class="padding flex flex-direction">
+<!-- <view class="padding flex flex-direction">
   <button class="cu-btn bg-themeBlue lg" open-type='contact'>聯繫管理員</button>
-</view>
+</view> -->
 
 <!-- 合作小程式 -->
 <view class="cu-bar bg-white margin-top">
@@ -33,7 +24,7 @@
 	</view>
 </view>
 
-<!-- 合作學會 -->
+<!-- 合作學會 - Title -->
 <view class="cu-bar bg-white margin-top">
 	<view class="action">
 		<text class="cuIcon-title text-themeBlue"></text>合作學會
@@ -60,6 +51,16 @@
     <view class="text-gray text-cut" style="width: 690rpx;">{{item.name}}</view>
   </swiper-item>
 </swiper>
+
+<!-- 功能按鈕 -->
+<view style="margin-top:20rpx">
+  <van-grid gutter="{{ 10 }}" column-num="2">
+    <van-grid-item icon="apps-o"    text="澳大小功能"     bindtap="jumpToSmallFun"/>
+    <van-grid-item icon="more-o"    text="關於"           bindtap="jumpToAbout" />
+    <van-grid-item icon="chat-o"    text="反饋 / 聯繫管理員"           bindtap="jumpToFeedBack" />
+    <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
+  </van-grid>
+</view>
 
 <van-divider contentPosition="center" custom-style="margin-top:100rpx;font-size:20rpx">正在開發更多內容！敬請期待！</van-divider>
 
