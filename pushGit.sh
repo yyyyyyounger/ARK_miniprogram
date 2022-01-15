@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m ":pencil: 寫了備註和往後日程"
+git commit -m ":art: 修改了一些視角上的變化"
 
 git push -f origin dev
 git push -f local dev
