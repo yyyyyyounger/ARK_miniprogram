@@ -149,8 +149,8 @@
       <text bindtap="towxml" decode="true">Towxml&nbsp;&nbsp;&nbsp;&nbsp;</text>
       <text bindtap="vantWeapp" decode="true">Vant Weapp&nbsp;&nbsp;&nbsp;&nbsp;</text>
       <text bindtap="oneWord" decode="true">一言API</text>
-      <!-- pjxml的json處理庫 -->
-      <text>    
+      <!-- pjxml的json處理庫 - 未指明 -->
+      <text>
       版權方式:
       MIT協議 GPL協議</text>
     </view>

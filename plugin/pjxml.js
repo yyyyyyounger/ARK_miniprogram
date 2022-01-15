@@ -1,3 +1,5 @@
+// 用於爬蟲處理html等
+
 var pjXML = (function () {
   var me = {};
   var node_types = {
