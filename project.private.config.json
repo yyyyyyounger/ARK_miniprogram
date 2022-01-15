@@ -65,6 +65,13 @@
           "pathName": "pages/more/umac/institution/institution",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "協議頁",
+          "pathName": "pages/protocol/protocol",
+          "query": "",
+          "scene": null,
+          "launchMode": "default"
         }
       ]
     }

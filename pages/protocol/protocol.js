@@ -2,7 +2,7 @@
 var app = getApp();
 
 var cloudData = require('../../data/cloud');
-var towxml = app.require('/towxml/index');
+var towxml = require('../../towxml/index');
 
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';

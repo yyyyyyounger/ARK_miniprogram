@@ -4,7 +4,7 @@ import Dialog from '../../miniprogram_npm/@vant/weapp/dialog/dialog';
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 import Notify from '../../miniprogram_npm/@vant/weapp/notify/notify';
 
-var towxml = app.require('/towxml/index');
+var towxml = require('../../towxml/index');
 var cloudData = require('../../data/cloud.js')
 const db = wx.cloud.database();
 const _ = db.command
