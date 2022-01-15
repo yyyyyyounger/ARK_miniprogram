@@ -146,25 +146,6 @@ bind:close="closePopup"
 
 <!-- <van-divider contentPosition="center" custom-style='margin-top:-5rpx;' >下方會有什麼...</van-divider> -->
 
-<!-- 關於ARK -->
-<block>
-	<view class="cu-bar bg-white" bindtap="shipTouched">
-		<view class="action">
-			<text class="cuIcon-title text-themeBlue"></text>關於ARK
-			<van-icon name="arrow"/>
-		</view>
-	</view>
-	<!-- <text>項目開始時間：2021/06/03</text> -->
-	<!-- <text> 今天是：{{today}} </text> -->
-	<view class="text-grey word"><text style="padding-left: 15px;"></text>
-		<text bindtap="shipTouched" decode="true">ARK已經航行&nbsp;</text>
-		<text bindtap="shipTouched" class="text-gray" style="font-weight:bold;">{{durationDay}}</text>
-		<text bindtap="shipTouched" decode="true">&nbsp;天了&nbsp;&nbsp;</text>
-		<image src="https://i.niupic.com/images/2021/09/12/9vbZ.png" class="{{shipClass}}" bindtap="shipRoll"></image><!--小船~-->
-		<image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png" class="floodAnim"></image><!--海浪~-->
-	</view>
-</block>
-
 <!-- 常见问题Q&A -->
 <block>
 	<view class="cu-bar bg-white" bindtap="displayQandA">
@@ -185,6 +166,25 @@ bind:close="closePopup"
 			{{item.answer}}
 		</view>
 		<text>\n</text>
+	</view>
+</block>
+
+<!-- 關於ARK -->
+<block>
+	<view class="cu-bar bg-white" bindtap="shipTouched">
+		<view class="action">
+			<text class="cuIcon-title text-themeBlue"></text>關於ARK
+			<van-icon name="arrow"/>
+		</view>
+	</view>
+	<!-- <text>項目開始時間：2021/06/03</text> -->
+	<!-- <text> 今天是：{{today}} </text> -->
+	<view class="text-grey word"><text style="padding-left: 15px;"></text>
+		<text bindtap="shipTouched" decode="true">ARK已經航行&nbsp;</text>
+		<text bindtap="shipTouched" class="text-gray" style="font-weight:bold;">{{durationDay}}</text>
+		<text bindtap="shipTouched" decode="true">&nbsp;天了&nbsp;&nbsp;</text>
+		<image src="https://i.niupic.com/images/2021/09/12/9vbZ.png" class="{{shipClass}}" bindtap="shipRoll"></image><!--小船~-->
+		<image src="https://i0.hdslb.com/bfs/album/dcd37543cdac0046b247392e87f5d2879d50755c.png" class="floodAnim"></image><!--海浪~-->
 	</view>
 </block>
 
