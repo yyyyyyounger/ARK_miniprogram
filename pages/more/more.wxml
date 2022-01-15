@@ -56,17 +56,17 @@
 <view style="margin-top:20rpx">
   <van-grid gutter="{{ 10 }}" column-num="2">
     <van-grid-item icon="apps-o"    text="澳大小功能"     bindtap="jumpToSmallFun"/>
-    <van-grid-item icon="more-o"    text="關於"           bindtap="jumpToAbout" />
+    <van-grid-item icon="more-o"    text="關於ARK"           bindtap="jumpToAbout" />
     <van-grid-item icon="chat-o"    text="反饋 / 聯繫管理員"           bindtap="jumpToFeedBack" />
     <van-grid-item icon="setting-o" text="小程序權限設置"  bindtap="bindOpenSetting" />
   </van-grid>
 </view>
 
-<van-divider contentPosition="center" custom-style="margin-top:100rpx;font-size:20rpx">正在開發更多內容！敬請期待！</van-divider>
-
 <view class="padding flex flex-direction" style="padding-top:20rpx">
   <button class="cu-btn bg-gray lg" bindtap="clearStorage">退出登錄 / 清除緩存</button>
 </view>
+
+<van-divider contentPosition="center" custom-style="margin-top:20rpx;font-size:20rpx">正在開發更多內容！敬請期待！</van-divider>
 
 <button bindtap="jumpToTestPage" wx:if="{{admin}}">跳轉測試頁（請不要擅自進入）</button>
 
