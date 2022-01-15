@@ -188,6 +188,25 @@ bind:close="closePopup"
 	</view>
 </block>
 
+
+<!-- 該sem已過 - 未完成 -->
+<!-- <block>
+	<view class="cu-bar bg-white">
+		<view class="action">
+			<text class="cuIcon-title text-themeBlue"></text>
+			這個Sem已過：
+		</view>
+	</view>
+
+	<view class="padding bg-white">
+		<view class="cu-progress round sm striped active">
+			<view class="bg-themeBlue" style="width:{{semFinishCalc}}%;"></view>
+		</view>
+	</view>
+</block> -->
+
+
+
 <!-- 一言 -->
 <block>
 	<view bindtap="hitokotoLocal">

@@ -3,4 +3,4 @@ echo " "
 
 git add -A
 
-git commit -m "修改了主頁顯示順序"
+git commit -m "該sem已過 嘗試寫中"
