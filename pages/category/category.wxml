@@ -92,8 +92,8 @@
 
   </van-tab>
 
-  <van-tab title="我的Follow">
-    <!-- 下拉菜單 - 排序未完成 -->
+  <van-tab wx:if="{{false}}" title="我的Follow">
+    <!-- 下拉菜單的排序未完成 -->
     <!-- <van-dropdown-menu>
       <van-dropdown-item value="{{ dropDownIndex }}" options="{{ option1 }}" bind:change="dropDownChange" />
       <van-dropdown-item value="{{0}}" options="{{ dropDownIndex==0 ? option3 : option2 }}" />
