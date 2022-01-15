@@ -173,26 +173,27 @@ Page({
   onLoad: function(scene) {
     this.app = getApp();
 
-    let semBeginDay  = '2022/01/06';
-    let semFinishDay = '2022/05/22';
-    // 獲取當前時間軸
-    var timestamp = Date.parse(new Date());
-    timestamp = timestamp / 1000;
-    //获取当前时间
-    var n = timestamp * 1000;
-    var date = new Date(n);
-    var Y = date.getFullYear();
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
-    var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-    let today = Y+'/'+M+'/'+D;
-    console.log("Today is",today);
-    console.log("The target date is",semFinishDay);
-    let durationDay = 0;
-    // 距離完sem日
-    durationDay = (new Date(semFinishDay).getTime() - new Date(today).getTime()) / (1000 * 60 * 60*24);
-    let semDurationDay = (new Date(semFinishDay).getTime() - new Date(semBeginDay).getTime()) / (1000 * 60 * 60*24);
-    this.setData({  semFinishCalc : parseInt((1-(durationDay/semDurationDay))*100)  })
-    console.log("該sem已過:",this.data.semFinishCalc,"%",);
+    // 該sem已過多少日的計算
+    // let semBeginDay  = '2022/01/06';
+    // let semFinishDay = '2022/05/22';
+    // // 獲取當前時間軸
+    // var timestamp = Date.parse(new Date());
+    // timestamp = timestamp / 1000;
+    // //获取当前时间
+    // var n = timestamp * 1000;
+    // var date = new Date(n);
+    // var Y = date.getFullYear();
+    // var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    // var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    // let today = Y+'/'+M+'/'+D;
+    // console.log("Today is",today);
+    // console.log("The target date is",semFinishDay);
+    // let durationDay = 0;
+    // // 距離完sem日
+    // durationDay = (new Date(semFinishDay).getTime() - new Date(today).getTime()) / (1000 * 60 * 60*24);
+    // let semDurationDay = (new Date(semFinishDay).getTime() - new Date(semBeginDay).getTime()) / (1000 * 60 * 60*24);
+    // this.setData({  semFinishCalc : parseInt((1-(durationDay/semDurationDay))*100)  })
+    // console.log("該sem已過:",this.data.semFinishCalc,"%",);
 
     // 小船动画初始化
     this.setData({

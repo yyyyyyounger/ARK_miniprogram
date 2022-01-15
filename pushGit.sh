@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m ":art: 修改了一些視角上的變化"
+git commit -m ":art: 注釋index.js無用的代碼"
 
 git push -f origin dev
 git push -f local dev
