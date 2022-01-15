@@ -17,6 +17,7 @@
     justify-content: center;
     text-align: center;
     height: 1.3rem;
+    overflow: hidden;
 }
 
 .th {

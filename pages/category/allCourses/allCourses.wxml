@@ -93,3 +93,6 @@ var subDate = function(date) {
 module.exports.subDate = subDate
 </wxs>
 
+<van-divider contentPosition="center" custom-style="margin-top:20rpx;">沒有更多了喔</van-divider>
+
+<view class="bottom-watch"></view>
