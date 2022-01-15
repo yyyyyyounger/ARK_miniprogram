@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m ":fire:突然出現開發者工具無Bug但手機端有Bug的問題，待修復！"
+git commit -m ":fire: 解決手機版tomxml的Bug，估計是開發者工具的問題，升級了Vant庫"
 
 git push -f origin dev
 git push -f local dev
