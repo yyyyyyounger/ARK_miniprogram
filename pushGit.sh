@@ -8,8 +8,8 @@ git add -A
 
 git commit -m ":fire:突然出現開發者工具無Bug但手機端有Bug的問題，待修復！"
 
-git push origin dev
-git push local dev
+git push -f origin dev
+git push -f local dev
 
 echo " "
 echo "The program has finished ~"
