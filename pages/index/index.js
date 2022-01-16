@@ -563,7 +563,7 @@ Page({
     switch (clickItem) {
       case 'newARK':
         // 使用app.global數據協助跳轉，0 1 2 3對應課程頁tabs的索引
-        app.globalData.switchTabs = 3;
+        app.globalData.switchTabs = 1;
         wx.switchTab({
           url: '/pages/category/category',
         })

@@ -163,21 +163,6 @@
 
   </van-tab>
 
-  <van-tab title="歸檔&記錄">
-
-    <view style="margin-top:30rpx">
-      <van-grid gutter="{{ 10 }}" column-num="1" clickable icon-size="60rpx">
-        <van-grid-item icon="apps-o" text="所有課程" bindtap="jumpToallCourses"/>
-        <!-- 參與記錄 - 未完成 -->
-        <!-- <van-grid-item icon="more-o" text="參與記錄" bindtap="jumpTomyFollowCourses"/> -->
-        <van-grid-item icon="more-o" text="我的開課" bindtap="jumpToMyCourses"/>
-        <!-- <van-grid-item wx:if="{{admin}}" icon="more-o" text="待審核課程" bindtap="jumpTomyFollowCourses"/> -->
-      </van-grid>
-      <van-divider contentPosition="center">正在設計更多歸檔分類，敬請期待！</van-divider>
-    </view>
-
-  </van-tab>
-  
   <van-tab title="我要開課">
     <van-divider contentPosition="center">請開課前認真閱讀 ARK協議 及 本須知</van-divider>
 
@@ -208,6 +193,21 @@
 
   </van-tab>
 
+  <van-tab title="歸檔&記錄">
+
+    <view style="margin-top:30rpx">
+      <van-grid gutter="{{ 10 }}" column-num="1" clickable icon-size="60rpx">
+        <van-grid-item icon="apps-o" text="所有課程" bindtap="jumpToallCourses"/>
+        <!-- 參與記錄 - 未完成 -->
+        <!-- <van-grid-item icon="more-o" text="參與記錄" bindtap="jumpTomyFollowCourses"/> -->
+        <van-grid-item icon="more-o" text="我的開課" bindtap="jumpToMyCourses"/>
+        <!-- <van-grid-item wx:if="{{admin}}" icon="more-o" text="待審核課程" bindtap="jumpTomyFollowCourses"/> -->
+      </van-grid>
+      <van-divider contentPosition="center">正在設計更多歸檔分類，敬請期待！</van-divider>
+    </view>
+
+  </van-tab>
+  
 </van-tabs>
 
 <view class="bottom-watch"></view>
