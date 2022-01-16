@@ -127,7 +127,7 @@ bind:close="closePopup"
 <view class="link" style="margin-top: 10px;">
 	<view class="iconCon" data-name="recentARK" bindtap="indexButtonJump">
 		<view class="iconfont icon-zhengceguizhang2"></view>
-		<view class="icontext">最近</view>
+		<view class="icontext">最近ARK</view>
 	</view>
 	<view class="iconCon" data-name="newARK" bindtap="indexButtonJump">
 		<view class="iconfont icon-heiban"></view>
@@ -136,11 +136,11 @@ bind:close="closePopup"
 	</view>
 	<view class="iconCon" data-name="partner" bindtap="indexButtonJump">
 		<view class="iconfont icon-a-xiaobaoxueshuqikan"></view>
-		<view class="icontext">社團</view>
+		<view class="icontext">社團活動</view>
 	</view>
 	<view class="iconCon" data-name="bus" bindtap="indexButtonJump">
 		<view class="iconfont icon-bancheshike"></view>
-		<view class="icontext">校巴</view>
+		<view class="icontext">實時校巴</view>
 	</view>
 </view>
 
