@@ -217,7 +217,7 @@ Page({
     const userCloudDataStorage = wx.getStorageSync('userCloudData');  // 用戶緩存
     if (!userCloudDataStorage) {
       Toast({
-        message : '登錄後才能體驗完整功能哦！',
+        message : '   登錄及填寫資料後\n才能體驗完整功能哦！',
         zIndex  : 99999999999999
       })
     } else {  // 已登錄，存放userCloudData
