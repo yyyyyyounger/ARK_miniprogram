@@ -3,4 +3,4 @@ echo " "
 
 git add -A
 
-git commit -m "修復主頁功能按鈕跳轉課程頁tab的問題"
+git commit -m "新增主頁部分按鈕的提示語"

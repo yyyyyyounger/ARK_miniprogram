@@ -150,7 +150,7 @@ bind:close="closePopup"
 <block>
 	<view class="cu-bar bg-white" bindtap="displayQandA">
 		<view class="action colorShining">
-			<text class="cuIcon-title text-themeBlue"></text>常見問題Q&A
+			<text class="cuIcon-title text-themeBlue"></text>常見問題Q&A<text class="text-gray" style="margin-left: 10rpx;">(點我展開)</text>
 			<van-icon name="arrow" wx:if="{{!showQandA}}"/><!-- 收起和打开时图标变化 -->
 			<van-icon name="arrow-down" wx:else/>
 		</view>
@@ -173,7 +173,7 @@ bind:close="closePopup"
 <block>
 	<view class="cu-bar bg-white" bindtap="shipTouched">
 		<view class="action">
-			<text class="cuIcon-title text-themeBlue"></text>關於ARK
+			<text class="cuIcon-title text-themeBlue"></text>關於ARK<text class="text-gray" style="margin-left: 10rpx;">(點我試試)</text>
 			<van-icon name="arrow"/>
 		</view>
 	</view>
