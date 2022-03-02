@@ -107,10 +107,10 @@ Page({
             {
                 // id:14,
                 // name:'澳門工程師學會學生分部',
-                shortName : 'ASCE',
-                date : Date.parse( new Date( '2021-10-16' ) ),        // 最裡面的括號格式為yyyy/mm/dd
+                shortName : 'IET',
+                date : Date.parse( new Date( '2022-03-06' ) ),        // 最裡面的括號格式為yyyy/mm/dd
                 // iconUrl:'https://i0.hdslb.com/bfs/album/6f74c3648370fe77421bb90b5194d19ea8aa73a9.png',
-                posterUrl:['https://imgtu.com/i/4fnChd'
+                posterUrl:['https://cdn.jsdelivr.net/gh/hututu-tech/IMG-gongfeng@main/2022/03/02/621f2b1855801.jpg'
                 ],
             }
         ]

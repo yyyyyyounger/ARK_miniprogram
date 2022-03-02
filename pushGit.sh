@@ -6,7 +6,7 @@ git config --global user.email "1049825685@qq.com"
 
 git add -A
 
-git commit -m ":art: 修改了主頁的文本顯示"
+git commit -m ":art: 新增IET的新活動（只對數據庫操作，本地無大更改）"
 
 git push -f origin dev
 git push -f local dev

@@ -1,84 +1,137 @@
 {
-    "description": "项目配置文件",
-    "packOptions": {
-        "ignore": []
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": false,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "lazyloadPlaceholderEnable": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
     },
-    "setting": {
-        "urlCheck": false,
-        "es6": true,
-        "enhance": true,
-        "postcss": true,
-        "preloadBackgroundData": false,
-        "minified": true,
-        "newFeature": false,
-        "coverView": true,
-        "nodeModules": true,
-        "autoAudits": false,
-        "showShadowRootInWxmlPanel": true,
-        "scopeDataCheck": false,
-        "uglifyFileName": false,
-        "checkInvalidKey": true,
-        "checkSiteMap": true,
-        "uploadWithSourceMap": true,
-        "compileHotReLoad": false,
-        "lazyloadPlaceholderEnable": true,
-        "useMultiFrameRuntime": true,
-        "useApiHook": true,
-        "useApiHostProcess": true,
-        "babelSetting": {
-            "ignore": [],
-            "disablePlugins": [],
-            "outputPath": ""
-        },
-        "useIsolateContext": false,
-        "userConfirmedBundleSwitch": false,
-        "packNpmManually": true,
-        "packNpmRelationList": [
-            {
-                "packageJsonPath": "./package.json",
-                "miniprogramNpmDistDir": "./"
-            }
-        ],
-        "minifyWXSS": true,
-        "disableUseStrict": false,
-        "minifyWXML": true,
-        "showES6CompileOption": false,
-        "useCompilerPlugins": false,
-        "ignoreUploadUnusedFiles": true
+    "enableEngineNative": false,
+    "useIsolateContext": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": true,
+    "packNpmRelationList": [
+      {
+        "packageJsonPath": "./package.json",
+        "miniprogramNpmDistDir": "./"
+      }
+    ],
+    "minifyWXSS": true,
+    "disableUseStrict": false,
+    "minifyWXML": true,
+    "showES6CompileOption": false,
+    "useCompilerPlugins": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.20.3",
+  "appid": "wx18d6d4846203797e",
+  "projectname": "ARK_Vant",
+  "cloudfunctionRoot": "cloud/",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+  "watchOptions": {
+    "ignore": []
+  },
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "scripts": {},
+  "condition": {
+    "plugin": {
+      "list": []
     },
-    "compileType": "miniprogram",
-    "libVersion": "2.16.1",
-    "appid": "wx18d6d4846203797e",
-    "projectname": "ARK_Vant",
-    "debugOptions": {
-        "hidedInDevtools": []
+    "game": {
+      "list": []
     },
-    "scripts": {},
-    "staticServerOptions": {
-        "baseURL": "",
-        "servePath": ""
+    "gamePlugin": {
+      "list": []
     },
-    "isGameTourist": false,
-    "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
-    "cloudfunctionRoot": "cloud/",
-    "condition": {
-        "search": {
-            "list": []
+    "miniprogram": {
+      "list": [
+        {
+          "name": "test",
+          "pathName": "pages/test/test",
+          "query": "",
+          "scene": null
         },
-        "conversation": {
-            "list": []
+        {
+          "name": "更多頁",
+          "pathName": "pages/more/more",
+          "query": "",
+          "scene": null
         },
-        "game": {
-            "list": []
+        {
+          "name": "課程頁",
+          "pathName": "pages/category/category",
+          "query": "",
+          "scene": null
         },
-        "plugin": {
-            "list": []
+        {
+          "name": "詳情頁3 num",
+          "pathName": "pages/category/courseDetail/courseDetail",
+          "query": "detailInfo={\"user\":\"follower\",\"courseId\":7}",
+          "scene": null
         },
-        "gamePlugin": {
-            "list": []
+        {
+          "name": "關於頁",
+          "pathName": "pages/more/about/about",
+          "query": "",
+          "scene": null
         },
-        "miniprogram": {
-            "list": []
+        {
+          "name": "所有課程歸檔",
+          "pathName": "pages/category/allCourses/allCourses",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "小功能頁",
+          "pathName": "pages/more/smallFun/smallFun",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "巴士報站",
+          "pathName": "pages/more/umac/bus/bus",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "學會社團宣傳頁",
+          "pathName": "pages/more/umac/institution/institution",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "協議頁",
+          "pathName": "pages/protocol/protocol",
+          "query": "",
+          "scene": null
         }
+      ]
     }
+  }
 }
