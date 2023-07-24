@@ -1,4 +1,4 @@
-# ARK Develop log
+# FST ARK Mini Program Develop log
 
 ## 項目文件目錄結構說明
 可前往`備註/協同開發.md`查看項目目錄簡介。
